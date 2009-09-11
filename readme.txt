@@ -10,14 +10,16 @@ Display users events in frontend
 
 == Description ==
 
-This plugin log registered users events in your blog.
+This plugin logs registered users events in your blog and display it in frontend.
 
 - connections
 - new comments
 - profile update
 - new/edit post
 
-[Plugin URI](http://www.driczone.net/blog/wp-activity/)
+Users can see what other members do in the blog. Great for multi-users blogs or community blogs.
+
+[Plugin page](http://www.driczone.net/blog/wp-activity/)
 
 == Installation ==
 
