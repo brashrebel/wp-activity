@@ -19,6 +19,8 @@ This plugin logs registered users events in your blog and display it in frontend
 
 Users can see what other members do in the blog. Great for multi-users blogs or community blogs.
 
+French tranlastion included.
+
 [Plugin page](http://www.driczone.net/blog/wp-activity/)
 
 == Installation ==
@@ -34,7 +36,7 @@ Users can see what other members do in the blog. Great for multi-users blogs or 
 = How do I set the events number or the title when using act_stream()? =
 
 this function accepts two parameters :
-act_stream(number,title)
+`act_stream(number,title)`
 
 defaults are :
 
