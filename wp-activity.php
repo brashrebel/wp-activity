@@ -1,7 +1,7 @@
 <?php
 /*
     Plugin Name: WP-Activity
-    Plugin URI: http://
+    Plugin URI: http://www.driczone.net/blog/wp-activity
     Description: Display activity stream on your community site
     Author: Dric
     Version: 0.2
