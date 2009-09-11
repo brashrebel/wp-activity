@@ -1,0 +1,133 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Wp-activity\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-10 09:47+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Dric\n"
+"Language-Team: Dric <cedric@driczone.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: s\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: wp-activity.php:123
+#: wp-activity.php:303
+msgid "Recent Activity"
+msgstr "Activité récente"
+
+#: wp-activity.php:134
+#: wp-activity.php:139
+#: wp-activity.php:142
+#: wp-activity.php:147
+#: wp-activity.php:150
+msgid "View Profile"
+msgstr "Voir le profil"
+
+#: wp-activity.php:134
+msgid "is logged."
+msgstr "s'est connecté."
+
+#: wp-activity.php:139
+msgid "put a message in the shoutbox."
+msgstr "A laissé un message dans la Boîte à messages."
+
+#: wp-activity.php:142
+msgid "commented"
+msgstr "a commenté"
+
+#: wp-activity.php:147
+msgid "published or edited"
+msgstr "a publié ou édité"
+
+#: wp-activity.php:150
+msgid "has updated his profile."
+msgstr "a modifié son profil."
+
+#: wp-activity.php:195
+msgid "week"
+msgstr "semaine"
+
+#: wp-activity.php:196
+#: wp-activity.php:199
+msgid "day"
+msgstr "jour"
+
+#: wp-activity.php:200
+#: wp-activity.php:203
+msgid "hour"
+msgstr "heure"
+
+#: wp-activity.php:204
+#: wp-activity.php:207
+msgid "minute"
+msgstr "minute"
+
+#: wp-activity.php:210
+msgid "second"
+msgstr "seconde"
+
+#: wp-activity.php:214
+#, php-format
+msgid "%s ago"
+msgstr "Il y a %s"
+
+#: wp-activity.php:231
+msgid "Activity logs deleted."
+msgstr "Données supprimées."
+
+#: wp-activity.php:245
+msgid "Date format : "
+msgstr "Format des dates :"
+
+#: wp-activity.php:250
+msgid "For events that are more than a month old only, or if you dont use relative dates."
+msgstr "pour les évènements qui sont plus vieux qu'un mois seulement, ou si vous n'utilisez pas les dates relatives."
+
+#: wp-activity.php:251
+msgid "Rows limit in database : "
+msgstr "Nombre max de lignes dans la table :"
+
+#: wp-activity.php:252
+msgid "Warning : cleaning activity table erase all activity logs."
+msgstr "Attention : vider la table supprime tous les logs."
+
+#: wp-activity.php:254
+msgid "Update settings"
+msgstr "Mettre à jour les paramètres"
+
+#: wp-activity.php:255
+msgid "Clean activity table"
+msgstr "Vider la table de WP-Activity"
+
+#: wp-activity.php:257
+msgid "Submit"
+msgstr "Valider"
+
+#: wp-activity.php:259
+#, php-format
+msgid "WP-Activity is a plugin made in France by <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
+msgstr "WP-Activity est un plugin développé par <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
+
+#: wp-activity.php:273
+msgid "Display a stream of registered users events"
+msgstr "Affiche le flux de l'activité des membres"
+
+#: wp-activity.php:279
+msgid "Wp-Activity Widget"
+msgstr "WP-Activity"
+
+#: wp-activity.php:307
+msgid "Title :"
+msgstr "Titre :"
+
+#: wp-activity.php:311
+msgid "Events number :"
+msgstr "Nombre d'évènements :"
+

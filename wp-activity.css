@@ -1,0 +1,10 @@
+#activity{
+  width: 350px;
+  background-color: #FFF;
+  padding: 7px;
+  border: 1px solid #CCC;
+  list-style : none;
+	overflow: auto; 
+	height: 150px;
+	margin: 10px;
+}
