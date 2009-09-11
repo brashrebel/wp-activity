@@ -17,6 +17,7 @@ This plugin log registered users events in your blog.
 - profile update
 - new/edit post
 
+[Plugin URI](http://www.driczone.net/blog/wp-activity/)
 
 == Installation ==
 
