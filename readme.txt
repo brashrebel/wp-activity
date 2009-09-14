@@ -28,12 +28,12 @@ French translation included.
 1. Download the plugin and unzip,
 2. Upload the wp-activity folder to your wp-content/plugins folder,
 3. Activate the plugin through the Wordpress admin,
-4. Go to Settings > Wp-Activity and set options that fit your needs.
+4. Go to `Settings > Wp-Activity` and set options that fit your needs.
 5. Put `<?php act_stream() ?>` where you want the stream to appear.
 
 == Frequently Asked Questions ==
 
-= How do I set the events number or the title when using act_stream()? =
+= How do I set the events number or the title when using `act_stream()`? =
 
 this function accepts two parameters :
 `act_stream(number,title)`
@@ -48,6 +48,10 @@ defaults are :
 1. frontend display
 
 == ChangeLog ==
+
+= 0.3 =
+* Less SQL queries
+* Admin can now select events to log
 
 = 0.2 =
 * Plugin internationalization

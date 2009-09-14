@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/wp-activity
     Description: Display activity stream on your community site
     Author: Dric
-    Version: 0.2
+    Version: 0.3
     Author URI: http://www.driczone.net
 */
 
@@ -28,7 +28,7 @@
 if ( !isset($_SESSION)) {
 		session_start();
 	}
-$act_version="0.2";
+$act_version="0.3";
 
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
 	if ( defined( 'WP_SITEURL' ) ) {
@@ -61,10 +61,21 @@ function act_install()
     dbDelta($structure);
     $options['act_prune'] = '300';
     $options['act_date_format'] = 'yyyy/mm/dd';
+    $options['act_connect']=true;
+    $options['act_profiles']=true;
+    $options['act_posts']=true;
+    $options['act_comments']=true;
     add_option('act_settings', $options);
     wp_schedule_event(time(), 'daily', 'act_cron_install');
 }
 register_activation_hook( __FILE__, 'act_install' );
+
+
+add_action('send_headers', 'act_session');
+add_action('send_headers', 'act_profile_edit');
+add_action('send_headers', 'act_post_add');
+add_action('send_headers', 'act_comment_add');
+
 
 function act_cron(){
   global $wpdb;
@@ -80,14 +91,16 @@ add_action('wp_head', 'act_header');
 
 function act_session(){
   global $wpdb, $user_ID;
-  if (!$_SESSION['act_logged'] and is_user_logged_in()){
-  $time=mysql2date("Y-m-d H:i:s", time());
-  $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$time."', '')");
-  $url = parse_url(get_option('home'));
-  $_SESSION['act_logged']= time();
+  $options=get_option('act_settings');
+  if ($options->act_connect == true ){
+    if (!$_SESSION['act_logged'] and is_user_logged_in()){
+      $time=mysql2date("Y-m-d H:i:s", time());
+      $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$time."', '')");
+      $url = parse_url(get_option('home'));
+      $_SESSION['act_logged']= time();
+    }
   }
 }
-add_action('send_headers', 'act_session');
 
 function act_reinit(){
   if ($_SESSION['act_logged']){ unset($_SESSION['act_logged']);}
@@ -95,27 +108,32 @@ function act_reinit(){
 add_action('wp_login', 'act_reinit');
 add_action('wp_logout', 'act_reinit');
 
-function act_comment_add($comment){
+function act_profile_edit($user_edit){
   global $wpdb, $user_ID;
-  $time=mysql2date("Y-m-d H:i:s", time());
-  $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'COMMENT_ADD', '".$time."', $comment)");
+  $options=get_option('act_settings');
+  if ($options->act_profiles == true ){
+    $time=mysql2date("Y-m-d H:i:s", time());
+    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'PROFILE_EDIT', '".$time."', $user_edit)");
+  }
 }
-add_action('comment_post', 'act_comment_add');
 
 function act_post_add($post){
   global $wpdb, $user_ID;
-  $time=mysql2date("Y-m-d H:i:s", time());
-  $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'POST_ADD', '".$time."', $post)");
+  $options=get_option('act_settings');
+  if ($options->act_connect == true ){
+    $time=mysql2date("Y-m-d H:i:s", time());
+    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'POST_ADD', '".$time."', $post)");
+  }
 }
-add_action('publish_post', 'act_post_add');
 
-function act_profile_edit($user_edit){
+function act_comment_add($comment){
   global $wpdb, $user_ID;
-  $time=mysql2date("Y-m-d H:i:s", time());
-  $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'PROFILE_EDIT', '".$time."', $user_edit)");
+  $options=get_option('act_settings');
+  if ($options->act_connect == true ){
+    $time=mysql2date("Y-m-d H:i:s", time());
+    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'COMMENT_ADD', '".$time."', $comment)");
+  }
 }
-add_action('profile_update', 'act_profile_edit');
-//add_action('personal_options_update', 'act_profile_edit');
 
 function act_stream($number='30', $title=''){
 global $wpdb;
@@ -124,14 +142,20 @@ global $wpdb;
   }
   $wp_url = get_bloginfo('wpurl');
   echo $title.'<ul id="activity">';
+  $users = $wpdb->get_results("SELECT ID, display_name, user_nicename FROM $wpdb->users");
+  foreach ($users as $user) {
+		$users_nicename[$user->ID]=$user->user_nicename;
+		$users_display[$user->ID]=$user->display_name;
+	}
   $sql  = "SELECT * FROM ".$wpdb->prefix."activity ORDER BY id DESC LIMIT $number";
 	if ( $logins = $wpdb->get_results( $sql)){
     foreach ( (array) $logins as $act ){
-      $user_nicename = get_the_author_meta('user_nicename',$act->user_id);
+      //$user_nicename = get_the_author_meta('user_nicename',$act->user_id);
+      $user_nicename = $users_nicename[$act->user_id];
       echo '<li class="login">'.nicetime($act->act_date).' - ';
       switch ($act->act_type){
         case 'CONNECT':
-          echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.get_the_author_meta('display_name', $act->user_id).'</a> '.__('is logged.', 'wp-activity');
+          echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act->user_id].'</a> '.__('is logged.', 'wp-activity');
           break;
         case 'COMMENT_ADD':
           $act_comment=get_comment($act->act_params);
@@ -140,10 +164,10 @@ global $wpdb;
           break;
         case 'POST_ADD':
           $act_post=get_post($act->act_params);
-          echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.get_the_author_meta('display_name',$act_post->post_author).'</a> '.__('published or edited', 'wp-activity').' <a href="'.$act_post->post_name.'">'.$act_post->post_title.'</a>';
+          echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act_post->post_author].'</a> '.__('published or edited', 'wp-activity').' <a href="'.$act_post->post_name.'">'.$act_post->post_title.'</a>';
           break;
         case 'PROFILE_EDIT':
-          echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.get_the_author_meta('display_name', $act->user_id).'</a> '.__('has updated his profile.', 'wp-activity');
+          echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act->user_id].'</a> '.__('has updated his profile.', 'wp-activity');
           break;
         default:
           break;
@@ -230,6 +254,10 @@ function act_admin(){
       default:
           $options['act_prune']=$_POST['act_prune'];
           $options['act_date_format']=$_POST['act_date_format'];
+          $options['act_connect']=$_POST['act_connect'];
+          $options['act_profiles']=$_POST['act_profiles'];
+          $options['act_posts']=$_POST['act_posts'];
+          $options['act_comments']=$_POST['act_comments'];
           update_option('act_settings', $options);
         break;
     }
@@ -238,21 +266,39 @@ function act_admin(){
   <div class="wrap">
   	<h2>WP-Activity</h2>
   	<form action='' method='post'>
-  	  <p><label for="act_date_format"><?php _e('Date format : ','wp-activity') ?></label>
-  	  <select name="act_date_format">
+  	<table class="form-table">
+      <tr valign="top">
+        <th scope="row"><?php _e('Date format : ','wp-activity') ?></th>
+  	    <td><select name="act_date_format">
         <option <?php if($act_date_format == 'yyyy/mm/dd') {echo"selected='selected' ";} ?>value ="yyyy/mm/dd">yyyy/mm/dd</option>
         <option <?php if($act_date_format == 'mm/dd/yyyy') {echo"selected='selected' ";} ?>value ="mm/dd/yyyy">mm/dd/yyyy</option>
         <option <?php if($act_date_format == 'dd/mm/yyyy') {echo"selected='selected' ";} ?>value ="dd/mm/yyyy">dd/mm/yyyy</option>
-      </select><br /><?php _e('For events that are more than a month old only, or if you dont use relative dates.','wp-activity') ?></p>
-  	  <p><label for="act_prune"><?php _e('Rows limit in database : ', 'wp-activity') ?></label><input type="text" name="act_prune" value="<?php echo $act_prune ?>" /></p>
-  	  <p><?php _e('Warning : cleaning activity table erase all activity logs.', 'wp-activity') ?></p>
+      </select><br /><?php _e('For events that are more than a month old only, or if you dont use relative dates.','wp-activity') ?></td>
+  	  </tr><tr>
+      <th><h3><?php _e('Events logging', 'wp-activity') ?></h3></th>
+      </tr><tr>
+      <th><?php _e('Rows limit in database : ', 'wp-activity') ?></th><td><input type="text" name="act_prune" value="<?php echo $act_prune ?>" /></td>
+  	  </tr><tr>
+      <th><?php _e('Store login events : ', 'wp-activity') ?></th><td><input type="checkbox" <?php if($act_connect){echo 'checked="checked"';} ?> name="act_connect" /></td>
+      </tr><tr>
+      <th><?php _e('Store profile update events : ', 'wp-activity') ?></th><td><input type="checkbox" <?php if($act_profiles){echo 'checked="checked"';} ?> name="act_profiles" /></td>
+      </tr><tr>
+      <th><?php _e('Store post creation/update events : ', 'wp-activity') ?></th><td><input type="checkbox" <?php if($act_posts){echo 'checked="checked"';} ?> name="act_posts" /></td>
+      </tr><tr>
+      <th><?php _e('Store new comment events : ', 'wp-activity') ?></th><td><input type="checkbox" <?php if($act_comments){echo 'checked="checked"';} ?> name="act_comments" /></td>
+      </tr>
+      </table>
+      <br />
+      <h3><?php _e('Update/clean tables', 'wp-activity') ?></h3>
+      <p><?php _e('Warning : cleaning activity table erase all activity logs.', 'wp-activity') ?></p>
       <select name="act_action">
         <option value ="update"><?php _e('Update settings', 'wp-activity') ?></option>
   			<option value ="clean"><?php _e('Clean activity table', 'wp-activity') ?></option>        
       </select>
       <input type='submit' class='button-secondary delete' name='submit' value='<?php _e('Submit', 'wp-activity') ?>' />
     </form>
-    <p><?php echo sprintf(__('WP-Activity is a plugin made in France by <a href="http://www.driczone.net">Dric</a>. Version <strong>%s</strong>.', 'wp-activity'), $act_version) ?></p>
+    <br />
+    <h4><?php echo sprintf(__('WP-Activity is a plugin made in France by <a href="http://www.driczone.net">Dric</a>. Version <strong>%s</strong>.', 'wp-activity'), $act_version) ?></h4>
   </div>
   <?php
 }
