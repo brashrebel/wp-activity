@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-activity\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-10 09:47+0100\n"
+"POT-Creation-Date: 2009-09-14 15:36+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Dric\n"
 "Language-Team: Dric <cedric@driczone.net>\n"
@@ -17,117 +17,139 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: wp-activity.php:123
-#: wp-activity.php:303
+#: wp-activity.php:141
+#: wp-activity.php:345
 msgid "Recent Activity"
 msgstr "Activité récente"
 
-#: wp-activity.php:134
-#: wp-activity.php:139
-#: wp-activity.php:142
-#: wp-activity.php:147
-#: wp-activity.php:150
+#: wp-activity.php:158
+#: wp-activity.php:163
+#: wp-activity.php:167
+#: wp-activity.php:170
 msgid "View Profile"
 msgstr "Voir le profil"
 
-#: wp-activity.php:134
+#: wp-activity.php:158
 msgid "is logged."
 msgstr "s'est connecté."
 
-#: wp-activity.php:139
-msgid "put a message in the shoutbox."
-msgstr "A laissé un message dans la Boîte à messages."
-
-#: wp-activity.php:142
+#: wp-activity.php:163
 msgid "commented"
 msgstr "a commenté"
 
-#: wp-activity.php:147
+#: wp-activity.php:167
 msgid "published or edited"
 msgstr "a publié ou édité"
 
-#: wp-activity.php:150
+#: wp-activity.php:170
 msgid "has updated his profile."
 msgstr "a modifié son profil."
 
-#: wp-activity.php:195
+#: wp-activity.php:215
 msgid "week"
 msgstr "semaine"
 
-#: wp-activity.php:196
-#: wp-activity.php:199
+#: wp-activity.php:216
+#: wp-activity.php:219
 msgid "day"
 msgstr "jour"
 
-#: wp-activity.php:200
-#: wp-activity.php:203
+#: wp-activity.php:220
+#: wp-activity.php:223
 msgid "hour"
 msgstr "heure"
 
-#: wp-activity.php:204
-#: wp-activity.php:207
+#: wp-activity.php:224
+#: wp-activity.php:227
 msgid "minute"
 msgstr "minute"
 
-#: wp-activity.php:210
+#: wp-activity.php:230
 msgid "second"
 msgstr "seconde"
 
-#: wp-activity.php:214
+#: wp-activity.php:234
 #, php-format
 msgid "%s ago"
 msgstr "Il y a %s"
 
-#: wp-activity.php:231
+#: wp-activity.php:251
 msgid "Activity logs deleted."
 msgstr "Données supprimées."
 
-#: wp-activity.php:245
+#: wp-activity.php:271
 msgid "Date format : "
 msgstr "Format des dates :"
 
-#: wp-activity.php:250
+#: wp-activity.php:276
 msgid "For events that are more than a month old only, or if you dont use relative dates."
 msgstr "pour les évènements qui sont plus vieux qu'un mois seulement, ou si vous n'utilisez pas les dates relatives."
 
-#: wp-activity.php:251
+#: wp-activity.php:278
+msgid "Events logging"
+msgstr "Log des évènements"
+
+#: wp-activity.php:280
 msgid "Rows limit in database : "
 msgstr "Nombre max de lignes dans la table :"
 
-#: wp-activity.php:252
+#: wp-activity.php:282
+msgid "Store login events : "
+msgstr "Surveiller les connexions utilisateurs :"
+
+#: wp-activity.php:284
+msgid "Store profile update events : "
+msgstr "Surveiller les mises à jour de profil"
+
+#: wp-activity.php:286
+msgid "Store post creation/update events : "
+msgstr "Surveiller la crétion/l'édition d'un article :"
+
+#: wp-activity.php:288
+msgid "Store new comment events : "
+msgstr "Surveiller les nouveaux commentaires :"
+
+#: wp-activity.php:292
+msgid "Update/clean tables"
+msgstr "Mettre à jour/vider la table"
+
+#: wp-activity.php:293
 msgid "Warning : cleaning activity table erase all activity logs."
 msgstr "Attention : vider la table supprime tous les logs."
 
-#: wp-activity.php:254
+#: wp-activity.php:295
 msgid "Update settings"
 msgstr "Mettre à jour les paramètres"
 
-#: wp-activity.php:255
+#: wp-activity.php:296
 msgid "Clean activity table"
 msgstr "Vider la table de WP-Activity"
 
-#: wp-activity.php:257
+#: wp-activity.php:298
 msgid "Submit"
 msgstr "Valider"
 
-#: wp-activity.php:259
+#: wp-activity.php:301
 #, php-format
 msgid "WP-Activity is a plugin made in France by <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
 msgstr "WP-Activity est un plugin développé par <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
 
-#: wp-activity.php:273
+#: wp-activity.php:315
 msgid "Display a stream of registered users events"
 msgstr "Affiche le flux de l'activité des membres"
 
-#: wp-activity.php:279
+#: wp-activity.php:321
 msgid "Wp-Activity Widget"
 msgstr "WP-Activity"
 
-#: wp-activity.php:307
+#: wp-activity.php:349
 msgid "Title :"
 msgstr "Titre :"
 
-#: wp-activity.php:311
+#: wp-activity.php:353
 msgid "Events number :"
 msgstr "Nombre d'évènements :"
+
+#~ msgid "put a message in the shoutbox."
+#~ msgstr "A laissé un message dans la Boîte à messages."
 
