@@ -29,7 +29,7 @@ French translation included.
 2. Upload the wp-activity folder to your wp-content/plugins folder,
 3. Activate the plugin through the Wordpress admin,
 4. Go to `Settings > Wp-Activity` and set options that fit your needs.
-5. Put `<?php act_stream() ?>` where you want the stream to appear.
+5. Put `<?php act_stream() ?>` where you want the stream to appear, or use the widget inculded.
 
 == Frequently Asked Questions ==
 
