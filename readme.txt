@@ -4,7 +4,7 @@ Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, events
 Requires at least: 2.8
 Tested up to: 2.8.4
-Stable tag: 0.2
+Stable tag: trunk
 
 Display users events in frontend
 
