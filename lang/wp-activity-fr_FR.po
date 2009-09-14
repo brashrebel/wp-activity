@@ -95,19 +95,19 @@ msgstr "Nombre max de lignes dans la table :"
 
 #: wp-activity.php:282
 msgid "Store login events : "
-msgstr "Surveiller les connexions utilisateurs :"
+msgstr "Log des connexions utilisateurs :"
 
 #: wp-activity.php:284
 msgid "Store profile update events : "
-msgstr "Surveiller les mises à jour de profil"
+msgstr "Log des mises à jour de profil :"
 
 #: wp-activity.php:286
 msgid "Store post creation/update events : "
-msgstr "Surveiller la crétion/l'édition d'un article :"
+msgstr "Log des créations/éditions d'articles :"
 
 #: wp-activity.php:288
 msgid "Store new comment events : "
-msgstr "Surveiller les nouveaux commentaires :"
+msgstr "Logs des nouveaux commentaires :"
 
 #: wp-activity.php:292
 msgid "Update/clean tables"
