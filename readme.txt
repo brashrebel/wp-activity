@@ -50,7 +50,7 @@ defaults are :
 == ChangeLog ==
 
 = 0.3a =
-* Big bug (introduced in 0.3) sqeezed
+* Big bug (introduced in 0.3) squeezed
 
 = 0.3 =
 * Less SQL queries
