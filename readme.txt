@@ -54,6 +54,7 @@ defaults are :
 
 = 0.3 =
 * Less SQL queries
+* Admin can choose event types to log
 
 = 0.2 =
 * Plugin internationalization
