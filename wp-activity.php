@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/wp-activity
     Description: Display activity stream on your community site
     Author: Dric
-    Version: 0.3
+    Version: 0.3a
     Author URI: http://www.driczone.net
 */
 
@@ -28,7 +28,8 @@
 if ( !isset($_SESSION)) {
 		session_start();
 	}
-$act_version="0.3";
+$act_version="0.3a";
+$options = get_option('act_settings');
 
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
 	if ( defined( 'WP_SITEURL' ) ) {
@@ -61,10 +62,10 @@ function act_install()
     dbDelta($structure);
     $options['act_prune'] = '300';
     $options['act_date_format'] = 'yyyy/mm/dd';
-    $options['act_connect']=true;
-    $options['act_profiles']=true;
-    $options['act_posts']=true;
-    $options['act_comments']=true;
+    $options['act_connect']= true;
+    $options['act_profiles']= true;
+    $options['act_posts']= true;
+    $options['act_comments']= true;
     add_option('act_settings', $options);
     wp_schedule_event(time(), 'daily', 'act_cron_install');
 }
@@ -72,14 +73,13 @@ register_activation_hook( __FILE__, 'act_install' );
 
 
 add_action('send_headers', 'act_session');
-add_action('send_headers', 'act_profile_edit');
-add_action('send_headers', 'act_post_add');
-add_action('send_headers', 'act_comment_add');
+add_action('profile_update', 'act_profile_edit');
+add_action('publish_post', 'act_post_add');
+add_action('comment_post', 'act_comment_add');
 
 
 function act_cron(){
-  global $wpdb;
-  $options=get_option('act_settings');
+  global $wpdb, $options;
   $wpdb->query("DELETE FROM ".$wpdb->prefix."activity ORDER BY id ASC LIMIT ".$options['act_prune']);
   
 }
@@ -90,9 +90,8 @@ function act_header(){
 add_action('wp_head', 'act_header');
 
 function act_session(){
-  global $wpdb, $user_ID;
-  $options=get_option('act_settings');
-  if ($options->act_connect == true ){
+  global $wpdb, $user_ID, $options;
+  if ($options['act_connect']){
     if (!$_SESSION['act_logged'] and is_user_logged_in()){
       $time=mysql2date("Y-m-d H:i:s", time());
       $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$time."', '')");
@@ -108,28 +107,26 @@ function act_reinit(){
 add_action('wp_login', 'act_reinit');
 add_action('wp_logout', 'act_reinit');
 
-function act_profile_edit($user_edit){
-  global $wpdb, $user_ID;
-  $options=get_option('act_settings');
-  if ($options->act_profiles == true ){
+function act_profile_edit($user){
+  global $wpdb, $user_ID, $options;
+  if ($options['act_profiles']){
     $time=mysql2date("Y-m-d H:i:s", time());
-    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'PROFILE_EDIT', '".$time."', $user_edit)");
+    echo "INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'PROFILE_EDIT', '".$time."', $user)";
+    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'PROFILE_EDIT', '".$time."', $user)");
   }
 }
 
 function act_post_add($post){
-  global $wpdb, $user_ID;
-  $options=get_option('act_settings');
-  if ($options->act_connect == true ){
+  global $wpdb, $user_ID, $options;
+  if ($options['act_post']){
     $time=mysql2date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'POST_ADD', '".$time."', $post)");
   }
 }
 
 function act_comment_add($comment){
-  global $wpdb, $user_ID;
-  $options=get_option('act_settings');
-  if ($options->act_connect == true ){
+  global $wpdb, $user_ID, $options;
+  if ($options['act_comment']){
     $time=mysql2date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'COMMENT_ADD', '".$time."', $comment)");
   }
@@ -252,12 +249,12 @@ function act_admin(){
 		    }
         break;
       default:
-          $options['act_prune']=$_POST['act_prune'];
-          $options['act_date_format']=$_POST['act_date_format'];
           $options['act_connect']=$_POST['act_connect'];
           $options['act_profiles']=$_POST['act_profiles'];
           $options['act_posts']=$_POST['act_posts'];
           $options['act_comments']=$_POST['act_comments'];
+          $options['act_prune']=$_POST['act_prune'];
+          $options['act_date_format']=$_POST['act_date_format'];
           update_option('act_settings', $options);
         break;
     }

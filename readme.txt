@@ -4,7 +4,7 @@ Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, events
 Requires at least: 2.8
 Tested up to: 2.8.4
-Stable tag: trunk
+Stable tag: 0.3a
 
 Display users events in frontend
 
@@ -29,7 +29,7 @@ French translation included.
 2. Upload the wp-activity folder to your wp-content/plugins folder,
 3. Activate the plugin through the Wordpress admin,
 4. Go to `Settings > Wp-Activity` and set options that fit your needs.
-5. Put `<?php act_stream() ?>` where you want the stream to appear, or use the widget inculded.
+5. Put `<?php act_stream() ?>` where you want the stream to appear.
 
 == Frequently Asked Questions ==
 
@@ -49,9 +49,11 @@ defaults are :
 
 == ChangeLog ==
 
+= 0.3a =
+* Big bug (introduced in 0.3) sqeezed
+
 = 0.3 =
 * Less SQL queries
-* Admin can now select events to log
 
 = 0.2 =
 * Plugin internationalization
