@@ -25,6 +25,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+// let's initializing all vars
 if ( !isset($_SESSION)) {
 		session_start();
 	}
@@ -44,6 +45,7 @@ if ( ! defined( 'WP_PLUGIN_DIR' ) ) define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/
 define('ACT_DIR', dirname(plugin_basename(__FILE__)));
 define('ACT_URL', WP_CONTENT_URL . '/plugins/' . ACT_DIR . '/');
 
+//Plugin can be translated, just put the .mo language file in the /lang directory
 load_plugin_textdomain('wp-activity', WP_PLUGIN_URL.'/wp-activity/lang/', ACT_DIR . '/lang/');
 
 function act_install()
@@ -60,7 +62,7 @@ function act_install()
 	UNIQUE KEY id (id)
     );";
     dbDelta($structure);
-    $options['act_prune'] = '300';
+    $options['act_prune'] = '500';
     $options['act_date_format'] = 'yyyy/mm/dd';
     $options['act_connect']= true;
     $options['act_profiles']= true;
@@ -71,7 +73,7 @@ function act_install()
 }
 register_activation_hook( __FILE__, 'act_install' );
 
-
+//we add actions to hooks to log their events
 add_action('send_headers', 'act_session');
 add_action('profile_update', 'act_profile_edit');
 add_action('publish_post', 'act_post_add');
@@ -91,9 +93,30 @@ function act_header(){
 }
 add_action('wp_head', 'act_header');
 
+function act_profile_option(){
+  global $wpdb, $user_ID;
+  $act_private = get_usermeta($user_ID, 'act_private');
+  ?>
+  <h3><?php _e('Activity events', 'wp-activity'); ?></h3>
+  <table>
+    <tr>
+		  <th><?php _e('Hide my activity :', 'wp-activity'); ?></th>
+		  <td><input type="checkbox" id="act_private" name="act_private" <?php if ($act_private){ echo 'checked="checked"'; }?> value="true" /></td>
+    </tr>
+  </table>
+  <?php
+}
+add_action('show_user_profile', 'act_profile_option');
+
+function act_profile_update(){
+  global $user_ID, $_POST;
+  update_usermeta($user_ID,'act_private',isset($_POST['act_private']) ? true : false);
+}
+add_action('personal_options_update', 'act_profile_update');
+
 function act_session(){
   global $wpdb, $user_ID, $options;
-  if ($options['act_connect']){
+  if ($options['act_connect'] and !get_usermeta($user_ID, 'act_private')){
     if (!$_SESSION['act_logged'] and is_user_logged_in()){
       $time=mysql2date("Y-m-d H:i:s", time());
       $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$time."', '')");
@@ -111,7 +134,7 @@ add_action('wp_logout', 'act_reinit');
 
 function act_profile_edit($user){
   global $wpdb, $user_ID, $options;
-  if ($options['act_profiles']){
+  if ($options['act_profiles'] and !get_usermeta($user_ID, 'act_private')){
     $time=mysql2date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'PROFILE_EDIT', '".$time."', $user)");
   }
@@ -119,7 +142,7 @@ function act_profile_edit($user){
 
 function act_post_add($post){
   global $wpdb, $user_ID, $options;
-  if ($options['act_post']){
+  if ($options['act_post'] and !get_usermeta($user_ID, 'act_private')){
     $time=mysql2date("Y-m-d H:i:s", time());
     if ($wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."activity WHERE act_params=$post AND act_type='POST_ADD'") > 0){
       $type='POST_EDIT';
@@ -132,7 +155,7 @@ function act_post_add($post){
 
 function act_comment_add($comment){
   global $wpdb, $user_ID, $options;
-  if ($options['act_comment']){
+  if ($options['act_comment'] and !get_usermeta($user_ID, 'act_private')){
     $time=mysql2date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'COMMENT_ADD', '".$time."', $comment)");
   }
@@ -140,7 +163,7 @@ function act_comment_add($comment){
 
 function act_link_add($link){
   global $wpdb, $user_ID, $options;
-  if ($options['act_links']){
+  if ($options['act_links'] and !get_usermeta($user_ID, 'act_private')){
     $time=mysql2date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'LINK_ADD', '".$time."', $link)");
   }

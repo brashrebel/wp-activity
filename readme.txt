@@ -21,6 +21,8 @@ This plugin logs registered users events in your blog and displays it in fronten
 
 Users can see what other members do in the blog. Great for multi-users blogs or community blogs.
 
+Users who don't want to appear can hide their events from profile. In that case, user events are not stored in database.
+
 French translation included.
 
 [Plugin page](http://www.driczone.net/blog/wp-activity/)
@@ -55,6 +57,7 @@ defaults are :
 = 0.4 =
 * Post creation/edition separated
 * Add link event added (only public links)
+* Users can hide their activity from profile
 
 = 0.3a =
 * Big bug (introduced in 0.3) squeezed
