@@ -15,7 +15,9 @@ This plugin logs registered users events in your blog and displays it in fronten
 - connections
 - new comments
 - profile update
-- new/edit post
+- new post
+- post edition
+- new link
 
 Users can see what other members do in the blog. Great for multi-users blogs or community blogs.
 
@@ -29,14 +31,14 @@ French translation included.
 2. Upload the wp-activity folder to your wp-content/plugins folder,
 3. Activate the plugin through the Wordpress admin,
 4. Go to `Settings > Wp-Activity` and set options that fit your needs.
-5. Put `<?php act_stream() ?>` where you want the stream to appear.
+5. Put `<?php act_stream() ?>` where you want the stream to appear, or use included widget.
 
 == Frequently Asked Questions ==
 
-= How do I set the events number or the title when using `act_stream()`? =
+= How do I set the events number or the title when not using the widget ? =
 
 this function accepts two parameters :
-`act_stream(number,title)`
+`<?php act_stream(number,title) ?>`
 
 defaults are :
 
@@ -46,15 +48,20 @@ defaults are :
 == Screenshots ==
 
 1. frontend display
+2. admin screen
 
 == ChangeLog ==
+
+= 0.4 =
+* Post creation/edition separated
+* Add link event added (only public links)
 
 = 0.3a =
 * Big bug (introduced in 0.3) squeezed
 
 = 0.3 =
 * Less SQL queries
-* Admin can choose event types to log
+* Admin can choose events types to log
 
 = 0.2 =
 * Plugin internationalization

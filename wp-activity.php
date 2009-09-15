@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/wp-activity
     Description: Display activity stream on your community site
     Author: Dric
-    Version: 0.3a
+    Version: 0.4
     Author URI: http://www.driczone.net
 */
 
@@ -28,7 +28,7 @@
 if ( !isset($_SESSION)) {
 		session_start();
 	}
-$act_version="0.3a";
+$act_version="0.4";
 $options = get_option('act_settings');
 
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
@@ -76,6 +76,8 @@ add_action('send_headers', 'act_session');
 add_action('profile_update', 'act_profile_edit');
 add_action('publish_post', 'act_post_add');
 add_action('comment_post', 'act_comment_add');
+add_action('add_link', 'act_link_add');
+ 
 
 
 function act_cron(){
@@ -111,7 +113,6 @@ function act_profile_edit($user){
   global $wpdb, $user_ID, $options;
   if ($options['act_profiles']){
     $time=mysql2date("Y-m-d H:i:s", time());
-    echo "INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'PROFILE_EDIT', '".$time."', $user)";
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'PROFILE_EDIT', '".$time."', $user)");
   }
 }
@@ -120,7 +121,12 @@ function act_post_add($post){
   global $wpdb, $user_ID, $options;
   if ($options['act_post']){
     $time=mysql2date("Y-m-d H:i:s", time());
-    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'POST_ADD', '".$time."', $post)");
+    if ($wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."activity WHERE act_params=$post AND act_type='POST_ADD'") > 0){
+      $type='POST_EDIT';
+    }else{
+      $type='POST_ADD';
+    }
+    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, $type, '".$time."', $post)");
   }
 }
 
@@ -129,6 +135,14 @@ function act_comment_add($comment){
   if ($options['act_comment']){
     $time=mysql2date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'COMMENT_ADD', '".$time."', $comment)");
+  }
+}
+
+function act_link_add($link){
+  global $wpdb, $user_ID, $options;
+  if ($options['act_links']){
+    $time=mysql2date("Y-m-d H:i:s", time());
+    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'LINK_ADD', '".$time."', $link)");
   }
 }
 
@@ -152,7 +166,7 @@ global $wpdb;
       echo '<li class="login">'.nicetime($act->act_date).' - ';
       switch ($act->act_type){
         case 'CONNECT':
-          echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act->user_id].'</a> '.__('is logged.', 'wp-activity');
+          echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act->user_id].'</a> '.__('has logged.', 'wp-activity');
           break;
         case 'COMMENT_ADD':
           $act_comment=get_comment($act->act_params);
@@ -161,10 +175,20 @@ global $wpdb;
           break;
         case 'POST_ADD':
           $act_post=get_post($act->act_params);
-          echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act_post->post_author].'</a> '.__('published or edited', 'wp-activity').' <a href="'.$act_post->post_name.'">'.$act_post->post_title.'</a>';
+          echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act_post->post_author].'</a> '.__('published', 'wp-activity').' <a href="'.$act_post->post_name.'">'.$act_post->post_title.'</a>';
+          break;
+        case 'POST_EDIT':
+          $act_post=get_post($act->act_params);
+          echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act_post->post_author].'</a> '.__('edited', 'wp-activity').' <a href="'.$act_post->post_name.'">'.$act_post->post_title.'</a>';
           break;
         case 'PROFILE_EDIT':
           echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act->user_id].'</a> '.__('has updated his profile.', 'wp-activity');
+          break;
+        case 'LINK_ADD':
+          $link = get_bookmark($act->act_params);
+          if ($link->link_visible == 'Y'){
+            echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act->user_id].'</a> '.__('has added a link to', 'wp-activity').' <a href="'.$link->link_url.'" title="'.$link->link_description.'" target="'.$link->link_target.'">'.$link->link_name.'</a>.';
+          }
           break;
         default:
           break;
