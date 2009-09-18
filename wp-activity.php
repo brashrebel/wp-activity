@@ -8,7 +8,7 @@
     Author URI: http://www.driczone.net
 */
 
-/*  Copyright 2009  Dric  (email : cedric@driczone.net)
+/*  Copyright 2009 Dric  (email : cedric@driczone.net)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,7 +31,6 @@ if ( !isset($_SESSION)) {
 	}
 $act_version="0.4";
 $options = get_option('act_settings');
-
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
 	if ( defined( 'WP_SITEURL' ) ) {
     define( 'WP_CONTENT_URL', WP_SITEURL . '/wp-content' );
@@ -53,21 +52,28 @@ function act_install()
     global $wpdb;
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     $table = $wpdb->prefix."activity";
-    $structure = "CREATE TABLE $table (
-        id INT(9) NOT NULL AUTO_INCREMENT,
-        user_id BIGINT(20) NOT NULL,
-        act_type VARCHAR(20) NOT NULL,
-        act_date DATETIME,
-        act_params TEXT,
-	UNIQUE KEY id (id)
-    );";
+    $structure = "CREATE TABLE `".$table."` (
+      `id` int(9) NOT NULL auto_increment,
+      `user_id` bigint(20) NOT NULL,
+      `act_type` varchar(20) NOT NULL,
+      `act_date` datetime default NULL,
+      `act_params` text,
+      UNIQUE KEY `id` (`id`),
+      KEY `user_id` (`user_id`),
+      KEY `act_date` (`act_date`)
+      );";
     dbDelta($structure);
     $options['act_prune'] = '500';
+    $options['act_feed_display'] = false;
     $options['act_date_format'] = 'yyyy/mm/dd';
     $options['act_connect']= true;
     $options['act_profiles']= true;
     $options['act_posts']= true;
     $options['act_comments']= true;
+    $options['act_feed_connect']= false;
+    $options['act_feed_profiles']= true;
+    $options['act_feed_posts']= true;
+    $options['act_feed_comments']= true;
     add_option('act_settings', $options);
     wp_schedule_event(time(), 'daily', 'act_cron_install');
 }
@@ -170,9 +176,12 @@ function act_link_add($link){
 }
 
 function act_stream($number='30', $title=''){
-global $wpdb;
+global $wpdb, $options;
   if ($title == ''){
     $title='<h2>'.__("Recent Activity", 'wp-activity').'</h2>';
+  }
+  if ($options['act_feed_display']){
+    $title .= '<a href="'.WP_PLUGIN_URL.'/wp-activity/wp-activity-feed.php" title="'.sprintf(__('%s activity RSS Feed', 'wp-activity'),get_bloginfo('name')).'"><img src="'.WP_PLUGIN_URL.'/wp-activity/img/rss.png" alt="" /></a>';
   }
   $wp_url = get_bloginfo('wpurl');
   echo $title.'<ul id="activity">';
@@ -184,7 +193,6 @@ global $wpdb;
   $sql  = "SELECT * FROM ".$wpdb->prefix."activity ORDER BY id DESC LIMIT $number";
 	if ( $logins = $wpdb->get_results( $sql)){
     foreach ( (array) $logins as $act ){
-      //$user_nicename = get_the_author_meta('user_nicename',$act->user_id);
       $user_nicename = $users_nicename[$act->user_id];
       echo '<li class="login">'.nicetime($act->act_date).' - ';
       switch ($act->act_type){
@@ -300,6 +308,13 @@ function act_admin(){
           $options['act_profiles']=$_POST['act_profiles'];
           $options['act_posts']=$_POST['act_posts'];
           $options['act_comments']=$_POST['act_comments'];
+          $options['act_links']=$_POST['act_links'];
+          $options['act_feed_connect']=$_POST['act_feed_connect'];
+          $options['act_feed_profiles']=$_POST['act_feed_profiles'];
+          $options['act_feed_posts']=$_POST['act_feed_posts'];
+          $options['act_feed_comments']=$_POST['act_feed_comments'];
+          $options['act_feed_links']=$_POST['act_feed_links'];
+          $options['act_feed_display']=$_POST['act_feed_display'];
           $options['act_prune']=$_POST['act_prune'];
           $options['act_date_format']=$_POST['act_date_format'];
           update_option('act_settings', $options);
@@ -319,17 +334,33 @@ function act_admin(){
         <option <?php if($act_date_format == 'dd/mm/yyyy') {echo"selected='selected' ";} ?>value ="dd/mm/yyyy">dd/mm/yyyy</option>
       </select><br /><?php _e('For events that are more than a month old only, or if you dont use relative dates.','wp-activity') ?></td>
   	  </tr><tr>
-      <th><h3><?php _e('Events logging', 'wp-activity') ?></h3></th>
+      <th><h3><?php _e('Events logging and feeding', 'wp-activity') ?></h3></th>
       </tr><tr>
       <th><?php _e('Rows limit in database : ', 'wp-activity') ?></th><td><input type="text" name="act_prune" value="<?php echo $act_prune ?>" /></td>
   	  </tr><tr>
-      <th><?php _e('Store login events : ', 'wp-activity') ?></th><td><input type="checkbox" <?php if($act_connect){echo 'checked="checked"';} ?> name="act_connect" /></td>
+      <th><?php _e('Display activity RSS feed : ', 'wp-activity') ?></th><td><input type="checkbox" <?php if($act_feed_display){echo 'checked="checked"';} ?> name="act_feed_display" /></td>
+  	  </tr><tr>
+      <th></th><th><?php _e('Log in database', 'wp-activity') ?></th><th><?php _e('Display in feed', 'wp-activity') ?></th>
       </tr><tr>
-      <th><?php _e('Store profile update events : ', 'wp-activity') ?></th><td><input type="checkbox" <?php if($act_profiles){echo 'checked="checked"';} ?> name="act_profiles" /></td>
+        <th><?php _e('Login events : ', 'wp-activity') ?></th>
+        <td><input type="checkbox" <?php if($act_connect){echo 'checked="checked"';} ?> name="act_connect" /></td>
+        <td><input type="checkbox" <?php if($act_feed_connect){echo 'checked="checked"';} ?> name="act_feed_connect" /></td>
       </tr><tr>
-      <th><?php _e('Store post creation/update events : ', 'wp-activity') ?></th><td><input type="checkbox" <?php if($act_posts){echo 'checked="checked"';} ?> name="act_posts" /></td>
+        <th><?php _e('Profile update events : ', 'wp-activity') ?></th>
+        <td><input type="checkbox" <?php if($act_profiles){echo 'checked="checked"';} ?> name="act_profiles" /></td>
+        <td><input type="checkbox" <?php if($act_feed_profiles){echo 'checked="checked"';} ?> name="act_feed_profiles" /></td>
       </tr><tr>
-      <th><?php _e('Store new comment events : ', 'wp-activity') ?></th><td><input type="checkbox" <?php if($act_comments){echo 'checked="checked"';} ?> name="act_comments" /></td>
+        <th><?php _e('Post creation/update events : ', 'wp-activity') ?></th>
+        <td><input type="checkbox" <?php if($act_posts){echo 'checked="checked"';} ?> name="act_posts" /></td>
+        <td><input type="checkbox" <?php if($act_feed_posts){echo 'checked="checked"';} ?> name="act_feed_posts" /></td>
+      </tr><tr>
+        <th><?php _e('New comment events : ', 'wp-activity') ?></th>
+        <td><input type="checkbox" <?php if($act_comments){echo 'checked="checked"';} ?> name="act_comments" /></td>
+        <td><input type="checkbox" <?php if($act_feed_comments){echo 'checked="checked"';} ?> name="act_feed_comments" /></td>
+      </tr><tr>
+        <th><?php _e('New link events : ', 'wp-activity') ?></th>
+        <td><input type="checkbox" <?php if($act_links){echo 'checked="checked"';} ?> name="act_links" /></td>
+        <td><input type="checkbox" <?php if($act_feed_links){echo 'checked="checked"';} ?> name="act_feed_links" /></td>
       </tr>
       </table>
       <br />
