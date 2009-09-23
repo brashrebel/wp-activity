@@ -1,15 +1,20 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: WP-Activity\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-18 11:05+0100\n"
+"POT-Creation-Date: 2009-09-23 15:41+0100\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Luca Realdi <baol77@gmail.com>\n"
-"Language-Team: \n"
+"Last-Translator: Dric\n"
+"Language-Team: Luca Realdi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
 
 #: wp-activity-feed.php:23
 #: wp-activity.php:184
@@ -105,8 +110,19 @@ msgid "Recent Activity"
 msgstr "Attività recenti"
 
 #: wp-activity.php:267
+#, fuzzy
+msgid "weeks"
+msgstr "settimana"
+
+#: wp-activity.php:267
 msgid "week"
 msgstr "settimana"
+
+#: wp-activity.php:268
+#: wp-activity.php:271
+#, fuzzy
+msgid "days"
+msgstr "giorno"
 
 #: wp-activity.php:268
 #: wp-activity.php:271
@@ -115,13 +131,30 @@ msgstr "giorno"
 
 #: wp-activity.php:272
 #: wp-activity.php:275
+#, fuzzy
+msgid "hours"
+msgstr "ora"
+
+#: wp-activity.php:272
+#: wp-activity.php:275
 msgid "hour"
 msgstr "ora"
 
 #: wp-activity.php:276
 #: wp-activity.php:279
+#, fuzzy
+msgid "minutes"
+msgstr "minuto"
+
+#: wp-activity.php:276
+#: wp-activity.php:279
 msgid "minute"
 msgstr "minuto"
+
+#: wp-activity.php:282
+#, fuzzy
+msgid "seconds"
+msgstr "secondo"
 
 #: wp-activity.php:282
 msgid "second"
@@ -225,6 +258,6 @@ msgstr "Titolo:"
 msgid "Events number :"
 msgstr "Numero di eventi:"
 
-msgid "put a message in the shoutbox."
-msgstr "Ha lasciato un messaggio nella MessageBox"
+#~ msgid "put a message in the shoutbox."
+#~ msgstr "Ha lasciato un messaggio nella MessageBox"
 

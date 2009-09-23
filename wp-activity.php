@@ -264,22 +264,22 @@ function nicetime($posted_date) {
     } else {
         if ($weeks>0) {
             // weeks and days
-            $relative_date .= ($relative_date?', ':'').$weeks.' '.__('week', 'wp-activity').($weeks>1?'s':'');
-            $relative_date .= $days>0?($relative_date?', ':'').$days.' '.__('day', 'wp-activity').($days>1?'s':''):'';
+            $relative_date .= ($relative_date?', ':'').$weeks.' '.($weeks>1? __('weeks', 'wp-activity'):__('week', 'wp-activity'));
+            $relative_date .= $days>0?($relative_date?', ':'').$days.' '.($days>1? __('days', 'wp-activity'):__('day', 'wp-activity')):'';
         } elseif ($days>0) {
             // days and hours
-            $relative_date .= ($relative_date?', ':'').$days.' '.__('day', 'wp-activity').($days>1?'s':'');
-            $relative_date .= $hours>0?($relative_date?', ':'').$hours.' '.__('hour', 'wp-activity').($hours>1?'s':''):'';
+            $relative_date .= ($relative_date?', ':'').$days.' '.($days>1? __('days', 'wp-activity'):__('day', 'wp-activity'));
+            $relative_date .= $hours>0?($relative_date?', ':'').$hours.' '.($hours>1? __('hours', 'wp-activity'):__('hour', 'wp-activity')):'';
         } elseif ($hours>0) {
             // hours and minutes
-            $relative_date .= ($relative_date?', ':'').$hours.' '.__('hour', 'wp-activity').($hours>1?'s':'');
-            $relative_date .= $minutes>0?($relative_date?', ':'').$minutes.' '.__('minute', 'wp-activity').($minutes>1?'s':''):'';
+            $relative_date .= ($relative_date?', ':'').$hours.' '.($hours>1? __('hours', 'wp-activity'):__('hour', 'wp-activity'));
+            $relative_date .= $minutes>0?($relative_date?', ':'').$minutes.' '.($minutes>1? __('minutes', 'wp-activity'):__('minute', 'wp-activity')):'';
         } elseif ($minutes>0) {
             // minutes only
-            $relative_date .= ($relative_date?', ':'').$minutes.' '.__('minute', 'wp-activity').($minutes>1?'s':'');
+            $relative_date .= ($relative_date?', ':'').$minutes.' '.($minutes>1? __('minutes', 'wp-activity'):__('minute', 'wp-activity'));
         } else {
             // seconds only
-            $relative_date .= ($relative_date?', ':'').$seconds.' '.__('second', 'wp-activity').($seconds>1?'s':'');
+            $relative_date .= ($relative_date?', ':'').$seconds.' '.($seconds>1? __('seconds', 'wp-activity'):__('second', 'wp-activity'));
         }
     }
     // show relative date and add proper verbiage
