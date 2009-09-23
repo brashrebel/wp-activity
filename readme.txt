@@ -25,7 +25,7 @@ Users who don't want to appear can hide their events from profile. In that case,
 
 Activity can be followed by RSS feed.
 
-French and partial italian translations included.
+French and italian translations included.
 
 [Plugin page](http://www.driczone.net/blog/wp-activity/)
 
