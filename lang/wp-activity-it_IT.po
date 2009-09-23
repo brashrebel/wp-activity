@@ -110,9 +110,8 @@ msgid "Recent Activity"
 msgstr "Attività recenti"
 
 #: wp-activity.php:267
-#, fuzzy
 msgid "weeks"
-msgstr "settimana"
+msgstr "settimane"
 
 #: wp-activity.php:267
 msgid "week"
@@ -120,9 +119,8 @@ msgstr "settimana"
 
 #: wp-activity.php:268
 #: wp-activity.php:271
-#, fuzzy
 msgid "days"
-msgstr "giorno"
+msgstr "giorni"
 
 #: wp-activity.php:268
 #: wp-activity.php:271
@@ -131,9 +129,8 @@ msgstr "giorno"
 
 #: wp-activity.php:272
 #: wp-activity.php:275
-#, fuzzy
 msgid "hours"
-msgstr "ora"
+msgstr "ore"
 
 #: wp-activity.php:272
 #: wp-activity.php:275
@@ -142,9 +139,8 @@ msgstr "ora"
 
 #: wp-activity.php:276
 #: wp-activity.php:279
-#, fuzzy
 msgid "minutes"
-msgstr "minuto"
+msgstr "minuti"
 
 #: wp-activity.php:276
 #: wp-activity.php:279
@@ -152,9 +148,8 @@ msgid "minute"
 msgstr "minuto"
 
 #: wp-activity.php:282
-#, fuzzy
 msgid "seconds"
-msgstr "secondo"
+msgstr "secondi"
 
 #: wp-activity.php:282
 msgid "second"
