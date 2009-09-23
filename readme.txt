@@ -4,7 +4,7 @@ Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, events
 Requires at least: 2.8
 Tested up to: 2.8.4
-Stable tag: 0.3a
+Stable tag: 0.4
 
 Display users events in frontend
 
@@ -23,7 +23,9 @@ Users can see what other members do in the blog. Great for multi-users blogs or 
 
 Users who don't want to appear can hide their events from profile. In that case, this user activity is not stored in database.
 
-French translation included.
+Activity can be followed by RSS feed.
+
+French and partial italian translations included.
 
 [Plugin page](http://www.driczone.net/blog/wp-activity/)
 
