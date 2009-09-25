@@ -19,7 +19,7 @@ This plugin logs registered users events in your blog and displays it in fronten
 - post edition
 - new link
 
-Users can see what other members do in the blog. Great for multi-users blogs or community blogs. There is also an activity RSS feed.
+Users can see what other members do in the blog. Great for multi-users blogs or community blogs.
 
 User who don't want to appear can hide its activity from profile. In that case, this user activity is not stored in database.
 
