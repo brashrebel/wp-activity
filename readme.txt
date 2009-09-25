@@ -4,7 +4,7 @@ Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, events
 Requires at least: 2.8
 Tested up to: 2.8.4
-Stable tag: 0.4
+Stable tag: 0.4a
 
 Display users events in frontend
 
@@ -58,6 +58,9 @@ defaults are :
 2. admin screen
 
 == ChangeLog ==
+
+= 0.4a =
+* Comments and posts adds are now correctly logged.
 
 = 0.4 =
 * Post creation/edition separated

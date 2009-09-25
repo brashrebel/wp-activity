@@ -148,7 +148,7 @@ function act_profile_edit($user){
 
 function act_post_add($post){
   global $wpdb, $user_ID, $options;
-  if ($options['act_post'] and !get_usermeta($user_ID, 'act_private')){
+  if ($options['act_posts'] and !get_usermeta($user_ID, 'act_private')){
     $time=mysql2date("Y-m-d H:i:s", time());
     if ($wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."activity WHERE act_params=$post AND act_type='POST_ADD'") > 0){
       $type='POST_EDIT';
@@ -161,7 +161,7 @@ function act_post_add($post){
 
 function act_comment_add($comment){
   global $wpdb, $user_ID, $options;
-  if ($options['act_comment'] and !get_usermeta($user_ID, 'act_private')){
+  if ($options['act_comments'] and !get_usermeta($user_ID, 'act_private')){
     $time=mysql2date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'COMMENT_ADD', '".$time."', $comment)");
   }
