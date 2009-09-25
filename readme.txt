@@ -6,7 +6,7 @@ Requires at least: 2.8
 Tested up to: 2.8.4
 Stable tag: 0.4a
 
-Display users events in frontend
+Display users events activity in frontend.
 
 == Description ==
 
@@ -21,9 +21,9 @@ This plugin logs registered users events in your blog and displays it in fronten
 
 Users can see what other members do in the blog. Great for multi-users blogs or community blogs. There is also an activity RSS feed.
 
-Users who don't want to appear can hide their events from profile. In that case, this user activity is not stored in database.
+User who don't want to appear can hide its activity from profile. In that case, this user activity is not stored in database.
 
-Activity can be followed by RSS feed.
+Users activity can be followed by RSS feed.
 
 Translations :
 
