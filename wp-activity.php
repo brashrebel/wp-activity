@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/wp-activity
     Description: Display activity stream on your community site
     Author: Dric
-    Version: 0.4a
+    Version: 0.5
     Author URI: http://www.driczone.net
 */
 
@@ -29,7 +29,7 @@
 if ( !isset($_SESSION)) {
 		session_start();
 	}
-$act_version="0.4a";
+$act_version="0.5";
 $options = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
 	if ( defined( 'WP_SITEURL' ) ) {
@@ -66,6 +66,7 @@ function act_install()
     $options['act_prune'] = '500';
     $options['act_feed_display'] = false;
     $options['act_date_format'] = 'yyyy/mm/dd';
+    $options['act_date_relative']= true;
     $options['act_connect']= true;
     $options['act_profiles']= true;
     $options['act_posts']= true;
@@ -89,7 +90,7 @@ add_action('add_link', 'act_link_add');
 
 
 function act_cron(){
-  global $wpdb, $options;
+  global $wpdb, $options, $plugin_page;
   $wpdb->query("DELETE FROM ".$wpdb->prefix."activity ORDER BY id ASC LIMIT ".$options['act_prune']);
   
 }
@@ -184,7 +185,6 @@ global $wpdb, $options;
     $title .= '<a href="'.WP_PLUGIN_URL.'/wp-activity/wp-activity-feed.php" title="'.sprintf(__('%s activity RSS Feed', 'wp-activity'),get_bloginfo('name')).'"><img src="'.WP_PLUGIN_URL.'/wp-activity/img/rss.png" alt="" /></a>';
   }
   $wp_url = get_bloginfo('wpurl');
-  echo $title.'<ul id="activity">';
   $users = $wpdb->get_results("SELECT ID, display_name, user_nicename FROM $wpdb->users");
   foreach ($users as $user) {
 		$users_nicename[$user->ID]=$user->user_nicename;
@@ -230,10 +230,12 @@ global $wpdb, $options;
   echo '</ul>';
 }
 
-function nicetime($posted_date) {
+function nicetime($posted_date, $admin=false) {
     $act_opt=get_option('act_settings');
+    $date_relative = $act_opt['act_date_relative'];
     $date_format = $act_opt['act_date_format'];
-    $in_seconds = strtotime($posted_date);          
+    $in_seconds = strtotime($posted_date);   
+    $relative_date = '';
     $diff = time()-$in_seconds;
     $months = floor($diff/2592000);
     $diff -= $months*2419200;
@@ -246,19 +248,23 @@ function nicetime($posted_date) {
     $minutes = floor($diff/60);
     $diff -= $minutes*60;
     $seconds = $diff;
- 
-    if ($months>0) {
+    if ($months>0 or !$date_relative or $admin) {
         // over a month old, just show date
+        if (!$date_relative or $admin){
+          $h = substr($posted_date,10);
+        } else {
+          $h = '';
+        }
         switch ($date_format){
           case 'dd/mm/yyyy':
-            return substr($posted_date,6,2).'/'.substr($posted_date,4,2).'/'.substr($posted_date,0,4);
+            return substr($posted_date,8,2).'/'.substr($posted_date,5,2).'/'.substr($posted_date,0,4).$h;
             break;
           case 'mm/dd/yyyy':
-            return substr($posted_date,4,2).'/'.substr($posted_date,6,2).'/'.substr($posted_date,0,4);
+            return substr($posted_date,5,2).'/'.substr($posted_date,8,2).'/'.substr($posted_date,0,4).$h;
             break;
           case 'yyyy/mm/dd':
           default:
-            return substr($posted_date,0,4).'/'.substr($posted_date,4,2).'/'.substr($posted_date,6,2);
+            return substr($posted_date,0,4).'/'.substr($posted_date,5,2).'/'.substr($posted_date,8,2).$h;
             break;
         }
     } else {
@@ -287,7 +293,8 @@ function nicetime($posted_date) {
 }
 
 function act_admin_menu(){
-  add_options_page('WP-Activity', 'WP-Activity', 8, 'wp-activity', 'act_admin');
+  $plugin_page = add_options_page('WP-Activity', 'WP-Activity', 8, 'wp-activity', 'act_admin');
+  add_action( 'admin_head-'. $plugin_page, 'act_header' );
 }
 add_action('admin_menu', 'act_admin_menu');
 
@@ -317,6 +324,7 @@ function act_admin(){
           $options['act_feed_display']=$_POST['act_feed_display'];
           $options['act_prune']=$_POST['act_prune'];
           $options['act_date_format']=$_POST['act_date_format'];
+          $options['act_date_relative']=$_POST['act_date_relative'];
           update_option('act_settings', $options);
         break;
     }
@@ -326,6 +334,7 @@ function act_admin(){
   	<h2>WP-Activity</h2>
   	<form action='' method='post'>
   	<table class="form-table">
+  	  <tr><th><h3><?php _e('Date format : ','wp-activity') ?></h3></th></tr>
       <tr valign="top">
         <th scope="row"><?php _e('Date format : ','wp-activity') ?></th>
   	    <td><select name="act_date_format">
@@ -333,6 +342,9 @@ function act_admin(){
         <option <?php if($act_date_format == 'mm/dd/yyyy') {echo"selected='selected' ";} ?>value ="mm/dd/yyyy">mm/dd/yyyy</option>
         <option <?php if($act_date_format == 'dd/mm/yyyy') {echo"selected='selected' ";} ?>value ="dd/mm/yyyy">dd/mm/yyyy</option>
       </select><br /><?php _e('For events that are more than a month old only, or if you dont use relative dates.','wp-activity') ?></td>
+  	  </tr><tr>
+  	    <th><?php _e('Use relative dates : ', 'wp-activity') ?></th>
+  	    <td><input type="checkbox" <?php if($act_date_relative){echo 'checked="checked"';} ?> name="act_date_relative" /></td>
   	  </tr><tr>
       <th><h3><?php _e('Events logging and feeding', 'wp-activity') ?></h3></th>
       </tr><tr>
@@ -370,8 +382,56 @@ function act_admin(){
         <option value ="update"><?php _e('Update settings', 'wp-activity') ?></option>
   			<option value ="clean"><?php _e('Clean activity table', 'wp-activity') ?></option>        
       </select>
-      <input type='submit' class='button-secondary delete' name='submit' value='<?php _e('Submit', 'wp-activity') ?>' />
+      <input type='submit' class='button-primary' name='submit' value='<?php _e('Submit', 'wp-activity') ?>' />
     </form>
+    <h3><?php _e("Recent Activity", 'wp-activity'); ?></h3>
+    <table id="activity-admin">
+      <tr>
+        <th><?php _e("Date", 'wp-activity'); ?></th>
+        <th><?php _e("User", 'wp-activity'); ?></th>
+        <th><?php _e("Event Type", 'wp-activity'); ?></th>
+        <th><?php _e("Data", 'wp-activity'); ?></th>
+      </tr>
+<?php
+  $users = $wpdb->get_results("SELECT ID, display_name FROM $wpdb->users");
+  foreach ($users as $user) {
+		$users_display[$user->ID]=$user->display_name;
+	}
+  $sql  = "SELECT * FROM ".$wpdb->prefix."activity ORDER BY id DESC LIMIT 50";
+	if ( $logins = $wpdb->get_results( $sql)){
+    foreach ( (array) $logins as $act ){
+      $user_display = $users_display[$act->user_id];
+      echo '<tr><td>'.nicetime($act->act_date, true).'</td>';
+      switch ($act->act_type){
+        case 'CONNECT':
+          echo '<td>'.$user_display.'</td><td>'.$act->act_type.'</td><td></td>';
+          break;
+        case 'COMMENT_ADD':
+          $act_comment=get_comment($act->act_params);
+          $act_post=get_post($act_comment->comment_post_ID);
+          echo '<td>'.$user_display.'</td><td>'.$act->act_type.'</td><td><a href="'.$act_post->post_name.'#comment-'.$act_comment->comment_ID.'">'.$act_post->post_title.'</a></td>';
+          break;
+        case 'POST_ADD':
+        case 'POST_EDIT':
+          $act_post=get_post($act->act_params);
+          echo '<td>'.$user_display.'</td><td>'.$act->act_type.'</td><td><a href="'.$act_post->post_name.'">'.$act_post->post_title.'</a></td>';
+          break;
+        case 'PROFILE_EDIT':
+          echo '<td>'.$user_display.'</td><td>'.$act->act_type.'</td><td></td>';
+          break;
+        case 'LINK_ADD':
+          $link = get_bookmark($act->act_params);
+          if ($link->link_visible == 'Y'){
+            echo '<td>'.$user_display.'</td><td>'.$act->act_type.'</td><td><a href="'.$link->link_url.'" title="'.$link->link_description.'" target="'.$link->link_target.'">'.$link->link_name.'</a></td>';
+          }
+          break;
+        default:
+          break;
+      }
+      echo '</tr>';
+    }
+  } ?>     
+    </table>
     <br />
     <h4><?php echo sprintf(__('WP-Activity is a plugin made in France by <a href="http://www.driczone.net">Dric</a>. Version <strong>%s</strong>.', 'wp-activity'), $act_version) ?></h4>
   </div>

@@ -8,3 +8,11 @@
 	height: 150px;
 	margin: 10px;
 }
+#activity-admin{
+  	padding: 7px;
+}
+#activity-admin tr, #activity-admin td{
+	border: 1px solid #CCC;
+	background-color: #FFF;
+	padding: 3px;
+}

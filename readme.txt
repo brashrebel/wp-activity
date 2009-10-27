@@ -3,7 +3,7 @@ Contributors: Dric
 Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, events
 Requires at least: 2.8
-Tested up to: 2.8.4
+Tested up to: 2.8.5
 Stable tag: 0.4a
 
 Display users events activity in frontend.
@@ -20,6 +20,7 @@ This plugin logs registered users events in your blog and displays it in fronten
 - new link
 
 Users can see what other members do in the blog. Great for multi-users blogs or community blogs.
+Admins can see activity events in the admin plugin page.
 
 User who don't want to appear can hide its activity from profile. In that case, this user activity is not stored in database.
 
@@ -59,8 +60,12 @@ defaults are :
 
 == ChangeLog ==
 
+= 0.5 =
+* Added setting for use of relatives dates
+* Activity is now displayed in the admin plugin page
+
 = 0.4a =
-* Comments and posts adds are now correctly logged.
+* Comments and posts adds are now correctly logged
 
 = 0.4 =
 * Post creation/edition separated
