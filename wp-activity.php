@@ -179,12 +179,14 @@ function act_link_add($link){
 function act_stream($number='30', $title=''){
 global $wpdb, $options;
   if ($title == ''){
-    $title='<h2>'.__("Recent Activity", 'wp-activity').'</h2>';
+    $title= __("Recent Activity", 'wp-activity');
   }
   if ($options['act_feed_display']){
-    $title .= '<a href="'.WP_PLUGIN_URL.'/wp-activity/wp-activity-feed.php" title="'.sprintf(__('%s activity RSS Feed', 'wp-activity'),get_bloginfo('name')).'"><img src="'.WP_PLUGIN_URL.'/wp-activity/img/rss.png" alt="" /></a>';
+    $title .= ' <a href="'.WP_PLUGIN_URL.'/wp-activity/wp-activity-feed.php" title="'.sprintf(__('%s activity RSS Feed', 'wp-activity'),get_bloginfo('name')).'"><img src="'.WP_PLUGIN_URL.'/wp-activity/img/rss.png" alt="" /></a>';
   }
+  
   $wp_url = get_bloginfo('wpurl');
+  echo '<h2>'.$title.'</h2><ul id="activity">';
   $users = $wpdb->get_results("SELECT ID, display_name, user_nicename FROM $wpdb->users");
   foreach ($users as $user) {
 		$users_nicename[$user->ID]=$user->user_nicename;
