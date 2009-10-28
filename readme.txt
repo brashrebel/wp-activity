@@ -63,6 +63,7 @@ defaults are :
 = 0.5 =
 * Added setting for use of relatives dates
 * Activity is now displayed in the admin plugin page
+* Post Add/Edit events are now correctly logged
 
 = 0.4a =
 * Comments and posts adds are now correctly logged
