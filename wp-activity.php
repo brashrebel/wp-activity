@@ -156,7 +156,7 @@ function act_post_add($post){
     }else{
       $type='POST_ADD';
     }
-    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, $type, '".$time."', $post)");
+    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, '".$type."', '".$time."', $post)");
   }
 }
 
