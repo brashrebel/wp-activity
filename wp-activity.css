@@ -11,8 +11,21 @@
 #activity-admin{
   	padding: 7px;
 }
+#activity-rows{
+	font-weight: bold;
+	float:right;
+	padding-right: 30px;
+}
 #activity-admin tr, #activity-admin td{
 	border: 1px solid #CCC;
 	background-color: #FFF;
 	padding: 3px;
+}
+.activity_date{
+	color: #AAA;
+	font-size: 80%;
+	margin-left: 3px;
+}
+#activity IMG{
+	padding-right: 3px;
 }

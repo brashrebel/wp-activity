@@ -53,15 +53,25 @@ defaults are :
 - number = 30
 - title = Recent Activity (translated by .mo)
 
+= How do I Change the events icons ? =
+
+Just change the icons in the /img directory, but keep the event name (example : to change the login/connect event icon, change the icon named CONNECT.png - names must be in capitals)
+
 == Screenshots ==
 
 1. frontend display
-2. admin screen
+2. admin screen - display activity
+3. admin screen - manage settings
 
 == ChangeLog ==
 
+= 0.6 =
+* admin panel tweaks
+* Plugin now support gravatars for connect and profile edit events. Generic icons can also be used.
+* Activity stream display changed.
+
 = 0.5 =
-* Added setting for use of relatives dates
+* Added setting for using relatives dates
 * Activity is now displayed in the admin plugin page
 * Post Add/Edit events are now correctly logged
 

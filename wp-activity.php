@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/wp-activity
     Description: Display activity stream on your community site
     Author: Dric
-    Version: 0.5
+    Version: 0.6
     Author URI: http://www.driczone.net
 */
 
@@ -29,7 +29,7 @@
 if ( !isset($_SESSION)) {
 		session_start();
 	}
-$act_version="0.5";
+$act_version="0.6";
 $options = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
 	if ( defined( 'WP_SITEURL' ) ) {
@@ -75,6 +75,7 @@ function act_install()
     $options['act_feed_profiles']= true;
     $options['act_feed_posts']= true;
     $options['act_feed_comments']= true;
+    $options['act_icons']= 'g';
     add_option('act_settings', $options);
     wp_schedule_event(time(), 'daily', 'act_cron_install');
 }
@@ -196,7 +197,16 @@ global $wpdb, $options;
 	if ( $logins = $wpdb->get_results( $sql)){
     foreach ( (array) $logins as $act ){
       $user_nicename = $users_nicename[$act->user_id];
-      echo '<li class="login">'.nicetime($act->act_date).' - ';
+      echo '<li class="login">';
+      if ($options['act_icons']== 'g'){
+        echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/'.$act->act_type.'.png" />';
+      }elseif ($options['act_icons']== 'a'){
+        if ($act->act_type == 'CONNECT' or $act->act_type == 'PROFILE_EDIT'){
+          echo get_avatar( $act->user_id, '16'); ;
+        }else{
+          echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/'.$act->act_type.'.png" />';
+        }
+      }
       switch ($act->act_type){
         case 'CONNECT':
           echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act->user_id].'</a> '.__('has logged.', 'wp-activity');
@@ -226,8 +236,9 @@ global $wpdb, $options;
         default:
           break;
       }
+      echo '<span class="activity_date">'.nicetime($act->act_date).'</span>';
+      echo '</li>';
     }
-    echo '</li>';
   }
   echo '</ul>';
 }
@@ -302,8 +313,15 @@ add_action('admin_menu', 'act_admin_menu');
 
 function act_admin(){
   global $wpdb, $act_version;
-  $act_opt=get_option('act_settings');
-  extract($act_opt);
+  
+  $count = $wpdb->get_var("SELECT count(ID) FROM ".$wpdb->prefix."activity");
+  ?>
+    <div class="wrap">
+  	<h2>WP-Activity</h2>
+    <div id="activity-rows">(<?php echo $count.' '.__('rows in db','wp-activity') ?>)</div>
+  	<a href="admin.php?page=wp-activity&screen=activity"><?php _e("Recent Activity", 'wp-activity') ?></a> - <a href="admin.php?page=wp-activity&screen=manage"><?php _e("Manage", 'wp-activity') ?></a>
+  <?php
+  if ($_GET['screen'] == 'manage'){
   if ( isset($_POST['act_action'] ) ){
     switch ($_POST['act_action']){
       case "clean":
@@ -327,13 +345,14 @@ function act_admin(){
           $options['act_prune']=$_POST['act_prune'];
           $options['act_date_format']=$_POST['act_date_format'];
           $options['act_date_relative']=$_POST['act_date_relative'];
+          $options['act_icons']=$_POST['act_icons'];
           update_option('act_settings', $options);
         break;
     }
 	}
+  $act_opt=get_option('act_settings');
+  extract($act_opt);
   ?>
-  <div class="wrap">
-  	<h2>WP-Activity</h2>
   	<form action='' method='post'>
   	<table class="form-table">
   	  <tr><th><h3><?php _e('Date format : ','wp-activity') ?></h3></th></tr>
@@ -348,6 +367,13 @@ function act_admin(){
   	    <th><?php _e('Use relative dates : ', 'wp-activity') ?></th>
   	    <td><input type="checkbox" <?php if($act_date_relative){echo 'checked="checked"';} ?> name="act_date_relative" /></td>
   	  </tr><tr>
+  	  <tr><th><h3><?php _e('Display options','wp-activity') ?></h3></th></tr>
+  	  <tr>
+        <th><?php _e('Display icons : ', 'wp-activity') ?></th>
+        <td><input type="radio" <?php if($act_icons=="g"){echo 'checked="checked"';} ?> name="act_icons" value="g" /> <?php _e('Generic icons ', 'wp-activity') ?></td>
+      </tr>
+  	  <tr><td></td><td><input type="radio" <?php if($act_icons=="a"){echo 'checked="checked"';} ?> name="act_icons" value="a" /> <?php _e('Gravatars for profile edit and connect events icons', 'wp-activity') ?></td></tr>
+  	  <tr><td></td><td><input type="radio" <?php if($act_icons=="n"){echo 'checked="checked"';} ?> name="act_icons" value="n" /> <?php _e('No icons ', 'wp-activity') ?></td></tr>
       <th><h3><?php _e('Events logging and feeding', 'wp-activity') ?></h3></th>
       </tr><tr>
       <th><?php _e('Rows limit in database : ', 'wp-activity') ?></th><td><input type="text" name="act_prune" value="<?php echo $act_prune ?>" /></td>
@@ -386,8 +412,37 @@ function act_admin(){
       </select>
       <input type='submit' class='button-primary' name='submit' value='<?php _e('Submit', 'wp-activity') ?>' />
     </form>
+    <?php 
+    }else{ 
+      if ($_GET['act_page']){
+        $page = $_GET['act_page'];
+      }else{
+        $page = 1;
+      }
+    ?>
     <h3><?php _e("Recent Activity", 'wp-activity'); ?></h3>
+    <?php
+    $start = ($page - 1)*50;
+    $nbpages = floor($count/50);
+    if (($count % 50)> 0){
+      $nbpages++; 
+    }
+    echo __("Page", 'wp-activity').' '.$page.'/'.$nbpages; 
+    ?>
     <table id="activity-admin">
+        <tr><th colspan="2" align="left">
+    <?php
+    if ($page >1){
+      echo '<a href="admin.php?page=wp-activity&screen=activity&act_page='.($page-1).'">'.__("&laquo; Previous Page").'</a>';
+    }
+    ?>
+      </th><th colspan="2" align="right">
+    <?php
+    if ($start+50 < $count){
+      echo '<a href="admin.php?page=wp-activity&screen=activity&act_page='.($page+1).'">'.__("Next Page &raquo;").'</a>';
+    }
+    ?>     
+      </th></tr>
       <tr>
         <th><?php _e("Date", 'wp-activity'); ?></th>
         <th><?php _e("User", 'wp-activity'); ?></th>
@@ -399,7 +454,7 @@ function act_admin(){
   foreach ($users as $user) {
 		$users_display[$user->ID]=$user->display_name;
 	}
-  $sql  = "SELECT * FROM ".$wpdb->prefix."activity ORDER BY id DESC LIMIT 50";
+  $sql  = "SELECT * FROM ".$wpdb->prefix."activity ORDER BY id DESC LIMIT ".$start.",50";
 	if ( $logins = $wpdb->get_results( $sql)){
     foreach ( (array) $logins as $act ){
       $user_display = $users_display[$act->user_id];
@@ -432,9 +487,24 @@ function act_admin(){
       }
       echo '</tr>';
     }
-  } ?>     
+  } 
+    ?>
+      <tr><th colspan="2" align="left">
+    <?php
+    if ($page >1){
+      echo '<a href="admin.php?page=wp-activity&screen=activity&act_page='.($page-1).'">'.__("&laquo; Previous Page").'</a>';
+    }
+    ?>
+      </th><th colspan="2" align="right">
+    <?php
+    if ($start+50 < $count){
+      echo '<a href="admin.php?page=wp-activity&screen=activity&act_page='.($page+1).'">'.__("Next Page &raquo;").'</a>';
+    }
+    ?>     
+      </th></tr>
     </table>
-    <br />
+  <?php } ?>
+  <br />
     <h4><?php echo sprintf(__('WP-Activity is a plugin made in France by <a href="http://www.driczone.net">Dric</a>. Version <strong>%s</strong>.', 'wp-activity'), $act_version) ?></h4>
   </div>
   <?php
