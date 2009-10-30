@@ -66,9 +66,9 @@ Just change the icons in the /img directory, but keep the event name (example : 
 == ChangeLog ==
 
 = 0.6 =
-* admin panel tweaks
+* admin panel tweaked
 * Plugin now support gravatars for connect and profile edit events. Generic icons can also be used.
-* Activity stream display changed.
+* Activity stream display tweaked.
 
 = 0.5 =
 * Added setting for using relatives dates
