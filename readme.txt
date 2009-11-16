@@ -43,6 +43,10 @@ Translations :
 
 == Frequently Asked Questions ==
 
+= How do I enable the user last logon on author or index page ?
+
+Just put `<?php act_last_connect($author) ?>` in author page, or `<?php act_last_connect() ?>` in index page.
+
 = How do I set the events number or the title when not using the widget ? =
 
 this function accepts two parameters :
@@ -53,7 +57,7 @@ defaults are :
 - number = 30
 - title = Recent Activity (translated by .mo)
 
-= How do I Change the events icons ? =
+= How do I Change the events generic icons ? =
 
 Just change the icons in the /img directory, but keep the event name (example : to change the login/connect event icon, change the icon named CONNECT.png - names must be in capitals)
 
@@ -64,6 +68,9 @@ Just change the icons in the /img directory, but keep the event name (example : 
 3. admin screen - manage settings
 
 == ChangeLog ==
+
+= 0.7 =
+* User last logon can now be displayed on author page
 
 = 0.6 =
 * admin panel tweaked

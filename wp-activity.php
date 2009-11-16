@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/wp-activity
     Description: Display activity stream on your community site
     Author: Dric
-    Version: 0.6
+    Version: 0.7
     Author URI: http://www.driczone.net
 */
 
@@ -29,7 +29,7 @@
 if ( !isset($_SESSION)) {
 		session_start();
 	}
-$act_version="0.6";
+$act_version="0.7";
 $options = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
 	if ( defined( 'WP_SITEURL' ) ) {
@@ -174,6 +174,15 @@ function act_link_add($link){
   if ($options['act_links'] and !get_usermeta($user_ID, 'act_private')){
     $time=mysql2date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'LINK_ADD', '".$time."', $link)");
+  }
+}
+
+function act_last_connect($user=''){
+  global $wpdb, $options, $user_ID;
+  if (!$user){ $user = $user_ID; }
+  if ($options['act_connect'] and !get_usermeta($user_ID, 'act_private')){
+    $last_connect = $wpdb->get_var("SELECT MAX(act_date) FROM ".$wpdb->prefix."activity WHERE user_id = '".$user."'");
+    echo __("Last logon :", 'wp-activity')." ".nicetime($last_connect);
   }
 }
 
