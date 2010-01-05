@@ -3,7 +3,7 @@ Contributors: Dric
 Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, events
 Requires at least: 2.8
-Tested up to: 2.8.6
+Tested up to: 2.9.1
 Stable tag: 0.6
 
 Display users events activity in frontend.
