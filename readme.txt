@@ -1,16 +1,17 @@
 === WP-Activity ===
 Contributors: Dric
 Donate link: http://www.driczone.net/blog
-Tags: stream, activity, community, multi-users, log, events
+Tags: stream, activity, community, multi-users, log, events, monitor
 Requires at least: 2.8
-Tested up to: 2.9.1
-Stable tag: 0.6
+Tested up to: 2.9.2
+Stable tag: 0.7
 
-Display users events activity in frontend.
+Display users events activity in frontend. For WP single (not tested with WPMU).
 
 == Description ==
 
-This plugin logs registered users events in your blog and displays it in frontend.
+This plugin logs registered users events in your blog and displays it in frontend and backend.
+Admin can use this plugin to monitor a multi-blog activity without displaying it in frontend.
 
 - connections
 - new comments
@@ -20,7 +21,7 @@ This plugin logs registered users events in your blog and displays it in fronten
 - new link
 
 Users can see what other members do in the blog. Great for multi-users blogs or community blogs.
-Admins can see activity events in the admin plugin page.
+
 
 User who don't want to appear can hide its activity from profile. In that case, this user activity is not stored in database.
 
@@ -29,7 +30,7 @@ Users activity can be followed by RSS feed.
 Translations :
 
 - French
-- Italian (Thx to Luca)
+- Italian (Partial translation - Thx to Luca)
 
 [Plugin page](http://www.driczone.net/blog/wp-activity/)
 
@@ -79,7 +80,7 @@ Just change the icons in the /img directory, but keep the event name (example : 
 
 = 0.5 =
 * Added setting for using relatives dates
-* Activity is now displayed in the admin plugin page
+* Activity is now displayed in the admin plugin page (backend)
 * Post Add/Edit events are now correctly logged
 
 = 0.4a =
