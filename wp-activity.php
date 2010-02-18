@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/wp-activity
     Description: Display activity stream on your community site
     Author: Dric
-    Version: 0.7
+    Version: 0.7.1
     Author URI: http://www.driczone.net
 */
 
@@ -29,7 +29,7 @@
 if ( !isset($_SESSION)) {
 		session_start();
 	}
-$act_version="0.7";
+$act_version="0.7.1";
 $options = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
 	if ( defined( 'WP_SITEURL' ) ) {
@@ -92,7 +92,11 @@ add_action('add_link', 'act_link_add');
 
 function act_cron(){
   global $wpdb, $options, $plugin_page;
-  $wpdb->query("DELETE FROM ".$wpdb->prefix."activity ORDER BY id ASC LIMIT ".$options['act_prune']);
+  $count = $wpdb->get_var("SELECT count(ID) FROM ".$wpdb->prefix."activity");
+  $delete = $count - $options['act_prune'];
+  if ($delete > 0) {
+    $wpdb->query("DELETE FROM ".$wpdb->prefix."activity ORDER BY id ASC LIMIT ".$delete);
+  }
   
 }
 add_action('act_cron_install','act_cron');
