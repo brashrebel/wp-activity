@@ -6,12 +6,12 @@ Requires at least: 2.8
 Tested up to: 2.9.2
 Stable tag: 0.7.1
 
-Display users events activity in frontend. For WP single (not tested with WPMU).
+Display users events activity in backend and/or frontend. For WP single (not tested with WPMU).
 
 == Description ==
 
 This plugin logs registered users events in your blog and displays it in frontend and backend.
-Admin can use this plugin to monitor a multi-blog activity without displaying it in frontend.
+Admin can use this plugin to monitor a multi-users blog activity without displaying it in frontend.
 
 - connections
 - new comments

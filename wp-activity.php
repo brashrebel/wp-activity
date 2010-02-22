@@ -2,7 +2,7 @@
 /*
     Plugin Name: WP-Activity
     Plugin URI: http://www.driczone.net/blog/wp-activity
-    Description: Display activity stream on your community site
+    Description: Display and monitor users activity in backend and/or frontend of WP.
     Author: Dric
     Version: 0.7.1
     Author URI: http://www.driczone.net
