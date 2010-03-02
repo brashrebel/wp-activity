@@ -4,7 +4,7 @@ Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, events, monitor
 Requires at least: 2.8
 Tested up to: 2.9.2
-Stable tag: 0.7.1
+Stable tag: 0.7.2
 
 Display users events activity in backend and/or frontend. For WP single (not tested with WPMU).
 
@@ -69,6 +69,9 @@ Just change the icons in the /img directory, but keep the event name (example : 
 3. admin screen - manage settings
 
 == ChangeLog ==
+
+= 0.7.2 =
+* Bug fix with cron settings for deleting old activity
 
 = 0.7.1 =
 * Bug fix when auto-delete old activity (activity limit)

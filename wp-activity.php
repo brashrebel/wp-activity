@@ -2,13 +2,13 @@
 /*
     Plugin Name: WP-Activity
     Plugin URI: http://www.driczone.net/blog/wp-activity
-    Description: Display and monitor users activity in backend and/or frontend of WP.
+    Description: Display and monitor users activity in backend and frontend of WP.
     Author: Dric
-    Version: 0.7.1
+    Version: 0.7.2
     Author URI: http://www.driczone.net
 */
 
-/*  Copyright 2009 Dric  (email : cedric@driczone.net)
+/*  Copyright 2009-2010 Dric  (email : cedric@driczone.net)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 if ( !isset($_SESSION)) {
 		session_start();
 	}
-$act_version="0.7.1";
+$act_version="0.7.2";
 $options = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
 	if ( defined( 'WP_SITEURL' ) ) {
@@ -46,6 +46,21 @@ define('ACT_URL', WP_CONTENT_URL . '/plugins/' . ACT_DIR . '/');
 
 //Plugin can be translated, just put the .mo language file in the /lang directory
 load_plugin_textdomain('wp-activity', WP_PLUGIN_URL.'/wp-activity/lang/', ACT_DIR . '/lang/');
+
+function act_cron(){
+  global $wpdb, $options, $plugin_page;
+  $count = $wpdb->get_var("SELECT count(ID) FROM ".$wpdb->prefix."activity");
+  $delete = $count - $options['act_prune'];
+  if ($delete > 0) {
+    $wpdb->query("DELETE FROM ".$wpdb->prefix."activity ORDER BY id ASC LIMIT ".$delete);
+  }
+  
+}
+add_action('act_cron_install','act_cron');
+
+function act_desactive() {
+	wp_clear_scheduled_hook('act_cron_install');
+}
 
 function act_install()
 {
@@ -80,6 +95,7 @@ function act_install()
     wp_schedule_event(time(), 'daily', 'act_cron_install');
 }
 register_activation_hook( __FILE__, 'act_install' );
+register_deactivation_hook(__FILE__, 'act_desactive');
 
 //we add actions to hooks to log their events
 add_action('send_headers', 'act_session');
@@ -88,18 +104,6 @@ add_action('publish_post', 'act_post_add');
 add_action('comment_post', 'act_comment_add');
 add_action('add_link', 'act_link_add');
  
-
-
-function act_cron(){
-  global $wpdb, $options, $plugin_page;
-  $count = $wpdb->get_var("SELECT count(ID) FROM ".$wpdb->prefix."activity");
-  $delete = $count - $options['act_prune'];
-  if ($delete > 0) {
-    $wpdb->query("DELETE FROM ".$wpdb->prefix."activity ORDER BY id ASC LIMIT ".$delete);
-  }
-  
-}
-add_action('act_cron_install','act_cron');
 function act_header(){
   echo '<link type="text/css" rel="stylesheet" href="' . ACT_URL. 'wp-activity.css" />' . "\n";
 }
