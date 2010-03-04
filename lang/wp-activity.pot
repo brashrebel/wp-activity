@@ -1,0 +1,326 @@
+# Translation of the WordPress plugin WP-Activity 0.8 by Dric.
+# Copyright (C) 2010 Dric
+# This file is distributed under the same license as the WP-Activity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: WP-Activity 0.8\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-activity\n"
+"POT-Creation-Date: 2010-03-04 13:58+0000\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: wp-activity-feed.php:23 wp-activity.php:204
+#, php-format
+msgid "%s activity RSS Feed"
+msgstr ""
+
+#: wp-activity-feed.php:26
+#, php-format
+msgid "User events of %s"
+msgstr ""
+
+#: wp-activity-feed.php:36
+msgid "New visit"
+msgstr ""
+
+#: wp-activity-feed.php:37 wp-activity-feed.php:44 wp-activity-feed.php:50
+#: wp-activity-feed.php:56 wp-activity-feed.php:61 wp-activity-feed.php:68
+#: wp-activity.php:235 wp-activity.php:241 wp-activity.php:245
+#: wp-activity.php:249 wp-activity.php:252 wp-activity.php:257
+msgid "View Profile"
+msgstr ""
+
+#: wp-activity-feed.php:37 wp-activity.php:235
+msgid "has logged."
+msgstr ""
+
+#: wp-activity-feed.php:41
+msgid "New comment"
+msgstr ""
+
+#: wp-activity-feed.php:44 wp-activity.php:241
+msgid "commented"
+msgstr ""
+
+#: wp-activity-feed.php:48
+msgid "New post"
+msgstr ""
+
+#: wp-activity-feed.php:50 wp-activity.php:245
+msgid "published"
+msgstr ""
+
+#: wp-activity-feed.php:54
+msgid "Post edited"
+msgstr ""
+
+#: wp-activity-feed.php:56 wp-activity.php:249
+msgid "edited"
+msgstr ""
+
+#: wp-activity-feed.php:60
+msgid "Profile edited"
+msgstr ""
+
+#: wp-activity-feed.php:61 wp-activity.php:252
+msgid "has updated his profile."
+msgstr ""
+
+#: wp-activity-feed.php:65
+msgid "New link"
+msgstr ""
+
+#: wp-activity-feed.php:68 wp-activity.php:257
+msgid "has added a link to"
+msgstr ""
+
+#: wp-activity.php:117
+msgid "Activity events"
+msgstr ""
+
+#: wp-activity.php:120
+msgid "Hide my activity :"
+msgstr ""
+
+#: wp-activity.php:194
+msgid "Last logon :"
+msgstr ""
+
+#: wp-activity.php:201 wp-activity.php:346 wp-activity.php:452
+#: wp-activity.php:581
+msgid "Recent Activity"
+msgstr ""
+
+#: wp-activity.php:310
+msgid "weeks"
+msgstr ""
+
+#: wp-activity.php:310
+msgid "week"
+msgstr ""
+
+#: wp-activity.php:311 wp-activity.php:314
+msgid "days"
+msgstr ""
+
+#: wp-activity.php:311 wp-activity.php:314
+msgid "day"
+msgstr ""
+
+#: wp-activity.php:315 wp-activity.php:318
+msgid "hours"
+msgstr ""
+
+#: wp-activity.php:315 wp-activity.php:318
+msgid "hour"
+msgstr ""
+
+#: wp-activity.php:319 wp-activity.php:322
+msgid "minutes"
+msgstr ""
+
+#: wp-activity.php:319 wp-activity.php:322
+msgid "minute"
+msgstr ""
+
+#: wp-activity.php:325
+msgid "seconds"
+msgstr ""
+
+#: wp-activity.php:325
+msgid "second"
+msgstr ""
+
+#: wp-activity.php:329
+#, php-format
+msgid "%s ago"
+msgstr ""
+
+#: wp-activity.php:345
+msgid "rows in db"
+msgstr ""
+
+#: wp-activity.php:346
+msgid "Manage"
+msgstr ""
+
+#: wp-activity.php:354
+msgid "Activity logs deleted."
+msgstr ""
+
+#: wp-activity.php:383 wp-activity.php:385
+msgid "Date format : "
+msgstr ""
+
+#: wp-activity.php:390
+msgid ""
+"For events that are more than a month old only, or if you dont use relative "
+"dates."
+msgstr ""
+
+#: wp-activity.php:392
+msgid "Use relative dates : "
+msgstr ""
+
+#: wp-activity.php:395
+msgid "Display options"
+msgstr ""
+
+#: wp-activity.php:397
+msgid "Display icons : "
+msgstr ""
+
+#: wp-activity.php:398
+msgid "Generic icons "
+msgstr ""
+
+#: wp-activity.php:400
+msgid "Gravatars for profile edit and connect events icons"
+msgstr ""
+
+#: wp-activity.php:401
+msgid "No icons "
+msgstr ""
+
+#: wp-activity.php:403
+msgid "Highlight new activity since last user login : "
+msgstr ""
+
+#: wp-activity.php:406
+msgid "Events logging and feeding"
+msgstr ""
+
+#: wp-activity.php:408
+msgid "Rows limit in database : "
+msgstr ""
+
+#: wp-activity.php:410
+msgid "Display activity RSS feed : "
+msgstr ""
+
+#: wp-activity.php:412
+msgid "Log in database"
+msgstr ""
+
+#: wp-activity.php:412
+msgid "Display in feed"
+msgstr ""
+
+#: wp-activity.php:414
+msgid "Login events : "
+msgstr ""
+
+#: wp-activity.php:418
+msgid "Profile update events : "
+msgstr ""
+
+#: wp-activity.php:422
+msgid "Post creation/update events : "
+msgstr ""
+
+#: wp-activity.php:426
+msgid "New comment events : "
+msgstr ""
+
+#: wp-activity.php:430
+msgid "New link events : "
+msgstr ""
+
+#: wp-activity.php:436
+msgid "Update/clean tables"
+msgstr ""
+
+#: wp-activity.php:437
+msgid "Warning : cleaning activity table erase all activity logs."
+msgstr ""
+
+#: wp-activity.php:439
+msgid "Update settings"
+msgstr ""
+
+#: wp-activity.php:440
+msgid "Clean activity table"
+msgstr ""
+
+#: wp-activity.php:442
+msgid "Submit"
+msgstr ""
+
+#: wp-activity.php:459
+msgid "Page"
+msgstr ""
+
+#: wp-activity.php:465 wp-activity.php:524
+msgid "&laquo; Previous Page"
+msgstr ""
+
+#: wp-activity.php:471 wp-activity.php:530
+msgid "Next Page &raquo;"
+msgstr ""
+
+#: wp-activity.php:476
+msgid "Date"
+msgstr ""
+
+#: wp-activity.php:477
+msgid "User"
+msgstr ""
+
+#: wp-activity.php:478
+msgid "Event Type"
+msgstr ""
+
+#: wp-activity.php:479
+msgid "Data"
+msgstr ""
+
+#: wp-activity.php:537
+#, php-format
+msgid ""
+"WP-Activity is a plugin made in France by <a href=\"http://www.driczone.net"
+"\">Dric</a>. Version <strong>%s</strong>."
+msgstr ""
+
+#: wp-activity.php:551
+msgid "Display a stream of registered users events"
+msgstr ""
+
+#: wp-activity.php:557
+msgid "Wp-Activity Widget"
+msgstr ""
+
+#: wp-activity.php:585
+msgid "Title :"
+msgstr ""
+
+#: wp-activity.php:589
+msgid "Events number :"
+msgstr ""
+
+#. Plugin Name of an extension
+msgid "WP-Activity"
+msgstr ""
+
+#. Plugin URI of an extension
+msgid "http://www.driczone.net/blog/wp-activity"
+msgstr ""
+
+#. Description of an extension
+msgid ""
+"Display and monitor users activity in backend and frontend of WP single."
+msgstr ""
+
+#. Author of an extension
+msgid "Dric"
+msgstr ""
+
+#. Author URI of an extension
+msgid "http://www.driczone.net"
+msgstr ""
