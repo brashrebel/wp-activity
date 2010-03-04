@@ -2,9 +2,9 @@
 /*
     Plugin Name: WP-Activity
     Plugin URI: http://www.driczone.net/blog/wp-activity
-    Description: Display and monitor users activity in backend and frontend of WP.
+    Description: Display and monitor users activity in backend and frontend of WP single.
     Author: Dric
-    Version: 0.7.2
+    Version: 0.8
     Author URI: http://www.driczone.net
 */
 
@@ -29,8 +29,8 @@
 if ( !isset($_SESSION)) {
 		session_start();
 	}
-$act_version="0.7.2";
-$options = get_option('act_settings');
+$act_version="0.8";
+$options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
 	if ( defined( 'WP_SITEURL' ) ) {
     define( 'WP_CONTENT_URL', WP_SITEURL . '/wp-content' );
@@ -48,9 +48,9 @@ define('ACT_URL', WP_CONTENT_URL . '/plugins/' . ACT_DIR . '/');
 load_plugin_textdomain('wp-activity', WP_PLUGIN_URL.'/wp-activity/lang/', ACT_DIR . '/lang/');
 
 function act_cron(){
-  global $wpdb, $options, $plugin_page;
+  global $wpdb, $options_act, $plugin_page;
   $count = $wpdb->get_var("SELECT count(ID) FROM ".$wpdb->prefix."activity");
-  $delete = $count - $options['act_prune'];
+  $delete = $count - $options_act['act_prune'];
   if ($delete > 0) {
     $wpdb->query("DELETE FROM ".$wpdb->prefix."activity ORDER BY id ASC LIMIT ".$delete);
   }
@@ -78,20 +78,21 @@ function act_install()
       KEY `act_date` (`act_date`)
       );";
     dbDelta($structure);
-    $options['act_prune'] = '500';
-    $options['act_feed_display'] = false;
-    $options['act_date_format'] = 'yyyy/mm/dd';
-    $options['act_date_relative']= true;
-    $options['act_connect']= true;
-    $options['act_profiles']= true;
-    $options['act_posts']= true;
-    $options['act_comments']= true;
-    $options['act_feed_connect']= false;
-    $options['act_feed_profiles']= true;
-    $options['act_feed_posts']= true;
-    $options['act_feed_comments']= true;
-    $options['act_icons']= 'g';
-    add_option('act_settings', $options);
+    $options_act['act_prune'] = '500';
+    $options_act['act_feed_display'] = false;
+    $options_act['act_date_format'] = 'yyyy/mm/dd';
+    $options_act['act_date_relative']= true;
+    $options_act['act_connect']= true;
+    $options_act['act_profiles']= true;
+    $options_act['act_posts']= true;
+    $options_act['act_comments']= true;
+    $options_act['act_feed_connect']= false;
+    $options_act['act_feed_profiles']= true;
+    $options_act['act_feed_posts']= true;
+    $options_act['act_feed_comments']= true;
+    $options_act['act_icons']= 'g';
+    $options_act['act_old']= true;
+    add_option('act_settings', $options_act);
     wp_schedule_event(time(), 'daily', 'act_cron_install');
 }
 register_activation_hook( __FILE__, 'act_install' );
@@ -131,8 +132,8 @@ function act_profile_update(){
 add_action('personal_options_update', 'act_profile_update');
 
 function act_session(){
-  global $wpdb, $user_ID, $options;
-  if ($options['act_connect'] and !get_usermeta($user_ID, 'act_private')){
+  global $wpdb, $user_ID, $options_act;
+  if ($options_act['act_connect'] and !get_usermeta($user_ID, 'act_private')){
     if (!$_SESSION['act_logged'] and is_user_logged_in()){
       $time=mysql2date("Y-m-d H:i:s", time());
       $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$time."', '')");
@@ -149,16 +150,16 @@ add_action('wp_login', 'act_reinit');
 add_action('wp_logout', 'act_reinit');
 
 function act_profile_edit($user){
-  global $wpdb, $user_ID, $options;
-  if ($options['act_profiles'] and !get_usermeta($user_ID, 'act_private')){
+  global $wpdb, $user_ID, $options_act;
+  if ($options_act['act_profiles'] and !get_usermeta($user_ID, 'act_private')){
     $time=mysql2date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'PROFILE_EDIT', '".$time."', $user)");
   }
 }
 
 function act_post_add($post){
-  global $wpdb, $user_ID, $options;
-  if ($options['act_posts'] and !get_usermeta($user_ID, 'act_private')){
+  global $wpdb, $user_ID, $options_act;
+  if ($options_act['act_posts'] and !get_usermeta($user_ID, 'act_private')){
     $time=mysql2date("Y-m-d H:i:s", time());
     if ($wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."activity WHERE act_params=$post AND act_type='POST_ADD'") > 0){
       $type='POST_EDIT';
@@ -170,40 +171,42 @@ function act_post_add($post){
 }
 
 function act_comment_add($comment){
-  global $wpdb, $user_ID, $options;
-  if ($options['act_comments'] and !get_usermeta($user_ID, 'act_private')){
+  global $wpdb, $user_ID, $options_act;
+  if ($options_act['act_comments'] and !get_usermeta($user_ID, 'act_private')){
     $time=mysql2date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'COMMENT_ADD', '".$time."', $comment)");
   }
 }
 
 function act_link_add($link){
-  global $wpdb, $user_ID, $options;
-  if ($options['act_links'] and !get_usermeta($user_ID, 'act_private')){
+  global $wpdb, $user_ID, $options_act;
+  if ($options_act['act_links'] and !get_usermeta($user_ID, 'act_private')){
     $time=mysql2date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'LINK_ADD', '".$time."', $link)");
   }
 }
 
 function act_last_connect($user=''){
-  global $wpdb, $options, $user_ID;
+  global $wpdb, $options_act, $user_ID;
   if (!$user){ $user = $user_ID; }
-  if ($options['act_connect'] and !get_usermeta($user_ID, 'act_private')){
+  if ($options_act['act_connect'] and !get_usermeta($user_ID, 'act_private')){
     $last_connect = $wpdb->get_var("SELECT MAX(act_date) FROM ".$wpdb->prefix."activity WHERE user_id = '".$user."'");
     echo __("Last logon :", 'wp-activity')." ".nicetime($last_connect);
   }
 }
 
 function act_stream($number='30', $title=''){
-global $wpdb, $options;
+global $wpdb, $options_act, $user_ID;
   if ($title == ''){
     $title= __("Recent Activity", 'wp-activity');
   }
-  if ($options['act_feed_display']){
+  if ($options_act['act_feed_display']){
     $title .= ' <a href="'.WP_PLUGIN_URL.'/wp-activity/wp-activity-feed.php" title="'.sprintf(__('%s activity RSS Feed', 'wp-activity'),get_bloginfo('name')).'"><img src="'.WP_PLUGIN_URL.'/wp-activity/img/rss.png" alt="" /></a>';
   }
   
   $wp_url = get_bloginfo('wpurl');
+  $old_class = '';
+  $old_flag = -1;
   echo '<h2>'.$title.'</h2><ul id="activity">';
   $users = $wpdb->get_results("SELECT ID, display_name, user_nicename FROM $wpdb->users");
   foreach ($users as $user) {
@@ -214,10 +217,13 @@ global $wpdb, $options;
 	if ( $logins = $wpdb->get_results( $sql)){
     foreach ( (array) $logins as $act ){
       $user_nicename = $users_nicename[$act->user_id];
-      echo '<li class="login">';
-      if ($options['act_icons']== 'g'){
+      if ($act->user_id == $user_ID and $options_act['act_old'] and $old_flag > 0){
+        $old_class = ' old';
+      }      
+      echo '<li class="login '.$old_class.'">';
+      if ($options_act['act_icons']== 'g'){
         echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/'.$act->act_type.'.png" />';
-      }elseif ($options['act_icons']== 'a'){
+      }elseif ($options_act['act_icons']== 'a'){
         if ($act->act_type == 'CONNECT' or $act->act_type == 'PROFILE_EDIT'){
           echo get_avatar( $act->user_id, '16'); ;
         }else{
@@ -227,6 +233,7 @@ global $wpdb, $options;
       switch ($act->act_type){
         case 'CONNECT':
           echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act->user_id].'</a> '.__('has logged.', 'wp-activity');
+          $old_flag++;
           break;
         case 'COMMENT_ADD':
           $act_comment=get_comment($act->act_params);
@@ -348,22 +355,23 @@ function act_admin(){
 		    }
         break;
       default:
-          $options['act_connect']=$_POST['act_connect'];
-          $options['act_profiles']=$_POST['act_profiles'];
-          $options['act_posts']=$_POST['act_posts'];
-          $options['act_comments']=$_POST['act_comments'];
-          $options['act_links']=$_POST['act_links'];
-          $options['act_feed_connect']=$_POST['act_feed_connect'];
-          $options['act_feed_profiles']=$_POST['act_feed_profiles'];
-          $options['act_feed_posts']=$_POST['act_feed_posts'];
-          $options['act_feed_comments']=$_POST['act_feed_comments'];
-          $options['act_feed_links']=$_POST['act_feed_links'];
-          $options['act_feed_display']=$_POST['act_feed_display'];
-          $options['act_prune']=$_POST['act_prune'];
-          $options['act_date_format']=$_POST['act_date_format'];
-          $options['act_date_relative']=$_POST['act_date_relative'];
-          $options['act_icons']=$_POST['act_icons'];
-          update_option('act_settings', $options);
+          $options_act['act_connect']=$_POST['act_connect'];
+          $options_act['act_profiles']=$_POST['act_profiles'];
+          $options_act['act_posts']=$_POST['act_posts'];
+          $options_act['act_comments']=$_POST['act_comments'];
+          $options_act['act_links']=$_POST['act_links'];
+          $options_act['act_feed_connect']=$_POST['act_feed_connect'];
+          $options_act['act_feed_profiles']=$_POST['act_feed_profiles'];
+          $options_act['act_feed_posts']=$_POST['act_feed_posts'];
+          $options_act['act_feed_comments']=$_POST['act_feed_comments'];
+          $options_act['act_feed_links']=$_POST['act_feed_links'];
+          $options_act['act_feed_display']=$_POST['act_feed_display'];
+          $options_act['act_prune']=$_POST['act_prune'];
+          $options_act['act_date_format']=$_POST['act_date_format'];
+          $options_act['act_date_relative']=$_POST['act_date_relative'];
+          $options_act['act_icons']=$_POST['act_icons'];
+          $options_act['act_old']=$_POST['act_old'];
+          update_option('act_settings', $options_act);
         break;
     }
 	}
@@ -391,7 +399,11 @@ function act_admin(){
       </tr>
   	  <tr><td></td><td><input type="radio" <?php if($act_icons=="a"){echo 'checked="checked"';} ?> name="act_icons" value="a" /> <?php _e('Gravatars for profile edit and connect events icons', 'wp-activity') ?></td></tr>
   	  <tr><td></td><td><input type="radio" <?php if($act_icons=="n"){echo 'checked="checked"';} ?> name="act_icons" value="n" /> <?php _e('No icons ', 'wp-activity') ?></td></tr>
-      <th><h3><?php _e('Events logging and feeding', 'wp-activity') ?></h3></th>
+      <tr>
+  	    <th><?php _e('Highlight new activity since last user login : ', 'wp-activity') ?></th>
+  	    <td><input type="checkbox" <?php if($act_old){echo 'checked="checked"';} ?> name="act_old" /></td>
+  	  </tr>
+      <tr><th><h3><?php _e('Events logging and feeding', 'wp-activity') ?></h3></th>
       </tr><tr>
       <th><?php _e('Rows limit in database : ', 'wp-activity') ?></th><td><input type="text" name="act_prune" value="<?php echo $act_prune ?>" /></td>
   	  </tr><tr>

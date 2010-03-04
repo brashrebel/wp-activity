@@ -1,11 +1,11 @@
 <?php
 require($_ENV["DOCUMENT_ROOT"]."/site/wp-blog-header.php");
 header('Content-Type: application/rss+xml ; charset=UTF-8', true);
-$options = get_option('act_settings');
+$options_act = get_option('act_settings');
 
 function act_feed(){
-  global $wpdb, $options;
-  extract($options);
+  global $wpdb, $options_act;
+  extract($options_act);
   $act_feed = wp_cache_get( 'act_feed' );
   if (!$act_feed) {
     $date = date('r', strtotime($wpdb->get_var("SELECT MAX(act_date) FROM ".$wpdb->prefix."activity")));
@@ -89,7 +89,7 @@ function act_feed(){
     return $act_feed;
   }
 }
-if ($options['act_feed_display']) {
+if ($options_act['act_feed_display']) {
   echo act_feed();
 }else{
   echo "Error. Activity feed not allowed !";

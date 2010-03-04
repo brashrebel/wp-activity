@@ -6,7 +6,7 @@ Requires at least: 2.8
 Tested up to: 2.9.2
 Stable tag: 0.7.2
 
-Display users events activity in backend and/or frontend. For WP single (not tested with WPMU).
+Display and monitor users activity in backend and frontend of WordPress. For WP single (not tested with WPMU).
 
 == Description ==
 
@@ -69,6 +69,10 @@ Just change the icons in the /img directory, but keep the event name (example : 
 3. admin screen - manage settings
 
 == ChangeLog ==
+
+= 0.8 =
+* New activity can be highlighted since last user login (in fact old activity is greyed out)
+* Bug fix with a possibly shared var name (thx to Stephane)
 
 = 0.7.2 =
 * Bug fix with cron settings for deleting old activity

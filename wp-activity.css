@@ -8,6 +8,7 @@
 	height: 150px;
 	margin: 10px;
 }
+
 #activity-admin{
   	padding: 7px;
 }
@@ -28,4 +29,7 @@
 }
 #activity IMG{
 	padding-right: 3px;
+}
+.activity .old{
+	color: #AAA;
 }
