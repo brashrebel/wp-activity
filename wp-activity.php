@@ -206,7 +206,7 @@ global $wpdb, $options_act, $user_ID;
   
   $wp_url = get_bloginfo('wpurl');
   $old_class = '';
-  $old_flag = -1;
+  $old_flag = 0;
   echo '<h2>'.$title.'</h2><ul id="activity">';
   $users = $wpdb->get_results("SELECT ID, display_name, user_nicename FROM $wpdb->users");
   foreach ($users as $user) {
@@ -217,8 +217,10 @@ global $wpdb, $options_act, $user_ID;
 	if ( $logins = $wpdb->get_results( $sql)){
     foreach ( (array) $logins as $act ){
       $user_nicename = $users_nicename[$act->user_id];
-      if ($act->user_id == $user_ID and $options_act['act_old'] and $old_flag > 0){
-        $old_class = ' old';
+      if ($options_act['act_old'] and $old_flag > 0){
+        $old_class = 'act-old';
+      }else{
+        $old_class = '';
       }      
       echo '<li class="login '.$old_class.'">';
       if ($options_act['act_icons']== 'g'){
@@ -233,7 +235,9 @@ global $wpdb, $options_act, $user_ID;
       switch ($act->act_type){
         case 'CONNECT':
           echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act->user_id].'</a> '.__('has logged.', 'wp-activity');
-          $old_flag++;
+          if ($act->user_id == $user_ID and $options_act['act_old']){
+            $old_flag++;
+          }
           break;
         case 'COMMENT_ADD':
           $act_comment=get_comment($act->act_params);

@@ -22,7 +22,6 @@ Admin can use this plugin to monitor a multi-users blog activity without display
 
 Users can see what other members do in the blog. Great for multi-users blogs or community blogs.
 
-
 User who don't want to appear can hide its activity from profile. In that case, this user activity is not stored in database.
 
 Users activity can be followed by RSS feed.
