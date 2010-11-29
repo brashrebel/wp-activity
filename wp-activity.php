@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/wp-activity
     Description: Display and monitor users activity in backend and frontend of WP single.
     Author: Dric
-    Version: 0.8
+    Version: 0.8.1
     Author URI: http://www.driczone.net
 */
 
@@ -49,9 +49,9 @@ load_plugin_textdomain('wp-activity', WP_PLUGIN_URL.'/wp-activity/lang/', ACT_DI
 
 function act_cron(){
   global $wpdb, $options_act, $plugin_page;
-  $count = $wpdb->get_var("SELECT count(ID) FROM ".$wpdb->prefix."activity");
-  $delete = $count - $options_act['act_prune'];
-  if ($delete > 0) {
+  $act_count = $wpdb->get_var("SELECT count(ID) FROM ".$wpdb->prefix."activity");
+  $act_delete = $act_count - $options_act['act_prune'];
+  if ($act_delete > 0) {
     $wpdb->query("DELETE FROM ".$wpdb->prefix."activity ORDER BY id ASC LIMIT ".$delete);
   }
   
@@ -67,7 +67,7 @@ function act_install()
     global $wpdb;
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     $table = $wpdb->prefix."activity";
-    $structure = "CREATE TABLE `".$table."` (
+    $act_structure = "CREATE TABLE `".$table."` (
       `id` int(9) NOT NULL auto_increment,
       `user_id` bigint(20) NOT NULL,
       `act_type` varchar(20) NOT NULL,
@@ -77,7 +77,7 @@ function act_install()
       KEY `user_id` (`user_id`),
       KEY `act_date` (`act_date`)
       );";
-    dbDelta($structure);
+    dbDelta($act_structure);
     $options_act['act_prune'] = '500';
     $options_act['act_feed_display'] = false;
     $options_act['act_date_format'] = 'yyyy/mm/dd';
@@ -135,9 +135,9 @@ function act_session(){
   global $wpdb, $user_ID, $options_act;
   if ($options_act['act_connect'] and !get_usermeta($user_ID, 'act_private')){
     if (!$_SESSION['act_logged'] and is_user_logged_in()){
-      $time=mysql2date("Y-m-d H:i:s", time());
-      $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$time."', '')");
-      $url = parse_url(get_option('home'));
+      $act_time=mysql2date("Y-m-d H:i:s", time());
+      $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$act_time."', '')");
+      $act_url = parse_url(get_option('home'));
       $_SESSION['act_logged']= time();
     }
   }
@@ -149,80 +149,82 @@ function act_reinit(){
 add_action('wp_login', 'act_reinit');
 add_action('wp_logout', 'act_reinit');
 
-function act_profile_edit($user){
+function act_profile_edit($act_user){
   global $wpdb, $user_ID, $options_act;
   if ($options_act['act_profiles'] and !get_usermeta($user_ID, 'act_private')){
-    $time=mysql2date("Y-m-d H:i:s", time());
-    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'PROFILE_EDIT', '".$time."', $user)");
+    $act_time=mysql2date("Y-m-d H:i:s", time());
+    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'PROFILE_EDIT', '".$act_time."', $act_user)");
   }
 }
 
-function act_post_add($post){
+function act_post_add($act_post){
   global $wpdb, $user_ID, $options_act;
   if ($options_act['act_posts'] and !get_usermeta($user_ID, 'act_private')){
-    $time=mysql2date("Y-m-d H:i:s", time());
-    if ($wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."activity WHERE act_params=$post AND act_type='POST_ADD'") > 0){
-      $type='POST_EDIT';
+    $act_time=mysql2date("Y-m-d H:i:s", time());
+    if ($wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."activity WHERE act_params=$act_post AND act_type='POST_ADD'") > 0){
+      $act_type='POST_EDIT';
     }else{
-      $type='POST_ADD';
+      $act_type='POST_ADD';
     }
-    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, '".$type."', '".$time."', $post)");
+    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, '".$act_type."', '".$act_time."', $act_post)");
   }
 }
 
-function act_comment_add($comment){
+function act_comment_add($act_comment){
   global $wpdb, $user_ID, $options_act;
   if ($options_act['act_comments'] and !get_usermeta($user_ID, 'act_private')){
-    $time=mysql2date("Y-m-d H:i:s", time());
-    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'COMMENT_ADD', '".$time."', $comment)");
+    $act_time=mysql2date("Y-m-d H:i:s", time());
+    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'COMMENT_ADD', '".$act_time."', $act_comment)");
   }
 }
 
-function act_link_add($link){
+function act_link_add($act_link){
   global $wpdb, $user_ID, $options_act;
   if ($options_act['act_links'] and !get_usermeta($user_ID, 'act_private')){
-    $time=mysql2date("Y-m-d H:i:s", time());
-    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'LINK_ADD', '".$time."', $link)");
+    $act_time=mysql2date("Y-m-d H:i:s", time());
+    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'LINK_ADD', '".$act_time."', $act_link)");
   }
 }
 
-function act_last_connect($user=''){
+function act_last_connect($act_user=''){
   global $wpdb, $options_act, $user_ID;
-  if (!$user){ $user = $user_ID; }
+  if (!$act_user){ $act_user = $user_ID; }
   if ($options_act['act_connect'] and !get_usermeta($user_ID, 'act_private')){
-    $last_connect = $wpdb->get_var("SELECT MAX(act_date) FROM ".$wpdb->prefix."activity WHERE user_id = '".$user."'");
-    echo __("Last logon :", 'wp-activity')." ".nicetime($last_connect);
+    $act_last_connect = $wpdb->get_var("SELECT MAX(act_date) FROM ".$wpdb->prefix."activity WHERE user_id = '".$act_user."'");
+    echo __("Last logon :", 'wp-activity')." ".nicetime($act_last_connect);
   }
 }
 
-function act_stream($number='30', $title=''){
+add_shortcode('act_stream', 'act_stream');
+
+function act_stream($act_number='30', $act_title=''){
 global $wpdb, $options_act, $user_ID;
-  if ($title == ''){
-    $title= __("Recent Activity", 'wp-activity');
+  if ($act_title == ''){
+    $act_title= __("Recent Activity", 'wp-activity');
   }
   if ($options_act['act_feed_display']){
-    $title .= ' <a href="'.WP_PLUGIN_URL.'/wp-activity/wp-activity-feed.php" title="'.sprintf(__('%s activity RSS Feed', 'wp-activity'),get_bloginfo('name')).'"><img src="'.WP_PLUGIN_URL.'/wp-activity/img/rss.png" alt="" /></a>';
+    $act_title .= ' <a href="'.WP_PLUGIN_URL.'/wp-activity/wp-activity-feed.php" title="'.sprintf(__('%s activity RSS Feed', 'wp-activity'),get_bloginfo('name')).'"><img src="'.WP_PLUGIN_URL.'/wp-activity/img/rss.png" alt="" /></a>';
   }
   
   $wp_url = get_bloginfo('wpurl');
-  $old_class = '';
-  $old_flag = 0;
-  echo '<h2>'.$title.'</h2><ul id="activity">';
-  $users = $wpdb->get_results("SELECT ID, display_name, user_nicename FROM $wpdb->users");
-  foreach ($users as $user) {
-		$users_nicename[$user->ID]=$user->user_nicename;
-		$users_display[$user->ID]=$user->display_name;
+  $act_old_class = '';
+  $act_old_flag = -1;
+  echo '<h2>'.$act_title.'</h2><ul id="activity">';
+  $act_users = $wpdb->get_results("SELECT ID, display_name, user_nicename FROM $wpdb->users");
+  foreach ($act_users as $act_user) {
+		$act_users_nicename[$act_user->ID]=$act_user->user_nicename;
+		$act_users_display[$act_user->ID]=$act_user->display_name;
 	}
-  $sql  = "SELECT * FROM ".$wpdb->prefix."activity ORDER BY id DESC LIMIT $number";
+  $sql  = "SELECT * FROM ".$wpdb->prefix."activity ORDER BY id DESC LIMIT $act_number";
 	if ( $logins = $wpdb->get_results( $sql)){
-    foreach ( (array) $logins as $act ){
-      $user_nicename = $users_nicename[$act->user_id];
-      if ($options_act['act_old'] and $old_flag > 0){
-        $old_class = 'act-old';
+    foreach ( (array) $act_logins as $act ){
+      $act_user_nicename = $act_users_nicename[$act->user_id];
+      if ($options_act['act_old'] and $act_old_flag > 0){
+        $act_old_class = 'act-old';
       }else{
-        $old_class = '';
+        $act_old_class = '';
       }      
-      echo '<li class="login '.$old_class.'">';
+      echo '<li class="login '.$act_old_class.'">';
       if ($options_act['act_icons']== 'g'){
         echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/'.$act->act_type.'.png" />';
       }elseif ($options_act['act_icons']== 'a'){
@@ -234,31 +236,31 @@ global $wpdb, $options_act, $user_ID;
       }
       switch ($act->act_type){
         case 'CONNECT':
-          echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act->user_id].'</a> '.__('has logged.', 'wp-activity');
+          echo '<a href="'.$wp_url.'/author/'.$act_user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act_users_display[$act->user_id].'</a> '.__('has logged.', 'wp-activity');
           if ($act->user_id == $user_ID and $options_act['act_old']){
-            $old_flag++;
+            $act_old_flag++;
           }
           break;
         case 'COMMENT_ADD':
           $act_comment=get_comment($act->act_params);
           $act_post=get_post($act_comment->comment_post_ID);
-          echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act_comment->comment_author.'</a> '.__('commented', 'wp-activity').' <a href="'.$act_post->post_name.'#comment-'.$act_comment->comment_ID.'">'.$act_post->post_title.'</a>';
+          echo '<a href="'.$wp_url.'/author/'.$act_user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act_comment->comment_author.'</a> '.__('commented', 'wp-activity').' <a href="'.$act_post->post_name.'#comment-'.$act_comment->comment_ID.'">'.$act_post->post_title.'</a>';
           break;
         case 'POST_ADD':
           $act_post=get_post($act->act_params);
-          echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act_post->post_author].'</a> '.__('published', 'wp-activity').' <a href="'.$act_post->post_name.'">'.$act_post->post_title.'</a>';
+          echo '<a href="'.$wp_url.'/author/'.$act_user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act_users_display[$act_post->post_author].'</a> '.__('published', 'wp-activity').' <a href="'.$act_post->post_name.'">'.$act_post->post_title.'</a>';
           break;
         case 'POST_EDIT':
           $act_post=get_post($act->act_params);
-          echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act_post->post_author].'</a> '.__('edited', 'wp-activity').' <a href="'.$act_post->post_name.'">'.$act_post->post_title.'</a>';
+          echo '<a href="'.$wp_url.'/author/'.$act_user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act_users_display[$act_post->post_author].'</a> '.__('edited', 'wp-activity').' <a href="'.$act_post->post_name.'">'.$act_post->post_title.'</a>';
           break;
         case 'PROFILE_EDIT':
-          echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act->user_id].'</a> '.__('has updated his profile.', 'wp-activity');
+          echo '<a href="'.$wp_url.'/author/'.$act_user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act_users_display[$act->user_id].'</a> '.__('has updated his profile.', 'wp-activity');
           break;
         case 'LINK_ADD':
-          $link = get_bookmark($act->act_params);
-          if ($link->link_visible == 'Y'){
-            echo '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$users_display[$act->user_id].'</a> '.__('has added a link to', 'wp-activity').' <a href="'.$link->link_url.'" title="'.$link->link_description.'" target="'.$link->link_target.'">'.$link->link_name.'</a>.';
+          $act_link = get_bookmark($act->act_params);
+          if ($act_link->link_visible == 'Y'){
+            echo '<a href="'.$wp_url.'/author/'.$act_user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act_users_display[$act->user_id].'</a> '.__('has added a link to', 'wp-activity').' <a href="'.$act_link->link_url.'" title="'.$act_link->link_description.'" target="'.$act_link->link_target.'">'.$act_link->link_name.'</a>.';
           }
           break;
         default:
@@ -334,19 +336,19 @@ function nicetime($posted_date, $admin=false) {
 }
 
 function act_admin_menu(){
-  $plugin_page = add_options_page('WP-Activity', 'WP-Activity', 8, 'wp-activity', 'act_admin');
-  add_action( 'admin_head-'. $plugin_page, 'act_header' );
+  $act_plugin_page = add_options_page('WP-Activity', 'WP-Activity', 8, 'wp-activity', 'act_admin');
+  add_action( 'admin_head-'. $act_plugin_page, 'act_header' );
 }
 add_action('admin_menu', 'act_admin_menu');
 
 function act_admin(){
   global $wpdb, $act_version;
   
-  $count = $wpdb->get_var("SELECT count(ID) FROM ".$wpdb->prefix."activity");
+  $act_count = $wpdb->get_var("SELECT count(ID) FROM ".$wpdb->prefix."activity");
   ?>
     <div class="wrap">
   	<h2>WP-Activity</h2>
-    <div id="activity-rows">(<?php echo $count.' '.__('rows in db','wp-activity') ?>)</div>
+    <div id="activity-rows">(<?php echo $act_count.' '.__('rows in db','wp-activity') ?>)</div>
   	<a href="admin.php?page=wp-activity&screen=activity"><?php _e("Recent Activity", 'wp-activity') ?></a> - <a href="admin.php?page=wp-activity&screen=manage"><?php _e("Manage", 'wp-activity') ?></a>
   <?php
   if ($_GET['screen'] == 'manage'){

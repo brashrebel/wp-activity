@@ -3,8 +3,8 @@ Contributors: Dric
 Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, events, monitor
 Requires at least: 2.8
-Tested up to: 2.9.2
-Stable tag: 0.7.2
+Tested up to: 3.0.1
+Stable tag: 0.8.1
 
 Display and monitor users activity in backend and frontend of WordPress. For WP single (not tested with WPMU).
 
@@ -40,6 +40,7 @@ Translations :
 3. Activate the plugin through the Wordpress admin,
 4. Go to `Settings > Wp-Activity` and set options that fit your needs.
 5. Put `<?php act_stream() ?>` where you want the stream to appear, or use included widget.
+6. Use `[ACT_STREAM]` to display activity in a page or post.
 
 == Frequently Asked Questions ==
 
@@ -68,6 +69,9 @@ Just change the icons in the /img directory, but keep the event name (example : 
 3. admin screen - manage settings
 
 == ChangeLog ==
+
+= 0.8.1 =
+* Added shortcode [ACT_STREAM] to display activity on a page or post.
 
 = 0.8 =
 * New activity can be highlighted since last user login (in fact old activity is greyed out)
