@@ -44,7 +44,7 @@ Translations :
 
 == Frequently Asked Questions ==
 
-= How do I enable the user last logon on author or index page ?
+= How do I enable the user last logon on author or index page ? =
 
 Just put `<?php act_last_connect($author) ?>` in author page, or `<?php act_last_connect() ?>` in index page.
 
