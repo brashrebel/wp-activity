@@ -29,7 +29,7 @@
 if ( !isset($_SESSION)) {
 		session_start();
 	}
-$act_version="0.8";
+$act_version="0.8.1";
 $options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
 	if ( defined( 'WP_SITEURL' ) ) {
