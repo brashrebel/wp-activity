@@ -62,6 +62,9 @@ defaults are :
 
 Just change the icons in the /img directory, but keep the event name (example : to change the login/connect event icon, change the icon named CONNECT.png - names must be in capitals)
 
+= Do you really test your plugin before updating it at the Wordpress Plugin Repository ? =
+Hum. I'm testing it on a single Wordpress installation, so it can't really be called "test". That's why there is often updates that just fix the previous ones... Sorry for that.
+
 == Screenshots ==
 
 1. frontend display
