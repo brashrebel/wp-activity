@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/wp-activity
     Description: Display and monitor users activity in backend and frontend of WP single.
     Author: Dric
-    Version: 0.8.1
+    Version: 0.8.1.1
     Author URI: http://www.driczone.net
 */
 
@@ -29,7 +29,7 @@
 if ( !isset($_SESSION)) {
 		session_start();
 	}
-$act_version="0.8.1";
+$act_version="0.8.1.1";
 $options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
 	if ( defined( 'WP_SITEURL' ) ) {
@@ -216,7 +216,7 @@ global $wpdb, $options_act, $user_ID;
 		$act_users_display[$act_user->ID]=$act_user->display_name;
 	}
   $sql  = "SELECT * FROM ".$wpdb->prefix."activity ORDER BY id DESC LIMIT $act_number";
-	if ( $logins = $wpdb->get_results( $sql)){
+	if ( $act_logins = $wpdb->get_results( $sql)){
     foreach ( (array) $act_logins as $act ){
       $act_user_nicename = $act_users_nicename[$act->user_id];
       if ($options_act['act_old'] and $act_old_flag > 0){

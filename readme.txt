@@ -4,7 +4,7 @@ Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, events, monitor
 Requires at least: 2.8
 Tested up to: 3.0.1
-Stable tag: 0.8.1
+Stable tag: 0.8.1.1
 
 Display and monitor users activity in backend and frontend of WordPress. For WP single (not tested with WPMU).
 
@@ -69,6 +69,9 @@ Just change the icons in the /img directory, but keep the event name (example : 
 3. admin screen - manage settings
 
 == ChangeLog ==
+
+= 0.8.1.1 =
+* Bug fix that prevented activity to be displayed in frontend.
 
 = 0.8.1 =
 * Added shortcode [ACT_STREAM] to display activity on a page or post.
