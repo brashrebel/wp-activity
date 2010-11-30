@@ -73,6 +73,9 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 
 == ChangeLog ==
 
+= 0.8.1.2 =
+* Use of a cookie instead of a session var.
+
 = 0.8.1.1 =
 * Bug fix that prevented activity to be displayed in frontend.
 

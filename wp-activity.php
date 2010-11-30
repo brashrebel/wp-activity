@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/wp-activity
     Description: Display and monitor users activity in backend and frontend of WP single.
     Author: Dric
-    Version: 0.8.1.1
+    Version: 0.8.1.2
     Author URI: http://www.driczone.net
 */
 
@@ -26,10 +26,8 @@
 */
 
 // let's initializing all vars
-if ( !isset($_SESSION)) {
-		session_start();
-	}
-$act_version="0.8.1.1";
+
+$act_version="0.8.1.2";
 $options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
 	if ( defined( 'WP_SITEURL' ) ) {
@@ -134,17 +132,17 @@ add_action('personal_options_update', 'act_profile_update');
 function act_session(){
   global $wpdb, $user_ID, $options_act;
   if ($options_act['act_connect'] and !get_usermeta($user_ID, 'act_private')){
-    if (!$_SESSION['act_logged'] and is_user_logged_in()){
+    if (!$_COOKIE['act_logged'] and is_user_logged_in()){
       $act_time=mysql2date("Y-m-d H:i:s", time());
       $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$act_time."', '')");
       $act_url = parse_url(get_option('home'));
-      $_SESSION['act_logged']= time();
+      $_COOKIE['act_logged']= time();
     }
   }
 }
 
 function act_reinit(){
-  if ($_SESSION['act_logged']){ unset($_SESSION['act_logged']);}
+  if ($_COOKIE['act_logged']){ unset($_COOKIE['act_logged']);}
 }
 add_action('wp_login', 'act_reinit');
 add_action('wp_logout', 'act_reinit');
