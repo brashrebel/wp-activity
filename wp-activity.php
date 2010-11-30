@@ -133,16 +133,16 @@ function act_session(){
   global $wpdb, $user_ID, $options_act;
   if ($options_act['act_connect'] and !get_usermeta($user_ID, 'act_private')){
     if (!$_COOKIE['act_logged'] and is_user_logged_in()){
+      setcookie('act_logged',time());
       $act_time=mysql2date("Y-m-d H:i:s", time());
       $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$act_time."', '')");
       $act_url = parse_url(get_option('home'));
-      $_COOKIE['act_logged']= time();
     }
   }
 }
 
 function act_reinit(){
-  if ($_COOKIE['act_logged']){ unset($_COOKIE['act_logged']);}
+  if ($_COOKIE['act_logged']){ setcookie ("act_logged", "", time() - 3600);}
 }
 add_action('wp_login', 'act_reinit');
 add_action('wp_logout', 'act_reinit');
@@ -351,14 +351,16 @@ function act_admin(){
   <?php
   if ($_GET['screen'] == 'manage'){
   if ( isset($_POST['act_action'] ) ){
-    switch ($_POST['act_action']){
-      case "clean":
-        $sql="DELETE FROM ".$wpdb->prefix."activity";
-		    if ( $results = $wpdb->query( $sql ) ){
-		      echo '<div id="message" class="updated fade"><p><strong>'.__('Activity logs deleted.', 'wp-activity').'</strong></div>';
-		    }
-        break;
-      default:
+    // if this fails, check_admin_referer() will automatically print a "failed" page and die.
+    if (check_admin_referer('wp-activity-submit','act_admin')){
+      switch ($_POST['act_action']){
+        case "clean":
+          $sql="DELETE FROM ".$wpdb->prefix."activity";
+		      if ( $results = $wpdb->query( $sql ) ){
+		        echo '<div id="message" class="updated fade"><p><strong>'.__('Activity logs deleted.', 'wp-activity').'</strong></div>';
+		      }
+          break;
+        default:
           $options_act['act_connect']=$_POST['act_connect'];
           $options_act['act_profiles']=$_POST['act_profiles'];
           $options_act['act_posts']=$_POST['act_posts'];
@@ -377,6 +379,7 @@ function act_admin(){
           $options_act['act_old']=$_POST['act_old'];
           update_option('act_settings', $options_act);
         break;
+      }
     }
 	}
   $act_opt=get_option('act_settings');
@@ -444,6 +447,10 @@ function act_admin(){
   			<option value ="clean"><?php _e('Clean activity table', 'wp-activity') ?></option>        
       </select>
       <input type='submit' class='button-primary' name='submit' value='<?php _e('Submit', 'wp-activity') ?>' />
+      <?php
+        if ( function_exists('wp_nonce_field') )
+	         wp_nonce_field('wp-activity-submit','act_admin');
+      ?>
     </form>
     <?php 
     }else{ 
