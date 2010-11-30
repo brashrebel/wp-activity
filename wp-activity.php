@@ -1,10 +1,10 @@
 <?php
 /*
     Plugin Name: WP-Activity
-    Plugin URI: http://www.driczone.net/blog/wp-activity
+    Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Display and monitor users activity in backend and frontend of WP single.
     Author: Dric
-    Version: 0.8.1.2
+    Version: 0.8.2
     Author URI: http://www.driczone.net
 */
 
@@ -27,7 +27,8 @@
 
 // let's initializing all vars
 
-$act_version="0.8.1.2";
+$act_version="0.8.2";
+
 $options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
 	if ( defined( 'WP_SITEURL' ) ) {

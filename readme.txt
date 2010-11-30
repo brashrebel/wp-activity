@@ -31,7 +31,7 @@ Translations :
 - French
 - Italian (Partial translation - Thx to Luca)
 
-[Plugin page](http://www.driczone.net/blog/wp-activity/)
+[Plugin page](http://www.driczone.net/blog/plugins/wp-activity/)
 
 == Installation ==
 
@@ -73,7 +73,7 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 
 == ChangeLog ==
 
-= 0.8.1.2 =
+= 0.8.2 =
 * Use of a cookie instead of a session var.
 * Fixed a CSRF vulnerability (Thx to Julio - www.boiteaweb.fr)
 
