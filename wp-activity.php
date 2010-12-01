@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Display and monitor users activity in backend and frontend of WP single.
     Author: Dric
-    Version: 0.8.2
+    Version: 0.9
     Author URI: http://www.driczone.net
 */
 
@@ -27,7 +27,7 @@
 
 // let's initializing all vars
 
-$act_version="0.8.2";
+$act_version="0.9";
 
 $options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
@@ -105,7 +105,14 @@ add_action('comment_post', 'act_comment_add');
 add_action('add_link', 'act_link_add');
  
 function act_header(){
-  echo '<link type="text/css" rel="stylesheet" href="' . ACT_URL. 'wp-activity.css" />' . "\n";
+  $altcss = TEMPLATEPATH.'/wp-activity.css';
+  echo '<link type="text/css" rel="stylesheet" href="';
+  if (@file_exists($altcss)){
+    echo get_bloginfo('stylesheet_directory').'/';
+  }else{
+    echo ACT_URL;
+  }
+  echo 'wp-activity.css" />' . "\n";
 }
 add_action('wp_head', 'act_header');
 
@@ -194,9 +201,16 @@ function act_last_connect($act_user=''){
   }
 }
 
-add_shortcode('act_stream', 'act_stream');
+function act_stream_shortcode ($attr) {
+    $attr = shortcode_atts(array('number'   => '50',
+                                 'title'    => '',), $attr);
+    return act_stream($attr['number'], $attr['title'], true);
+}
 
-function act_stream($act_number='30', $act_title=''){
+add_shortcode('ACT_STREAM', 'act_stream_shortcode');
+
+//$act_number = -1 : no limit
+function act_stream($act_number='30', $act_title='', $nowindow = false){
 global $wpdb, $options_act, $user_ID;
   if ($act_title == ''){
     $act_title= __("Recent Activity", 'wp-activity');
@@ -208,13 +222,18 @@ global $wpdb, $options_act, $user_ID;
   $wp_url = get_bloginfo('wpurl');
   $act_old_class = '';
   $act_old_flag = -1;
-  echo '<h2>'.$act_title.'</h2><ul id="activity">';
+  echo '<h2>'.$act_title.'</h2>';
+  if ($nowindow == false) {echo '<ul id="activity">';}else{echo '<ul id="activity-nowindow">';}
   $act_users = $wpdb->get_results("SELECT ID, display_name, user_nicename FROM $wpdb->users");
   foreach ($act_users as $act_user) {
 		$act_users_nicename[$act_user->ID]=$act_user->user_nicename;
 		$act_users_display[$act_user->ID]=$act_user->display_name;
 	}
-  $sql  = "SELECT * FROM ".$wpdb->prefix."activity ORDER BY id DESC LIMIT $act_number";
+	if ($act_number < 0){
+    $sql  = "SELECT * FROM ".$wpdb->prefix."activity ORDER BY id DESC";
+  } else {
+    $sql  = "SELECT * FROM ".$wpdb->prefix."activity ORDER BY id DESC LIMIT $act_number";
+  }
 	if ( $act_logins = $wpdb->get_results( $sql)){
     foreach ( (array) $act_logins as $act ){
       $act_user_nicename = $act_users_nicename[$act->user_id];

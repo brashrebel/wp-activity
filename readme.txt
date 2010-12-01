@@ -4,7 +4,7 @@ Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, events, monitor
 Requires at least: 2.8
 Tested up to: 3.0.1
-Stable tag: 0.8.1.1
+Stable tag: 0.9
 
 Display and monitor users activity in backend and frontend of WordPress. For WP single (not tested with WPMU).
 
@@ -26,6 +26,7 @@ User who don't want to appear can hide its activity from profile. In that case, 
 
 Users activity can be followed by RSS feed.
 
+
 Translations :
 
 - French
@@ -40,7 +41,7 @@ Translations :
 3. Activate the plugin through the Wordpress admin,
 4. Go to `Settings > Wp-Activity` and set options that fit your needs.
 5. Put `<?php act_stream() ?>` where you want the stream to appear, or use included widget.
-6. Use `[ACT_STREAM]` to display activity in a page or post.
+6. Use `[ACT_STREAM]` to display activity in a page or post. See FAQ section for parameters.
 
 == Frequently Asked Questions ==
 
@@ -54,15 +55,27 @@ this function accepts two parameters :
 `<?php act_stream(number,title) ?>`
 
 defaults are :
-
 - number = 30
 - title = Recent Activity (translated by .mo)
+
+= Shortcode parameters =
+
+`[ACT_STREAM number="" title=""]`
+
+defaults are :
+- number = 50
+- title = Recent Activity (translated by .mo)
+
+= How do I avoid erasing css tweaks when I update the plugin ? =
+
+Just put a copy of wp-activity.css in your theme dir, it will be processed instead of the css file included with the plugin.
 
 = How do I Change the events generic icons ? =
 
 Just change the icons in the /img directory, but keep the event name (example : to change the login/connect event icon, change the icon named CONNECT.png - names must be in capitals)
 
 = Do you really test your plugin before updating it at the Wordpress Plugin Repository ? =
+
 Hum. I'm testing it on a single Wordpress installation, so it can't really be called "test". That's why there is often updates that just fix the previous ones... Sorry for that.
 
 == Screenshots ==
@@ -72,6 +85,10 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 3. admin screen - manage settings
 
 == ChangeLog ==
+
+= 0.9 =
+* improved shortcode - now with parameters.
+* possible use of an alternate css file in theme directory - avoid erasing css tweaks with plugin updates.
 
 = 0.8.2 =
 * Use of a cookie instead of a session var.
