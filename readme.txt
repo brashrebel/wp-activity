@@ -55,20 +55,24 @@ this function accepts two parameters :
 `<?php act_stream(number,title) ?>`
 
 defaults are :
-- number = 30
-- title = Recent Activity (translated by .mo)
+* number = 30
+* title = Recent Activity (translated by .mo)
 
 = Shortcode parameters =
 
 `[ACT_STREAM number="" title=""]`
 
 defaults are :
-- number = 50
-- title = Recent Activity (translated by .mo)
+* number = no limit
+* title = Recent Activity (translated by .mo)
 
 = How do I avoid erasing css tweaks when I update the plugin ? =
 
 Just put a copy of wp-activity.css in your theme dir, it will be processed instead of the css file included with the plugin.
+
+= How do I display all activity ? =
+
+You must specify "-1" in number parameter. All activity stored in database will be returned.
 
 = How do I Change the events generic icons ? =
 
@@ -86,13 +90,18 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 
 == ChangeLog ==
 
+= 0.9.1 = (Development version)
+* Fixed a XSS vulnerability (Thx again to Julio - http://www.boiteaweb.fr)
+* Admin panel improved
+* Activity archive link in frontend
+
 = 0.9 =
 * improved shortcode - now with parameters.
 * possible use of an alternate css file in theme directory - avoid erasing css tweaks with plugin updates.
 
 = 0.8.2 =
 * Use of a cookie instead of a session var.
-* Fixed a CSRF vulnerability (Thx to Julio - www.boiteaweb.fr)
+* Fixed a CSRF vulnerability (Thx to Julio - http://www.boiteaweb.fr)
 
 = 0.8.1.1 =
 * Bug fix that prevented activity to be displayed in frontend.
