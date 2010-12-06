@@ -1,10 +1,10 @@
 === WP-Activity ===
-Contributors: Dric
+Contributors: Dric1107
 Donate link: http://www.driczone.net/blog
-Tags: stream, activity, community, multi-users, log, events, monitor
+Tags: stream, activity, community, multi-users, log, event, monitor
 Requires at least: 2.8
 Tested up to: 3.0.1
-Stable tag: 0.9
+Stable tag: 1.0
 
 Display and monitor users activity in backend and frontend of WordPress. For WP single (not tested with WPMU).
 
@@ -32,6 +32,8 @@ Translations :
 - French
 - Italian (Partial translation - Thx to Luca)
 
+(If you translated my plugin, thanks to send it to me at cedric@driczone.net )
+
 [Plugin page](http://www.driczone.net/blog/plugins/wp-activity/)
 
 == Installation ==
@@ -47,7 +49,11 @@ Translations :
 
 = How do I enable the user last logon on author or index page ? =
 
-Just put `<?php act_last_connect($author) ?>` in author page, or `<?php act_last_connect() ?>` in index page.
+Use `<?php act_last_connect($author) ?>` in author.php template, or `<?php act_last_connect() ?>` in index page.
+
+= How do I add user activity on it's author page ? =
+
+Use `<?php act_stream_user($author) ?>` in author.php template
 
 = How do I set the events number or the title when not using the widget ? =
 
@@ -58,13 +64,15 @@ defaults are :
 * number = 30
 * title = Recent Activity (translated by .mo)
 
-= Shortcode parameters =
+= Shortcode use =
 
+`[ACT_STREAM]`
 `[ACT_STREAM number="" title=""]`
 
 defaults are :
 * number = no limit
 * title = Recent Activity (translated by .mo)
+
 
 = How do I avoid erasing css tweaks when I update the plugin ? =
 
@@ -78,19 +86,33 @@ You must specify "-1" in number parameter. All activity stored in database will 
 
 Just change the icons in the /img directory, but keep the event name (example : to change the login/connect event icon, change the icon named CONNECT.png - names must be in capitals)
 
-= Do you really test your plugin before updating it at the Wordpress Plugin Repository ? =
+= I added a post and changed the author, and the activity logs have changed too. How could I disable this ? =
+
+You will have to edit wp-activity.php, check line 33 and set `$strict_logs` to **true**.
+
+= I have a poor hosting, is your plugin a big fat resources consumer ? =
+I also have a poor hosting, so I try to keep my plugin as light as I can. But as I am a poor coder, I'm not sure that WP-Activity is the best optimized plugin in the World...
+
+= Do you really test your plugin before publishing new versions at the Wordpress Plugin Repository ? =
 
 Hum. I'm testing it on a single Wordpress installation, so it can't really be called "test". That's why there is often updates that just fix the previous ones... Sorry for that.
+
 
 == Screenshots ==
 
 1. frontend display
-2. admin screen - display activity
-3. admin screen - manage settings
+2. admin screen - activity display
+3. admin screen - one of the settings tabs
+4. admin screen - reset/uninstall tab
 
 == ChangeLog ==
 
-= 0.9.1 = (Development version)
+= 1.0 =
+* Reset/uninstall tab
+* User activity can now be displayed on author page
+* If the author of a post has been changed, the plugin will change it in activity logs too. See FAQ for more details.
+
+= 0.9.1 =
 * Fixed a XSS vulnerability (Thx again to Julio - http://www.boiteaweb.fr)
 * Admin panel improved
 * Activity archive link in frontend

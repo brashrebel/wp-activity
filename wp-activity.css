@@ -8,14 +8,9 @@
 	height: 150px;
 	margin: 10px;
 }
-
 /* Was previously named #activity-nowindow */
 #activity-archive{
   list-style : none;
-}
-
-#activity-admin{
-  	padding: 7px;
 }
 .act_info{
   color: #AAA;
@@ -25,11 +20,6 @@
 	font-weight: bold;
 	float:right;
 	padding-right: 30px;
-}
-#activity-admin tr, #activity-admin td{
-	border: 1px solid #CCC;
-	background-color: #FFF;
-	padding: 3px;
 }
 .activity_date{
 	color: #AAA;
@@ -41,4 +31,7 @@
 }
 .act-old{
 	color: #AAA;
+}
+.activity_warning{
+  color: Red;
 }
