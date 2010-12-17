@@ -3,15 +3,14 @@ Contributors: Dric1107
 Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor
 Requires at least: 2.8
-Tested up to: 3.0.1
-Stable tag: 1.0
+Tested up to: 3.0.3
+Stable tag: 1.1
 
-Display and monitor users activity in backend and frontend of WordPress. For WP single (not tested with WPMU).
+Monitor and display users activity (logins, new posts, new comments, etc.) in backend and frontend of WordPress. Not tested with WPMU (but should work).
 
 == Description ==
 
 This plugin logs registered users events in your blog and displays it in frontend and backend.
-Admin can use this plugin to monitor a multi-users blog activity without displaying it in frontend.
 
 - connections
 - new comments
@@ -19,10 +18,12 @@ Admin can use this plugin to monitor a multi-users blog activity without display
 - new post
 - post edition
 - new link
+- login failures (displayed only in admin panel)
 
+Admin can use this plugin to monitor a multi-users blog activity without displaying it in frontend.
 Users can see what other members do in the blog. Great for multi-users blogs or community blogs.
 
-User who don't want to appear can hide its activity from profile. In that case, this user activity is not stored in database.
+If enabled, user who don't want to be listed in blog activity can hide its own activity by checking a privacy option in the profile page. In that case, this user activity is not stored in database.
 
 Users activity can be followed by RSS feed.
 
@@ -32,7 +33,7 @@ Translations :
 - French
 - Italian (Partial translation - Thx to Luca)
 
-(If you translated my plugin, thanks to send it to me at cedric@driczone.net )
+(If you translated my plugin, please send the translated .po file at cedric@driczone.net )
 
 [Plugin page](http://www.driczone.net/blog/plugins/wp-activity/)
 
@@ -41,9 +42,10 @@ Translations :
 1. Download the plugin and unzip,
 2. Upload the wp-activity folder to your wp-content/plugins folder,
 3. Activate the plugin through the Wordpress admin,
-4. Go to `Settings > Wp-Activity` and set options that fit your needs.
-5. Put `<?php act_stream() ?>` where you want the stream to appear, or use included widget.
+4. Go to `Settings > Wp-Activity` and set options.
+5. Put `<?php act_stream() ?>` where you want the stream to be displayed, or use included widget.
 6. Use `[ACT_STREAM]` to display activity in a page or post. See FAQ section for parameters.
+7. If you renamed your wp-content directory and you want to use RSS feed, change `$wpcontentdir` var in wp-activity-feed.php
 
 == Frequently Asked Questions ==
 
@@ -61,18 +63,20 @@ this function accepts two parameters :
 `<?php act_stream(number,title) ?>`
 
 defaults are :
+
 * number = 30
 * title = Recent Activity (translated by .mo)
 
 = Shortcode use =
 
 `[ACT_STREAM]`
+
 `[ACT_STREAM number="" title=""]`
 
 defaults are :
+
 * number = no limit
 * title = Recent Activity (translated by .mo)
-
 
 = How do I avoid erasing css tweaks when I update the plugin ? =
 
@@ -90,6 +94,13 @@ Just change the icons in the /img directory, but keep the event name (example : 
 
 You will have to edit wp-activity.php, check line 33 and set `$strict_logs` to **true**.
 
+= The RSS feed is not working =
+
+If you renamed your wp-content directory, you have to change `$wpcontentdir` var in ../plugins/wp-activity/wp-activity-feed.php
+
+= I edited a post but wp-activity logged POST_ADD instead of POST_EDIT =
+That's because the post_add event for this post id was removed from the wp-activity database table. Wordpress doesn't have separate actions for adding or editing posts, so the plugin checks in it's table if there was a post creation with the same ID. If found, the plugin logs a post edition. But as the plugin clears old logs (see "Rows limit in database" setting), the post creation event can be previously deleted when the post edition occurs.
+
 = I have a poor hosting, is your plugin a big fat resources consumer ? =
 I also have a poor hosting, so I try to keep my plugin as light as I can. But as I am a poor coder, I'm not sure that WP-Activity is the best optimized plugin in the World...
 
@@ -106,6 +117,12 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 4. admin screen - reset/uninstall tab
 
 == ChangeLog ==
+
+= 1.1 =
+* Fixed RSS feed (it has probably never worked outside of my wordpress test site)
+* Admin can now prevent users to deny logging of their activity.
+* Activity list in admin panel has now the same ergonomy as the standard wp admin lists (with pagination, filtering and ordering).
+* Login failures can now be logged.
 
 = 1.0 =
 * Reset/uninstall tab
