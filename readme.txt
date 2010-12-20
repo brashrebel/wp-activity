@@ -119,7 +119,7 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 == ChangeLog ==
 
 = 1.1 =
-* Fixed RSS feed (it has probably never worked outside of my wordpress test site)
+* Fixed RSS feed (it has probably never worked outside of my wordpress test site).
 * Admin can now prevent users to deny logging of their activity.
 * Activity list in admin panel has now the same ergonomy as the standard wp admin lists (with pagination, filtering and ordering).
 * Login failures can now be logged.
