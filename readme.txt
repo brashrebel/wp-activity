@@ -3,8 +3,8 @@ Contributors: Dric1107
 Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor
 Requires at least: 2.8
-Tested up to: 3.0.3
-Stable tag: 1.1
+Tested up to: 3.0.5
+Stable tag: 1.2
 
 Monitor and display users activity (logins, new posts, new comments, etc.) in backend and frontend of WordPress. Not tested with WPMU (but should work).
 
@@ -117,6 +117,12 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 4. admin screen - reset/uninstall tab
 
 == ChangeLog ==
+
+= 1.2 =
+* Fixed stupids "\n" displayed in plugin admin.
+* Added links in wordpress plugin lists to configure or uninstall WP-Activity.
+* Fixed a misplaced div closing tag (Thx to Mario_7).
+* Added Turkish translation (Thx to Can KAYA - http://www.kartaca.com)
 
 = 1.1 =
 * Fixed RSS feed (it has probably never worked outside of my wordpress test site).

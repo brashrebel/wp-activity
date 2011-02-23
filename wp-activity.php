@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Log and display users activity in backend and frontend of WordPress.
     Author: Dric
-    Version: 1.1
+    Version: 1.2
     Author URI: http://www.driczone.net
 */
 
@@ -27,7 +27,7 @@
 
 // let's initializing all vars
 
-$act_plugin_version = "1.1";
+$act_plugin_version = "1.2";
 
 //If you don't want to keep track of posts authors changes, set this to "true"
 $strict_logs = false;
@@ -104,6 +104,15 @@ function act_install()
 register_activation_hook( __FILE__, 'act_install' );
 register_deactivation_hook(__FILE__, 'act_desactive');
 
+add_filter("plugin_action_links_wp-activity/wp-activity.php", 'act_plugin_action_links');
+function act_plugin_action_links($links)
+{
+    $settings_link = '<a href="options-general.php?page=wp-activity">' . __( 'Settings' ) . '</a>';
+    $uninstall_link = '<a href="options-general.php?page=wp-activity#act_reset">' . __( 'Uninstall' ) . '</a>';
+    array_unshift($links, $settings_link, $uninstall_link);
+    return $links;
+}
+
 //we add actions to hooks to log their events
 add_action('send_headers', 'act_session');
 add_action('profile_update', 'act_profile_edit');
@@ -120,7 +129,7 @@ function act_header(){
   }else{
     echo ACT_URL;
   }
-  echo 'wp-activity.css" />' . "\n";
+  echo 'wp-activity.css" />';
 }
 add_action('wp_head', 'act_header');
 
@@ -496,14 +505,15 @@ function act_pagination($act_count, $limit = 50, $current, $act_start = 0, $args
 		}
 		//next button
 		if ($current < $counter - 1) 
-			$pagination.= "<a class=\"next page-numbers\" href=\"$targetpage&act_page=$next\">&raquo;</a>";
-		$pagination.= "</div>\n";		
+			$pagination.= "<a class=\"next page-numbers\" href=\"$targetpage&act_page=$next\">&raquo;</a>";	
 	}
+	$pagination.= "</div>";	
 	echo $pagination;
 }
 
 function act_admin(){
   global $wpdb, $act_plugin_version;
+  
   $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
   ?>
   <div class="wrap">
@@ -641,18 +651,18 @@ function act_admin(){
                     <input type="submit" value="<?php esc_attr_e('Apply'); ?>" name="doaction" id="doaction" class="button-secondary action" />
                     <?php
                     $types = array('LOGIN_FAIL', 'CONNECT', 'POST_ADD', 'POST_EDIT', 'PROFILE_EDIT', 'LINK_ADD');
-                    $select_type = "<select name=\"act_type_filter\">\n";
-                    $select_type .= '<option value="all"'  . (($act_type_filter == 'all') ? " selected='selected'" : '') . '>' . __('View all') . "</option>\n";
+                    $select_type = "<select name=\"act_type_filter\">";
+                    $select_type .= '<option value="all"'  . (($act_type_filter == 'all') ? " selected='selected'" : '') . '>' . __('View all') . "</option>";
                     foreach ((array) $types as $type)
-  	                  $select_type .= '<option value="' . $type . '"' . (($type == $act_type_filter) ? " selected='selected'" : '') . '>' . $type . "</option>\n";
-                    $select_type .= "</select>\n";
+  	                  $select_type .= '<option value="' . $type . '"' . (($type == $act_type_filter) ? " selected='selected'" : '') . '>' . $type . "</option>";
+                    $select_type .= "</select>";
                     echo $select_type;
-                    $select_order = "<select name=\"act_order_by\">\n";
-                    $select_order .= '<option value="order_date"' . (($act_order_by == 'order_date') ? " selected='selected'" : '') . '>' .  __('Order by date (DESC)', 'wp-activity') . "</option>\n";
-                    $select_order .= '<option value="order_user"' . (($act_order_by == 'order_user') ? " selected='selected'" : '') . '>' .  __('Order by user', 'wp-activity') . "</option>\n";
-                    $select_order .= '<option value="order_type"' . (($act_order_by == 'order_type') ? " selected='selected'" : '') . '>' .  __('Order by event type', 'wp-activity') . "</option>\n";
-                    //$select_order .= '<option value="order_data"' . (($act_order_by == 'order_data') ? " selected='selected'" : '') . '>' .  __('Order by data', 'wp-activity') . "</option>\n";
-                    $select_order .= "</select>\n";
+                    $select_order = "<select name=\"act_order_by\">";
+                    $select_order .= '<option value="order_date"' . (($act_order_by == 'order_date') ? " selected='selected'" : '') . '>' .  __('Order by date (DESC)', 'wp-activity') . "</option>";
+                    $select_order .= '<option value="order_user"' . (($act_order_by == 'order_user') ? " selected='selected'" : '') . '>' .  __('Order by user', 'wp-activity') . "</option>";
+                    $select_order .= '<option value="order_type"' . (($act_order_by == 'order_type') ? " selected='selected'" : '') . '>' .  __('Order by event type', 'wp-activity') . "</option>";
+                    //$select_order .= '<option value="order_data"' . (($act_order_by == 'order_data') ? " selected='selected'" : '') . '>' .  __('Order by data', 'wp-activity') . "</option>";
+                    $select_order .= "</select>";
                     echo $select_order;
                     ?>
                     <input type="submit" id="post-query-submit" value="<?php esc_attr_e('Filter'); ?>" class="button-secondary" />
@@ -720,7 +730,7 @@ function act_admin(){
                         default:
                           break;
                       }
-                      echo '</tr>\n';
+                      echo '</tr>';
                       if ($act_alt == 1){$act_alt = 0;}else{$act_alt = 1;}
                     }
                   }

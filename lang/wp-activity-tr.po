@@ -1,0 +1,324 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-activity\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-07-25 13:40+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Can KAYA <can.kaya@kartaca.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Turkish\n"
+"X-Poedit-Country: TURKEY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity\n"
+"X-Poedit-SearchPath-0: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity\n"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:116
+msgid "Activity events"
+msgstr "Olan Bitenler"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:119
+msgid "Hide my activity :"
+msgstr "Olan Bitenlerimi gizle :"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:193
+msgid "Last logon :"
+msgstr "Son giriş :"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:200
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:339
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:440
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:569
+msgid "Recent Activity"
+msgstr "Olan Biten"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:203
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:23
+#, php-format
+msgid "%s activity RSS Feed"
+msgstr "%s Olan Biten RSS'i"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:229
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:234
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:238
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:242
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:245
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:250
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:37
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:44
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:50
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:56
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:61
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:68
+msgid "View Profile"
+msgstr "Profile Bak"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:229
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:37
+msgid "has logged."
+msgstr "giriş yaptı."
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:234
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:44
+msgid "commented"
+msgstr "yorum yaptı  -"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:238
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:50
+msgid "published"
+msgstr "yayınladı -"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:242
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:56
+msgid "edited"
+msgstr "düzenledi -"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:245
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:61
+msgid "has updated his profile."
+msgstr "profilini güncelledi."
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:250
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:68
+msgid "has added a link to"
+msgstr "bir link ekledi -"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:303
+msgid "weeks"
+msgstr "hafta"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:303
+msgid "week"
+msgstr "hafta"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:304
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:307
+msgid "days"
+msgstr "gün"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:304
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:307
+msgid "day"
+msgstr "gün"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:308
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:311
+msgid "hours"
+msgstr "saat"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:308
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:311
+msgid "hour"
+msgstr "saat"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:312
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:315
+msgid "minutes"
+msgstr "dakika"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:312
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:315
+msgid "minute"
+msgstr "dakika"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:318
+msgid "seconds"
+msgstr "saniye"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:318
+msgid "second"
+msgstr "saniye"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:322
+#, php-format
+msgid "%s ago"
+msgstr "%s önce"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:338
+msgid "rows in db"
+msgstr "veritabanı satırları"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:339
+msgid "Manage"
+msgstr "Yöneti"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:347
+msgid "Activity logs deleted."
+msgstr "Olan Biten kayıtları silindi"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:375
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:377
+msgid "Date format : "
+msgstr "Tarih formatı :"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:382
+msgid "For events that are more than a month old only, or if you dont use relative dates."
+msgstr "Göreli tarihler kullanmadığınız durumlarda, bir aydan daha eski aktiviteler için."
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:384
+msgid "Use relative dates : "
+msgstr "Göreli tarih kullan :"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:387
+msgid "Display options"
+msgstr "Görüntüleme seçenekleri"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:389
+msgid "Display icons : "
+msgstr "Görüntüleme ikonları :"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:390
+msgid "Generic icons "
+msgstr "Standart ikonlar"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:392
+msgid "Gravatars for profile edit and connect events icons"
+msgstr "Profil düzenleme ve bağlantı durumları için Gravatar ikonları"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:393
+msgid "No icons "
+msgstr "İkon yok"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:394
+msgid "Events logging and feeding"
+msgstr "Olan Biten kayıt ve beslemesi"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:396
+msgid "Rows limit in database : "
+msgstr "Veritabanı satır limiti :"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:398
+msgid "Display activity RSS feed : "
+msgstr "Olan Biten RSS göster :"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:400
+msgid "Log in database"
+msgstr "Veritabanı"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:400
+msgid "Display in feed"
+msgstr "RSS'te göster"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:402
+msgid "Login events : "
+msgstr "Sisteme girişler :"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:406
+msgid "Profile update events : "
+msgstr "Profil güncelleme işlemleri :"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:410
+msgid "Post creation/update events : "
+msgstr "Yazı yazma/güncelleme :"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:414
+msgid "New comment events : "
+msgstr "Yeni yorumlar :"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:418
+msgid "New link events : "
+msgstr "Yeni linkler :"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:424
+msgid "Update/clean tables"
+msgstr "Tabloları güncelle/temizle"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:425
+msgid "Warning : cleaning activity table erase all activity logs."
+msgstr "Uyarı : Olan Biten tablosunu temizlemek tüm aktivite kayıtlarını silecektir."
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:427
+msgid "Update settings"
+msgstr "Güncelleme seçenekleri"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:428
+msgid "Clean activity table"
+msgstr "Olan Biten tablosunu temizle"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:430
+msgid "Submit"
+msgstr "Gönder"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:447
+msgid "Page"
+msgstr "Sayfa"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:453
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:512
+msgid "&laquo; Previous Page"
+msgstr "&laquo; Önceki Sayfa"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:459
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:518
+msgid "Next Page &raquo;"
+msgstr "Sonraki Sayfa &raquo;"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:464
+msgid "Date"
+msgstr "Tarih"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:465
+msgid "User"
+msgstr "Kullanıcı"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:466
+msgid "Event Type"
+msgstr "Aktivite Tipi"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:467
+msgid "Data"
+msgstr "Veri"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:525
+#, php-format
+msgid "WP-Activity is a plugin made in France by <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
+msgstr "WP-Activity eklentisi, Fransa'da <a href=\"http://www.driczone.net\">Dric</a> tarafından yapılmıştır. Sürüm <strong>%s</strong>."
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:539
+msgid "Display a stream of registered users events"
+msgstr "Kayıtlı kullanıcıların aktivitelerini akış halinde göster"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:545
+msgid "Wp-Activity Widget"
+msgstr "Wp-Activity Aracı"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:573
+msgid "Title :"
+msgstr "Başlık :"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:577
+msgid "Events number :"
+msgstr "Aktivite sayısı :"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:26
+#, php-format
+msgid "User events of %s"
+msgstr "%s kullanıcısının aktiviteleri"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:36
+msgid "New visit"
+msgstr "Yeni ziyaret"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:41
+msgid "New comment"
+msgstr "Yeni yorum"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:48
+msgid "New post"
+msgstr "Yeni yazı"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:54
+msgid "Post edited"
+msgstr "Yazı güncellendi"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:60
+msgid "Profile edited"
+msgstr "Profil güncellendi"
+
+#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:65
+msgid "New link"
+msgstr "Yeni link"
+
