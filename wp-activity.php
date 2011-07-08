@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Log and display users activity in backend and frontend of WordPress.
     Author: Dric
-    Version: 1.3
+    Version: 1.3.1
     Author URI: http://www.driczone.net
 */
 
@@ -27,7 +27,7 @@
 
 // let's initializing all vars
 
-$act_plugin_version = "1.3"; //Don't change this, of course.
+$act_plugin_version = "1.3.1"; //Don't change this, of course.
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 
@@ -419,10 +419,10 @@ function act_admin_menu(){
   $act_plugin_page = add_options_page('WP-Activity', 'WP-Activity', 8, 'wp-activity', 'act_admin');
   add_action( 'admin_head-'. $act_plugin_page, 'act_header' );
 }
-if (current_user_can('administrator')){
+//if (current_user_can('administrator')){
   add_action('admin_menu', 'act_admin_menu');
   add_action('admin_init','act_admin_scripts');
-}
+//}
 
 function act_rightnow_row(){
   global $wpdb, $user_ID;
@@ -434,9 +434,9 @@ function act_rightnow_row(){
 	echo " <td class=\"t spam\">" . __("Logon fails", 'wp-activity') . "</td>";
   echo "</tr>";
 }
-if (current_user_can('administrator') and $options_act['act_log_failures']){
+//if (current_user_can('administrator') and $options_act['act_log_failures']){
   add_action('right_now_content_table_end', 'act_rightnow_row');
-}
+//}
 
 function act_admin_scripts(){
   wp_enqueue_script('jquery-ui-tabs');
@@ -541,9 +541,6 @@ function act_pagination($act_count, $limit = 50, $current, $act_start = 0, $args
 
 function act_admin(){
   global $wpdb, $act_plugin_version, $act_list_limit;
-  if (!current_user_can('administrator')){
-    echo __('You are not allowed to manage this plugin.', 'wp-activity');
-  }else{
     ?>
     <div class="wrap">
     <div id="icon-users" class="icon32"></div>
@@ -916,7 +913,6 @@ function act_admin(){
       <h4><?php echo sprintf(__('WP-Activity is a plugin by <a href="http://www.driczone.net">Dric</a>. Version <strong>%s</strong>.', 'wp-activity'), $act_plugin_version ) ?></h4>
     </div>
     <?php
-  }
 }
 add_action( 'widgets_init', 'WPActivity_load_widgets' );
 

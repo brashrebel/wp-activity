@@ -4,7 +4,7 @@ Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor
 Requires at least: 2.8
 Tested up to: 3.2
-Stable tag: 1.3
+Stable tag: 1.3.1
 
 Monitor and display users activity (logins, logon failures, new posts, new comments, etc.) in backend and frontend of WordPress.
 
@@ -122,6 +122,9 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 4. admin screen - reset/uninstall tab
 
 == ChangeLog ==
+
+= 1.3.1 =
+* Seurity check removed as it causes fatal error.
 
 = 1.3 =
 * Added logon fails count since last administrator login on "Right Now" admin panel widget.
