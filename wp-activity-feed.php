@@ -48,19 +48,19 @@ function act_feed(){
             $item_title = __('New comment', 'wp-activity');
             $item_comment=get_comment($item->act_params);
             $item_post=get_post($item_comment->comment_post_ID);
-            $item_desc = '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$item->displayname.'</a> '.__('commented', 'wp-activity').' <a href="'.$item_post->post_name.'#comment-'.$item_comment->comment_ID.'">'.$item_post->post_title.'</a>';              
+            $item_desc = '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$item->displayname.'</a> '.__('commented', 'wp-activity').' <a href="'.get_permalink($item_post->ID).'#comment-'.$item_comment->comment_ID.'">'.$item_post->post_title.'</a>';              
             break;
           case 'POST_ADD':
             $flag = ($act_feed_posts) ? true : false ;
             $item_title = __('New post', 'wp-activity');
             $item_post=get_post($item->act_params);
-            $item_desc = '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$item->displayname.'</a> '.__('published', 'wp-activity').' <a href="'.$item_post->post_name.'">'.$item_post->post_title.'</a>';
+            $item_desc = '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$item->displayname.'</a> '.__('published', 'wp-activity').' <a href="'.get_permalink($item_post->ID).'">'.$item_post->post_title.'</a>';
             break;
           case 'POST_EDIT':
             $flag = ($act_feed_posts) ? true : false ;
             $item_title = __('Post edited', 'wp-activity');
             $item_post=get_post($item->act_params);
-            $item_desc = '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$item->displayname.'</a> '.__('edited', 'wp-activity').' <a href="'.$item_post->post_name.'">'.$item_post->post_title.'</a>';
+            $item_desc = '<a href="'.$wp_url.'/author/'.$user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$item->displayname.'</a> '.__('edited', 'wp-activity').' <a href="'.get_permalink($item_post->ID).'">'.$item_post->post_title.'</a>';
             break;
           case 'PROFILE_EDIT':
             $flag = ($act_feed_profiles) ? true : false ;

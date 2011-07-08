@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-activity\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-25 13:40+0200\n"
+"POT-Creation-Date: 2011-07-08 11:18+0100\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Can KAYA <can.kaya@kartaca.com>\n"
+"Last-Translator: Dric\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,309 +16,463 @@ msgstr ""
 "X-Poedit-Basepath: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity\n"
 "X-Poedit-SearchPath-0: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity\n"
 
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:116
-msgid "Activity events"
-msgstr "Olan Bitenler"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:119
-msgid "Hide my activity :"
-msgstr "Olan Bitenlerimi gizle :"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:193
-msgid "Last logon :"
-msgstr "Son giriş :"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:200
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:339
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:440
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:569
-msgid "Recent Activity"
-msgstr "Olan Biten"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:203
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:23
+#: ../wp-activity-feed.php:30
+#: ../wp-activity.php:272
 #, php-format
 msgid "%s activity RSS Feed"
 msgstr "%s Olan Biten RSS'i"
 
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:229
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:234
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:238
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:242
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:245
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:250
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:37
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:44
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:50
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:56
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:61
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:68
-msgid "View Profile"
-msgstr "Profile Bak"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:229
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:37
-msgid "has logged."
-msgstr "giriş yaptı."
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:234
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:44
-msgid "commented"
-msgstr "yorum yaptı  -"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:238
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:50
-msgid "published"
-msgstr "yayınladı -"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:242
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:56
-msgid "edited"
-msgstr "düzenledi -"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:245
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:61
-msgid "has updated his profile."
-msgstr "profilini güncelledi."
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:250
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:68
-msgid "has added a link to"
-msgstr "bir link ekledi -"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:303
-msgid "weeks"
-msgstr "hafta"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:303
-msgid "week"
-msgstr "hafta"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:304
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:307
-msgid "days"
-msgstr "gün"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:304
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:307
-msgid "day"
-msgstr "gün"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:308
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:311
-msgid "hours"
-msgstr "saat"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:308
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:311
-msgid "hour"
-msgstr "saat"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:312
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:315
-msgid "minutes"
-msgstr "dakika"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:312
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:315
-msgid "minute"
-msgstr "dakika"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:318
-msgid "seconds"
-msgstr "saniye"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:318
-msgid "second"
-msgstr "saniye"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:322
-#, php-format
-msgid "%s ago"
-msgstr "%s önce"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:338
-msgid "rows in db"
-msgstr "veritabanı satırları"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:339
-msgid "Manage"
-msgstr "Yöneti"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:347
-msgid "Activity logs deleted."
-msgstr "Olan Biten kayıtları silindi"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:375
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:377
-msgid "Date format : "
-msgstr "Tarih formatı :"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:382
-msgid "For events that are more than a month old only, or if you dont use relative dates."
-msgstr "Göreli tarihler kullanmadığınız durumlarda, bir aydan daha eski aktiviteler için."
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:384
-msgid "Use relative dates : "
-msgstr "Göreli tarih kullan :"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:387
-msgid "Display options"
-msgstr "Görüntüleme seçenekleri"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:389
-msgid "Display icons : "
-msgstr "Görüntüleme ikonları :"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:390
-msgid "Generic icons "
-msgstr "Standart ikonlar"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:392
-msgid "Gravatars for profile edit and connect events icons"
-msgstr "Profil düzenleme ve bağlantı durumları için Gravatar ikonları"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:393
-msgid "No icons "
-msgstr "İkon yok"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:394
-msgid "Events logging and feeding"
-msgstr "Olan Biten kayıt ve beslemesi"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:396
-msgid "Rows limit in database : "
-msgstr "Veritabanı satır limiti :"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:398
-msgid "Display activity RSS feed : "
-msgstr "Olan Biten RSS göster :"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:400
-msgid "Log in database"
-msgstr "Veritabanı"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:400
-msgid "Display in feed"
-msgstr "RSS'te göster"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:402
-msgid "Login events : "
-msgstr "Sisteme girişler :"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:406
-msgid "Profile update events : "
-msgstr "Profil güncelleme işlemleri :"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:410
-msgid "Post creation/update events : "
-msgstr "Yazı yazma/güncelleme :"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:414
-msgid "New comment events : "
-msgstr "Yeni yorumlar :"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:418
-msgid "New link events : "
-msgstr "Yeni linkler :"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:424
-msgid "Update/clean tables"
-msgstr "Tabloları güncelle/temizle"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:425
-msgid "Warning : cleaning activity table erase all activity logs."
-msgstr "Uyarı : Olan Biten tablosunu temizlemek tüm aktivite kayıtlarını silecektir."
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:427
-msgid "Update settings"
-msgstr "Güncelleme seçenekleri"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:428
-msgid "Clean activity table"
-msgstr "Olan Biten tablosunu temizle"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:430
-msgid "Submit"
-msgstr "Gönder"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:447
-msgid "Page"
-msgstr "Sayfa"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:453
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:512
-msgid "&laquo; Previous Page"
-msgstr "&laquo; Önceki Sayfa"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:459
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:518
-msgid "Next Page &raquo;"
-msgstr "Sonraki Sayfa &raquo;"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:464
-msgid "Date"
-msgstr "Tarih"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:465
-msgid "User"
-msgstr "Kullanıcı"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:466
-msgid "Event Type"
-msgstr "Aktivite Tipi"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:467
-msgid "Data"
-msgstr "Veri"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:525
-#, php-format
-msgid "WP-Activity is a plugin made in France by <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
-msgstr "WP-Activity eklentisi, Fransa'da <a href=\"http://www.driczone.net\">Dric</a> tarafından yapılmıştır. Sürüm <strong>%s</strong>."
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:539
-msgid "Display a stream of registered users events"
-msgstr "Kayıtlı kullanıcıların aktivitelerini akış halinde göster"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:545
-msgid "Wp-Activity Widget"
-msgstr "Wp-Activity Aracı"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:573
-msgid "Title :"
-msgstr "Başlık :"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity.php:577
-msgid "Events number :"
-msgstr "Aktivite sayısı :"
-
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:26
+#: ../wp-activity-feed.php:33
 #, php-format
 msgid "User events of %s"
 msgstr "%s kullanıcısının aktiviteleri"
 
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:36
+#: ../wp-activity-feed.php:43
 msgid "New visit"
 msgstr "Yeni ziyaret"
 
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:41
+#: ../wp-activity-feed.php:44
+#: ../wp-activity-feed.php:51
+#: ../wp-activity-feed.php:57
+#: ../wp-activity-feed.php:63
+#: ../wp-activity-feed.php:68
+#: ../wp-activity-feed.php:75
+#: ../wp-activity.php:313
+#: ../wp-activity.php:321
+#: ../wp-activity.php:329
+#: ../wp-activity.php:334
+#: ../wp-activity.php:337
+#: ../wp-activity.php:342
+msgid "View Profile"
+msgstr "Profile Bak"
+
+#: ../wp-activity-feed.php:44
+#: ../wp-activity.php:313
+msgid "has logged."
+msgstr "giriş yaptı."
+
+#: ../wp-activity-feed.php:48
 msgid "New comment"
 msgstr "Yeni yorum"
 
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:48
+#: ../wp-activity-feed.php:51
+#: ../wp-activity.php:321
+msgid "commented"
+msgstr "yorum yaptı  -"
+
+#: ../wp-activity-feed.php:55
 msgid "New post"
 msgstr "Yeni yazı"
 
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:54
+#: ../wp-activity-feed.php:57
+#: ../wp-activity.php:329
+msgid "published"
+msgstr "yayınladı -"
+
+#: ../wp-activity-feed.php:61
 msgid "Post edited"
 msgstr "Yazı güncellendi"
 
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:60
+#: ../wp-activity-feed.php:63
+#: ../wp-activity.php:334
+msgid "edited"
+msgstr "düzenledi -"
+
+#: ../wp-activity-feed.php:67
 msgid "Profile edited"
 msgstr "Profil güncellendi"
 
-#: /home/cankaya/ortak/Gecici/cankaya/pukkalar/pukka/plugins/wp-activity/wp-activity-feed.php:65
+#: ../wp-activity-feed.php:68
+#: ../wp-activity.php:337
+msgid "has updated his profile."
+msgstr "profilini güncelledi."
+
+#: ../wp-activity-feed.php:72
 msgid "New link"
 msgstr "Yeni link"
+
+#: ../wp-activity-feed.php:75
+#: ../wp-activity.php:342
+msgid "has added a link to"
+msgstr "bir link ekledi -"
+
+#: ../wp-activity.php:123
+#, fuzzy
+msgid "Settings"
+msgstr "Güncelleme seçenekleri"
+
+#: ../wp-activity.php:124
+msgid "Uninstall"
+msgstr ""
+
+#: ../wp-activity.php:154
+msgid "Activity events"
+msgstr "Olan Bitenler"
+
+#: ../wp-activity.php:157
+msgid "Hide my activity :"
+msgstr "Olan Bitenlerimi gizle :"
+
+#: ../wp-activity.php:158
+msgid "If selected, this option makes you become invisible in activity events."
+msgstr ""
+
+#: ../wp-activity.php:241
+msgid "Last logon :"
+msgstr "Son giriş :"
+
+#: ../wp-activity.php:269
+#: ../wp-activity.php:648
+#: ../wp-activity.php:663
+#: ../wp-activity.php:960
+msgid "Recent Activity"
+msgstr "Olan Biten"
+
+#: ../wp-activity.php:275
+#, fuzzy, php-format
+msgid "%s activity archive"
+msgstr "%s Olan Biten RSS'i"
+
+#: ../wp-activity.php:275
+msgid "Archives"
+msgstr ""
+
+#: ../wp-activity.php:396
+msgid "weeks"
+msgstr "hafta"
+
+#: ../wp-activity.php:396
+msgid "week"
+msgstr "hafta"
+
+#: ../wp-activity.php:397
+#: ../wp-activity.php:400
+msgid "days"
+msgstr "gün"
+
+#: ../wp-activity.php:397
+#: ../wp-activity.php:400
+msgid "day"
+msgstr "gün"
+
+#: ../wp-activity.php:401
+#: ../wp-activity.php:404
+msgid "hours"
+msgstr "saat"
+
+#: ../wp-activity.php:401
+#: ../wp-activity.php:404
+msgid "hour"
+msgstr "saat"
+
+#: ../wp-activity.php:405
+#: ../wp-activity.php:408
+msgid "minutes"
+msgstr "dakika"
+
+#: ../wp-activity.php:405
+#: ../wp-activity.php:408
+msgid "minute"
+msgstr "dakika"
+
+#: ../wp-activity.php:411
+msgid "seconds"
+msgstr "saniye"
+
+#: ../wp-activity.php:411
+msgid "second"
+msgstr "saniye"
+
+#: ../wp-activity.php:415
+#, php-format
+msgid "%s ago"
+msgstr "%s önce"
+
+#: ../wp-activity.php:434
+msgid "Logon fails"
+msgstr ""
+
+#: ../wp-activity.php:467
+#, php-format
+msgid "Displaying %s&#8211;%s of %s"
+msgstr ""
+
+#: ../wp-activity.php:545
+msgid "You are not allowed to manage this plugin."
+msgstr ""
+
+#: ../wp-activity.php:557
+#, fuzzy
+msgid "Event(s) deleted."
+msgstr "Olan Biten kayıtları silindi"
+
+#: ../wp-activity.php:620
+msgid "Options saved."
+msgstr ""
+
+#: ../wp-activity.php:625
+msgid "Activity logs deleted."
+msgstr "Olan Biten kayıtları silindi"
+
+#: ../wp-activity.php:632
+#: ../wp-activity.php:637
+#, php-format
+msgid "Activity Plugin has been uninstalled. You can now desactivate this plugin : <a href=\"%s\">Plugins Page</a>"
+msgstr ""
+
+#: ../wp-activity.php:649
+#: ../wp-activity.php:782
+#, fuzzy
+msgid "Date format"
+msgstr "Tarih formatı :"
+
+#: ../wp-activity.php:650
+#: ../wp-activity.php:805
+msgid "Display options"
+msgstr "Görüntüleme seçenekleri"
+
+#: ../wp-activity.php:651
+#: ../wp-activity.php:829
+#, fuzzy
+msgid "Privacy options"
+msgstr "Görüntüleme seçenekleri"
+
+#: ../wp-activity.php:652
+#: ../wp-activity.php:842
+msgid "Events logging and feeding"
+msgstr "Olan Biten kayıt ve beslemesi"
+
+#: ../wp-activity.php:653
+#: ../wp-activity.php:884
+msgid "Reset/uninstall"
+msgstr ""
+
+#: ../wp-activity.php:677
+msgid "Bulk Actions"
+msgstr ""
+
+#: ../wp-activity.php:678
+#, fuzzy
+msgid "Delete"
+msgstr "Tarih"
+
+#: ../wp-activity.php:684
+#, fuzzy
+msgid "View all"
+msgstr "Profile Bak"
+
+#: ../wp-activity.php:690
+msgid "Order by date (DESC)"
+msgstr ""
+
+#: ../wp-activity.php:691
+msgid "Order by user"
+msgstr ""
+
+#: ../wp-activity.php:692
+msgid "Order by event type"
+msgstr ""
+
+#: ../wp-activity.php:706
+#: ../wp-activity.php:716
+msgid "Date"
+msgstr "Tarih"
+
+#: ../wp-activity.php:707
+#: ../wp-activity.php:717
+msgid "User"
+msgstr "Kullanıcı"
+
+#: ../wp-activity.php:708
+#: ../wp-activity.php:718
+msgid "Event Type"
+msgstr "Aktivite Tipi"
+
+#: ../wp-activity.php:709
+#: ../wp-activity.php:719
+msgid "Applies to"
+msgstr ""
+
+#: ../wp-activity.php:776
+#, fuzzy
+msgid "Activity logs are empty !"
+msgstr "Olan Biten kayıtları silindi"
+
+#: ../wp-activity.php:785
+msgid "Date format : "
+msgstr "Tarih formatı :"
+
+#: ../wp-activity.php:792
+msgid "For events that are more than a month old only, or if you dont use relative dates."
+msgstr "Göreli tarihler kullanmadığınız durumlarda, bir aydan daha eski aktiviteler için."
+
+#: ../wp-activity.php:795
+msgid "Use relative dates : "
+msgstr "Göreli tarih kullan :"
+
+#: ../wp-activity.php:798
+msgid "Relatives dates exemples : 1 day ago, 22 hours and 3 minutes ago, etc."
+msgstr ""
+
+#: ../wp-activity.php:802
+#: ../wp-activity.php:826
+#: ../wp-activity.php:839
+#: ../wp-activity.php:879
+msgid "Update options &raquo;"
+msgstr ""
+
+#: ../wp-activity.php:808
+msgid "Display icons : "
+msgstr "Görüntüleme ikonları :"
+
+#: ../wp-activity.php:809
+msgid "Generic icons "
+msgstr "Standart ikonlar"
+
+#: ../wp-activity.php:811
+msgid "Gravatars for profile edit and connect events icons"
+msgstr "Profil düzenleme ve bağlantı durumları için Gravatar ikonları"
+
+#: ../wp-activity.php:812
+msgid "No icons "
+msgstr "İkon yok"
+
+#: ../wp-activity.php:814
+msgid "Highlight new activity since last user login : "
+msgstr ""
+
+#: ../wp-activity.php:818
+msgid "Display a link to the activity archive page : "
+msgstr ""
+
+#: ../wp-activity.php:822
+msgid "You have to create a page first, with the [ACT_STREAM] shortcode."
+msgstr ""
+
+#: ../wp-activity.php:832
+msgid "Prevent users to hide their activity : "
+msgstr ""
+
+#: ../wp-activity.php:835
+msgid "Warning : If you activate this option, users won't have the choice to allow or deny the logging of their activity. For privacy respect, this option should stay desactivated."
+msgstr ""
+
+#: ../wp-activity.php:845
+msgid "Rows limit in database : "
+msgstr "Veritabanı satır limiti :"
+
+#: ../wp-activity.php:847
+msgid "Display activity RSS feed : "
+msgstr "Olan Biten RSS göster :"
+
+#: ../wp-activity.php:850
+#, fuzzy
+msgid "Log login failures : "
+msgstr "Sisteme girişler :"
+
+#: ../wp-activity.php:853
+msgid "If you want to log all connexions attempts that failed, enable this option."
+msgstr ""
+
+#: ../wp-activity.php:856
+msgid "Log in database"
+msgstr "Veritabanı"
+
+#: ../wp-activity.php:856
+msgid "Display in feed"
+msgstr "RSS'te göster"
+
+#: ../wp-activity.php:858
+msgid "Login events : "
+msgstr "Sisteme girişler :"
+
+#: ../wp-activity.php:862
+msgid "Profile update events : "
+msgstr "Profil güncelleme işlemleri :"
+
+#: ../wp-activity.php:866
+msgid "Post creation/update events : "
+msgstr "Yazı yazma/güncelleme :"
+
+#: ../wp-activity.php:870
+msgid "New comment events : "
+msgstr "Yeni yorumlar :"
+
+#: ../wp-activity.php:874
+msgid "New link events : "
+msgstr "Yeni linkler :"
+
+#: ../wp-activity.php:887
+#, fuzzy
+msgid "Empty activity table : "
+msgstr "Olan Biten tablosunu temizle"
+
+#: ../wp-activity.php:894
+msgid "Reset logs"
+msgstr ""
+
+#: ../wp-activity.php:894
+msgid ""
+"Empty activity table ? All your activity logs will be deleted.\\n"
+"\\n"
+"Choose [Cancel] to Stop, [OK] to proceed.\\n"
+msgstr ""
+
+#: ../wp-activity.php:895
+msgid "Warning : cleaning activity table erase all activity logs."
+msgstr "Uyarı : Olan Biten tablosunu temizlemek tüm aktivite kayıtlarını silecektir."
+
+#: ../wp-activity.php:899
+#: ../wp-activity.php:906
+msgid "Uninstall plugin"
+msgstr ""
+
+#: ../wp-activity.php:906
+msgid ""
+"Uninstall plugin ? Settings and activity logs will be deleted.\\n"
+"\\n"
+"Choose [Cancel] to Stop, [OK] to proceed.\\n"
+msgstr ""
+
+#: ../wp-activity.php:907
+msgid "Warning : This will delete settings and activity table."
+msgstr ""
+
+#: ../wp-activity.php:916
+#, fuzzy, php-format
+msgid "WP-Activity is a plugin by <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
+msgstr "WP-Activity eklentisi, Fransa'da <a href=\"http://www.driczone.net\">Dric</a> tarafından yapılmıştır. Sürüm <strong>%s</strong>."
+
+#: ../wp-activity.php:930
+msgid "Display a stream of registered users events"
+msgstr "Kayıtlı kullanıcıların aktivitelerini akış halinde göster"
+
+#: ../wp-activity.php:936
+msgid "Wp-Activity Widget"
+msgstr "Wp-Activity Aracı"
+
+#: ../wp-activity.php:964
+msgid "Title :"
+msgstr "Başlık :"
+
+#: ../wp-activity.php:968
+msgid "Events number :"
+msgstr "Aktivite sayısı :"
+
+#~ msgid "rows in db"
+#~ msgstr "veritabanı satırları"
+#~ msgid "Manage"
+#~ msgstr "Yöneti"
+#~ msgid "Update/clean tables"
+#~ msgstr "Tabloları güncelle/temizle"
+#~ msgid "Submit"
+#~ msgstr "Gönder"
+#~ msgid "Page"
+#~ msgstr "Sayfa"
+#~ msgid "&laquo; Previous Page"
+#~ msgstr "&laquo; Önceki Sayfa"
+#~ msgid "Next Page &raquo;"
+#~ msgstr "Sonraki Sayfa &raquo;"
+#~ msgid "Data"
+#~ msgstr "Veri"
 

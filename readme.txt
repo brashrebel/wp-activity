@@ -3,10 +3,10 @@ Contributors: Dric1107
 Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor
 Requires at least: 2.8
-Tested up to: 3.0.5
-Stable tag: 1.2
+Tested up to: 3.2
+Stable tag: 1.3
 
-Monitor and display users activity (logins, new posts, new comments, etc.) in backend and frontend of WordPress. Not tested with WPMU (but should work).
+Monitor and display users activity (logins, logon failures, new posts, new comments, etc.) in backend and frontend of WordPress.
 
 == Description ==
 
@@ -32,10 +32,11 @@ Translations :
 
 - French
 - Italian (Partial translation - Thx to Luca)
+- Turkish (Thx to Can KAYA)
 
 (If you translated my plugin, please send the translated .po file at cedric@driczone.net )
 
-[Plugin page](http://www.driczone.net/blog/plugins/wp-activity/)
+[Plugin page](http://www.driczone.net/blog/plugins/wp-activity/) (French blog but feel free to comment in english)
 
 == Installation ==
 
@@ -94,6 +95,10 @@ Just change the icons in the /img directory, but keep the event name (example : 
 
 You will have to edit wp-activity.php, check line 33 and set `$strict_logs` to **true**.
 
+= I would like to display more or less than 50 lines per page in admin panel of wp_activity =
+
+You have to modify the `$act_list_limit` var near line 534 (at the beginning of act_admin() function)
+
 = The RSS feed is not working =
 
 If you renamed your wp-content directory, you have to change `$wpcontentdir` var in ../plugins/wp-activity/wp-activity-feed.php
@@ -102,7 +107,7 @@ If you renamed your wp-content directory, you have to change `$wpcontentdir` var
 That's because the post_add event for this post id was removed from the wp-activity database table. Wordpress doesn't have separate actions for adding or editing posts, so the plugin checks in it's table if there was a post creation with the same ID. If found, the plugin logs a post edition. But as the plugin clears old logs (see "Rows limit in database" setting), the post creation event can be previously deleted when the post edition occurs.
 
 = I have a poor hosting, is your plugin a big fat resources consumer ? =
-I also have a poor hosting, so I try to keep my plugin as light as I can. But as I am a poor coder, I'm not sure that WP-Activity is the best optimized plugin in the World...
+I also have a poor hosting, so I try to keep my plugin as light as I can.
 
 = Do you really test your plugin before publishing new versions at the Wordpress Plugin Repository ? =
 
@@ -117,6 +122,14 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 4. admin screen - reset/uninstall tab
 
 == ChangeLog ==
+
+= 1.3 =
+* Added logon fails count since last administrator login on "Right Now" admin panel widget.
+* More privileges security added.
+* Corrected a bug with relatives dates.
+
+= 1.2.1 =
+* Fixed bad posts links in admin and RSS logs (Thx again to Mario_7).
 
 = 1.2 =
 * Fixed stupids "\n" displayed in plugin admin.

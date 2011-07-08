@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Activity 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-17 16:07+0100\n"
+"POT-Creation-Date: 2011-07-08 11:20+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Dric\n"
 "Language-Team: Luca Realdi\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../wp-activity-feed.php:30
-#: ../wp-activity.php:250
+#: ../wp-activity.php:272
 #, php-format
 msgid "%s activity RSS Feed"
 msgstr "Feed RSS dell'attività di %s"
@@ -37,17 +37,17 @@ msgstr "Nuova visita"
 #: ../wp-activity-feed.php:63
 #: ../wp-activity-feed.php:68
 #: ../wp-activity-feed.php:75
-#: ../wp-activity.php:296
-#: ../wp-activity.php:304
-#: ../wp-activity.php:312
-#: ../wp-activity.php:317
-#: ../wp-activity.php:320
-#: ../wp-activity.php:325
+#: ../wp-activity.php:313
+#: ../wp-activity.php:321
+#: ../wp-activity.php:329
+#: ../wp-activity.php:334
+#: ../wp-activity.php:337
+#: ../wp-activity.php:342
 msgid "View Profile"
 msgstr "Vedi il profilo"
 
 #: ../wp-activity-feed.php:44
-#: ../wp-activity.php:296
+#: ../wp-activity.php:313
 msgid "has logged."
 msgstr "si è connesso"
 
@@ -56,7 +56,7 @@ msgid "New comment"
 msgstr "Nuovo commento"
 
 #: ../wp-activity-feed.php:51
-#: ../wp-activity.php:304
+#: ../wp-activity.php:321
 msgid "commented"
 msgstr "ha commentato"
 
@@ -65,7 +65,7 @@ msgid "New post"
 msgstr "Nuovo articolo"
 
 #: ../wp-activity-feed.php:57
-#: ../wp-activity.php:312
+#: ../wp-activity.php:329
 msgid "published"
 msgstr "ha pubblicato"
 
@@ -74,7 +74,7 @@ msgid "Post edited"
 msgstr "Articolo modificato"
 
 #: ../wp-activity-feed.php:63
-#: ../wp-activity.php:317
+#: ../wp-activity.php:334
 msgid "edited"
 msgstr "ha modificato"
 
@@ -83,7 +83,7 @@ msgid "Profile edited"
 msgstr "Profilo modificato"
 
 #: ../wp-activity-feed.php:68
-#: ../wp-activity.php:320
+#: ../wp-activity.php:337
 msgid "has updated his profile."
 msgstr "ha modificato il suo profilo"
 
@@ -92,352 +92,367 @@ msgid "New link"
 msgstr "Nuovo link"
 
 #: ../wp-activity-feed.php:75
-#: ../wp-activity.php:325
+#: ../wp-activity.php:342
 msgid "has added a link to"
 msgstr "ha aggiunto un link a "
 
-#: ../wp-activity.php:132
+#: ../wp-activity.php:123
+#, fuzzy
+msgid "Settings"
+msgstr "Aggiorna impostazioni"
+
+#: ../wp-activity.php:124
+msgid "Uninstall"
+msgstr ""
+
+#: ../wp-activity.php:154
 msgid "Activity events"
 msgstr "Attività"
 
-#: ../wp-activity.php:135
+#: ../wp-activity.php:157
 msgid "Hide my activity :"
 msgstr "Nascondi la mia attività"
 
-#: ../wp-activity.php:136
+#: ../wp-activity.php:158
 msgid "If selected, this option makes you become invisible in activity events."
 msgstr ""
 
-#: ../wp-activity.php:219
+#: ../wp-activity.php:241
 msgid "Last logon :"
 msgstr ""
 
-#: ../wp-activity.php:247
-#: ../wp-activity.php:614
-#: ../wp-activity.php:629
-#: ../wp-activity.php:926
+#: ../wp-activity.php:269
+#: ../wp-activity.php:648
+#: ../wp-activity.php:663
+#: ../wp-activity.php:960
 msgid "Recent Activity"
 msgstr "Attività recenti"
 
-#: ../wp-activity.php:253
+#: ../wp-activity.php:275
 #, php-format
 msgid "%s activity archive"
 msgstr ""
 
-#: ../wp-activity.php:253
+#: ../wp-activity.php:275
 msgid "Archives"
 msgstr ""
 
-#: ../wp-activity.php:379
+#: ../wp-activity.php:396
 msgid "weeks"
 msgstr "settimane"
 
-#: ../wp-activity.php:379
+#: ../wp-activity.php:396
 msgid "week"
 msgstr "settimana"
 
-#: ../wp-activity.php:380
-#: ../wp-activity.php:383
+#: ../wp-activity.php:397
+#: ../wp-activity.php:400
 msgid "days"
 msgstr "giorni"
 
-#: ../wp-activity.php:380
-#: ../wp-activity.php:383
+#: ../wp-activity.php:397
+#: ../wp-activity.php:400
 msgid "day"
 msgstr "giorno"
 
-#: ../wp-activity.php:384
-#: ../wp-activity.php:387
+#: ../wp-activity.php:401
+#: ../wp-activity.php:404
 msgid "hours"
 msgstr "ore"
 
-#: ../wp-activity.php:384
-#: ../wp-activity.php:387
+#: ../wp-activity.php:401
+#: ../wp-activity.php:404
 msgid "hour"
 msgstr "ora"
 
-#: ../wp-activity.php:388
-#: ../wp-activity.php:391
+#: ../wp-activity.php:405
+#: ../wp-activity.php:408
 msgid "minutes"
 msgstr "minuti"
 
-#: ../wp-activity.php:388
-#: ../wp-activity.php:391
+#: ../wp-activity.php:405
+#: ../wp-activity.php:408
 msgid "minute"
 msgstr "minuto"
 
-#: ../wp-activity.php:394
+#: ../wp-activity.php:411
 msgid "seconds"
 msgstr "secondi"
 
-#: ../wp-activity.php:394
+#: ../wp-activity.php:411
 msgid "second"
 msgstr "secondo"
 
-#: ../wp-activity.php:398
+#: ../wp-activity.php:415
 #, php-format
 msgid "%s ago"
 msgstr "%s fa"
 
-#: ../wp-activity.php:435
+#: ../wp-activity.php:434
+msgid "Logon fails"
+msgstr ""
+
+#: ../wp-activity.php:467
 #, php-format
 msgid "Displaying %s&#8211;%s of %s"
 msgstr ""
 
-#: ../wp-activity.php:523
+#: ../wp-activity.php:545
+msgid "You are not allowed to manage this plugin."
+msgstr ""
+
+#: ../wp-activity.php:557
 msgid "Event(s) deleted."
 msgstr ""
 
-#: ../wp-activity.php:586
+#: ../wp-activity.php:620
 msgid "Options saved."
 msgstr ""
 
-#: ../wp-activity.php:591
+#: ../wp-activity.php:625
 msgid "Activity logs deleted."
 msgstr "Log attività cancellati"
 
-#: ../wp-activity.php:598
-#: ../wp-activity.php:603
+#: ../wp-activity.php:632
+#: ../wp-activity.php:637
 #, php-format
 msgid "Activity Plugin has been uninstalled. You can now desactivate this plugin : <a href=\"%s\">Plugins Page</a>"
 msgstr ""
 
-#: ../wp-activity.php:615
-#: ../wp-activity.php:748
+#: ../wp-activity.php:649
+#: ../wp-activity.php:782
 msgid "Date format"
 msgstr ""
 
-#: ../wp-activity.php:616
-#: ../wp-activity.php:771
+#: ../wp-activity.php:650
+#: ../wp-activity.php:805
 msgid "Display options"
 msgstr ""
 
-#: ../wp-activity.php:617
-#: ../wp-activity.php:795
+#: ../wp-activity.php:651
+#: ../wp-activity.php:829
 msgid "Privacy options"
 msgstr ""
 
-#: ../wp-activity.php:618
-#: ../wp-activity.php:808
+#: ../wp-activity.php:652
+#: ../wp-activity.php:842
 msgid "Events logging and feeding"
 msgstr "Log e RSS eventi"
 
-#: ../wp-activity.php:619
-#: ../wp-activity.php:850
+#: ../wp-activity.php:653
+#: ../wp-activity.php:884
 msgid "Reset/uninstall"
 msgstr ""
 
-#: ../wp-activity.php:643
+#: ../wp-activity.php:677
 msgid "Bulk Actions"
 msgstr ""
 
-#: ../wp-activity.php:644
+#: ../wp-activity.php:678
 msgid "Delete"
 msgstr ""
 
-#: ../wp-activity.php:650
+#: ../wp-activity.php:684
 msgid "View all"
 msgstr ""
 
-#: ../wp-activity.php:656
+#: ../wp-activity.php:690
 msgid "Order by date (DESC)"
 msgstr ""
 
-#: ../wp-activity.php:657
+#: ../wp-activity.php:691
 msgid "Order by user"
 msgstr ""
 
-#: ../wp-activity.php:658
+#: ../wp-activity.php:692
 msgid "Order by event type"
 msgstr ""
 
-#: ../wp-activity.php:672
-#: ../wp-activity.php:682
+#: ../wp-activity.php:706
+#: ../wp-activity.php:716
 msgid "Date"
 msgstr ""
 
-#: ../wp-activity.php:673
-#: ../wp-activity.php:683
+#: ../wp-activity.php:707
+#: ../wp-activity.php:717
 msgid "User"
 msgstr ""
 
-#: ../wp-activity.php:674
-#: ../wp-activity.php:684
+#: ../wp-activity.php:708
+#: ../wp-activity.php:718
 msgid "Event Type"
 msgstr ""
 
-#: ../wp-activity.php:675
-#: ../wp-activity.php:685
+#: ../wp-activity.php:709
+#: ../wp-activity.php:719
 msgid "Applies to"
 msgstr ""
 
-#: ../wp-activity.php:742
+#: ../wp-activity.php:776
 msgid "Activity logs are empty !"
 msgstr ""
 
-#: ../wp-activity.php:751
+#: ../wp-activity.php:785
 msgid "Date format : "
 msgstr "Formato data:"
 
-#: ../wp-activity.php:758
+#: ../wp-activity.php:792
 msgid "For events that are more than a month old only, or if you dont use relative dates."
 msgstr "Per gli eventi che sono più vecchi solo di un mese o se non si usano le date relative"
 
-#: ../wp-activity.php:761
+#: ../wp-activity.php:795
 msgid "Use relative dates : "
 msgstr ""
 
-#: ../wp-activity.php:764
+#: ../wp-activity.php:798
 msgid "Relatives dates exemples : 1 day ago, 22 hours and 3 minutes ago, etc."
 msgstr ""
 
-#: ../wp-activity.php:768
-#: ../wp-activity.php:792
-#: ../wp-activity.php:805
-#: ../wp-activity.php:845
+#: ../wp-activity.php:802
+#: ../wp-activity.php:826
+#: ../wp-activity.php:839
+#: ../wp-activity.php:879
 msgid "Update options &raquo;"
 msgstr ""
 
-#: ../wp-activity.php:774
+#: ../wp-activity.php:808
 msgid "Display icons : "
 msgstr ""
 
-#: ../wp-activity.php:775
+#: ../wp-activity.php:809
 msgid "Generic icons "
 msgstr ""
 
-#: ../wp-activity.php:777
+#: ../wp-activity.php:811
 msgid "Gravatars for profile edit and connect events icons"
 msgstr ""
 
-#: ../wp-activity.php:778
+#: ../wp-activity.php:812
 msgid "No icons "
 msgstr ""
 
-#: ../wp-activity.php:780
+#: ../wp-activity.php:814
 msgid "Highlight new activity since last user login : "
 msgstr ""
 
-#: ../wp-activity.php:784
+#: ../wp-activity.php:818
 msgid "Display a link to the activity archive page : "
 msgstr ""
 
-#: ../wp-activity.php:788
+#: ../wp-activity.php:822
 msgid "You have to create a page first, with the [ACT_STREAM] shortcode."
 msgstr ""
 
-#: ../wp-activity.php:798
+#: ../wp-activity.php:832
 msgid "Prevent users to hide their activity : "
 msgstr ""
 
-#: ../wp-activity.php:801
+#: ../wp-activity.php:835
 msgid "Warning : If you activate this option, users won't have the choice to allow or deny the logging of their activity. For privacy respect, this option should stay desactivated."
 msgstr ""
 
-#: ../wp-activity.php:811
+#: ../wp-activity.php:845
 msgid "Rows limit in database : "
 msgstr "Limite di righe nel database"
 
-#: ../wp-activity.php:813
+#: ../wp-activity.php:847
 msgid "Display activity RSS feed : "
 msgstr "Attiva il feed RSS per le attività"
 
-#: ../wp-activity.php:816
+#: ../wp-activity.php:850
 msgid "Log login failures : "
 msgstr ""
 
-#: ../wp-activity.php:819
+#: ../wp-activity.php:853
 msgid "If you want to log all connexions attempts that failed, enable this option."
 msgstr ""
 
-#: ../wp-activity.php:822
+#: ../wp-activity.php:856
 msgid "Log in database"
 msgstr "Log in database"
 
-#: ../wp-activity.php:822
+#: ../wp-activity.php:856
 msgid "Display in feed"
 msgstr "Mostra nel feed"
 
-#: ../wp-activity.php:824
+#: ../wp-activity.php:858
 msgid "Login events : "
 msgstr "Esegui il log per i login:"
 
-#: ../wp-activity.php:828
+#: ../wp-activity.php:862
 msgid "Profile update events : "
 msgstr "Esegui il log per gli aggiornamenti di profilo"
 
-#: ../wp-activity.php:832
+#: ../wp-activity.php:866
 msgid "Post creation/update events : "
 msgstr "Esegui il log per la pubblicazione/modifica:"
 
-#: ../wp-activity.php:836
+#: ../wp-activity.php:870
 msgid "New comment events : "
 msgstr "Esegui il log per i nuovi commenti:"
 
-#: ../wp-activity.php:840
+#: ../wp-activity.php:874
 msgid "New link events : "
 msgstr "Esegui il log per i login:"
 
-#: ../wp-activity.php:853
+#: ../wp-activity.php:887
 msgid "Empty activity table : "
 msgstr ""
 
-#: ../wp-activity.php:860
+#: ../wp-activity.php:894
 msgid "Reset logs"
 msgstr ""
 
-#: ../wp-activity.php:860
+#: ../wp-activity.php:894
 msgid ""
 "Empty activity table ? All your activity logs will be deleted.\\n"
 "\\n"
 "Choose [Cancel] to Stop, [OK] to proceed.\\n"
 msgstr ""
 
-#: ../wp-activity.php:861
+#: ../wp-activity.php:895
 msgid "Warning : cleaning activity table erase all activity logs."
 msgstr "Attenzione: svuotare le tabelle comporta la cancellazione dei log di attività"
 
-#: ../wp-activity.php:865
-#: ../wp-activity.php:872
+#: ../wp-activity.php:899
+#: ../wp-activity.php:906
 msgid "Uninstall plugin"
 msgstr ""
 
-#: ../wp-activity.php:872
+#: ../wp-activity.php:906
 msgid ""
 "Uninstall plugin ? Settings and activity logs will be deleted.\\n"
 "\\n"
 "Choose [Cancel] to Stop, [OK] to proceed.\\n"
 msgstr ""
 
-#: ../wp-activity.php:873
+#: ../wp-activity.php:907
 msgid "Warning : This will delete settings and activity table."
 msgstr ""
 
-#: ../wp-activity.php:882
+#: ../wp-activity.php:916
 #, php-format
 msgid "WP-Activity is a plugin by <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
 msgstr "WP-Activity è sviluppato da <a href=\"http://www.driczone.net\">Dric</a>. Versione <strong>%s</strong>."
 
-#: ../wp-activity.php:896
+#: ../wp-activity.php:930
 msgid "Display a stream of registered users events"
 msgstr "Visualizzare un flusso di eventi registrati"
 
-#: ../wp-activity.php:902
+#: ../wp-activity.php:936
 msgid "Wp-Activity Widget"
 msgstr "WP-Activity"
 
-#: ../wp-activity.php:930
+#: ../wp-activity.php:964
 msgid "Title :"
 msgstr "Titolo:"
 
-#: ../wp-activity.php:934
+#: ../wp-activity.php:968
 msgid "Events number :"
 msgstr "Numero di eventi:"
 
 #~ msgid "Update/clean tables"
 #~ msgstr "Aggiorna/Svuota tabelle"
-#~ msgid "Update settings"
-#~ msgstr "Aggiorna impostazioni"
 #~ msgid "Submit"
 #~ msgstr "Salva"
 #~ msgid "put a message in the shoutbox."
