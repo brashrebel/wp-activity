@@ -167,7 +167,7 @@ function act_login_failed($act_user=''){
   global $wpdb, $options_act;
   if ($options_act['act_log_failures'] and $act_user){
     $user_ID = 1; //event has to be linked to a wp user.
-    $act_time=mysql2date("Y-m-d H:i:s", time());
+    $act_time=date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'LOGIN_FAIL', '".$act_time."', '".$act_user."')");
     }
 }
@@ -183,7 +183,7 @@ function act_session(){
   if ($options_act['act_connect'] and !get_usermeta($user_ID, 'act_private')){
     if (!$_COOKIE['act_logged'] and is_user_logged_in()){
       setcookie('act_logged',time());
-      $act_time=mysql2date("Y-m-d H:i:s", time());
+      $act_time=date("Y-m-d H:i:s", time());
       $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$act_time."', '')");
       $act_url = parse_url(get_option('home'));
     }
@@ -199,7 +199,7 @@ add_action('wp_logout', 'act_reinit');
 function act_profile_edit($act_user){
   global $wpdb, $user_ID, $options_act;
   if ($options_act['act_profiles'] and !get_usermeta($user_ID, 'act_private')){
-    $act_time=mysql2date("Y-m-d H:i:s", time());
+    $act_time=date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'PROFILE_EDIT', '".$act_time."', $act_user)");
   }
 }
@@ -207,7 +207,7 @@ function act_profile_edit($act_user){
 function act_post_add($act_post){
   global $wpdb, $user_ID, $options_act;
   if ($options_act['act_posts'] and !get_usermeta($user_ID, 'act_private')){
-    $act_time=mysql2date("Y-m-d H:i:s", time());
+    $act_time=date("Y-m-d H:i:s", time());
     if ($wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."activity WHERE act_params=$act_post AND act_type='POST_ADD'") > 0){
       $act_type='POST_EDIT';
     }else{
@@ -220,7 +220,7 @@ function act_post_add($act_post){
 function act_comment_add($act_comment){
   global $wpdb, $user_ID, $options_act;
   if ($options_act['act_comments'] and !get_usermeta($user_ID, 'act_private')){
-    $act_time=mysql2date("Y-m-d H:i:s", time());
+    $act_time=date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'COMMENT_ADD', '".$act_time."', $act_comment)");
   }
 }
@@ -228,7 +228,7 @@ function act_comment_add($act_comment){
 function act_link_add($act_link){
   global $wpdb, $user_ID, $options_act;
   if ($options_act['act_links'] and !get_usermeta($user_ID, 'act_private')){
-    $act_time=mysql2date("Y-m-d H:i:s", time());
+    $act_time=date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'LINK_ADD', '".$act_time."', $act_link)");
   }
 }
@@ -299,7 +299,7 @@ global $wpdb, $options_act, $user_ID;
       if (!$act_logged[$act->user_id]){
         $act_logged[$act->user_id]="2029-01-01 00:00:01"; //hope this plugin won't be used anymore at this date...
       }
-      echo "act_logged : ".$act_logged[$act->user_id]." - ".strtotime($act_logged[$act->user_id])." - act_date : ".$act->act_date." - ".strtotime($act->act_date)." - diff : ".(strtotime($act_logged[$act->user_id]) - strtotime($act->act_date))."<br />";
+      //echo "act_logged : ".$act_logged[$act->user_id]." - ".strtotime($act_logged[$act->user_id])." - act_date : ".$act->act_date." - ".strtotime($act->act_date)." - diff : ".(strtotime($act_logged[$act->user_id]) - strtotime($act->act_date))."<br />";
       if (((strtotime($act_logged[$act->user_id]) - strtotime($act->act_date)) > 60 AND $act->act_type == 'CONNECT') OR $act->act_type != 'CONNECT'){      
         echo '<li class="login '.$act_old_class.'">';
         if ($options_act['act_icons']== 'g'){
@@ -367,10 +367,10 @@ function nicetime($posted_date, $admin=false) {
     $date_relative = $act_opt['act_date_relative'];
     $date_format = $act_opt['act_date_format'];
     $in_seconds = strtotime($posted_date);
-    $diff = strtotime(mysql2date("Y-m-d H:i:s", time()));   
+    $diff = strtotime(date("Y-m-d H:i:s", time()));   
     $relative_date = '';
     $diff = $diff - $in_seconds;
-    echo "time function : ".time()." mysqldate : ".mysql2date("Y-m-d H:i:s", time())." - time : ".date_i18n("j F Y G \h i \m\i\n",( time() + ( get_option( 'gmt_offset' ) * 3600 ) ))." - in_seconds : ".date_i18n("j F Y G \h i \m\i\n",$in_seconds)." = diff : $diff - gmt_option : ".get_option('gmt_offset')."<br />";
+    //echo "time function : ".time()." mysqldate : ".date("Y-m-d H:i:s", time())." - time : ".date_i18n("j F Y G \h i \m\i\n",( time() + ( get_option( 'gmt_offset' ) * 3600 ) ))." - in_seconds : ".date_i18n("j F Y G \h i \m\i\n",$in_seconds)." = diff : $diff - gmt_option : ".get_option('gmt_offset')."<br />";
     $months = floor($diff/2592000);
     $diff -= $months*2419200;
     $weeks = floor($diff/604800);
