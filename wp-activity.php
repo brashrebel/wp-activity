@@ -347,9 +347,9 @@ global $wpdb, $options_act, $user_ID;
         }
         echo '<span class="activity_date">'.nicetime($act->act_date).'</span>';
         echo '</li>';
+        $i++;
       }
       $act_logged[$act->user_id] = $act->act_date;
-      $i++;
       if ($i >$act_number){
         break;
       }
