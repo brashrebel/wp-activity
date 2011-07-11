@@ -289,7 +289,6 @@ global $wpdb, $options_act, $user_ID;
   }
   $sql .= " ORDER BY act_date DESC";
   $i=1;
-  $act_logged[$act->user_id]=mysql2date("Y-m-d H:i:s", time());
 	if ( $act_logins = $wpdb->get_results( $sql)){
     foreach ( (array) $act_logins as $act ){
       if ($options_act['act_old'] and $act_old_flag > 0 and !$archive){
@@ -297,6 +296,10 @@ global $wpdb, $options_act, $user_ID;
       }else{
         $act_old_class = '';
       }
+      if (!$act_logged[$act->user_id]){
+        $act_logged[$act->user_id]="2029-01-01 00:00:01"; //hope this plugin won't be used anymore at this date...
+      }
+      //echo "act_logged : ".$act_logged[$act->user_id]." - ".strtotime($act_logged[$act->user_id])." - act_date : ".$act->act_date." - ".strtotime($act->act_date)." - diff : ".(strtotime($act_logged[$act->user_id]) - strtotime($act->act_date))."<br />";
       if (((strtotime($act_logged[$act->user_id]) - strtotime($act->act_date)) > 60 AND $act->act_type == 'CONNECT') OR $act->act_type != 'CONNECT'){      
         echo '<li class="login '.$act_old_class.'">';
         if ($options_act['act_icons']== 'g'){
@@ -363,9 +366,11 @@ function nicetime($posted_date, $admin=false) {
     $act_opt=get_option('act_settings');
     $date_relative = $act_opt['act_date_relative'];
     $date_format = $act_opt['act_date_format'];
-    $in_seconds = strtotime($posted_date);   
+    $in_seconds = strtotime($posted_date);
+    $diff = strtotime(mysql2date("Y-m-d H:i:s", time()));   
     $relative_date = '';
-    $diff = time() + (get_option('gmt_offset')*3600)-$in_seconds;
+    $diff = $diff - $in_seconds;
+    //echo "time : ".date_i18n("j F Y G \h i \m\i\n",( time() + ( get_option( 'gmt_offset' ) * 3600 ) ))." - in_seconds : ".date_i18n("j F Y G \h i \m\i\n",$in_seconds)." = diff : $diff - gmt_option : ".get_option('gmt_offset')."<br />";
     $months = floor($diff/2592000);
     $diff -= $months*2419200;
     $weeks = floor($diff/604800);
