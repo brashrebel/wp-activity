@@ -288,9 +288,7 @@ global $wpdb, $options_act, $user_ID;
     $sql .= " AND act_type <> 'LOGIN_FAIL'";
   }
   $sql .= " ORDER BY act_date DESC";
-  if ($act_number > 0){
-    $sql  .= " LIMIT $act_number";
-  }
+  $i=1;
   $act_logged[$act->user_id]=mysql2date("Y-m-d H:i:s", time());
 	if ( $act_logins = $wpdb->get_results( $sql)){
     foreach ( (array) $act_logins as $act ){
@@ -351,6 +349,10 @@ global $wpdb, $options_act, $user_ID;
         echo '</li>';
       }
       $act_logged[$act->user_id] = $act->act_date;
+      $i++;
+      if ($i >$act_number){
+        break;
+      }
     }
   }
   echo '</ul>';
