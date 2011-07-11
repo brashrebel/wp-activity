@@ -291,7 +291,7 @@ global $wpdb, $options_act, $user_ID;
   if ($act_number > 0){
     $sql  .= " LIMIT $act_number";
   }
-  $act_logged[$act_user]=mysql2date("Y-m-d H:i:s", time());
+  $act_logged[$act->user_id]=mysql2date("Y-m-d H:i:s", time());
 	if ( $act_logins = $wpdb->get_results( $sql)){
     foreach ( (array) $act_logins as $act ){
       if ($options_act['act_old'] and $act_old_flag > 0 and !$archive){
@@ -299,7 +299,7 @@ global $wpdb, $options_act, $user_ID;
       }else{
         $act_old_class = '';
       }
-      if (((strtotime($act_logged[$act_user]) - strtotime($act->act_date)) > 60 AND $act->act_type == 'CONNECT') OR $act->act_type != 'CONNECT'){      
+      if (((strtotime($act_logged[$act->user_id]) - strtotime($act->act_date)) > 60 AND $act->act_type == 'CONNECT') OR $act->act_type != 'CONNECT'){      
         echo '<li class="login '.$act_old_class.'">';
         if ($options_act['act_icons']== 'g'){
           echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/'.$act->act_type.'.png" />';
@@ -350,7 +350,7 @@ global $wpdb, $options_act, $user_ID;
         echo '<span class="activity_date">'.nicetime($act->act_date).'</span>';
         echo '</li>';
       }
-      $act_logged[$act_user] = $act->act_date;
+      $act_logged[$act->user_id] = $act->act_date;
     }
   }
   echo '</ul>';
