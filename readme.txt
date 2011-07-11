@@ -123,8 +123,11 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 
 == ChangeLog ==
 
+= 1.3.2 =
+* If two login events occur within a minute, only the first of them is displayed in frontend (double login events reported with facebook login).
+
 = 1.3.1 =
-* Seurity check removed as it causes fatal error.
+* Security check removed as it causes fatal error.
 
 = 1.3 =
 * Added logon fails count since last administrator login on "Right Now" admin panel widget.

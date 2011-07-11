@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Log and display users activity in backend and frontend of WordPress.
     Author: Dric
-    Version: 1.3.1
+    Version: 1.3.2
     Author URI: http://www.driczone.net
 */
 
@@ -27,7 +27,7 @@
 
 // let's initializing all vars
 
-$act_plugin_version = "1.3.1"; //Don't change this, of course.
+$act_plugin_version = "1.3.2"; //Don't change this, of course.
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 
@@ -291,62 +291,66 @@ global $wpdb, $options_act, $user_ID;
   if ($act_number > 0){
     $sql  .= " LIMIT $act_number";
   }
+  $act_logged[$act_user]=mysql2date("Y-m-d H:i:s", time());
 	if ( $act_logins = $wpdb->get_results( $sql)){
     foreach ( (array) $act_logins as $act ){
       if ($options_act['act_old'] and $act_old_flag > 0 and !$archive){
         $act_old_class = 'act-old';
       }else{
         $act_old_class = '';
-      }      
-      echo '<li class="login '.$act_old_class.'">';
-      if ($options_act['act_icons']== 'g'){
-        echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/'.$act->act_type.'.png" />';
-      }elseif ($options_act['act_icons']== 'a'){
-        if ($act->act_type == 'CONNECT' or $act->act_type == 'PROFILE_EDIT'){
-          echo get_avatar( $act->user_id, '16'); ;
-        }else{
+      }
+      if (((strtotime($act_logged[$act_user]) - strtotime($act->act_date)) > 60 AND $act->act_type == 'CONNECT') OR $act->act_type != 'CONNECT'){      
+        echo '<li class="login '.$act_old_class.'">';
+        if ($options_act['act_icons']== 'g'){
           echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/'.$act->act_type.'.png" />';
-        }
-      }
-      switch ($act->act_type){
-        case 'CONNECT':
-          echo '<a href="'.$wp_url.'/author/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act->display_name.'</a> '.__('has logged.', 'wp-activity');
-          if ($act->user_id == $user_ID and $options_act['act_old']){
-            $act_old_flag++;
-          }
-          break;
-        case 'COMMENT_ADD':
-          $act_comment=get_comment($act->act_params);
-          $act_post=get_post($act_comment->comment_post_ID);
-          echo '<a href="'.$wp_url.'/author/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act_comment->comment_author.'</a> '.__('commented', 'wp-activity').' <a href="'.$act_post->post_name.'#comment-'.$act_comment->comment_ID.'">'.$act_post->post_title.'</a>';
-          break;
-        case 'POST_ADD':
-          $act_post=get_post($act->act_params);
-          if ($act->user_id != $act_post->post_author and !$strict_logs){ //this is a check if post author has been changed in admin post edition.
-            $sql = "UPDATE ".$wpdb->prefix."activity SET user_id = '".$act_post->post_author."' WHERE id = '".$act->id."'";
-            $wpdb->query( $sql);
+        }elseif ($options_act['act_icons']== 'a'){
+          if ($act->act_type == 'CONNECT' or $act->act_type == 'PROFILE_EDIT'){
+            echo get_avatar( $act->user_id, '16'); ;
           }else{
-            echo '<a href="'.$wp_url.'/author/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act->display_name.'</a> '.__('published', 'wp-activity').' <a href="'.$act_post->post_name.'">'.$act_post->post_title.'</a>';
+            echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/'.$act->act_type.'.png" />';
           }
-          break;
-        case 'POST_EDIT':
-          $act_post=get_post($act->act_params);
-          echo '<a href="'.$wp_url.'/author/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act->display_name.'</a> '.__('edited', 'wp-activity').' <a href="'.$act_post->post_name.'">'.$act_post->post_title.'</a>';
-          break;
-        case 'PROFILE_EDIT':
-          echo '<a href="'.$wp_url.'/author/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act->display_name.'</a> '.__('has updated his profile.', 'wp-activity');
-          break;
-        case 'LINK_ADD':
-          $act_link = get_bookmark($act->act_params);
-          if ($act_link->link_visible == 'Y'){
-            echo '<a href="'.$wp_url.'/author/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act->display_name.'</a> '.__('has added a link to', 'wp-activity').' <a href="'.$act_link->link_url.'" title="'.$act_link->link_description.'" target="'.$act_link->link_target.'">'.$act_link->link_name.'</a>.';
-          }
-          break;
-        default:
-          break;
+        }
+        switch ($act->act_type){
+          case 'CONNECT':
+              echo '<a href="'.$wp_url.'/author/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act->display_name.'</a> '.__('has logged.', 'wp-activity');
+              if ($act->user_id == $user_ID and $options_act['act_old']){
+                $act_old_flag++;
+              }
+            break;
+          case 'COMMENT_ADD':
+            $act_comment=get_comment($act->act_params);
+            $act_post=get_post($act_comment->comment_post_ID);
+            echo '<a href="'.$wp_url.'/author/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act_comment->comment_author.'</a> '.__('commented', 'wp-activity').' <a href="'.$act_post->post_name.'#comment-'.$act_comment->comment_ID.'">'.$act_post->post_title.'</a>';
+            break;
+          case 'POST_ADD':
+            $act_post=get_post($act->act_params);
+            if ($act->user_id != $act_post->post_author and !$strict_logs){ //this is a check if post author has been changed in admin post edition.
+              $sql = "UPDATE ".$wpdb->prefix."activity SET user_id = '".$act_post->post_author."' WHERE id = '".$act->id."'";
+              $wpdb->query( $sql);
+            }else{
+              echo '<a href="'.$wp_url.'/author/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act->display_name.'</a> '.__('published', 'wp-activity').' <a href="'.$act_post->post_name.'">'.$act_post->post_title.'</a>';
+            }
+            break;
+          case 'POST_EDIT':
+            $act_post=get_post($act->act_params);
+            echo '<a href="'.$wp_url.'/author/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act->display_name.'</a> '.__('edited', 'wp-activity').' <a href="'.$act_post->post_name.'">'.$act_post->post_title.'</a>';
+            break;
+          case 'PROFILE_EDIT':
+            echo '<a href="'.$wp_url.'/author/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act->display_name.'</a> '.__('has updated his profile.', 'wp-activity');
+            break;
+          case 'LINK_ADD':
+            $act_link = get_bookmark($act->act_params);
+            if ($act_link->link_visible == 'Y'){
+              echo '<a href="'.$wp_url.'/author/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act->display_name.'</a> '.__('has added a link to', 'wp-activity').' <a href="'.$act_link->link_url.'" title="'.$act_link->link_description.'" target="'.$act_link->link_target.'">'.$act_link->link_name.'</a>.';
+            }
+            break;
+          default:
+            break;
+        }
+        echo '<span class="activity_date">'.nicetime($act->act_date).'</span>';
+        echo '</li>';
       }
-      echo '<span class="activity_date">'.nicetime($act->act_date).'</span>';
-      echo '</li>';
+      $act_logged[$act_user] = $act->act_date;
     }
   }
   echo '</ul>';
