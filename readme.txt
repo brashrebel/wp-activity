@@ -4,7 +4,7 @@ Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor
 Requires at least: 2.8
 Tested up to: 3.2
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 
 Monitor and display users activity (logins, logon failures, new posts, new comments, etc.) in backend and frontend of WordPress.
 
@@ -125,6 +125,7 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 
 = 1.3.2 =
 * If two login events occur within a minute, only the first of them is displayed in frontend (double login events reported with facebook login).
+* Corrected another bug with dates (Thx to Royzzz - http://www.roypoots.nl)
 
 = 1.3.1 =
 * Security check removed as it causes fatal error.
