@@ -3,8 +3,8 @@ Contributors: Dric1107
 Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor
 Requires at least: 2.8
-Tested up to: 3.2
-Stable tag: 1.3.2
+Tested up to: 3.2.1
+Stable tag: 1.4
 
 Monitor and display users activity (logins, logon failures, new posts, new comments, etc.) in backend and frontend of WordPress.
 
@@ -32,7 +32,8 @@ Translations :
 
 - French
 - Italian (Partial translation - Thx to Luca)
-- Turkish (Thx to Can KAYA)
+- Turkish (Thx to Can KAYA - translated up to v1.2)
+- Spanish (Thx to Cscean - translated up to v1.3)
 
 (If you translated my plugin, please send the translated .po file at cedric@driczone.net )
 
@@ -87,17 +88,25 @@ Just put a copy of wp-activity.css in your theme dir, it will be processed inste
 
 You must specify "-1" in number parameter. All activity stored in database will be returned.
 
+= How do I change author page links ? =
+
+Change the value in the plugin administration, under display options tab.
+
 = How do I Change the events generic icons ? =
 
 Just change the icons in the /img directory, but keep the event name (example : to change the login/connect event icon, change the icon named CONNECT.png - names must be in capitals)
 
 = I added a post and changed the author, and the activity logs have changed too. How could I disable this ? =
 
-You will have to edit wp-activity.php, check line 33 and set `$strict_logs` to **true**.
+You will have to edit wp-activity.php, check line 32 and set `$strict_logs` to **true**.
 
 = I would like to display more or less than 50 lines per page in admin panel of wp_activity =
 
-You have to modify the `$act_list_limit` var near line 534 (at the beginning of act_admin() function)
+You have to modify the `$act_list_limit` var line 31 of wp-activity.php.
+
+= I don't need the last login column in user list or I don't need the last login failures in admin panel =
+
+You have to modify the `$no_admin_mess` var line 33 of wp-activity.php and set it to **true**.
 
 = The RSS feed is not working =
 
@@ -107,7 +116,7 @@ If you renamed your wp-content directory, you have to change `$wpcontentdir` var
 That's because the post_add event for this post id was removed from the wp-activity database table. Wordpress doesn't have separate actions for adding or editing posts, so the plugin checks in it's table if there was a post creation with the same ID. If found, the plugin logs a post edition. But as the plugin clears old logs (see "Rows limit in database" setting), the post creation event can be previously deleted when the post edition occurs.
 
 = I have a poor hosting, is your plugin a big fat resources consumer ? =
-I also have a poor hosting, so I try to keep my plugin as light as I can.
+I also have a poor hosting, so I try to keep my plugin as light as I can. But for more performance, do not display the users gravatars in activity list.
 
 = Do you really test your plugin before publishing new versions at the Wordpress Plugin Repository ? =
 
@@ -122,6 +131,13 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 4. admin screen - reset/uninstall tab
 
 == ChangeLog ==
+
+= 1.4 =
+* Added a 'Last Login' column in WP-Admin user list page.
+* Added an option to change the author page links when your permalink structure for authors is not 'author'.
+* Added a widget to display to a logged user its own activity.
+* Fixed a css conflit when using jquery.tabs in another plugin (Thx to Cscean - http://cscean.es/)
+* Added Spanish Translation (Thx to Cscean - http://cscean.es/)
 
 = 1.3.2 =
 * If two login events occur within a minute, only the first of them is displayed in frontend (double login events reported with facebook login).
