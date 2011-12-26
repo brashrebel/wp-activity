@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-activity\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-20 10:27+0100\n"
+"POT-Creation-Date: 2011-12-26 15:09+0100\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Dric\n"
+"Last-Translator: Dric <cedric@driczone.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,532 +16,35 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../wp-activity-bp.php:123
-#: ../wp-activity.php:128
-#, fuzzy
-msgid "Settings"
-msgstr "Güncelleme seçenekleri"
-
-#: ../wp-activity-bp.php:124
-#: ../wp-activity.php:129
-msgid "Uninstall"
-msgstr ""
-
-#: ../wp-activity-bp.php:154
-#: ../wp-activity.php:159
-msgid "Activity events"
-msgstr "Olan Bitenler"
-
-#: ../wp-activity-bp.php:157
-#: ../wp-activity.php:162
-msgid "Hide my activity :"
-msgstr "Olan Bitenlerimi gizle :"
-
-#: ../wp-activity-bp.php:158
-#: ../wp-activity.php:163
-msgid "If selected, this option makes you become invisible in activity events."
-msgstr ""
-
-#: ../wp-activity-bp.php:241
-#: ../wp-activity.php:246
-msgid "Last logon :"
-msgstr "Son giriş :"
-
-#: ../wp-activity-bp.php:269
-#: ../wp-activity-bp.php:657
-#: ../wp-activity-bp.php:672
-#: ../wp-activity-bp.php:968
-#: ../wp-activity.php:274
-#: ../wp-activity.php:683
-#: ../wp-activity.php:698
-#: ../wp-activity.php:1002
-msgid "Recent Activity"
-msgstr "Olan Biten"
-
-#: ../wp-activity-bp.php:272
-#: ../wp-activity-feed.php:30
-#: ../wp-activity.php:277
-#, php-format
-msgid "%s activity RSS Feed"
-msgstr "%s Olan Biten RSS'i"
-
-#: ../wp-activity-bp.php:275
-#: ../wp-activity.php:280
-#, fuzzy, php-format
-msgid "%s activity archive"
-msgstr "%s Olan Biten RSS'i"
-
-#: ../wp-activity-bp.php:275
-#: ../wp-activity.php:280
-msgid "Archives"
-msgstr ""
-
-#: ../wp-activity-bp.php:316
-#: ../wp-activity-bp.php:324
-#: ../wp-activity-bp.php:332
-#: ../wp-activity-bp.php:337
-#: ../wp-activity-bp.php:340
-#: ../wp-activity-bp.php:345
-#: ../wp-activity-feed.php:44
-#: ../wp-activity-feed.php:51
-#: ../wp-activity-feed.php:57
-#: ../wp-activity-feed.php:63
-#: ../wp-activity-feed.php:68
-#: ../wp-activity-feed.php:75
-#: ../wp-activity.php:321
-#: ../wp-activity.php:329
-#: ../wp-activity.php:337
-#: ../wp-activity.php:342
-#: ../wp-activity.php:345
-#: ../wp-activity.php:350
-msgid "View Profile"
-msgstr "Profile Bak"
-
-#: ../wp-activity-bp.php:316
-#: ../wp-activity-feed.php:44
-#: ../wp-activity.php:321
-msgid "has logged."
-msgstr "giriş yaptı."
-
-#: ../wp-activity-bp.php:324
-#: ../wp-activity-feed.php:51
-#: ../wp-activity.php:329
-msgid "commented"
-msgstr "yorum yaptı  -"
-
-#: ../wp-activity-bp.php:332
-#: ../wp-activity-feed.php:57
-#: ../wp-activity.php:337
-msgid "published"
-msgstr "yayınladı -"
-
-#: ../wp-activity-bp.php:337
-#: ../wp-activity-feed.php:63
-#: ../wp-activity.php:342
-msgid "edited"
-msgstr "düzenledi -"
-
-#: ../wp-activity-bp.php:340
-#: ../wp-activity-feed.php:68
-#: ../wp-activity.php:345
-msgid "has updated his profile."
-msgstr "profilini güncelledi."
-
-#: ../wp-activity-bp.php:345
-#: ../wp-activity-feed.php:75
-#: ../wp-activity.php:350
-msgid "has added a link to"
-msgstr "bir link ekledi -"
-
-#: ../wp-activity-bp.php:408
-#: ../wp-activity.php:413
-msgid "weeks"
-msgstr "hafta"
-
-#: ../wp-activity-bp.php:408
-#: ../wp-activity.php:413
-msgid "week"
-msgstr "hafta"
-
-#: ../wp-activity-bp.php:409
-#: ../wp-activity-bp.php:412
-#: ../wp-activity.php:414
-#: ../wp-activity.php:417
-msgid "days"
-msgstr "gün"
-
-#: ../wp-activity-bp.php:409
-#: ../wp-activity-bp.php:412
-#: ../wp-activity.php:414
-#: ../wp-activity.php:417
-msgid "day"
-msgstr "gün"
-
-#: ../wp-activity-bp.php:413
-#: ../wp-activity-bp.php:416
-#: ../wp-activity.php:418
-#: ../wp-activity.php:421
-msgid "hours"
-msgstr "saat"
-
-#: ../wp-activity-bp.php:413
-#: ../wp-activity-bp.php:416
-#: ../wp-activity.php:418
-#: ../wp-activity.php:421
-msgid "hour"
-msgstr "saat"
-
-#: ../wp-activity-bp.php:417
-#: ../wp-activity-bp.php:420
-#: ../wp-activity.php:422
-#: ../wp-activity.php:425
-msgid "minutes"
-msgstr "dakika"
-
-#: ../wp-activity-bp.php:417
-#: ../wp-activity-bp.php:420
-#: ../wp-activity.php:422
-#: ../wp-activity.php:425
-msgid "minute"
-msgstr "dakika"
-
-#: ../wp-activity-bp.php:423
-#: ../wp-activity.php:428
-msgid "seconds"
-msgstr "saniye"
-
-#: ../wp-activity-bp.php:423
-#: ../wp-activity.php:428
-msgid "second"
-msgstr "saniye"
-
-#: ../wp-activity-bp.php:427
-#: ../wp-activity.php:432
-#, php-format
-msgid "%s ago"
-msgstr "%s önce"
-
-#: ../wp-activity-bp.php:446
-#: ../wp-activity.php:460
-msgid "Logon fails"
-msgstr ""
-
-#: ../wp-activity-bp.php:479
-#: ../wp-activity.php:501
-#, php-format
-msgid "Displaying %s&#8211;%s of %s"
-msgstr ""
-
-#: ../wp-activity-bp.php:566
-#: ../wp-activity.php:588
-#, fuzzy
-msgid "Event(s) deleted."
-msgstr "Olan Biten kayıtları silindi"
-
-#: ../wp-activity-bp.php:629
-#: ../wp-activity.php:655
-msgid "Options saved."
-msgstr ""
-
-#: ../wp-activity-bp.php:634
-#: ../wp-activity.php:660
-msgid "Activity logs deleted."
-msgstr "Olan Biten kayıtları silindi"
-
-#: ../wp-activity-bp.php:641
-#: ../wp-activity-bp.php:646
-#: ../wp-activity.php:667
-#: ../wp-activity.php:672
-#, php-format
-msgid "Activity Plugin has been uninstalled. You can now desactivate this plugin : <a href=\"%s\">Plugins Page</a>"
-msgstr ""
-
-#: ../wp-activity-bp.php:658
-#: ../wp-activity-bp.php:791
-#: ../wp-activity.php:684
-#: ../wp-activity.php:817
-#, fuzzy
-msgid "Date format"
-msgstr "Tarih formatı :"
-
-#: ../wp-activity-bp.php:659
-#: ../wp-activity-bp.php:814
-#: ../wp-activity.php:685
-#: ../wp-activity.php:840
-msgid "Display options"
-msgstr "Görüntüleme seçenekleri"
-
-#: ../wp-activity-bp.php:660
-#: ../wp-activity-bp.php:838
-#: ../wp-activity.php:686
-#: ../wp-activity.php:871
-#, fuzzy
-msgid "Privacy options"
-msgstr "Görüntüleme seçenekleri"
-
-#: ../wp-activity-bp.php:661
-#: ../wp-activity-bp.php:851
-#: ../wp-activity.php:687
-#: ../wp-activity.php:884
-msgid "Events logging and feeding"
-msgstr "Olan Biten kayıt ve beslemesi"
-
-#: ../wp-activity-bp.php:662
-#: ../wp-activity-bp.php:893
-#: ../wp-activity.php:688
-#: ../wp-activity.php:926
-msgid "Reset/uninstall"
-msgstr ""
-
-#: ../wp-activity-bp.php:686
-#: ../wp-activity.php:712
-msgid "Bulk Actions"
-msgstr ""
-
-#: ../wp-activity-bp.php:687
-#: ../wp-activity.php:713
-#, fuzzy
-msgid "Delete"
-msgstr "Tarih"
-
-#: ../wp-activity-bp.php:693
-#: ../wp-activity.php:719
-#, fuzzy
-msgid "View all"
-msgstr "Profile Bak"
-
-#: ../wp-activity-bp.php:699
-#: ../wp-activity.php:725
-msgid "Order by date (DESC)"
-msgstr ""
-
-#: ../wp-activity-bp.php:700
-#: ../wp-activity.php:726
-msgid "Order by user"
-msgstr ""
-
-#: ../wp-activity-bp.php:701
-#: ../wp-activity.php:727
-msgid "Order by event type"
-msgstr ""
-
-#: ../wp-activity-bp.php:715
-#: ../wp-activity-bp.php:725
-#: ../wp-activity.php:741
-#: ../wp-activity.php:751
+#: ../wp-activity-export.php:52
+#: ../wp-activity.php:744
+#: ../wp-activity.php:754
 msgid "Date"
 msgstr "Tarih"
 
-#: ../wp-activity-bp.php:716
-#: ../wp-activity-bp.php:726
-#: ../wp-activity.php:742
-#: ../wp-activity.php:752
+#: ../wp-activity-export.php:52
+#: ../wp-activity.php:745
+#: ../wp-activity.php:755
 msgid "User"
 msgstr "Kullanıcı"
 
-#: ../wp-activity-bp.php:717
-#: ../wp-activity-bp.php:727
-#: ../wp-activity.php:743
-#: ../wp-activity.php:753
+#: ../wp-activity-export.php:52
+#: ../wp-activity.php:746
+#: ../wp-activity.php:756
 msgid "Event Type"
 msgstr "Aktivite Tipi"
 
-#: ../wp-activity-bp.php:718
-#: ../wp-activity-bp.php:728
-#: ../wp-activity.php:744
-#: ../wp-activity.php:754
+#: ../wp-activity-export.php:52
+#: ../wp-activity.php:747
+#: ../wp-activity.php:757
 msgid "Applies to"
 msgstr ""
 
-#: ../wp-activity-bp.php:785
-#: ../wp-activity.php:811
-#, fuzzy
-msgid "Activity logs are empty !"
-msgstr "Olan Biten kayıtları silindi"
-
-#: ../wp-activity-bp.php:794
-#: ../wp-activity.php:820
-msgid "Date format : "
-msgstr "Tarih formatı :"
-
-#: ../wp-activity-bp.php:801
-#: ../wp-activity.php:827
-msgid "For events that are more than a month old only, or if you dont use relative dates."
-msgstr "Göreli tarihler kullanmadığınız durumlarda, bir aydan daha eski aktiviteler için."
-
-#: ../wp-activity-bp.php:804
-#: ../wp-activity.php:830
-msgid "Use relative dates : "
-msgstr "Göreli tarih kullan :"
-
-#: ../wp-activity-bp.php:807
-#: ../wp-activity.php:833
-msgid "Relatives dates exemples : 1 day ago, 22 hours and 3 minutes ago, etc."
-msgstr ""
-
-#: ../wp-activity-bp.php:811
-#: ../wp-activity-bp.php:835
-#: ../wp-activity-bp.php:848
-#: ../wp-activity-bp.php:888
-#: ../wp-activity.php:837
-#: ../wp-activity.php:868
-#: ../wp-activity.php:881
-#: ../wp-activity.php:921
-msgid "Update options &raquo;"
-msgstr ""
-
-#: ../wp-activity-bp.php:817
-#: ../wp-activity.php:843
-msgid "Display icons : "
-msgstr "Görüntüleme ikonları :"
-
-#: ../wp-activity-bp.php:818
-#: ../wp-activity.php:844
-msgid "Generic icons "
-msgstr "Standart ikonlar"
-
-#: ../wp-activity-bp.php:820
-#: ../wp-activity.php:846
-msgid "Gravatars for profile edit and connect events icons"
-msgstr "Profil düzenleme ve bağlantı durumları için Gravatar ikonları"
-
-#: ../wp-activity-bp.php:821
-#: ../wp-activity.php:847
-msgid "No icons "
-msgstr "İkon yok"
-
-#: ../wp-activity-bp.php:823
-#: ../wp-activity.php:849
-msgid "Highlight new activity since last user login : "
-msgstr ""
-
-#: ../wp-activity-bp.php:827
-#: ../wp-activity.php:853
-msgid "Display a link to the activity archive page : "
-msgstr ""
-
-#: ../wp-activity-bp.php:831
-#: ../wp-activity.php:857
-msgid "You have to create a page first, with the [ACT_STREAM] shortcode."
-msgstr ""
-
-#: ../wp-activity-bp.php:841
-#: ../wp-activity.php:874
-msgid "Prevent users to hide their activity : "
-msgstr ""
-
-#: ../wp-activity-bp.php:844
-#: ../wp-activity.php:877
-msgid "Warning : If you activate this option, users won't have the choice to allow or deny the logging of their activity. For privacy respect, this option should stay desactivated."
-msgstr ""
-
-#: ../wp-activity-bp.php:854
-#: ../wp-activity.php:887
-msgid "Rows limit in database : "
-msgstr "Veritabanı satır limiti :"
-
-#: ../wp-activity-bp.php:856
-#: ../wp-activity.php:889
-msgid "Display activity RSS feed : "
-msgstr "Olan Biten RSS göster :"
-
-#: ../wp-activity-bp.php:859
-#: ../wp-activity.php:892
-#, fuzzy
-msgid "Log login failures : "
-msgstr "Sisteme girişler :"
-
-#: ../wp-activity-bp.php:862
-#: ../wp-activity.php:895
-msgid "If you want to log all connexions attempts that failed, enable this option."
-msgstr ""
-
-#: ../wp-activity-bp.php:865
-#: ../wp-activity.php:898
-msgid "Log in database"
-msgstr "Veritabanı"
-
-#: ../wp-activity-bp.php:865
-#: ../wp-activity.php:898
-msgid "Display in feed"
-msgstr "RSS'te göster"
-
-#: ../wp-activity-bp.php:867
-#: ../wp-activity.php:900
-msgid "Login events : "
-msgstr "Sisteme girişler :"
-
-#: ../wp-activity-bp.php:871
-#: ../wp-activity.php:904
-msgid "Profile update events : "
-msgstr "Profil güncelleme işlemleri :"
-
-#: ../wp-activity-bp.php:875
-#: ../wp-activity.php:908
-msgid "Post creation/update events : "
-msgstr "Yazı yazma/güncelleme :"
-
-#: ../wp-activity-bp.php:879
-#: ../wp-activity.php:912
-msgid "New comment events : "
-msgstr "Yeni yorumlar :"
-
-#: ../wp-activity-bp.php:883
-#: ../wp-activity.php:916
-msgid "New link events : "
-msgstr "Yeni linkler :"
-
-#: ../wp-activity-bp.php:896
-#: ../wp-activity.php:929
-#, fuzzy
-msgid "Empty activity table : "
-msgstr "Olan Biten tablosunu temizle"
-
-#: ../wp-activity-bp.php:903
-#: ../wp-activity.php:936
-msgid "Reset logs"
-msgstr ""
-
-#: ../wp-activity-bp.php:903
-#: ../wp-activity.php:936
-msgid ""
-"Empty activity table ? All your activity logs will be deleted.\\n"
-"\\n"
-"Choose [Cancel] to Stop, [OK] to proceed.\\n"
-msgstr ""
-
-#: ../wp-activity-bp.php:904
-#: ../wp-activity.php:937
-msgid "Warning : cleaning activity table erase all activity logs."
-msgstr "Uyarı : Olan Biten tablosunu temizlemek tüm aktivite kayıtlarını silecektir."
-
-#: ../wp-activity-bp.php:908
-#: ../wp-activity-bp.php:915
-#: ../wp-activity.php:941
-#: ../wp-activity.php:948
-msgid "Uninstall plugin"
-msgstr ""
-
-#: ../wp-activity-bp.php:915
-#: ../wp-activity.php:948
-msgid ""
-"Uninstall plugin ? Settings and activity logs will be deleted.\\n"
-"\\n"
-"Choose [Cancel] to Stop, [OK] to proceed.\\n"
-msgstr ""
-
-#: ../wp-activity-bp.php:916
-#: ../wp-activity.php:949
-msgid "Warning : This will delete settings and activity table."
-msgstr ""
-
-#: ../wp-activity-bp.php:925
-#: ../wp-activity.php:958
-#, fuzzy, php-format
-msgid "WP-Activity is a plugin by <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
-msgstr "WP-Activity eklentisi, Fransa'da <a href=\"http://www.driczone.net\">Dric</a> tarafından yapılmıştır. Sürüm <strong>%s</strong>."
-
-#: ../wp-activity-bp.php:938
-#: ../wp-activity.php:972
-msgid "Display a stream of registered users events"
-msgstr "Kayıtlı kullanıcıların aktivitelerini akış halinde göster"
-
-#: ../wp-activity-bp.php:944
-#: ../wp-activity.php:978
-msgid "Wp-Activity Widget"
-msgstr "Wp-Activity Aracı"
-
-#: ../wp-activity-bp.php:972
-#: ../wp-activity.php:1006
-#: ../wp-activity.php:1069
-msgid "Title :"
-msgstr "Başlık :"
-
-#: ../wp-activity-bp.php:976
-#: ../wp-activity.php:1010
-#: ../wp-activity.php:1073
-msgid "Events number :"
-msgstr "Aktivite sayısı :"
+#: ../wp-activity-feed.php:30
+#: ../wp-activity.php:279
+#, php-format
+msgid "%s activity RSS Feed"
+msgstr "%s Olan Biten RSS'i"
 
 #: ../wp-activity-feed.php:33
 #, php-format
@@ -552,78 +55,483 @@ msgstr "%s kullanıcısının aktiviteleri"
 msgid "New visit"
 msgstr "Yeni ziyaret"
 
+#: ../wp-activity-feed.php:44
+#: ../wp-activity-feed.php:51
+#: ../wp-activity-feed.php:57
+#: ../wp-activity-feed.php:63
+#: ../wp-activity-feed.php:68
+#: ../wp-activity-feed.php:75
+#: ../wp-activity.php:322
+#: ../wp-activity.php:330
+#: ../wp-activity.php:338
+#: ../wp-activity.php:343
+#: ../wp-activity.php:346
+#: ../wp-activity.php:351
+msgid "View Profile"
+msgstr "Profile Bak"
+
+#: ../wp-activity-feed.php:44
+#: ../wp-activity.php:322
+msgid "has logged."
+msgstr "giriş yaptı."
+
 #: ../wp-activity-feed.php:48
 msgid "New comment"
 msgstr "Yeni yorum"
+
+#: ../wp-activity-feed.php:51
+#: ../wp-activity.php:330
+msgid "commented"
+msgstr "yorum yaptı  -"
 
 #: ../wp-activity-feed.php:55
 msgid "New post"
 msgstr "Yeni yazı"
 
+#: ../wp-activity-feed.php:57
+#: ../wp-activity.php:338
+msgid "published"
+msgstr "yayınladı -"
+
 #: ../wp-activity-feed.php:61
 msgid "Post edited"
 msgstr "Yazı güncellendi"
+
+#: ../wp-activity-feed.php:63
+#: ../wp-activity.php:343
+msgid "edited"
+msgstr "düzenledi -"
 
 #: ../wp-activity-feed.php:67
 msgid "Profile edited"
 msgstr "Profil güncellendi"
 
+#: ../wp-activity-feed.php:68
+#: ../wp-activity.php:346
+msgid "has updated his profile."
+msgstr "profilini güncelledi."
+
 #: ../wp-activity-feed.php:72
 msgid "New link"
 msgstr "Yeni link"
 
-#: ../wp-activity.php:437
+#: ../wp-activity-feed.php:75
+#: ../wp-activity.php:351
+msgid "has added a link to"
+msgstr "bir link ekledi -"
+
+#: ../wp-activity.php:128
+#, fuzzy
+msgid "Settings"
+msgstr "Güncelleme seçenekleri"
+
+#: ../wp-activity.php:129
+msgid "Uninstall"
+msgstr ""
+
+#: ../wp-activity.php:159
+msgid "Activity events"
+msgstr "Olan Bitenler"
+
+#: ../wp-activity.php:162
+msgid "Hide my activity :"
+msgstr "Olan Bitenlerimi gizle :"
+
+#: ../wp-activity.php:163
+msgid "If selected, this option makes you become invisible in activity events."
+msgstr ""
+
+#: ../wp-activity.php:248
+msgid "Last logon :"
+msgstr "Son giriş :"
+
+#: ../wp-activity.php:276
+#: ../wp-activity.php:686
+#: ../wp-activity.php:701
+#: ../wp-activity.php:1015
+msgid "Recent Activity"
+msgstr "Olan Biten"
+
+#: ../wp-activity.php:282
+#, fuzzy, php-format
+msgid "%s activity archive"
+msgstr "%s Olan Biten RSS'i"
+
+#: ../wp-activity.php:282
+msgid "Archives"
+msgstr ""
+
+#: ../wp-activity.php:414
+msgid "weeks"
+msgstr "hafta"
+
+#: ../wp-activity.php:414
+msgid "week"
+msgstr "hafta"
+
+#: ../wp-activity.php:415
+#: ../wp-activity.php:418
+msgid "days"
+msgstr "gün"
+
+#: ../wp-activity.php:415
+#: ../wp-activity.php:418
+msgid "day"
+msgstr "gün"
+
+#: ../wp-activity.php:419
+#: ../wp-activity.php:422
+msgid "hours"
+msgstr "saat"
+
+#: ../wp-activity.php:419
+#: ../wp-activity.php:422
+msgid "hour"
+msgstr "saat"
+
+#: ../wp-activity.php:423
+#: ../wp-activity.php:426
+msgid "minutes"
+msgstr "dakika"
+
+#: ../wp-activity.php:423
+#: ../wp-activity.php:426
+msgid "minute"
+msgstr "dakika"
+
+#: ../wp-activity.php:429
+msgid "seconds"
+msgstr "saniye"
+
+#: ../wp-activity.php:429
+msgid "second"
+msgstr "saniye"
+
+#: ../wp-activity.php:433
+#, php-format
+msgid "%s ago"
+msgstr "%s önce"
+
+#: ../wp-activity.php:438
 #, fuzzy
 msgid "Last login"
 msgstr "Son giriş :"
 
-#: ../wp-activity.php:861
+#: ../wp-activity.php:461
+msgid "Logon fails"
+msgstr ""
+
+#: ../wp-activity.php:502
+#, php-format
+msgid "Displaying %s&#8211;%s of %s"
+msgstr ""
+
+#: ../wp-activity.php:589
+#, fuzzy
+msgid "Event(s) deleted."
+msgstr "Olan Biten kayıtları silindi"
+
+#: ../wp-activity.php:658
+msgid "Options saved."
+msgstr ""
+
+#: ../wp-activity.php:663
+msgid "Activity logs deleted."
+msgstr "Olan Biten kayıtları silindi"
+
+#: ../wp-activity.php:670
+#: ../wp-activity.php:675
+#, php-format
+msgid "Activity Plugin has been uninstalled. You can now desactivate this plugin : <a href=\"%s\">Plugins Page</a>"
+msgstr ""
+
+#: ../wp-activity.php:687
+#: ../wp-activity.php:827
+#, fuzzy
+msgid "Date format"
+msgstr "Tarih formatı :"
+
+#: ../wp-activity.php:688
+#: ../wp-activity.php:850
+msgid "Display options"
+msgstr "Görüntüleme seçenekleri"
+
+#: ../wp-activity.php:689
+#: ../wp-activity.php:881
+#, fuzzy
+msgid "Privacy options"
+msgstr "Görüntüleme seçenekleri"
+
+#: ../wp-activity.php:690
+#: ../wp-activity.php:894
+msgid "Events logging and feeding"
+msgstr "Olan Biten kayıt ve beslemesi"
+
+#: ../wp-activity.php:691
+#: ../wp-activity.php:939
+msgid "Reset/uninstall"
+msgstr ""
+
+#: ../wp-activity.php:715
+msgid "Bulk Actions"
+msgstr ""
+
+#: ../wp-activity.php:716
+#, fuzzy
+msgid "Delete"
+msgstr "Tarih"
+
+#: ../wp-activity.php:722
+#, fuzzy
+msgid "View all"
+msgstr "Profile Bak"
+
+#: ../wp-activity.php:728
+msgid "Order by date (DESC)"
+msgstr ""
+
+#: ../wp-activity.php:729
+msgid "Order by user"
+msgstr ""
+
+#: ../wp-activity.php:730
+msgid "Order by event type"
+msgstr ""
+
+#: ../wp-activity.php:812
+msgid "Export filtered Data &raquo;"
+msgstr ""
+
+#: ../wp-activity.php:813
+msgid "If you use MS Excel and have some ugly characters, rename the file extension to .txt and open it within Excel."
+msgstr ""
+
+#: ../wp-activity.php:821
+#, fuzzy
+msgid "Activity logs are empty !"
+msgstr "Olan Biten kayıtları silindi"
+
+#: ../wp-activity.php:830
+msgid "Date format : "
+msgstr "Tarih formatı :"
+
+#: ../wp-activity.php:837
+msgid "For events that are more than a month old only, or if you dont use relative dates."
+msgstr "Göreli tarihler kullanmadığınız durumlarda, bir aydan daha eski aktiviteler için."
+
+#: ../wp-activity.php:840
+msgid "Use relative dates : "
+msgstr "Göreli tarih kullan :"
+
+#: ../wp-activity.php:843
+msgid "Relatives dates exemples : 1 day ago, 22 hours and 3 minutes ago, etc."
+msgstr ""
+
+#: ../wp-activity.php:847
+#: ../wp-activity.php:878
+#: ../wp-activity.php:891
+#: ../wp-activity.php:934
+msgid "Update options &raquo;"
+msgstr ""
+
+#: ../wp-activity.php:853
+msgid "Display icons : "
+msgstr "Görüntüleme ikonları :"
+
+#: ../wp-activity.php:854
+msgid "Generic icons "
+msgstr "Standart ikonlar"
+
+#: ../wp-activity.php:856
+msgid "Gravatars for profile edit and connect events icons"
+msgstr "Profil düzenleme ve bağlantı durumları için Gravatar ikonları"
+
+#: ../wp-activity.php:857
+msgid "No icons "
+msgstr "İkon yok"
+
+#: ../wp-activity.php:859
+msgid "Highlight new activity since last user login : "
+msgstr ""
+
+#: ../wp-activity.php:863
+msgid "Display a link to the activity archive page : "
+msgstr ""
+
+#: ../wp-activity.php:867
+msgid "You have to create a page first, with the [ACT_STREAM] shortcode."
+msgstr ""
+
+#: ../wp-activity.php:871
 msgid "Author Path : "
 msgstr ""
 
-#: ../wp-activity.php:864
+#: ../wp-activity.php:874
 msgid "If you modified your author structure link or if you use WPMu, change your path. (Default : author, BuddyPress : members)"
 msgstr ""
 
-#: ../wp-activity.php:1020
+#: ../wp-activity.php:884
+msgid "Prevent users to hide their activity : "
+msgstr ""
+
+#: ../wp-activity.php:887
+msgid "Warning : If you activate this option, users won't have the choice to allow or deny the logging of their activity. For privacy respect, this option should stay desactivated."
+msgstr ""
+
+#: ../wp-activity.php:897
+msgid "Rows limit in database : "
+msgstr "Veritabanı satır limiti :"
+
+#: ../wp-activity.php:899
+#, php-format
+msgid "There is currently %s rows in database."
+msgstr ""
+
+#: ../wp-activity.php:902
+msgid "Display activity RSS feed : "
+msgstr "Olan Biten RSS göster :"
+
+#: ../wp-activity.php:905
+#, fuzzy
+msgid "Log login failures : "
+msgstr "Sisteme girişler :"
+
+#: ../wp-activity.php:908
+msgid "If you want to log all connexions attempts that failed, enable this option."
+msgstr ""
+
+#: ../wp-activity.php:911
+msgid "Log in database"
+msgstr "Veritabanı"
+
+#: ../wp-activity.php:911
+msgid "Display in feed"
+msgstr "RSS'te göster"
+
+#: ../wp-activity.php:913
+msgid "Login events : "
+msgstr "Sisteme girişler :"
+
+#: ../wp-activity.php:917
+msgid "Profile update events : "
+msgstr "Profil güncelleme işlemleri :"
+
+#: ../wp-activity.php:921
+msgid "Post creation/update events : "
+msgstr "Yazı yazma/güncelleme :"
+
+#: ../wp-activity.php:925
+msgid "New comment events : "
+msgstr "Yeni yorumlar :"
+
+#: ../wp-activity.php:929
+msgid "New link events : "
+msgstr "Yeni linkler :"
+
+#: ../wp-activity.php:942
+#, fuzzy
+msgid "Empty activity table : "
+msgstr "Olan Biten tablosunu temizle"
+
+#: ../wp-activity.php:949
+msgid "Reset logs"
+msgstr ""
+
+#: ../wp-activity.php:949
+msgid ""
+"Empty activity table ? All your activity logs will be deleted.\\n"
+"\\n"
+"Choose [Cancel] to Stop, [OK] to proceed.\\n"
+msgstr ""
+
+#: ../wp-activity.php:950
+msgid "Warning : cleaning activity table erase all activity logs."
+msgstr "Uyarı : Olan Biten tablosunu temizlemek tüm aktivite kayıtlarını silecektir."
+
+#: ../wp-activity.php:954
+#: ../wp-activity.php:961
+msgid "Uninstall plugin"
+msgstr ""
+
+#: ../wp-activity.php:961
+msgid ""
+"Uninstall plugin ? Settings and activity logs will be deleted.\\n"
+"\\n"
+"Choose [Cancel] to Stop, [OK] to proceed.\\n"
+msgstr ""
+
+#: ../wp-activity.php:962
+msgid "Warning : This will delete settings and activity table."
+msgstr ""
+
+#: ../wp-activity.php:971
+#, fuzzy, php-format
+msgid "WP-Activity is a plugin by <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
+msgstr "WP-Activity eklentisi, Fransa'da <a href=\"http://www.driczone.net\">Dric</a> tarafından yapılmıştır. Sürüm <strong>%s</strong>."
+
+#: ../wp-activity.php:985
+msgid "Display a stream of registered users events"
+msgstr "Kayıtlı kullanıcıların aktivitelerini akış halinde göster"
+
+#: ../wp-activity.php:991
+msgid "Wp-Activity Widget"
+msgstr "Wp-Activity Aracı"
+
+#: ../wp-activity.php:1019
+#: ../wp-activity.php:1082
+msgid "Title :"
+msgstr "Başlık :"
+
+#: ../wp-activity.php:1023
+#: ../wp-activity.php:1086
+msgid "Events number :"
+msgstr "Aktivite sayısı :"
+
+#: ../wp-activity.php:1033
 msgid "Display the logged user own activity"
 msgstr ""
 
-#: ../wp-activity.php:1026
+#: ../wp-activity.php:1039
 msgid "Wp-Activity logged user own activity"
 msgstr ""
 
-#: ../wp-activity.php:1057
+#: ../wp-activity.php:1070
 msgid "Your activity"
 msgstr ""
 
-#: ../wp-activity.php:1077
+#: ../wp-activity.php:1090
 msgid "When viewed by visitor"
 msgstr ""
 
-#: ../wp-activity.php:1078
+#: ../wp-activity.php:1091
 msgid "Display all users activity"
 msgstr ""
 
-#: ../wp-activity.php:1079
+#: ../wp-activity.php:1092
 #, fuzzy
 msgid "Display nothing"
 msgstr "Görüntüleme seçenekleri"
 
 #~ msgid "rows in db"
 #~ msgstr "veritabanı satırları"
+
 #~ msgid "Manage"
 #~ msgstr "Yöneti"
+
 #~ msgid "Update/clean tables"
 #~ msgstr "Tabloları güncelle/temizle"
+
 #~ msgid "Submit"
 #~ msgstr "Gönder"
+
 #~ msgid "Page"
 #~ msgstr "Sayfa"
+
 #~ msgid "&laquo; Previous Page"
 #~ msgstr "&laquo; Önceki Sayfa"
+
 #~ msgid "Next Page &raquo;"
 #~ msgstr "Sonraki Sayfa &raquo;"
+
 #~ msgid "Data"
 #~ msgstr "Veri"
-

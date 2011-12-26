@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Log and display users activity in backend and frontend of WordPress.
     Author: Dric
-    Version: 1.4
+    Version: 1.5
     Author URI: http://www.driczone.net
 */
 
@@ -27,7 +27,7 @@
 
 // let's initializing all vars
 
-$act_plugin_version = "1.4"; //Don't change this, of course.
+$act_plugin_version = "1.5"; //Don't change this, of course.
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get bugged by admin panel additions
@@ -153,7 +153,7 @@ add_action('wp_head', 'act_header');
 
 function act_profile_option(){
   global $wpdb, $user_ID, $options_act;
-  if ($options_act['act_allow_priv']){
+  if (!$options_act['act_prevent_priv']){
     $act_private = get_usermeta($user_ID, 'act_private');
     ?>
     <h3><?php _e('Activity events', 'wp-activity'); ?></h3>
@@ -191,6 +191,8 @@ function act_session(){
       $act_time=date("Y-m-d H:i:s", time());
       $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$act_time."', '')");
       $act_url = parse_url(get_option('home'));
+    }elseif ($_COOKIE['act_logged'] and !is_user_logged_in()){
+      act_reinit();      
     }
   }
 }
@@ -198,7 +200,7 @@ function act_session(){
 function act_reinit(){
   if ($_COOKIE['act_logged']){ setcookie ("act_logged", "", time() - 3600);}
 }
-add_action('wp_login', 'act_reinit');
+//add_action('wp_login', 'act_reinit');  'v1.5 - double login bug
 add_action('wp_logout', 'act_reinit');
 
 function act_profile_edit($act_user){
@@ -304,7 +306,6 @@ global $wpdb, $options_act, $user_ID;
       if (!$act_logged[$act->user_id]){
         $act_logged[$act->user_id]="2029-01-01 00:00:01"; //hope this plugin won't be used anymore at this date...
       }
-      //echo "act_logged : ".$act_logged[$act->user_id]." - ".strtotime($act_logged[$act->user_id])." - act_date : ".$act->act_date." - ".strtotime($act->act_date)." - diff : ".(strtotime($act_logged[$act->user_id]) - strtotime($act->act_date))."<br />";
       if (((strtotime($act_logged[$act->user_id]) - strtotime($act->act_date)) > 60 AND $act->act_type == 'CONNECT') OR $act->act_type != 'CONNECT'){      
         echo '<li class="login '.$act_old_class.'">';
         if ($options_act['act_icons']== 'g'){
@@ -438,12 +439,12 @@ if (!$no_admin_mess){
       return $columns;
   }
   
-  add_action('manage_users_custom_column',  'add_act_last_login_column_value', 10, 3);
+  add_filter('manage_users_custom_column',  'add_act_last_login_column_value', 10, 3); //v1.5 : empty column data when another plugin dealing with columns.
   function add_act_last_login_column_value( $value, $column_name, $user_id ){
     global $wpdb;
-  	$user = get_userdata( $user_id );
-  	$act_last_connect = $wpdb->get_var("SELECT act_date FROM ".$wpdb->prefix."activity WHERE user_id = '".$user->ID."' AND act_type = 'CONNECT' ORDER BY act_date DESC LIMIT 0,1");
-  	if ( 'act_last_login' == $column_name){
+  	if ($column_name == 'act_last_login'){
+      $user = get_userdata( $user_id );
+    	$act_last_connect = $wpdb->get_var("SELECT act_date FROM ".$wpdb->prefix."activity WHERE user_id = '".$user->ID."' AND act_type = 'CONNECT' ORDER BY act_date DESC LIMIT 0,1");
       if ($act_last_connect){
         $value = nicetime($act_last_connect);
       }
@@ -589,7 +590,7 @@ function act_admin(){
         }
     	}
     }
-    $act_args = '';
+    $act_args = $act_sqlorderby_sec = '';
     if (isset($_GET['act_type_filter'])){
       $act_type_filter = esc_html($_GET['act_type_filter']);
       if ($act_type_filter <> 'all'){
@@ -613,10 +614,12 @@ function act_admin(){
     	case 'order_user' :
     		$sqlorderby = 'display_name';
     		$sqlasc = 'ASC';
+        $act_sqlorderby_sec = ', act_date DESC';
     		break;
     	case 'order_type' :
     		$sqlorderby = 'act_type';
     		$sqlasc = 'ASC';
+        $act_sqlorderby_sec = ', act_date DESC';
     		break;
     	case 'order_date' :
     	default :
@@ -665,7 +668,7 @@ function act_admin(){
       $sql="DROP TABLE ".$wpdb->prefix."activity"; //delete activity table
   		if ( $results = $wpdb->query( $sql ) ){
   		  echo '<div id="message" class="updated highlight fade"><p><strong>'.sprintf(__('Activity Plugin has been uninstalled. You can now desactivate this plugin : <a href="%s">Plugins Page</a>', 'wp-activity'),get_bloginfo('wpurl').'/wp-admin/plugins.php').'</strong></div>';
-  		}
+  		}      
     }
     $act_opt=get_option('act_settings');
     if (!is_array($act_opt)){
@@ -698,8 +701,8 @@ function act_admin(){
           <h2><?php _e("Recent Activity", 'wp-activity'); ?></h2>
           <?php
             $act_start = ($act_page - 1)*$act_list_limit;
-            $sql  = "SELECT * FROM ".$wpdb->prefix."activity AS activity, ".$wpdb->prefix."users AS users WHERE activity.user_id = users.id ".$sqlfilter." ORDER BY ".$sqlorderby." ".$sqlasc; //." LIMIT ".$act_start.",".$act_list_limit;
-            if ( $logins = $wpdb->get_results($sql)){
+            $act_recent_sql  = "SELECT * FROM ".$wpdb->prefix."activity AS activity, ".$wpdb->prefix."users AS users WHERE activity.user_id = users.id ".$sqlfilter." ORDER BY ".$sqlorderby." ".$sqlasc." ".$act_sqlorderby_sec; //." LIMIT ".$act_start.",".$act_list_limit;
+            if ( $logins = $wpdb->get_results($wpdb->prepare($act_recent_sql))){
               $act_count = count($logins);
               ?>
               <form id="act-filter" action="" method="get">
@@ -802,8 +805,15 @@ function act_admin(){
                   </tbody>
                 </table>
               </form>                
+              <div class="tablenav">
+                <form action="<?php echo ACT_URL; ?>wp-activity-export.php" method="post">
+                  <input type="hidden" name="act_type_filter" value="<?php echo $act_type_filter; ?>" />
+                  <input type="hidden" name="act_order_by" value="<?php echo $act_order_by; ?>" />
+                  <input type='submit' class='button-primary' name='act_export' value='<?php _e('Export filtered Data &raquo;') ?>' />
+                  <span class="act_info"><?php _e('If you use MS Excel and have some ugly characters, rename the file extension to .txt and open it within Excel.','wp-activity') ?></span>
+                  <?php wp_nonce_field('wp-activity-export','act_export_csv'); ?>
+                </form>
               <?php
-              echo '<div class="tablenav">';
               act_pagination($act_count,$act_list_limit, $act_page, $act_start, $act_args);
               echo '</div>';
               echo '<div class="clearfix"></div>';
@@ -884,7 +894,10 @@ function act_admin(){
             <h2><?php _e('Events logging and feeding', 'wp-activity') ?></h2>
             <table class="form-table">
               </tr><tr>
-                <th><?php _e('Rows limit in database : ', 'wp-activity') ?></th><td><input type="text" name="act_prune" value="<?php echo $act_prune ?>" /></td>
+                <th><?php _e('Rows limit in database : ', 'wp-activity') ?></th>
+                <td><input type="text" name="act_prune" value="<?php echo $act_prune ?>" />
+                <br /><span class="act_info"><?php sprintf(_e('There is currently %s rows in database.','wp-activity'), $act_count) ?></span>
+                </td>
               </tr><tr>
                 <th><?php _e('Display activity RSS feed : ', 'wp-activity') ?></th><td><input type="checkbox" <?php if($act_feed_display){echo 'checked="checked"';} ?> name="act_feed_display" /></td>
               </tr><tr>

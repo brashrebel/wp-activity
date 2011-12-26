@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Activity 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-20 10:24+0100\n"
-"PO-Revision-Date: 2011-09-20 10:25+0100\n"
-"Last-Translator: Dric\n"
+"POT-Creation-Date: 2011-12-26 15:09+0100\n"
+"PO-Revision-Date: 2011-12-26 15:09+0100\n"
+"Last-Translator: Dric <cedric@driczone.net>\n"
 "Language-Team: leevel OpenSource (http://leevel.com) <opensource@leevel.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,529 +20,35 @@ msgstr ""
 "X-Poedit-Country: SPAIN\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../wp-activity-bp.php:123
-#: ../wp-activity.php:128
-msgid "Settings"
-msgstr "Configuración"
-
-#: ../wp-activity-bp.php:124
-#: ../wp-activity.php:129
-msgid "Uninstall"
-msgstr "Desinstalar"
-
-#: ../wp-activity-bp.php:154
-#: ../wp-activity.php:159
-msgid "Activity events"
-msgstr "Eventos de actividad"
-
-#: ../wp-activity-bp.php:157
-#: ../wp-activity.php:162
-msgid "Hide my activity :"
-msgstr "Ocultar mi actividad:"
-
-#: ../wp-activity-bp.php:158
-#: ../wp-activity.php:163
-msgid "If selected, this option makes you become invisible in activity events."
-msgstr "Si se selecciona, esta opción hace que se vuelven invisibles en los eventos de la actividad."
-
-#: ../wp-activity-bp.php:241
-#: ../wp-activity.php:246
-msgid "Last logon :"
-msgstr "Última sesión:"
-
-#: ../wp-activity-bp.php:269
-#: ../wp-activity-bp.php:657
-#: ../wp-activity-bp.php:672
-#: ../wp-activity-bp.php:968
-#: ../wp-activity.php:274
-#: ../wp-activity.php:683
-#: ../wp-activity.php:698
-#: ../wp-activity.php:1002
-msgid "Recent Activity"
-msgstr "Actividad Reciente"
-
-#: ../wp-activity-bp.php:272
-#: ../wp-activity-feed.php:30
-#: ../wp-activity.php:277
-#, php-format
-msgid "%s activity RSS Feed"
-msgstr "%s actividad RSS Feed"
-
-#: ../wp-activity-bp.php:275
-#: ../wp-activity.php:280
-#, php-format
-msgid "%s activity archive"
-msgstr "%s archivo de la actividad"
-
-#: ../wp-activity-bp.php:275
-#: ../wp-activity.php:280
-msgid "Archives"
-msgstr "Archivos"
-
-#: ../wp-activity-bp.php:316
-#: ../wp-activity-bp.php:324
-#: ../wp-activity-bp.php:332
-#: ../wp-activity-bp.php:337
-#: ../wp-activity-bp.php:340
-#: ../wp-activity-bp.php:345
-#: ../wp-activity-feed.php:44
-#: ../wp-activity-feed.php:51
-#: ../wp-activity-feed.php:57
-#: ../wp-activity-feed.php:63
-#: ../wp-activity-feed.php:68
-#: ../wp-activity-feed.php:75
-#: ../wp-activity.php:321
-#: ../wp-activity.php:329
-#: ../wp-activity.php:337
-#: ../wp-activity.php:342
-#: ../wp-activity.php:345
-#: ../wp-activity.php:350
-msgid "View Profile"
-msgstr "Ver Perfil"
-
-#: ../wp-activity-bp.php:316
-#: ../wp-activity-feed.php:44
-#: ../wp-activity.php:321
-msgid "has logged."
-msgstr "ha iniciado la sesión."
-
-#: ../wp-activity-bp.php:324
-#: ../wp-activity-feed.php:51
-#: ../wp-activity.php:329
-msgid "commented"
-msgstr "comentó"
-
-#: ../wp-activity-bp.php:332
-#: ../wp-activity-feed.php:57
-#: ../wp-activity.php:337
-msgid "published"
-msgstr "publicado"
-
-#: ../wp-activity-bp.php:337
-#: ../wp-activity-feed.php:63
-#: ../wp-activity.php:342
-msgid "edited"
-msgstr "editado"
-
-#: ../wp-activity-bp.php:340
-#: ../wp-activity-feed.php:68
-#: ../wp-activity.php:345
-msgid "has updated his profile."
-msgstr "ha actualizado su perfil."
-
-#: ../wp-activity-bp.php:345
-#: ../wp-activity-feed.php:75
-#: ../wp-activity.php:350
-msgid "has added a link to"
-msgstr "ha añadido un enlace a"
-
-#: ../wp-activity-bp.php:408
-#: ../wp-activity.php:413
-msgid "weeks"
-msgstr "semanas"
-
-#: ../wp-activity-bp.php:408
-#: ../wp-activity.php:413
-msgid "week"
-msgstr "semana"
-
-#: ../wp-activity-bp.php:409
-#: ../wp-activity-bp.php:412
-#: ../wp-activity.php:414
-#: ../wp-activity.php:417
-msgid "days"
-msgstr "días"
-
-#: ../wp-activity-bp.php:409
-#: ../wp-activity-bp.php:412
-#: ../wp-activity.php:414
-#: ../wp-activity.php:417
-msgid "day"
-msgstr "día"
-
-#: ../wp-activity-bp.php:413
-#: ../wp-activity-bp.php:416
-#: ../wp-activity.php:418
-#: ../wp-activity.php:421
-msgid "hours"
-msgstr "horas"
-
-#: ../wp-activity-bp.php:413
-#: ../wp-activity-bp.php:416
-#: ../wp-activity.php:418
-#: ../wp-activity.php:421
-msgid "hour"
-msgstr "hora"
-
-#: ../wp-activity-bp.php:417
-#: ../wp-activity-bp.php:420
-#: ../wp-activity.php:422
-#: ../wp-activity.php:425
-msgid "minutes"
-msgstr "minutos"
-
-#: ../wp-activity-bp.php:417
-#: ../wp-activity-bp.php:420
-#: ../wp-activity.php:422
-#: ../wp-activity.php:425
-msgid "minute"
-msgstr "minuto"
-
-#: ../wp-activity-bp.php:423
-#: ../wp-activity.php:428
-msgid "seconds"
-msgstr "segundo"
-
-#: ../wp-activity-bp.php:423
-#: ../wp-activity.php:428
-msgid "second"
-msgstr "segundo"
-
-#: ../wp-activity-bp.php:427
-#: ../wp-activity.php:432
-#, php-format
-msgid "%s ago"
-msgstr "hace %s"
-
-#: ../wp-activity-bp.php:446
-#: ../wp-activity.php:460
-msgid "Logon fails"
-msgstr "Inicio de sesión erróneos"
-
-#: ../wp-activity-bp.php:479
-#: ../wp-activity.php:501
-#, php-format
-msgid "Displaying %s&#8211;%s of %s"
-msgstr "Mostrando %s&#8211;%s de %s"
-
-#: ../wp-activity-bp.php:566
-#: ../wp-activity.php:588
-msgid "Event(s) deleted."
-msgstr "Evento(s) eliminado(s)."
-
-#: ../wp-activity-bp.php:629
-#: ../wp-activity.php:655
-msgid "Options saved."
-msgstr "Opciones guardadas."
-
-#: ../wp-activity-bp.php:634
-#: ../wp-activity.php:660
-msgid "Activity logs deleted."
-msgstr "Registros de actividad eliminados."
-
-#: ../wp-activity-bp.php:641
-#: ../wp-activity-bp.php:646
-#: ../wp-activity.php:667
-#: ../wp-activity.php:672
-#, php-format
-msgid "Activity Plugin has been uninstalled. You can now desactivate this plugin : <a href=\"%s\">Plugins Page</a>"
-msgstr "Activity Plugin ha sido desinstalado. Ahora puedes desactivar este plugin: <a href=\"%s\">Página de Plugins</a>"
-
-#: ../wp-activity-bp.php:658
-#: ../wp-activity-bp.php:791
-#: ../wp-activity.php:684
-#: ../wp-activity.php:817
-msgid "Date format"
-msgstr "Formato de fecha"
-
-#: ../wp-activity-bp.php:659
-#: ../wp-activity-bp.php:814
-#: ../wp-activity.php:685
-#: ../wp-activity.php:840
-msgid "Display options"
-msgstr "Opciones de visualización"
-
-#: ../wp-activity-bp.php:660
-#: ../wp-activity-bp.php:838
-#: ../wp-activity.php:686
-#: ../wp-activity.php:871
-msgid "Privacy options"
-msgstr "Opciones de privacidad"
-
-#: ../wp-activity-bp.php:661
-#: ../wp-activity-bp.php:851
-#: ../wp-activity.php:687
-#: ../wp-activity.php:884
-msgid "Events logging and feeding"
-msgstr "Registro y feed de eventos"
-
-#: ../wp-activity-bp.php:662
-#: ../wp-activity-bp.php:893
-#: ../wp-activity.php:688
-#: ../wp-activity.php:926
-msgid "Reset/uninstall"
-msgstr "Restablacer/desinstalar"
-
-#: ../wp-activity-bp.php:686
-#: ../wp-activity.php:712
-msgid "Bulk Actions"
-msgstr "Acciones en Bloque"
-
-#: ../wp-activity-bp.php:687
-#: ../wp-activity.php:713
-msgid "Delete"
-msgstr "Borrar"
-
-#: ../wp-activity-bp.php:693
-#: ../wp-activity.php:719
-msgid "View all"
-msgstr "Ver todos"
-
-#: ../wp-activity-bp.php:699
-#: ../wp-activity.php:725
-msgid "Order by date (DESC)"
-msgstr "Ordenar por Fecha (DESC)"
-
-#: ../wp-activity-bp.php:700
-#: ../wp-activity.php:726
-msgid "Order by user"
-msgstr "Ordenar por usuario"
-
-#: ../wp-activity-bp.php:701
-#: ../wp-activity.php:727
-msgid "Order by event type"
-msgstr "Ordenar por tipo de evento"
-
-#: ../wp-activity-bp.php:715
-#: ../wp-activity-bp.php:725
-#: ../wp-activity.php:741
-#: ../wp-activity.php:751
+#: ../wp-activity-export.php:52
+#: ../wp-activity.php:744
+#: ../wp-activity.php:754
 msgid "Date"
 msgstr "Fecha"
 
-#: ../wp-activity-bp.php:716
-#: ../wp-activity-bp.php:726
-#: ../wp-activity.php:742
-#: ../wp-activity.php:752
+#: ../wp-activity-export.php:52
+#: ../wp-activity.php:745
+#: ../wp-activity.php:755
 msgid "User"
 msgstr "Usuario"
 
-#: ../wp-activity-bp.php:717
-#: ../wp-activity-bp.php:727
-#: ../wp-activity.php:743
-#: ../wp-activity.php:753
+#: ../wp-activity-export.php:52
+#: ../wp-activity.php:746
+#: ../wp-activity.php:756
 msgid "Event Type"
 msgstr "Tipo de evento"
 
-#: ../wp-activity-bp.php:718
-#: ../wp-activity-bp.php:728
-#: ../wp-activity.php:744
-#: ../wp-activity.php:754
+#: ../wp-activity-export.php:52
+#: ../wp-activity.php:747
+#: ../wp-activity.php:757
 msgid "Applies to"
 msgstr "Se aplica a"
 
-#: ../wp-activity-bp.php:785
-#: ../wp-activity.php:811
-msgid "Activity logs are empty !"
-msgstr "¡Los registros de actividad están vacíos!"
-
-#: ../wp-activity-bp.php:794
-#: ../wp-activity.php:820
-msgid "Date format : "
-msgstr "Formato de fecha:"
-
-#: ../wp-activity-bp.php:801
-#: ../wp-activity.php:827
-msgid "For events that are more than a month old only, or if you dont use relative dates."
-msgstr "Para los eventos que tienen más de un mes solamente, o si no utilizas fechas relativas."
-
-#: ../wp-activity-bp.php:804
-#: ../wp-activity.php:830
-msgid "Use relative dates : "
-msgstr "Uso de fechas relativas:"
-
-#: ../wp-activity-bp.php:807
-#: ../wp-activity.php:833
-msgid "Relatives dates exemples : 1 day ago, 22 hours and 3 minutes ago, etc."
-msgstr "Ejemplos de fechas relativas: hace 1 día, hace 22 horas y 3 minutos, etc."
-
-#: ../wp-activity-bp.php:811
-#: ../wp-activity-bp.php:835
-#: ../wp-activity-bp.php:848
-#: ../wp-activity-bp.php:888
-#: ../wp-activity.php:837
-#: ../wp-activity.php:868
-#: ../wp-activity.php:881
-#: ../wp-activity.php:921
-msgid "Update options &raquo;"
-msgstr "Actualizar opciones &raquo;"
-
-#: ../wp-activity-bp.php:817
-#: ../wp-activity.php:843
-msgid "Display icons : "
-msgstr "Mostrar iconos:"
-
-#: ../wp-activity-bp.php:818
-#: ../wp-activity.php:844
-msgid "Generic icons "
-msgstr "Iconos genéricos"
-
-#: ../wp-activity-bp.php:820
-#: ../wp-activity.php:846
-msgid "Gravatars for profile edit and connect events icons"
-msgstr "Gravatars para editar perfil y conectar los iconos de los eventos"
-
-#: ../wp-activity-bp.php:821
-#: ../wp-activity.php:847
-msgid "No icons "
-msgstr "Sin iconos"
-
-#: ../wp-activity-bp.php:823
-#: ../wp-activity.php:849
-msgid "Highlight new activity since last user login : "
-msgstr "Destacar la nueva actividad desde el último acceso:"
-
-#: ../wp-activity-bp.php:827
-#: ../wp-activity.php:853
-msgid "Display a link to the activity archive page : "
-msgstr "Mostrar un enlace a la página de archivo de actividad:"
-
-#: ../wp-activity-bp.php:831
-#: ../wp-activity.php:857
-msgid "You have to create a page first, with the [ACT_STREAM] shortcode."
-msgstr "Tienes que crear una página en primer lugar, con el [ACT_STREAM] abreviado."
-
-#: ../wp-activity-bp.php:841
-#: ../wp-activity.php:874
-msgid "Prevent users to hide their activity : "
-msgstr "Evitar que los usuarios oculten su actividad:"
-
-#: ../wp-activity-bp.php:844
-#: ../wp-activity.php:877
-msgid "Warning : If you activate this option, users won't have the choice to allow or deny the logging of their activity. For privacy respect, this option should stay desactivated."
-msgstr "Advertencia: Si se activa esta opción, los usuarios no tienen la opción de permitir o denegar el registro de su actividad. Para respetar la privacidad, esta opción debe permanecer desactivada."
-
-#: ../wp-activity-bp.php:854
-#: ../wp-activity.php:887
-msgid "Rows limit in database : "
-msgstr "Límite de las filas en la base de datos:"
-
-#: ../wp-activity-bp.php:856
-#: ../wp-activity.php:889
-msgid "Display activity RSS feed : "
-msgstr "Mostrar feed RSS de la actividad:"
-
-#: ../wp-activity-bp.php:859
-#: ../wp-activity.php:892
-msgid "Log login failures : "
-msgstr "Registro de errores de acceso:"
-
-#: ../wp-activity-bp.php:862
-#: ../wp-activity.php:895
-msgid "If you want to log all connexions attempts that failed, enable this option."
-msgstr "Si deseas registrar todos los intentos de conexiones fallidas, activa esta opción."
-
-#: ../wp-activity-bp.php:865
-#: ../wp-activity.php:898
-msgid "Log in database"
-msgstr "Registro en la base de datos"
-
-#: ../wp-activity-bp.php:865
-#: ../wp-activity.php:898
-msgid "Display in feed"
-msgstr "Mostrar en feed"
-
-#: ../wp-activity-bp.php:867
-#: ../wp-activity.php:900
-msgid "Login events : "
-msgstr "Eventos de acceso:"
-
-#: ../wp-activity-bp.php:871
-#: ../wp-activity.php:904
-msgid "Profile update events : "
-msgstr "Eventos de actualización de perfil:"
-
-#: ../wp-activity-bp.php:875
-#: ../wp-activity.php:908
-msgid "Post creation/update events : "
-msgstr "Entradas creadas/eventos de actualización:"
-
-#: ../wp-activity-bp.php:879
-#: ../wp-activity.php:912
-msgid "New comment events : "
-msgstr "Eventos de nuevos comentario:"
-
-#: ../wp-activity-bp.php:883
-#: ../wp-activity.php:916
-msgid "New link events : "
-msgstr "Eventos de nuevos enlaces:"
-
-#: ../wp-activity-bp.php:896
-#: ../wp-activity.php:929
-msgid "Empty activity table : "
-msgstr "Tabla de actividades vacía:"
-
-#: ../wp-activity-bp.php:903
-#: ../wp-activity.php:936
-msgid "Reset logs"
-msgstr "Restablecer registros"
-
-#: ../wp-activity-bp.php:903
-#: ../wp-activity.php:936
-msgid ""
-"Empty activity table ? All your activity logs will be deleted.\\n"
-"\\n"
-"Choose [Cancel] to Stop, [OK] to proceed.\\n"
-msgstr ""
-"¿Vacíar tabla de actividad ? Todos tus registros de actividad serán eliminados.\\n"
-"\\n"
-"Selecciona [Cancelar] para detener, [Aceptar] para continuar.\\n"
-
-#: ../wp-activity-bp.php:904
-#: ../wp-activity.php:937
-msgid "Warning : cleaning activity table erase all activity logs."
-msgstr "Advertencia: Limpiando la tabla de actividad se borrarán todos los registros de actividad."
-
-#: ../wp-activity-bp.php:908
-#: ../wp-activity-bp.php:915
-#: ../wp-activity.php:941
-#: ../wp-activity.php:948
-msgid "Uninstall plugin"
-msgstr "Desinstalar plugin"
-
-#: ../wp-activity-bp.php:915
-#: ../wp-activity.php:948
-msgid ""
-"Uninstall plugin ? Settings and activity logs will be deleted.\\n"
-"\\n"
-"Choose [Cancel] to Stop, [OK] to proceed.\\n"
-msgstr ""
-"¿Desinstalar plugin ? Los registros de configuración y actividad serán eliminados.\\n"
-"\\n"
-"Selecciona [Cancelar] para detener, [Aceptar] para continuar. \\n"
-
-#: ../wp-activity-bp.php:916
-#: ../wp-activity.php:949
-msgid "Warning : This will delete settings and activity table."
-msgstr "Advertencia: Se borrarán las configuraciones y la tabla de actividades."
-
-#: ../wp-activity-bp.php:925
-#: ../wp-activity.php:958
+#: ../wp-activity-feed.php:30
+#: ../wp-activity.php:279
 #, php-format
-msgid "WP-Activity is a plugin by <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
-msgstr "WP-Activity es un plugin de <a href=\"http://www.driczone.net\">Dric</a>. Versión <strong>%s</strong>."
-
-#: ../wp-activity-bp.php:938
-#: ../wp-activity.php:972
-msgid "Display a stream of registered users events"
-msgstr "Mostrar una secuencia de eventos usuarios registrados"
-
-#: ../wp-activity-bp.php:944
-#: ../wp-activity.php:978
-msgid "Wp-Activity Widget"
-msgstr "Wp-Activity Widget"
-
-#: ../wp-activity-bp.php:972
-#: ../wp-activity.php:1006
-#: ../wp-activity.php:1069
-msgid "Title :"
-msgstr "Título:"
-
-#: ../wp-activity-bp.php:976
-#: ../wp-activity.php:1010
-#: ../wp-activity.php:1073
-msgid "Events number :"
-msgstr "Número de eventos:"
+msgid "%s activity RSS Feed"
+msgstr "%s actividad RSS Feed"
 
 #: ../wp-activity-feed.php:33
 #, php-format
@@ -553,64 +59,459 @@ msgstr "Eventos de usuario de %s"
 msgid "New visit"
 msgstr "Nueva visita"
 
+#: ../wp-activity-feed.php:44
+#: ../wp-activity-feed.php:51
+#: ../wp-activity-feed.php:57
+#: ../wp-activity-feed.php:63
+#: ../wp-activity-feed.php:68
+#: ../wp-activity-feed.php:75
+#: ../wp-activity.php:322
+#: ../wp-activity.php:330
+#: ../wp-activity.php:338
+#: ../wp-activity.php:343
+#: ../wp-activity.php:346
+#: ../wp-activity.php:351
+msgid "View Profile"
+msgstr "Ver Perfil"
+
+#: ../wp-activity-feed.php:44
+#: ../wp-activity.php:322
+msgid "has logged."
+msgstr "ha iniciado la sesión."
+
 #: ../wp-activity-feed.php:48
 msgid "New comment"
 msgstr "Nuevo comentario"
+
+#: ../wp-activity-feed.php:51
+#: ../wp-activity.php:330
+msgid "commented"
+msgstr "comentó"
 
 #: ../wp-activity-feed.php:55
 msgid "New post"
 msgstr "Nueva entrada"
 
+#: ../wp-activity-feed.php:57
+#: ../wp-activity.php:338
+msgid "published"
+msgstr "publicado"
+
 #: ../wp-activity-feed.php:61
 msgid "Post edited"
 msgstr "Entrada Editada"
+
+#: ../wp-activity-feed.php:63
+#: ../wp-activity.php:343
+msgid "edited"
+msgstr "editado"
 
 #: ../wp-activity-feed.php:67
 msgid "Profile edited"
 msgstr "Perfil editado"
 
+#: ../wp-activity-feed.php:68
+#: ../wp-activity.php:346
+msgid "has updated his profile."
+msgstr "ha actualizado su perfil."
+
 #: ../wp-activity-feed.php:72
 msgid "New link"
 msgstr "Nuevo enlace"
 
-#: ../wp-activity.php:437
+#: ../wp-activity-feed.php:75
+#: ../wp-activity.php:351
+msgid "has added a link to"
+msgstr "ha añadido un enlace a"
+
+#: ../wp-activity.php:128
+msgid "Settings"
+msgstr "Configuración"
+
+#: ../wp-activity.php:129
+msgid "Uninstall"
+msgstr "Desinstalar"
+
+#: ../wp-activity.php:159
+msgid "Activity events"
+msgstr "Eventos de actividad"
+
+#: ../wp-activity.php:162
+msgid "Hide my activity :"
+msgstr "Ocultar mi actividad:"
+
+#: ../wp-activity.php:163
+msgid "If selected, this option makes you become invisible in activity events."
+msgstr "Si se selecciona, esta opción hace que se vuelven invisibles en los eventos de la actividad."
+
+#: ../wp-activity.php:248
+msgid "Last logon :"
+msgstr "Última sesión:"
+
+#: ../wp-activity.php:276
+#: ../wp-activity.php:686
+#: ../wp-activity.php:701
+#: ../wp-activity.php:1015
+msgid "Recent Activity"
+msgstr "Actividad Reciente"
+
+#: ../wp-activity.php:282
+#, php-format
+msgid "%s activity archive"
+msgstr "%s archivo de la actividad"
+
+#: ../wp-activity.php:282
+msgid "Archives"
+msgstr "Archivos"
+
+#: ../wp-activity.php:414
+msgid "weeks"
+msgstr "semanas"
+
+#: ../wp-activity.php:414
+msgid "week"
+msgstr "semana"
+
+#: ../wp-activity.php:415
+#: ../wp-activity.php:418
+msgid "days"
+msgstr "días"
+
+#: ../wp-activity.php:415
+#: ../wp-activity.php:418
+msgid "day"
+msgstr "día"
+
+#: ../wp-activity.php:419
+#: ../wp-activity.php:422
+msgid "hours"
+msgstr "horas"
+
+#: ../wp-activity.php:419
+#: ../wp-activity.php:422
+msgid "hour"
+msgstr "hora"
+
+#: ../wp-activity.php:423
+#: ../wp-activity.php:426
+msgid "minutes"
+msgstr "minutos"
+
+#: ../wp-activity.php:423
+#: ../wp-activity.php:426
+msgid "minute"
+msgstr "minuto"
+
+#: ../wp-activity.php:429
+msgid "seconds"
+msgstr "segundo"
+
+#: ../wp-activity.php:429
+msgid "second"
+msgstr "segundo"
+
+#: ../wp-activity.php:433
+#, php-format
+msgid "%s ago"
+msgstr "hace %s"
+
+#: ../wp-activity.php:438
 #, fuzzy
 msgid "Last login"
 msgstr "Última sesión:"
 
-#: ../wp-activity.php:861
+#: ../wp-activity.php:461
+msgid "Logon fails"
+msgstr "Inicio de sesión erróneos"
+
+#: ../wp-activity.php:502
+#, php-format
+msgid "Displaying %s&#8211;%s of %s"
+msgstr "Mostrando %s&#8211;%s de %s"
+
+#: ../wp-activity.php:589
+msgid "Event(s) deleted."
+msgstr "Evento(s) eliminado(s)."
+
+#: ../wp-activity.php:658
+msgid "Options saved."
+msgstr "Opciones guardadas."
+
+#: ../wp-activity.php:663
+msgid "Activity logs deleted."
+msgstr "Registros de actividad eliminados."
+
+#: ../wp-activity.php:670
+#: ../wp-activity.php:675
+#, php-format
+msgid "Activity Plugin has been uninstalled. You can now desactivate this plugin : <a href=\"%s\">Plugins Page</a>"
+msgstr "Activity Plugin ha sido desinstalado. Ahora puedes desactivar este plugin: <a href=\"%s\">Página de Plugins</a>"
+
+#: ../wp-activity.php:687
+#: ../wp-activity.php:827
+msgid "Date format"
+msgstr "Formato de fecha"
+
+#: ../wp-activity.php:688
+#: ../wp-activity.php:850
+msgid "Display options"
+msgstr "Opciones de visualización"
+
+#: ../wp-activity.php:689
+#: ../wp-activity.php:881
+msgid "Privacy options"
+msgstr "Opciones de privacidad"
+
+#: ../wp-activity.php:690
+#: ../wp-activity.php:894
+msgid "Events logging and feeding"
+msgstr "Registro y feed de eventos"
+
+#: ../wp-activity.php:691
+#: ../wp-activity.php:939
+msgid "Reset/uninstall"
+msgstr "Restablacer/desinstalar"
+
+#: ../wp-activity.php:715
+msgid "Bulk Actions"
+msgstr "Acciones en Bloque"
+
+#: ../wp-activity.php:716
+msgid "Delete"
+msgstr "Borrar"
+
+#: ../wp-activity.php:722
+msgid "View all"
+msgstr "Ver todos"
+
+#: ../wp-activity.php:728
+msgid "Order by date (DESC)"
+msgstr "Ordenar por Fecha (DESC)"
+
+#: ../wp-activity.php:729
+msgid "Order by user"
+msgstr "Ordenar por usuario"
+
+#: ../wp-activity.php:730
+msgid "Order by event type"
+msgstr "Ordenar por tipo de evento"
+
+#: ../wp-activity.php:812
+msgid "Export filtered Data &raquo;"
+msgstr ""
+
+#: ../wp-activity.php:813
+msgid "If you use MS Excel and have some ugly characters, rename the file extension to .txt and open it within Excel."
+msgstr ""
+
+#: ../wp-activity.php:821
+msgid "Activity logs are empty !"
+msgstr "¡Los registros de actividad están vacíos!"
+
+#: ../wp-activity.php:830
+msgid "Date format : "
+msgstr "Formato de fecha:"
+
+#: ../wp-activity.php:837
+msgid "For events that are more than a month old only, or if you dont use relative dates."
+msgstr "Para los eventos que tienen más de un mes solamente, o si no utilizas fechas relativas."
+
+#: ../wp-activity.php:840
+msgid "Use relative dates : "
+msgstr "Uso de fechas relativas:"
+
+#: ../wp-activity.php:843
+msgid "Relatives dates exemples : 1 day ago, 22 hours and 3 minutes ago, etc."
+msgstr "Ejemplos de fechas relativas: hace 1 día, hace 22 horas y 3 minutos, etc."
+
+#: ../wp-activity.php:847
+#: ../wp-activity.php:878
+#: ../wp-activity.php:891
+#: ../wp-activity.php:934
+msgid "Update options &raquo;"
+msgstr "Actualizar opciones &raquo;"
+
+#: ../wp-activity.php:853
+msgid "Display icons : "
+msgstr "Mostrar iconos:"
+
+#: ../wp-activity.php:854
+msgid "Generic icons "
+msgstr "Iconos genéricos"
+
+#: ../wp-activity.php:856
+msgid "Gravatars for profile edit and connect events icons"
+msgstr "Gravatars para editar perfil y conectar los iconos de los eventos"
+
+#: ../wp-activity.php:857
+msgid "No icons "
+msgstr "Sin iconos"
+
+#: ../wp-activity.php:859
+msgid "Highlight new activity since last user login : "
+msgstr "Destacar la nueva actividad desde el último acceso:"
+
+#: ../wp-activity.php:863
+msgid "Display a link to the activity archive page : "
+msgstr "Mostrar un enlace a la página de archivo de actividad:"
+
+#: ../wp-activity.php:867
+msgid "You have to create a page first, with the [ACT_STREAM] shortcode."
+msgstr "Tienes que crear una página en primer lugar, con el [ACT_STREAM] abreviado."
+
+#: ../wp-activity.php:871
 msgid "Author Path : "
 msgstr ""
 
-#: ../wp-activity.php:864
+#: ../wp-activity.php:874
 msgid "If you modified your author structure link or if you use WPMu, change your path. (Default : author, BuddyPress : members)"
 msgstr ""
 
-#: ../wp-activity.php:1020
+#: ../wp-activity.php:884
+msgid "Prevent users to hide their activity : "
+msgstr "Evitar que los usuarios oculten su actividad:"
+
+#: ../wp-activity.php:887
+msgid "Warning : If you activate this option, users won't have the choice to allow or deny the logging of their activity. For privacy respect, this option should stay desactivated."
+msgstr "Advertencia: Si se activa esta opción, los usuarios no tienen la opción de permitir o denegar el registro de su actividad. Para respetar la privacidad, esta opción debe permanecer desactivada."
+
+#: ../wp-activity.php:897
+msgid "Rows limit in database : "
+msgstr "Límite de las filas en la base de datos:"
+
+#: ../wp-activity.php:899
+#, php-format
+msgid "There is currently %s rows in database."
+msgstr ""
+
+#: ../wp-activity.php:902
+msgid "Display activity RSS feed : "
+msgstr "Mostrar feed RSS de la actividad:"
+
+#: ../wp-activity.php:905
+msgid "Log login failures : "
+msgstr "Registro de errores de acceso:"
+
+#: ../wp-activity.php:908
+msgid "If you want to log all connexions attempts that failed, enable this option."
+msgstr "Si deseas registrar todos los intentos de conexiones fallidas, activa esta opción."
+
+#: ../wp-activity.php:911
+msgid "Log in database"
+msgstr "Registro en la base de datos"
+
+#: ../wp-activity.php:911
+msgid "Display in feed"
+msgstr "Mostrar en feed"
+
+#: ../wp-activity.php:913
+msgid "Login events : "
+msgstr "Eventos de acceso:"
+
+#: ../wp-activity.php:917
+msgid "Profile update events : "
+msgstr "Eventos de actualización de perfil:"
+
+#: ../wp-activity.php:921
+msgid "Post creation/update events : "
+msgstr "Entradas creadas/eventos de actualización:"
+
+#: ../wp-activity.php:925
+msgid "New comment events : "
+msgstr "Eventos de nuevos comentario:"
+
+#: ../wp-activity.php:929
+msgid "New link events : "
+msgstr "Eventos de nuevos enlaces:"
+
+#: ../wp-activity.php:942
+msgid "Empty activity table : "
+msgstr "Tabla de actividades vacía:"
+
+#: ../wp-activity.php:949
+msgid "Reset logs"
+msgstr "Restablecer registros"
+
+#: ../wp-activity.php:949
+msgid ""
+"Empty activity table ? All your activity logs will be deleted.\\n"
+"\\n"
+"Choose [Cancel] to Stop, [OK] to proceed.\\n"
+msgstr ""
+"¿Vacíar tabla de actividad ? Todos tus registros de actividad serán eliminados.\\n"
+"\\n"
+"Selecciona [Cancelar] para detener, [Aceptar] para continuar.\\n"
+
+#: ../wp-activity.php:950
+msgid "Warning : cleaning activity table erase all activity logs."
+msgstr "Advertencia: Limpiando la tabla de actividad se borrarán todos los registros de actividad."
+
+#: ../wp-activity.php:954
+#: ../wp-activity.php:961
+msgid "Uninstall plugin"
+msgstr "Desinstalar plugin"
+
+#: ../wp-activity.php:961
+msgid ""
+"Uninstall plugin ? Settings and activity logs will be deleted.\\n"
+"\\n"
+"Choose [Cancel] to Stop, [OK] to proceed.\\n"
+msgstr ""
+"¿Desinstalar plugin ? Los registros de configuración y actividad serán eliminados.\\n"
+"\\n"
+"Selecciona [Cancelar] para detener, [Aceptar] para continuar. \\n"
+
+#: ../wp-activity.php:962
+msgid "Warning : This will delete settings and activity table."
+msgstr "Advertencia: Se borrarán las configuraciones y la tabla de actividades."
+
+#: ../wp-activity.php:971
+#, php-format
+msgid "WP-Activity is a plugin by <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
+msgstr "WP-Activity es un plugin de <a href=\"http://www.driczone.net\">Dric</a>. Versión <strong>%s</strong>."
+
+#: ../wp-activity.php:985
+msgid "Display a stream of registered users events"
+msgstr "Mostrar una secuencia de eventos usuarios registrados"
+
+#: ../wp-activity.php:991
+msgid "Wp-Activity Widget"
+msgstr "Wp-Activity Widget"
+
+#: ../wp-activity.php:1019
+#: ../wp-activity.php:1082
+msgid "Title :"
+msgstr "Título:"
+
+#: ../wp-activity.php:1023
+#: ../wp-activity.php:1086
+msgid "Events number :"
+msgstr "Número de eventos:"
+
+#: ../wp-activity.php:1033
 msgid "Display the logged user own activity"
 msgstr ""
 
-#: ../wp-activity.php:1026
+#: ../wp-activity.php:1039
 msgid "Wp-Activity logged user own activity"
 msgstr ""
 
-#: ../wp-activity.php:1057
+#: ../wp-activity.php:1070
 msgid "Your activity"
 msgstr ""
 
-#: ../wp-activity.php:1077
+#: ../wp-activity.php:1090
 msgid "When viewed by visitor"
 msgstr ""
 
-#: ../wp-activity.php:1078
+#: ../wp-activity.php:1091
 msgid "Display all users activity"
 msgstr ""
 
-#: ../wp-activity.php:1079
+#: ../wp-activity.php:1092
 #, fuzzy
 msgid "Display nothing"
 msgstr "Opciones de visualización"
 
 #~ msgid "You are not allowed to manage this plugin."
 #~ msgstr "No te está permitido gestionar este plugin."
-

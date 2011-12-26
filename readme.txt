@@ -100,6 +100,10 @@ Just change the icons in the /img directory, but keep the event name (example : 
 
 You will have to edit wp-activity.php, check line 32 and set `$strict_logs` to **true**.
 
+= I exported data to a csv file but there are ugly characters in MS Excel ! =
+
+This is a known excel bug : when you open a .csv file in Excel, it uses the local encoding set (WINDOWS-1252 for French) and not UTF-8. To avoid this, you will have to rename the file extension from .csv to .txt, open Excel, do File/Open and open the wp-activity.txt. The csv import assistant will now launch, allowing you to set the encoding to UTF-8. 
+
 = I would like to display more or less than 50 lines per page in admin panel of wp_activity =
 
 You have to modify the `$act_list_limit` var line 31 of wp-activity.php.
@@ -131,6 +135,13 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 4. admin screen - reset/uninstall tab
 
 == ChangeLog ==
+
+= 1.5 =
+* Fixed missing profile field to allow user privacy.
+* Fixed double login events when using a plugin dealing with WP login.
+* Fixed "last connect" empty data values when using a plugin that deals with WP admin panel users list.
+* Added current rows count in db next to the max rows value setting.
+* Added export to csv file - filters and ordering are also processed to exported data. 
 
 = 1.4 =
 * Added a 'Last Login' column in WP-Admin user list page.
