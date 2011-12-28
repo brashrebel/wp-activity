@@ -3,7 +3,7 @@
 $wpcontentdir = "wp-content"; //You have to change this if you renamed your wp-content directory.
 
 
-$script_filename = $_ENV["SCRIPT_FILENAME"];
+$script_filename = dirname($_SERVER["DOCUMENT_ROOT"].$_SERVER['PHP_SELF']); //$_ENV["SCRIPT_FILENAME"];
 $cut = strpos($script_filename, "/".$wpcontentdir."/plugins/");
 $path_tab = str_split($script_filename, $cut);
 require($path_tab[0]."/wp-blog-header.php");

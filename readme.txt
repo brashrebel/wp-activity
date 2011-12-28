@@ -3,8 +3,8 @@ Contributors: Dric1107
 Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor
 Requires at least: 2.8
-Tested up to: 3.2.1
-Stable tag: 1.4
+Tested up to: 3.3
+Stable tag: 1.5
 
 Monitor and display users activity (logins, logon failures, new posts, new comments, etc.) in backend and frontend of WordPress.
 
@@ -25,7 +25,7 @@ Users can see what other members do in the blog. Great for multi-users blogs or 
 
 If enabled, user who don't want to be listed in blog activity can hide its own activity by checking a privacy option in the profile page. In that case, this user activity is not stored in database.
 
-Users activity can be followed by RSS feed.
+Users activity can be followed by RSS feed and can be exported in csv file (semicolon separation).
 
 
 Translations :
@@ -47,7 +47,7 @@ Translations :
 4. Go to `Settings > Wp-Activity` and set options.
 5. Put `<?php act_stream() ?>` where you want the stream to be displayed, or use included widget.
 6. Use `[ACT_STREAM]` to display activity in a page or post. See FAQ section for parameters.
-7. If you renamed your wp-content directory and you want to use RSS feed, change `$wpcontentdir` var in wp-activity-feed.php
+7. If you renamed your wp-content directory and you want to use RSS feed, change `$wpcontentdir` var in wp-activity-feed.php and wp-activity-export.php
 
 == Frequently Asked Questions ==
 
@@ -112,9 +112,9 @@ You have to modify the `$act_list_limit` var line 31 of wp-activity.php.
 
 You have to modify the `$no_admin_mess` var line 33 of wp-activity.php and set it to **true**.
 
-= The RSS feed is not working =
+= Export and RSS file are not working =
 
-If you renamed your wp-content directory, you have to change `$wpcontentdir` var in ../plugins/wp-activity/wp-activity-feed.php
+If you renamed your wp-content directory, you have to change `$wpcontentdir` var in ../plugins/wp-activity/wp-activity-feed.php and wp-activity-export.php
 
 = I edited a post but wp-activity logged POST_ADD instead of POST_EDIT =
 That's because the post_add event for this post id was removed from the wp-activity database table. Wordpress doesn't have separate actions for adding or editing posts, so the plugin checks in it's table if there was a post creation with the same ID. If found, the plugin logs a post edition. But as the plugin clears old logs (see "Rows limit in database" setting), the post creation event can be previously deleted when the post edition occurs.
@@ -137,11 +137,15 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 == ChangeLog ==
 
 = 1.5 =
+* Added current rows count in db next to the max rows value setting.
+* Added export to csv file - filters and ordering are also processed to exported data.
+* Added filtering by user in admin activity list.
+* Tweaks and optimizations.
 * Fixed missing profile field to allow user privacy.
 * Fixed double login events when using a plugin dealing with WP login.
 * Fixed "last connect" empty data values when using a plugin that deals with WP admin panel users list.
-* Added current rows count in db next to the max rows value setting.
-* Added export to csv file - filters and ordering are also processed to exported data. 
+* Fixed a bug in multisites environment where queries to the users table where wrong (bad prefix).
+* Fixed a bug where spam comments were written in activity table (but not displayed). 
 
 = 1.4 =
 * Added a 'Last Login' column in WP-Admin user list page.

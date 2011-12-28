@@ -49,19 +49,9 @@ define('ACT_URL', WP_CONTENT_URL . '/plugins/' . ACT_DIR . '/');
 //Plugin can be translated, just put the .mo language file in the /lang directory
 load_plugin_textdomain('wp-activity', WP_PLUGIN_URL.'/wp-activity/lang/', ACT_DIR . '/lang/');
 
-function act_cron(){
-  global $wpdb, $options_act, $plugin_page;
-  $act_count = $wpdb->get_var("SELECT count(ID) FROM ".$wpdb->prefix."activity");
-  $act_delete = $act_count - $options_act['act_prune'];
-  if ($act_delete > 0) {
-    $wpdb->query("DELETE FROM ".$wpdb->prefix."activity ORDER BY id ASC LIMIT ".$delete);
-  }
-  
-}
-add_action('act_cron_install','act_cron');
 
 function act_desactive() {
-	wp_clear_scheduled_hook('act_cron_install');
+	wp_clear_scheduled_hook('act_cron_daily');
 }
 
 function act_update_db_check() {
@@ -75,6 +65,7 @@ add_action('plugins_loaded', 'act_update_db_check');
 function act_install()
 {
     global $wpdb, $act_plugin_version, $options_act;
+    wp_schedule_event(time(), 'daily', 'act_cron_daily');
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     $table = $wpdb->prefix."activity";
     $act_structure = "CREATE TABLE `".$table."` (
@@ -117,10 +108,21 @@ function act_install()
       $options_act['act_version'] = $act_plugin_version;
       update_option('act_settings', $options_act);
     }
-    wp_schedule_event(time(), 'daily', 'act_cron_install');
 }
+
 register_activation_hook( __FILE__, 'act_install' );
 register_deactivation_hook(__FILE__, 'act_desactive');
+
+add_action('act_cron_daily', 'act_cron');
+
+function act_cron(){
+  global $wpdb, $options_act, $plugin_page;
+  $act_count = $wpdb->get_var("SELECT count(ID) FROM ".$wpdb->prefix."activity");
+  $act_delete = $act_count - $options_act['act_prune'];
+  if ($act_delete > 0) {
+    $wpdb->query("DELETE FROM ".$wpdb->prefix."activity ORDER BY id ASC LIMIT ".$delete);
+  }
+}
 
 add_filter("plugin_action_links_wp-activity/wp-activity.php", 'act_plugin_action_links');
 function act_plugin_action_links($links)
@@ -132,13 +134,25 @@ function act_plugin_action_links($links)
 }
 
 //we add actions to hooks to log their events
-add_action('send_headers', 'act_session');
-add_action('profile_update', 'act_profile_edit');
-add_action('publish_post', 'act_post_add');
-add_action('comment_post', 'act_comment_add');
-add_action('add_link', 'act_link_add');
-add_action('wp_login_failed', 'act_login_failed');
- 
+if ($options_act['act_connect']){
+  add_action('send_headers', 'act_session');
+}
+if ($options_act['act_profiles'] ){ 
+  add_action('profile_update', 'act_profile_edit');
+}
+if ($options_act['act_posts']){
+  add_action('publish_post', 'act_post_add');
+}
+if ($options_act['act_comments']){
+  add_action('comment_post', 'act_comment_add');
+}
+if ($options_act['act_links']){
+  add_action('add_link', 'act_link_add');
+}
+if ($options_act['act_log_failures'] ){
+  add_action('wp_login_failed', 'act_login_failed');
+}
+
 function act_header(){
   $altcss = TEMPLATEPATH.'/wp-activity.css';
   echo '<link type="text/css" rel="stylesheet" href="';
@@ -153,24 +167,24 @@ add_action('wp_head', 'act_header');
 
 function act_profile_option(){
   global $wpdb, $user_ID, $options_act;
-  if (!$options_act['act_prevent_priv']){
-    $act_private = get_usermeta($user_ID, 'act_private');
-    ?>
-    <h3><?php _e('Activity events', 'wp-activity'); ?></h3>
-    <table>
-      <tr>
-		    <th><?php _e('Hide my activity :', 'wp-activity'); ?></th>
-		    <td><input type="checkbox" id="act_private" name="act_private" <?php if ($act_private){ echo 'checked="checked"'; }?> value="true" /> <?php _e('If selected, this option makes you become invisible in activity events.', 'wp-activity'); ?></td>
-      </tr>
-    </table>
-    <?php
-  }
+  $act_private = get_usermeta($user_ID, 'act_private');
+  ?>
+  <h3><?php _e('Activity events', 'wp-activity'); ?></h3>
+  <table>
+    <tr>
+	    <th><?php _e('Hide my activity :', 'wp-activity'); ?></th>
+	    <td><input type="checkbox" id="act_private" name="act_private" <?php if ($act_private){ echo 'checked="checked"'; }?> value="true" /> <?php _e('If selected, this option makes you become invisible in activity events.', 'wp-activity'); ?></td>
+    </tr>
+  </table>
+  <?php
 }
-add_action('show_user_profile', 'act_profile_option');
+if (!$options_act['act_prevent_priv']){
+  add_action('show_user_profile', 'act_profile_option');
+}
 
 function act_login_failed($act_user=''){
   global $wpdb, $options_act;
-  if ($options_act['act_log_failures'] and $act_user){
+  if ($act_user){
     $user_ID = 1; //event has to be linked to a wp user.
     $act_time=date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'LOGIN_FAIL', '".$act_time."', '".$act_user."')");
@@ -185,7 +199,7 @@ add_action('personal_options_update', 'act_profile_update');
 
 function act_session(){
   global $wpdb, $user_ID, $options_act;
-  if ($options_act['act_connect'] and !get_usermeta($user_ID, 'act_private')){
+  if (!get_usermeta($user_ID, 'act_private')){
     if (!$_COOKIE['act_logged'] and is_user_logged_in()){
       setcookie('act_logged',time());
       $act_time=date("Y-m-d H:i:s", time());
@@ -205,7 +219,7 @@ add_action('wp_logout', 'act_reinit');
 
 function act_profile_edit($act_user){
   global $wpdb, $user_ID, $options_act;
-  if ($options_act['act_profiles'] and !get_usermeta($user_ID, 'act_private')){
+  if (!get_usermeta($user_ID, 'act_private')){
     $act_time=date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'PROFILE_EDIT', '".$act_time."', $act_user)");
   }
@@ -213,7 +227,7 @@ function act_profile_edit($act_user){
 
 function act_post_add($act_post){
   global $wpdb, $user_ID, $options_act;
-  if ($options_act['act_posts'] and !get_usermeta($user_ID, 'act_private')){
+  if (!get_usermeta($user_ID, 'act_private')){
     $act_time=date("Y-m-d H:i:s", time());
     if ($wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."activity WHERE act_params=$act_post AND act_type='POST_ADD'") > 0){
       $act_type='POST_EDIT';
@@ -226,7 +240,7 @@ function act_post_add($act_post){
 
 function act_comment_add($act_comment){
   global $wpdb, $user_ID, $options_act;
-  if ($options_act['act_comments'] and !get_usermeta($user_ID, 'act_private')){
+  if (!get_usermeta($user_ID, 'act_private') and $user_ID <> 0){
     $act_time=date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'COMMENT_ADD', '".$act_time."', $act_comment)");
   }
@@ -234,7 +248,7 @@ function act_comment_add($act_comment){
 
 function act_link_add($act_link){
   global $wpdb, $user_ID, $options_act;
-  if ($options_act['act_links'] and !get_usermeta($user_ID, 'act_private')){
+  if (!get_usermeta($user_ID, 'act_private')){
     $act_time=date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'LINK_ADD', '".$act_time."', $act_link)");
   }
@@ -288,7 +302,7 @@ global $wpdb, $options_act, $user_ID;
 
   echo '<h2>'.$act_title.'</h2>';
   if ($archive == false) {echo '<ul id="activity">';}else{echo '<ul id="activity-archive">';}
-	$sql  = "SELECT * FROM ".$wpdb->prefix."activity AS activity, ".$wpdb->prefix."users AS users WHERE activity.user_id = users.id";
+	$sql  = "SELECT * FROM ".$wpdb->prefix."activity AS activity, ".$wpdb->users." AS users WHERE activity.user_id = users.id";
   if ($act_user!= ''){
     $sql .= " AND user_id = '".$act_user."'";
   }else{
@@ -480,7 +494,7 @@ function act_admin_scripts(){
 
 function act_pagination($act_count, $limit = 50, $current, $act_start = 0, $args = ''){
   // Adapted from http://www.phpeasystep.com/phptu/29.html
-	$adjacents = 3;
+	$adjacents = 1;
   if ($act_start + $limit > $act_count){
     $act_last = $act_count;
   }else{
@@ -508,7 +522,7 @@ function act_pagination($act_count, $limit = 50, $current, $act_start = 0, $args
 			$pagination.= "<a class=\"prev page-numbers\" href=\"$targetpage&act_page=$prev\">&laquo;</a> ";
 		
 		//pages	
-		if ($lastpage < 7 + ($adjacents * 2))	//not enough pages to bother breaking it up
+		if ($lastpage < (7 + $adjacents ))	//not enough pages to bother breaking it up
 		{	
 			for ($counter = 1; $counter <= $lastpage; $counter++)
 			{
@@ -518,12 +532,12 @@ function act_pagination($act_count, $limit = 50, $current, $act_start = 0, $args
 					$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=$counter\">$counter</a> ";					
 			}
 		}
-		elseif($lastpage > 5 + ($adjacents * 2))	//enough pages to hide some
+		elseif($lastpage > (5 + $adjacents))	//enough pages to hide some
 		{
 			//close to beginning; only hide later pages
-			if($current < 1 + ($adjacents * 2))		
+			if($current < (1 + $adjacents))		
 			{
-				for ($counter = 1; $counter < 4 + ($adjacents * 2); $counter++)
+				for ($counter = 1; $counter < (4 + $adjacents); $counter++)
 				{
 					if ($counter == $current)
 						$pagination.= "<span class=\"page-numbers current\">$counter</span> ";
@@ -531,14 +545,14 @@ function act_pagination($act_count, $limit = 50, $current, $act_start = 0, $args
 						$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=$counter\">$counter</a> ";					
 				}
 				$pagination.= "<span class=\"page-numbers dots\">...</span> ";
-				$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=$lpm1\">$lpm1</a> ";
+				//$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=$lpm1\">$lpm1</a> ";
 				$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=$lastpage\">$lastpage</a> ";		
 			}
 			//in middle; hide some front and some back
-			elseif($lastpage - ($adjacents * 2) > $current && $current > ($adjacents * 2))
+			elseif($lastpage - $adjacents > $current && $current > $adjacents)
 			{
 				$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=1\">1</a> ";
-				$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=2\">2</a> ";
+				//$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=2\">2</a> ";
 				$pagination.= "<span class=\"page-numbers dots\">...</span> ";
 				for ($counter = $current - $adjacents; $counter <= $current + $adjacents; $counter++)
 				{
@@ -548,16 +562,16 @@ function act_pagination($act_count, $limit = 50, $current, $act_start = 0, $args
 						$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=$counter\">$counter</a> ";					
 				}
 				$pagination.= "<span class=\"page-numbers dots\">...</span> ";
-				$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=$lpm1\">$lpm1</a> ";
+				//$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=$lpm1\">$lpm1</a> ";
 				$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=$lastpage\">$lastpage</a> ";		
 			}
 			//close to end; only hide early pages
 			else
 			{
 				$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=1\">1</a> ";
-				$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=2\">2</a> ";
+				//$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=2\">2</a> ";
 				$pagination.= "<span class=\"page-numbers dots\">...</span> ";
-				for ($counter = $lastpage - (2 + ($adjacents * 2)); $counter <= $lastpage; $counter++)
+				for ($counter = $lastpage - (2 + $adjacents); $counter <= $lastpage; $counter++)
 				{
 					if ($counter == $current)
 						$pagination.= "<span class=\"page-numbers current\">$counter</span> ";
@@ -593,6 +607,13 @@ function act_admin(){
     $act_args = $act_sqlorderby_sec = '';
     if (isset($_GET['act_type_filter'])){
       $act_type_filter = esc_html($_GET['act_type_filter']);
+      $act_user_sel = esc_html($_GET['act_user_sel']);
+      if ($act_user_sel <> 'all'){
+        $act_user_sql_filter = 'AND users.id = '.$act_user_sel.' AND act_type <> "LOGIN_FAIL" ';
+        $act_args .= '&act_user_sel='.$act_user_sel;
+      }else{
+        $act_user_sql_filter = '';
+      }
       if ($act_type_filter <> 'all'){
         $sqlfilter = 'AND act_type = "'.$act_type_filter.'"';
       }
@@ -606,7 +627,8 @@ function act_admin(){
     }
     if ( empty($act_type_filter) )
     	$act_type_filter = 'all';
-    
+    if ( empty($act_user_sel) )
+    	$act_user_sel = 'all';
     if ( empty($act_order_by) )
     	$act_order_by = 'order_date';
   
@@ -698,11 +720,11 @@ function act_admin(){
               $act_page = 1;
             }
           ?>
-          <h2><?php _e("Recent Activity", 'wp-activity'); ?></h2>
+          <h2><?php _e("Recent Activity", 'wp-activity'); ?> <?php if($act_feed_display){ ?><a href="<?php echo WP_PLUGIN_URL ?>/wp-activity/wp-activity-feed.php" title="<?php echo sprintf(__('%s activity RSS Feed', 'wp-activity'),get_bloginfo('name')) ?>"><img src="<?php echo WP_PLUGIN_URL ?>/wp-activity/img/rss.png" alt="" /></a><?php } ?></h2>
           <?php
             $act_start = ($act_page - 1)*$act_list_limit;
-            $act_recent_sql  = "SELECT * FROM ".$wpdb->prefix."activity AS activity, ".$wpdb->prefix."users AS users WHERE activity.user_id = users.id ".$sqlfilter." ORDER BY ".$sqlorderby." ".$sqlasc." ".$act_sqlorderby_sec; //." LIMIT ".$act_start.",".$act_list_limit;
-            if ( $logins = $wpdb->get_results($wpdb->prepare($act_recent_sql))){
+            $act_recent_sql  = "SELECT * FROM ".$wpdb->prefix."activity AS activity, ".$wpdb->users." AS users WHERE activity.user_id = users.id ".$sqlfilter." ".$act_user_sql_filter."ORDER BY ".$sqlorderby." ".$sqlasc." ".$act_sqlorderby_sec; //." LIMIT ".$act_start.",".$act_list_limit;
+            if ( $logins = $wpdb->get_results($wpdb->prepare($act_recent_sql)) or !empty($act_user_sql_filter) ){
               $act_count = count($logins);
               ?>
               <form id="act-filter" action="" method="get">
@@ -725,12 +747,21 @@ function act_admin(){
                     $select_type .= "</select>";
                     echo $select_type;
                     $select_order = "<select name=\"act_order_by\">";
-                    $select_order .= '<option value="order_date"' . (($act_order_by == 'order_date') ? " selected='selected'" : '') . '>' .  __('Order by date (DESC)', 'wp-activity') . "</option>";
-                    $select_order .= '<option value="order_user"' . (($act_order_by == 'order_user') ? " selected='selected'" : '') . '>' .  __('Order by user', 'wp-activity') . "</option>";
-                    $select_order .= '<option value="order_type"' . (($act_order_by == 'order_type') ? " selected='selected'" : '') . '>' .  __('Order by event type', 'wp-activity') . "</option>";
-                    //$select_order .= '<option value="order_data"' . (($act_order_by == 'order_data') ? " selected='selected'" : '') . '>' .  __('Order by data', 'wp-activity') . "</option>";
+                    $select_order .= '<option value="order_date"' . (($act_order_by == 'order_date') ? " selected='selected'" : '') . '>' .  __('Order by date (DESC)', 'wp-activity') . '</option>';
+                    $select_order .= '<option value="order_user"' . (($act_order_by == 'order_user') ? " selected='selected'" : '') . '>' .  __('Order by user', 'wp-activity') . '</option>';
+                    $select_order .= '<option value="order_type"' . (($act_order_by == 'order_type') ? " selected='selected'" : '') . '>' .  __('Order by event type', 'wp-activity') . '</option>';
                     $select_order .= "</select>";
                     echo $select_order;
+                    $act_users_sql = "SELECT ID, display_name FROM ".$wpdb->users." ORDER BY display_name ASC";
+                    if ( $act_u_res = $wpdb->get_results($act_users_sql)){
+                      $act_u_sel = "<select name=\"act_user_sel\">";
+                      $act_u_sel .= '<option value="all"' . (($act_user_sel == 'all') ? " selected='selected'" : '') . '>' .  __('All users', 'wp-activity') . '</option>';
+                      foreach ( (array) $act_u_res as $act_u ){
+                        $act_u_sel .= '<option value="'.$act_u->ID.'"' . (($act_user_sel == $act_u->ID) ? " selected='selected'" : '') . '>' .  $act_u->display_name . '</option>';
+                      }
+                      $act_u_sel .= "</select>";
+                      echo $act_u_sel;
+                    }
                     ?>
                     <input type="submit" id="post-query-submit" value="<?php esc_attr_e('Filter'); ?>" class="button-secondary" />
                   </div>
@@ -809,8 +840,10 @@ function act_admin(){
                 <form action="<?php echo ACT_URL; ?>wp-activity-export.php" method="post">
                   <input type="hidden" name="act_type_filter" value="<?php echo $act_type_filter; ?>" />
                   <input type="hidden" name="act_order_by" value="<?php echo $act_order_by; ?>" />
+                  <input type="hidden" name="act_user_sel" value="<?php echo $act_user_sel; ?>" />
                   <input type='submit' class='button-primary' name='act_export' value='<?php _e('Export filtered Data &raquo;') ?>' />
-                  <span class="act_info"><?php _e('If you use MS Excel and have some ugly characters, rename the file extension to .txt and open it within Excel.','wp-activity') ?></span>
+                  <input type="checkbox" name="act_del_exported" /> <?php _e('Delete exported data','wp-activity') ?> 
+                  <br /><span class="act_info"><?php _e('If you use MS Excel and have some ugly characters, rename the file extension to .txt and open it within Excel.','wp-activity') ?></span>
                   <?php wp_nonce_field('wp-activity-export','act_export_csv'); ?>
                 </form>
               <?php
@@ -896,10 +929,10 @@ function act_admin(){
               </tr><tr>
                 <th><?php _e('Rows limit in database : ', 'wp-activity') ?></th>
                 <td><input type="text" name="act_prune" value="<?php echo $act_prune ?>" />
-                <br /><span class="act_info"><?php sprintf(_e('There is currently %s rows in database.','wp-activity'), $act_count) ?></span>
+                <br /><span class="act_info"><?php echo sprintf(__('There is currently %s rows in database.','wp-activity'), $act_count); ?></span>
                 </td>
               </tr><tr>
-                <th><?php _e('Display activity RSS feed : ', 'wp-activity') ?></th><td><input type="checkbox" <?php if($act_feed_display){echo 'checked="checked"';} ?> name="act_feed_display" /></td>
+                <th><?php _e('Display activity RSS feed : ', 'wp-activity') ?> <?php if($act_feed_display){ ?><a href="<?php echo WP_PLUGIN_URL ?>/wp-activity/wp-activity-feed.php" title="<?php echo sprintf(__('%s activity RSS Feed', 'wp-activity'),get_bloginfo('name')) ?>"><img src="<?php echo WP_PLUGIN_URL ?>/wp-activity/img/rss.png" alt="" /></a><?php } ?></th><td><input type="checkbox" <?php if($act_feed_display){echo 'checked="checked"';} ?> name="act_feed_display" /></td>
               </tr><tr>
               </tr><tr>
                 <th><?php _e('Log login failures : ', 'wp-activity') ?></th>

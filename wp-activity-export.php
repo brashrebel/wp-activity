@@ -3,7 +3,7 @@
 $wpcontentdir = "wp-content"; //You have to change this if you renamed your wp-content directory.
 
 
-$script_filename = $_ENV["SCRIPT_FILENAME"];
+$script_filename = dirname($_SERVER["DOCUMENT_ROOT"].$_SERVER['PHP_SELF']); //$_ENV["SCRIPT_FILENAME"];
 $cut = strpos($script_filename, "/".$wpcontentdir."/plugins/");
 $path_tab = str_split($script_filename, $cut);
 require($path_tab[0]."/wp-blog-header.php");
@@ -23,6 +23,12 @@ if (current_user_can('administrator')){
         }
       }else{
         $sqlfilter = '';
+      }
+      $act_user_sel = esc_html($_POST['act_user_sel']);
+      if ($act_user_sel <> 'all'){
+        $act_user_sql_filter = 'AND users.id = '.$act_user_sel.' AND act_type <> "LOGIN_FAIL" ';
+      }else{
+        $act_user_sql_filter = '';
       }
       if (isset($_POST['act_order_by'])){
         $act_order_by = esc_html($_POST['act_order_by']);
@@ -47,7 +53,7 @@ if (current_user_can('administrator')){
       		$sqlasc = 'DESC';
       		break;
       }
-      $act_recent_sql  = "SELECT * FROM ".$wpdb->prefix."activity AS activity, ".$wpdb->prefix."users AS users WHERE activity.user_id = users.id ".$sqlfilter." ORDER BY ".$sqlorderby." ".$sqlasc." ".$act_sqlorderby_sec;
+      $act_recent_sql  = "SELECT * FROM ".$wpdb->prefix."activity AS activity, ".$wpdb->users." AS users WHERE activity.user_id = users.id ".$sqlfilter." ".$act_user_sql_filter."ORDER BY ".$sqlorderby." ".$sqlasc." ".$act_sqlorderby_sec;
       if ( $logins = $wpdb->get_results($wpdb->prepare($act_recent_sql))){
         echo __("Date", 'wp-activity').';'.__("User", 'wp-activity').';'.__("Event Type", 'wp-activity').';'.__("Applies to", 'wp-activity').";\n";
         foreach ( (array) $logins as $act ){
@@ -82,9 +88,14 @@ if (current_user_can('administrator')){
               break;
           }
           echo "\n"; 
+        }
+        //delete exported data if requested
+        if ($_POST['act_del_exported'] == true ){
+          $del_sql = "DELETE FROM ".$wpdb->prefix."activity WHERE 1=1 ".$sqlfilter." ".$act_user_sql_filter; //stupid condition 1=1 to avoid rewriting filters vars.
+          $wpdb->query($wpdb->prepare($del_sql));
+          
         }  
       }
-      $wpdb->print_error();
     }
   }
   act_export();
