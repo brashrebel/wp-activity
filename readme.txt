@@ -39,6 +39,8 @@ Translations :
 
 [Plugin page](http://www.driczone.net/blog/plugins/wp-activity/) (French blog but feel free to comment in english)
 
+I my plugin doesn't fit your needs, you can also try [ThreeWP Activity Monitor](http://wordpress.org/extend/plugins/threewp-activity-monitor/) by [Edward Mindeantre](http://mindreantre.se).
+
 == Installation ==
 
 1. Download the plugin and unzip,
@@ -135,6 +137,9 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 4. admin screen - reset/uninstall tab
 
 == ChangeLog ==
+
+= 1.6 =
+* Added Logging of IP Address when a logon failure occurs.
 
 = 1.5 =
 * Added current rows count in db next to the max rows value setting.
