@@ -27,6 +27,8 @@ If enabled, user who don't want to be listed in blog activity can hide its own a
 
 Users activity can be followed by RSS feed and can be exported in csv file (semicolon separation).
 
+Known Bugs :
+* Export in csv and rss feeds do not play well with Windows Hostings, you will get 404 errors when trying to access feed or csv file.
 
 Translations :
 
@@ -140,6 +142,11 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 
 = 1.6 =
 * Added Logging of IP Address when a logon failure occurs.
+* Added Activity stats.
+* Added a few css rules to wp-activity.css (custom css files must be updated).
+* Changed plugin menus (Wp-Activity has now it's own menu).
+* Changed CONNECT events tracking, should be less disturbed by plugins that deals with Wordpress login.
+* Fixed (again) empty Last login column in user list when using User Access Manager plugin.
 
 = 1.5 =
 * Added current rows count in db next to the max rows value setting.

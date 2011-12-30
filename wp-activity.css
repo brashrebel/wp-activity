@@ -8,6 +8,15 @@
 	height: 150px;
 	margin: 10px;
 }
+
+#toplevel_page_act_activity div.wp-menu-image {
+	background: transparent url(./img/admin_menu_icon.png) no-repeat 0px -32px !important;;
+}
+
+#toplevel_page_act_activity:hover div.wp-menu-image,
+#toplevel_page_act_activity.wp-has-current-submenu div.wp-menu-image {
+	background: transparent url(./img/admin_menu_icon.png) no-repeat 0px 0px !important;
+}
 /* Was previously named #activity-nowindow */
 #activity-archive{
   list-style : none;
@@ -34,4 +43,10 @@
 }
 .activity_warning{
   color: Red;
+}
+
+#act_admin_icon{
+	background-color: transparent;
+	background-image: url(img/icon32.png);
+	background-repeat: no-repeat;
 }

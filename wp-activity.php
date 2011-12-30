@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Log and display users activity in backend and frontend of WordPress.
     Author: Dric
-    Version: 1.6 alpha
+    Version: 1.6 alpha 2
     Author URI: http://www.driczone.net
 */
 
@@ -27,7 +27,7 @@
 
 // let's initializing all vars
 
-$act_plugin_version = "1.6 alpha"; //Don't change this, of course.
+$act_plugin_version = "1.6 alpha 2"; //Don't change this, of course.
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get bugged by admin panel additions
@@ -42,13 +42,20 @@ if ( ! defined( 'WP_CONTENT_URL' ) ) {
 }
 if ( ! defined( 'WP_CONTENT_DIR' ) ) define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
 if ( ! defined( 'WP_PLUGIN_URL' ) ) define( 'WP_PLUGIN_URL', WP_CONTENT_URL. '/plugins' );
-if ( ! defined( 'WP_PLUGIN_DIR' ) ) define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins/' );
+if ( ! defined( 'WP_PLUGIN_DIR' ) ) define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
 define('ACT_DIR', dirname(plugin_basename(__FILE__)));
 define('ACT_URL', WP_CONTENT_URL . '/plugins/' . ACT_DIR . '/');
 
 //Plugin can be translated, just put the .mo language file in the /lang directory
 load_plugin_textdomain('wp-activity', WP_PLUGIN_URL.'/wp-activity/lang/', ACT_DIR . '/lang/');
 
+add_action('init', 'act_process_post');
+
+function act_process_post(){
+ if(isset($_POST['act_export'])) {
+   act_export();
+ }
+}
 
 function act_desactive() {
 	wp_clear_scheduled_hook('act_cron_daily');
@@ -272,14 +279,7 @@ function act_session($userlogin){
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$act_time."', '')");
     $act_url = parse_url(get_option('home'));
   }
-
 }
-
-function act_reinit(){
-  if ($_COOKIE['act_logged']){ setcookie ("act_logged", "", time() - 3600);}
-}
-//add_action('wp_login', 'act_reinit');  'v1.5 - double login bug
-add_action('wp_logout', 'act_reinit');
 
 function act_profile_edit($act_user){
   global $wpdb, $user_ID, $options_act;
@@ -518,17 +518,17 @@ if (is_admin()){
         return $columns;
     }
     
-    add_filter('manage_users_custom_column',  'add_act_last_login_column_value', 10, 3); //v1.5 : empty column data when another plugin dealing with columns.
-    function add_act_last_login_column_value( $value, $column_name, $user_id ){
+    add_filter('manage_users_custom_column',  'add_act_last_login_column_value', 20, 3);
+    function add_act_last_login_column_value( $value='', $column_name, $user_id ){
       global $wpdb;
     	if ($column_name == 'act_last_login'){
-        $user = get_userdata( $user_id );
-      	$act_last_connect = $wpdb->get_var("SELECT act_date FROM ".$wpdb->prefix."activity WHERE user_id = '".$user->ID."' AND act_type = 'CONNECT' ORDER BY act_date DESC LIMIT 0,1");
+      	$act_last_connect = $wpdb->get_var("SELECT act_date FROM ".$wpdb->prefix."activity WHERE user_id = '".$user_id."' AND act_type = 'CONNECT' ORDER BY act_date DESC LIMIT 0,1");
         if ($act_last_connect){
-          $value = nicetime($act_last_connect);
+          return nicetime($act_last_connect);
         }
-      }		
-    	return $value;
+      }else{
+        return $value;
+      }
     }
     function act_rightnow_row(){
       global $wpdb, $user_ID;
@@ -547,7 +547,7 @@ if (is_admin()){
   
   function act_admin_menu(){
     add_action( 'admin_head', 'act_header' );
-    add_menu_page('WP-Activity', 'WP-Activity', 'publish_posts', 'act_activity', 'act_admin_activity');
+    add_menu_page('WP-Activity', 'WP-Activity', 'publish_posts', 'act_activity', 'act_admin_activity', 'div');
     add_submenu_page( 'act_activity' , __('Activity Log', 'wp-activity'), __('Activity Log', 'wp-activity'), 'publish_posts', 'act_activity', 'act_admin_activity');
     add_submenu_page( 'act_activity' , __('Activity Stats', 'wp-activity'), __('Activity Stats', 'wp-activity'), 'publish_posts', 'act_stats', 'act_admin_stats');
     add_submenu_page( 'act_activity' , __('WP-Activity Settings', 'wp-activity'), __('WP-Activity Settings', 'wp-activity'), 'manage_options', 'act_admin', 'act_admin_settings');
@@ -661,11 +661,11 @@ if (is_admin()){
   }
 
   function act_admin_activity(){
-    global $wpdb, $act_plugin_version, $act_list_limit;
+    global $wpdb, $act_plugin_version, $act_list_limit, $options_act;
     ?>
     <div class="wrap">
-    <div id="icon-users" class="icon32"></div>
-    <h2>WP-Activity Log</h2>
+    <div id="act_admin_icon" class="icon32"></div>
+    <h2>WP-Activity Log <?php if($options_act['act_feed_display']){ ?><a href="<?php echo WP_PLUGIN_URL ?>/wp-activity/wp-activity-feed.php" title="<?php echo sprintf(__('%s activity RSS Feed', 'wp-activity'),get_bloginfo('name')) ?>"><img src="<?php echo WP_PLUGIN_URL ?>/wp-activity/img/rss.png" alt="" /></a><?php } ?></h2>
     <?php
     if ( isset($_GET['act_list_action']) && isset($_GET['act_check']) && check_admin_referer('wp-activity-list', 'act_filter')) {
     	$doaction = $_GET['act_list_action'];
@@ -680,13 +680,13 @@ if (is_admin()){
     if (isset($_GET['act_type_filter'])){
       $act_type_filter = esc_html($_GET['act_type_filter']);
       $act_user_sel = esc_html($_GET['act_user_sel']);
-      if ($act_user_sel <> 'all'){
+      if ($act_user_sel <> 'all' and !empty($act_user_sel)){
         $act_user_sql_filter = 'AND users.id = '.$act_user_sel.' AND act_type <> "LOGIN_FAIL" ';
         $act_args .= '&act_user_sel='.$act_user_sel;
       }else{
         $act_user_sql_filter = '';
       }
-      if ($act_type_filter <> 'all'){
+      if ($act_type_filter <> 'all' and !empty($act_type_filter)){
         $sqlfilter = 'AND act_type = "'.$act_type_filter.'"';
       }
       $act_args .= '&act_type_filter='.$act_type_filter;
@@ -749,7 +749,7 @@ if (is_admin()){
                 </select>
                 <input type="submit" value="<?php esc_attr_e('Apply'); ?>" name="doaction" id="doaction" class="button-secondary action" />
                 <?php
-                $types = array('LOGIN_FAIL', 'CONNECT', 'POST_ADD', 'POST_EDIT', 'PROFILE_EDIT', 'LINK_ADD');
+                $types = array('LOGIN_FAIL', 'CONNECT', 'POST_ADD', 'POST_EDIT', 'PROFILE_EDIT', 'COMMENT_ADD', 'LINK_ADD');
                 $select_type = "<select name=\"act_type_filter\">";
                 $select_type .= '<option value="all"'  . (($act_type_filter == 'all') ? " selected='selected'" : '') . '>' . __('View all') . "</option>";
                 foreach ((array) $types as $type)
@@ -848,7 +848,8 @@ if (is_admin()){
             </table>
           </form>                
           <div class="tablenav">
-            <form action="<?php echo ACT_URL; ?>wp-activity-export.php" method="post">
+            <form action="" method="post">
+              
               <input type="hidden" name="act_type_filter" value="<?php echo $act_type_filter; ?>" />
               <input type="hidden" name="act_order_by" value="<?php echo $act_order_by; ?>" />
               <input type="hidden" name="act_user_sel" value="<?php echo $act_user_sel; ?>" />
@@ -873,7 +874,7 @@ if (is_admin()){
     global $wpdb, $act_plugin_version, $act_list_limit;
     ?>
     <div class="wrap">
-    <div id="icon-users" class="icon32"></div>
+    <div id="act_admin_icon" class="icon32"></div>
     <h2><?php _e('WP-Activity Settings', 'wp-activity') ?></h2>
     <?php
     if (isset($_POST['submit']) and check_admin_referer('wp-activity-submit','act_admin')){
@@ -919,6 +920,7 @@ if (is_admin()){
   		}      
     }
     $act_opt=get_option('act_settings');
+    $act_count = $wpdb->get_var("SELECT count(ID) FROM ".$wpdb->prefix."activity");
     if (!is_array($act_opt)){
       echo '<span class="activity_warning">'.sprintf(__('Activity Plugin has been uninstalled. You can now desactivate this plugin : <a href="%s">Plugins Page</a>', 'wp-activity'),get_bloginfo('wpurl').'/wp-admin/plugins.php').'</span>';
     }else{
@@ -1119,13 +1121,11 @@ if (is_admin()){
         }
         $act_events_tab[$act_type] += 1;
       }
-      
-      print_r($act_events_tab);
     }
-    echo $sql;
+    $act_nonce = wp_create_nonce('wp-activity-list');
     ?>
     <div class="wrap">
-      <div id="icon-stats" class="icon32"></div>
+      <div id="act_admin_icon" class="icon32"></div>
       <h2><?php _e('Activity Stats', 'wp-activity') ?></h2>
       <br />
       <div class="tablenav">
@@ -1141,7 +1141,7 @@ if (is_admin()){
         <br class="clear" />
       </div>
       <div id="act_wrap">
-        <div class="metabox-holder">
+        <div id="dashboard-widgets" class="metabox-holder">
           <div id="dashboard_right_now" class="postbox">
             <h3><?php _e('Activity Stats', 'wp-activity') ?></h3>
             <div class="inside">
@@ -1150,43 +1150,39 @@ if (is_admin()){
                 <table>
                   <tbody>
                     <tr>
-                      <td class="first b"><?php echo ($act_events_tab['CONNECT']) ? $act_events_tab['CONNECT'] : '0'; ?></td>
-                      <td class="t approved"><?php _e('Successful user logins', 'wp-activity'); ?></td>
+                      <td class="first b"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=CONNECT"><?php echo ($act_events_tab['CONNECT']) ? $act_events_tab['CONNECT'] : '0'; ?></a></td>
+                      <td class="t approved"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=CONNECT"><?php _e('Successful user logins', 'wp-activity'); ?></a></td>
+                    </tr>
+                    <?php if ($options_act['act_log_failures']) { ?>
+                    <tr>
+                      <td class="first b"><a class="spam" href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=LOGIN_FAIL"><?php echo ($act_events_tab['LOGIN_FAIL']) ? $act_events_tab['LOGIN_FAIL'] : '0'; ?></a></td>
+                      <td class="t"><a class="spam" href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=LOGIN_FAIL"><?php _e('Login attempts failed', 'wp-activity'); ?></a></td>
+                    </tr>
+                    <?php } ?>
+                    <tr>
+                      <td class="first b"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=PROFILE_EDIT"><?php echo ($act_events_tab['PROFILE_EDIT']) ? $act_events_tab['PROFILE_EDIT'] : '0'; ?></a></td>
+                      <td class="t"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=PROFILE_EDIT"><?php _e('Profiles edited', 'wp-activity'); ?></a></td>
                     </tr>
                     <tr>
-                      <td class="first b"><?php echo ($act_events_tab['LOGIN_FAIL']) ? $act_events_tab['LOGIN_FAIL'] : '0'; ?></td>
-                      <td class="t spam"><?php _e('Login attempts failed', 'wp-activity'); ?></td>
+                      <td class="first b"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=POST_ADD"><?php echo ($act_events_tab['POST_ADD']) ? $act_events_tab['POST_ADD'] : '0'; ?></a></td>
+                      <td class="t"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=POST_ADD"><?php _e('Posts created', 'wp-activity'); ?></a></td>
                     </tr>
                     <tr>
-                      <td class="first b"><?php echo ($act_events_tab['PROFILE_EDIT']) ? $act_events_tab['PROFILE_EDIT'] : '0'; ?></td>
-                      <td class="t"><?php _e('Profiles edited', 'wp-activity'); ?></td>
+                      <td class="first b"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=POST_EDIT"><?php echo ($act_events_tab['POST_EDIT']) ? $act_events_tab['POST_EDIT'] : '0'; ?></a></td>
+                      <td class="t"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=POST_EDIT"><?php _e('Posts edited', 'wp-activity'); ?></a></td>
                     </tr>
                     <tr>
-                      <td class="first b"><?php echo ($act_events_tab['POST_ADD']) ? $act_events_tab['POST_ADD'] : '0'; ?></td>
-                      <td class="t"><?php _e('Posts created', 'wp-activity'); ?></td>
+                      <td class="first b"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=COMMENT_ADD"><?php echo ($act_events_tab['COMMENT_ADD']) ? $act_events_tab['COMMENT_ADD'] : '0'; ?></a></td>
+                      <td class="t"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=COMMENT_ADD"><?php _e('Comments added', 'wp-activity'); ?></a></td>
                     </tr>
                     <tr>
-                      <td class="first b"><?php echo ($act_events_tab['POST_EDIT']) ? $act_events_tab['POST_EDIT'] : '0'; ?></td>
-                      <td class="t"><?php _e('Posts edited', 'wp-activity'); ?></td>
-                    </tr>
-                    <tr>
-                      <td class="first b"><?php echo ($act_events_tab['COMMENT_ADD']) ? $act_events_tab['COMMENT_ADD'] : '0'; ?></td>
-                      <td class="t"><?php _e('Comments added', 'wp-activity'); ?></td>
-                    </tr>
-                    <tr>
-                      <td class="first b"><?php echo ($act_events_tab['LINK_ADD']) ? $act_events_tab['LINK_ADD'] : '0'; ?></td>
-                      <td class="t"><?php _e('Links added', 'wp-activity'); ?></td>
+                      <td class="first b"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=LINK_ADD"><?php echo ($act_events_tab['LINK_ADD']) ? $act_events_tab['LINK_ADD'] : '0'; ?></a></td>
+                      <td class="t"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=LINK_ADD"><?php _e('Links added', 'wp-activity'); ?></a></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
               <div id="act_cat_graphs" style="width:650px;height:250px;"></div>
-            </div>
-          </div>
-          <div class="postbox">
-            <h3><?php _e('Mood Timeline', 'wpmoods') ?></h3>
-            <div class="wpmoods_inside">
-              <div id="wpmoods_mood_graphs" style="width:650px;height:250px;"></div>
             </div>
           </div>
         </div>
@@ -1195,6 +1191,100 @@ if (is_admin()){
     <?php
   }
 }
+  function act_export(){
+    global $wpdb;
+    if(isset($_POST['act_export']) and check_admin_referer('wp-activity-export','act_export_csv')){
+      $act_sqlorderby_sec = '';
+      if (isset($_POST['act_type_filter'])){
+        $act_type_filter = esc_html($_POST['act_type_filter']);
+        if ($act_type_filter <> 'all'){
+          $sqlfilter = 'AND act_type = "'.$act_type_filter.'"';
+        }
+      }else{
+        $sqlfilter = '';
+      }
+      $act_user_sel = esc_html($_POST['act_user_sel']);
+      if ($act_user_sel <> 'all'){
+        $act_user_sql_filter = 'AND users.id = '.$act_user_sel.' AND act_type <> "LOGIN_FAIL" ';
+      }else{
+        $act_user_sql_filter = '';
+      }
+      if (isset($_POST['act_order_by'])){
+        $act_order_by = esc_html($_POST['act_order_by']);
+      }else{
+      	$act_order_by = 'order_date';
+      }
+    
+      switch ($act_order_by) {
+      	case 'order_user' :
+      		$sqlorderby = 'display_name';
+      		$sqlasc = 'ASC';
+          $act_sqlorderby_sec = ', act_date DESC';
+      		break;
+      	case 'order_type' :
+      		$sqlorderby = 'act_type';
+      		$sqlasc = 'ASC';
+          $act_sqlorderby_sec = ', act_date DESC';
+      		break;
+      	case 'order_date' :
+      	default :
+      		$sqlorderby = 'act_date';
+      		$sqlasc = 'DESC';
+      		break;
+      }
+      $act_recent_sql  = "SELECT * FROM ".$wpdb->prefix."activity AS activity, ".$wpdb->users." AS users WHERE activity.user_id = users.id ".$sqlfilter." ".$act_user_sql_filter."ORDER BY ".$sqlorderby." ".$sqlasc." ".$act_sqlorderby_sec;
+      if ( $logins = $wpdb->get_results($wpdb->prepare($act_recent_sql))){
+        header("Content-Type: application/csv-tab-delimited-table");
+        header("Content-disposition: filename=wp-activity.csv");
+        echo __("Date", 'wp-activity').';'.__("User", 'wp-activity').';'.__("Event Type", 'wp-activity').';'.__("Applies to", 'wp-activity').";\n";
+        foreach ( (array) $logins as $act ){
+           echo $act->act_date.';';
+           switch ($act->act_type){
+            case 'LOGIN_FAIL' :
+              echo $act->act_params.';'.$act->act_type.';;';
+              break;
+            case 'CONNECT':
+              echo $act->display_name.';'.$act->act_type.';;';
+              break;
+            case 'COMMENT_ADD':
+              $act_comment=get_comment($act->act_params);
+              $act_post=get_post($act_comment->comment_post_ID);
+              echo $act->display_name.';'.$act->act_type.';'.$act_post->post_title.';';
+              break;
+            case 'POST_ADD':
+            case 'POST_EDIT':
+              $act_post=get_post($act->act_params);
+              echo $act->display_name.';'.$act->act_type.';'.$act_post->post_title.';';
+              break;
+            case 'PROFILE_EDIT':
+              echo $act->display_name.';'.$act->act_type.';;';
+              break;
+            case 'LINK_ADD':
+              $link = get_bookmark($act->act_params);
+              if ($link->link_visible == 'Y'){
+                echo $act->display_name.';'.$act->act_type.';'.$link->link_name.';';
+              }
+              break;
+            default:
+              break;
+          }
+          echo "\n"; 
+        }
+        //delete exported data if requested
+        if ($_POST['act_del_exported'] == true ){
+          $del_sql = "DELETE FROM ".$wpdb->prefix."activity WHERE 1=1 ".$sqlfilter." ".$act_user_sql_filter; //stupid condition 1=1 to avoid rewriting filters vars.
+          $wpdb->query($wpdb->prepare($del_sql));
+          
+        }  
+      }else{
+        echo 'Zombie frenzy ! They gonna eat our brains ! ...No, in fact something goes wrong with the sql query : '.$wpdb->print_error();
+      }
+    }else{
+      echo "Alien Invasion ! We all gonna die ! ...No, in fact this is a security check failure.";
+    }
+    die();
+  }
+  
 add_action( 'widgets_init', 'WPActivity_load_widgets' );
 
 function WPActivity_load_widgets() {
