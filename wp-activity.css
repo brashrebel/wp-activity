@@ -17,6 +17,9 @@
 #toplevel_page_act_activity.wp-has-current-submenu div.wp-menu-image {
 	background: transparent url(./img/admin_menu_icon.png) no-repeat 0px 0px !important;
 }
+.act_data_report_icon{
+  vertical-align: middle;
+}
 /* Was previously named #activity-nowindow */
 #activity-archive{
   list-style : none;
@@ -44,7 +47,6 @@
 .activity_warning{
   color: Red;
 }
-
 #act_admin_icon{
 	background-color: transparent;
 	background-image: url(img/icon32.png);

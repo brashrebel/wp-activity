@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Log and display users activity in backend and frontend of WordPress.
     Author: Dric
-    Version: 1.6 alpha 2
+    Version: 1.6 alpha 3
     Author URI: http://www.driczone.net
 */
 
@@ -27,7 +27,7 @@
 
 // let's initializing all vars
 
-$act_plugin_version = "1.6 alpha 2"; //Don't change this, of course.
+$act_plugin_version = "1.6 alpha 3"; //Don't change this, of course.
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get bugged by admin panel additions
@@ -534,9 +534,9 @@ if (is_admin()){
       global $wpdb, $user_ID;
       $act_last_connect = $wpdb->get_var("SELECT act_date FROM ".$wpdb->prefix."activity WHERE user_id = '".$user_ID."' AND act_type = 'CONNECT' ORDER BY act_date DESC LIMIT 1,1");
       $act_fail_count = $wpdb->get_var("SELECT COUNT(id) FROM ".$wpdb->prefix."activity WHERE act_date >= '".$act_last_connect."' AND act_type = 'LOGIN_FAIL'");
-      
+      $act_nonce = wp_create_nonce('wp-activity-list');
       echo "<tr>";
-      echo " <td class=\"first b\"><a href=\"?page=wp-activity\">$act_fail_count</a></td>";
+      echo " <td class=\"first b\"><a href=\"admin.php?page=act_activity&act_filter=".$act_nonce."&act_type_filter=LOGIN_FAIL\">$act_fail_count</a></td>";
     	echo " <td class=\"t spam\">" . __("Logon fails", 'wp-activity') . "</td>";
       echo "</tr>";
     }
@@ -549,21 +549,24 @@ if (is_admin()){
     add_action( 'admin_head', 'act_header' );
     add_menu_page('WP-Activity', 'WP-Activity', 'publish_posts', 'act_activity', 'act_admin_activity', 'div');
     add_submenu_page( 'act_activity' , __('Activity Log', 'wp-activity'), __('Activity Log', 'wp-activity'), 'publish_posts', 'act_activity', 'act_admin_activity');
-    add_submenu_page( 'act_activity' , __('Activity Stats', 'wp-activity'), __('Activity Stats', 'wp-activity'), 'publish_posts', 'act_stats', 'act_admin_stats');
+    $act_stats_page = add_submenu_page( 'act_activity' , __('Activity Stats', 'wp-activity'), __('Activity Stats', 'wp-activity'), 'publish_posts', 'act_stats', 'act_admin_stats');
     add_submenu_page( 'act_activity' , __('WP-Activity Settings', 'wp-activity'), __('WP-Activity Settings', 'wp-activity'), 'manage_options', 'act_admin', 'act_admin_settings');
+    add_action('admin_print_styles-' . $act_stats_page, 'act_stats_scripts');
   }
   add_action('admin_menu', 'act_admin_menu');
   add_action('admin_init','act_admin_scripts');
   
-  function act_admin_scripts(){
-    wp_enqueue_script('jquery-ui-tabs');
-    wp_enqueue_script('jquery-ui-datepicker');
-    wp_enqueue_style('act_tabs', WP_PLUGIN_URL .'/wp-activity/jquery.ui.tabs.css', false, '2.5.0', 'screen');
+  function act_stats_scripts(){
     wp_enqueue_style('act_datepicker', WP_PLUGIN_URL .'/wp-activity/jquery.ui.datepicker.css', false, '2.5.0', 'screen');
     wp_enqueue_script('flot', ACT_URL .'js/jquery.flot.min.js', 'jQuery');
+    wp_enqueue_script('jquery-ui-datepicker');
   }
   
-  
+  function act_admin_scripts(){
+    wp_enqueue_script('jquery-ui-tabs');
+    wp_enqueue_style('act_tabs', WP_PLUGIN_URL .'/wp-activity/jquery.ui.tabs.css', false, '2.5.0', 'screen');
+  }
+ 
   function act_pagination($act_count, $limit = 50, $current, $act_start = 0, $args = ''){
     // Adapted from http://www.phpeasystep.com/phptu/29.html
   	$adjacents = 1;
@@ -1110,6 +1113,18 @@ if (is_admin()){
       $act_date_start = date('Y-m-d',time()-604800);
       $act_date_end = date('Y-m-d');
     }
+    if ( isset($_GET['act_filter']) && check_admin_referer('wp-activity-list', 'act_stats')) {
+      if ( isset($_GET['act_date_start']) && isset($_GET['act_date_end'])) {
+        $act_date_start = $_GET['act_date_start'];
+        $act_date_end = $_GET['act_date_end'];
+      }else{
+        $act_date_start = date('Y-m-d',time()-604800);
+        $act_date_end = date('Y-m-d');
+      }
+      $act_filter = esc_html($_GET['act_filter']);  
+    }else{
+      $act_filter = "CONNECT";
+    }
     $sql  = "SELECT * FROM ".$wpdb->prefix."activity WHERE act_date BETWEEN '".$act_date_start."' AND '".$act_date_end." 23:59:59' ORDER BY act_type ASC, act_date ASC"; //We need to set h:m:s as they are by default 00:00:00
     if ( $act_events = $wpdb->get_results( $sql)){
       $act_events_tab = array();
@@ -1122,7 +1137,28 @@ if (is_admin()){
         $act_events_tab[$act_type] += 1;
       }
     }
+    $sqlfilter  = "SELECT DATE_FORMAT(act_date, '%Y-%m-%d') as act_date FROM ".$wpdb->prefix."activity WHERE act_type = '".$act_filter."' AND act_date BETWEEN '".$act_date_start."' AND '".$act_date_end." 23:59:59' ORDER BY act_type ASC, act_date ASC"; //We need to set h:m:s as they are by default 00:00:00
+    if ( $act_filter_r = $wpdb->get_results($sqlfilter)){
+      $act_filter_tab = array();
+      $act_date = '';
+      foreach ( (array) $act_filter_r as $act_event ){
+        if (strtotime($act_event->act_date) <> $act_date){
+          $act_date = strtotime($act_event->act_date);
+          $act_filter_tab[$act_date] = 0;
+        }
+        $act_filter_tab[$act_date] += 1;
+      }
+    }
     $act_nonce = wp_create_nonce('wp-activity-list');
+    $act_tab_types = array(
+      'CONNECT'       => __('Successful user logins', 'wp-activity'),
+      'LOGIN_FAIL'    => __('Login attempts failed', 'wp-activity'),
+      'PROFILE_EDIT'  => __('Profiles edited', 'wp-activity'),
+      'POST_ADD'      => __('Posts created', 'wp-activity'),
+      'POST_EDIT'     => __('Posts edited', 'wp-activity'),
+      'COMMENT_ADD'   => __('Comments added', 'wp-activity'),
+      'LINK_ADD'      => __('Links added', 'wp-activity')
+      )
     ?>
     <div class="wrap">
       <div id="act_admin_icon" class="icon32"></div>
@@ -1145,44 +1181,108 @@ if (is_admin()){
           <div id="dashboard_right_now" class="postbox">
             <h3><?php _e('Activity Stats', 'wp-activity') ?></h3>
             <div class="inside">
-              <div class="table table_content">
+              <div class="table table_content" style="width: 25%">
                 <p class="sub"><?php _e('Events number :', 'wp-activity'); ?></p>
                 <table>
                   <tbody>
-                    <tr>
-                      <td class="first b"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=CONNECT"><?php echo ($act_events_tab['CONNECT']) ? $act_events_tab['CONNECT'] : '0'; ?></a></td>
-                      <td class="t approved"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=CONNECT"><?php _e('Successful user logins', 'wp-activity'); ?></a></td>
-                    </tr>
-                    <?php if ($options_act['act_log_failures']) { ?>
-                    <tr>
-                      <td class="first b"><a class="spam" href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=LOGIN_FAIL"><?php echo ($act_events_tab['LOGIN_FAIL']) ? $act_events_tab['LOGIN_FAIL'] : '0'; ?></a></td>
-                      <td class="t"><a class="spam" href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=LOGIN_FAIL"><?php _e('Login attempts failed', 'wp-activity'); ?></a></td>
-                    </tr>
-                    <?php } ?>
-                    <tr>
-                      <td class="first b"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=PROFILE_EDIT"><?php echo ($act_events_tab['PROFILE_EDIT']) ? $act_events_tab['PROFILE_EDIT'] : '0'; ?></a></td>
-                      <td class="t"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=PROFILE_EDIT"><?php _e('Profiles edited', 'wp-activity'); ?></a></td>
-                    </tr>
-                    <tr>
-                      <td class="first b"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=POST_ADD"><?php echo ($act_events_tab['POST_ADD']) ? $act_events_tab['POST_ADD'] : '0'; ?></a></td>
-                      <td class="t"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=POST_ADD"><?php _e('Posts created', 'wp-activity'); ?></a></td>
-                    </tr>
-                    <tr>
-                      <td class="first b"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=POST_EDIT"><?php echo ($act_events_tab['POST_EDIT']) ? $act_events_tab['POST_EDIT'] : '0'; ?></a></td>
-                      <td class="t"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=POST_EDIT"><?php _e('Posts edited', 'wp-activity'); ?></a></td>
-                    </tr>
-                    <tr>
-                      <td class="first b"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=COMMENT_ADD"><?php echo ($act_events_tab['COMMENT_ADD']) ? $act_events_tab['COMMENT_ADD'] : '0'; ?></a></td>
-                      <td class="t"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=COMMENT_ADD"><?php _e('Comments added', 'wp-activity'); ?></a></td>
-                    </tr>
-                    <tr>
-                      <td class="first b"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=LINK_ADD"><?php echo ($act_events_tab['LINK_ADD']) ? $act_events_tab['LINK_ADD'] : '0'; ?></a></td>
-                      <td class="t"><a href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=LINK_ADD"><?php _e('Links added', 'wp-activity'); ?></a></td>
-                    </tr>
+                    <?php 
+                      foreach ($act_tab_types as $act_tab_type => $act_tab_label){
+                        if ($act_tab_type <> 'LOGIN_FAIL' OR $options_act['act_log_failures']) {
+                        ?>
+                        <tr>
+                          <td class="first b"><a <?php if($act_tab_type == 'LOGIN_FAIL') echo 'class="spam"'; ?> href="?page=act_stats&act_stats=<?php echo $act_nonce ?>&act_filter=<?php echo $act_tab_type ?>&act_date_start=<?php echo $act_date_start ?>&act_date_end=<?php echo $act_date_end ?>"><?php echo ($act_events_tab[$act_tab_type]) ? $act_events_tab[$act_tab_type] : '0'; ?></a></td>
+                          <td class="t"><a <?php if($act_tab_type == 'LOGIN_FAIL') echo 'class="spam"'; ?> href="?page=act_stats&act_stats=<?php echo $act_nonce ?>&act_filter=<?php echo $act_tab_type ?>&act_date_start=<?php echo $act_date_start ?>&act_date_end=<?php echo $act_date_end ?>"><?php echo $act_tab_label ?></a> <a title="<?php echo __('See data for', 'wp-activity').' : '.$act_tab_label ?>" href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=<?php echo $act_tab_type ?>"><img class="act_data_report_icon" src="<?php echo WP_PLUGIN_URL ?>/wp-activity/img/report_data.png" alt="" /></a></td>
+                        </tr>
+                        <?php
+                        }
+                      } 
+                    ?>
                   </tbody>
                 </table>
               </div>
-              <div id="act_cat_graphs" style="width:650px;height:250px;"></div>
+              <div class="table table_discussion" style="width: 65%">
+                <p class="sub"><?php echo $act_tab_types[$act_filter] ?></p>
+                <div id="act_cat_graphs" style="width:98%;height:250px;"></div>
+                <script type="text/javascript">
+                  jQuery().ready(function ($) {
+                    var d1 = [
+                    <?php
+                      $act_disp = ''; 
+                      foreach ($act_filter_tab as $act_date => $act_number){
+                        $act_date = $act_date*1000;
+                        $act_disp .= "[".$act_date.", ".$act_number."],";
+                      }
+                      $act_disp = rtrim($act_disp, ",");
+                      echo $act_disp;
+                    ?>
+                      ];
+                    $.plot($("#act_cat_graphs"), [
+                      {
+                          data: d1,
+                          label: "<?php echo $act_tab_types[$act_filter] ?>",
+                          bars: { show: true, barWidth : 24*60*60*1000 },
+                          color: "#a3bcd3"
+                      }
+                    ],
+                      {
+                          xaxis: {
+                              mode: "time",
+                              minTickSize: [1, "day"],
+                              tickLength: 0,
+                              min: <?php echo strtotime($act_date_start)*1000 ?>,
+                              max: <?php echo strtotime($act_date_end." 23:59:59")*1000 ?>
+                          },
+                          yaxis: { 
+                              tickDecimals: 0,
+                              min: 0
+                          },
+                          grid: {
+                              backgroundColor: { colors: ["#fff", "#eee"] },
+                              hoverable: true
+                          },
+                          legend: {
+                              show: false
+                          }
+                      }
+                    );
+                    function showTooltip(x, y, contents) {
+                        $('<div id="tooltip">' + contents + '</div>').css( {
+                            position: 'absolute',
+                            display: 'none',
+                            top: y + 5,
+                            left: x + 5,
+                            border: '1px solid #ccc',
+                            padding: '2px',
+                            'background-color': '#fff',
+                            opacity: 0.80
+                        }).appendTo("body").fadeIn(200);
+                    }
+                
+                    var previousPoint = null;
+                    $("#act_cat_graphs").bind("plothover", function (event, pos, item) {
+                        $("#x").text(pos.x.toFixed(2));
+                        $("#y").text(pos.y.toFixed(2));
+                            if (item) {
+                                if (previousPoint != item.dataIndex) {
+                                    previousPoint = item.dataIndex;
+                                    
+                                    $("#tooltip").remove();
+                                    var x = item.datapoint[0].toFixed(2),
+                                        y = item.datapoint[1].toFixed(2);
+                                    var actDate = new Date();
+                                    actDate.setTime(x);
+                                    showTooltip(item.pageX, item.pageY, actDate.toDateString() + "<br />" + item.series.label + " : " + parseFloat(y));
+                                }
+                            }
+                            else {
+                                $("#tooltip").remove();
+                                previousPoint = null;            
+                            }
+                    });
+                  });
+                </script>
+              </div>
+              <div class="versions"></div>
             </div>
           </div>
         </div>
