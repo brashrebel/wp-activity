@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Log and display users activity in backend and frontend of WordPress.
     Author: Dric
-    Version: 1.6 alpha 3
+    Version: 1.6
     Author URI: http://www.driczone.net
 */
 
@@ -27,7 +27,7 @@
 
 // let's initializing all vars
 
-$act_plugin_version = "1.6 alpha 3"; //Don't change this, of course.
+$act_plugin_version = "1.6"; //Don't change this, of course.
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get bugged by admin panel additions
@@ -179,44 +179,6 @@ function act_header(){
       break;
     default:
       $act_date_format_js = "yy/mm/dd";
-  }
-  if (is_admin()){
-    echo '<script>
-  jQuery(function($){
-	$.datepicker.regional["'.WPLANG.'"] = {
-		closeText: "'.__('Close', 'wp-activity').'",
-		prevText: "'.__('&#x3c;Prev', 'wp-activity').'",
-		nextText: "'.__('Next&#x3e;', 'wp-activity').'",
-		currentText: "'.__('Current', 'wp-activity').'",
-		monthNames: ["'.__('January').'","'.__('February').'","'.__('March').'","'.__('April').'","'.__('May').'","'.__('June').'",
-		"'.__('July').'","'.__('August').'","'.__('September').'","'.__('October').'","'.__('November').'","'.__('December').'"],
-		monthNamesShort: ["'.__('Jan_January_abbreviation').'","'.__('Feb_February_abbreviation').'","'.__('Mar_March_abbreviation').'","'.__('Apr_April_abbreviation').'","'.__('May_May_abbreviation').'","'.__('Jun_June_abbreviation').'",
-		"'.__('Jul_July_abbreviation').'","'.__('Aug_August_abbreviation').'","'.__('Sep_September_abbreviation').'","'.__('Oct_October_abbreviation').'","'.__('Nov_November_abbreviation').'","'.__('Dec_December_abbreviation').'"],
-		dayNames: ["'.__('Sunday').'","'.__('Monday').'","'.__('Tuesday').'","'.__('Wednesday').'","'.__('Thursday').'","'.__('Friday').'","'.__('Saturday').'"],
-		dayNamesShort: ["'.__('Sun').'","'.__('Mon').'","'.__('Tue').'","'.__('Wed').'","'.__('Thu').'","'.__('Fri').'","'.__('Sat').'"],
-		dayNamesMin: ["'.__('S_Sunday_initial').'","'.__('M_Monday_initial').'","'.__('T_Tuesday_initial').'","'.__('W_Wednesday_initial').'","'.__('T_Thursday_initial').'","'.__('F_Friday_initial').'","'.__('S_Saturday_initial').'"],
-		firstDay: '.get_option('start_of_week').',
-		showMonthAfterYear: false,
-		yearSuffix: ""};
-	$.datepicker.setDefaults($.datepicker.regional["'.WPLANG.'"]);
-});
-	jQuery().ready(function ($) {
-		var dates = $( "#act_date_start, #act_date_end" ).datepicker({
-      dateFormat: "'.$act_date_format_js.'",
-      changeMonth: true,
-			numberOfMonths: 1,
-			onSelect: function( selectedDate ) {
-				var option = this.id == "act_date_start" ? "minDate" : "maxDate",
-					instance = $( this ).data( "datepicker" ),
-					date = $.datepicker.parseDate(
-						instance.settings.dateFormat ||
-						$.datepicker._defaults.dateFormat,
-						selectedDate, instance.settings );
-				dates.not( this ).datepicker( "option", option, date );
-			}
-		});
-	});
-	</script>';
   }
 }
 add_action('wp_head', 'act_header');
@@ -1096,18 +1058,20 @@ if (is_admin()){
   function act_admin_stats(){
     global $wpdb, $options_act;
     if ( isset($_POST['act_date_start']) && isset($_POST['act_date_end']) && check_admin_referer('act_stats', 'act_stats')) {
-    	switch ($options_act['act_date_format']){
+      $act_d_s_tab = explode('/', esc_html($_POST['act_date_start']));
+      $act_d_e_tab = explode('/', esc_html($_POST['act_date_end'])); 
+      switch ($options_act['act_date_format']){
         case "dd/mm/yyyy":
-          $act_date_start = date_format(date_create_from_format('d/m/Y', $_POST['act_date_start']),'Y-m-d');
-          $act_date_end = date_format(date_create_from_format('d/m/Y', $_POST['act_date_end']),'Y-m-d');
+          $act_date_start = $act_d_s_tab[2].'/'.$act_d_s_tab[1].'/'.$act_d_s_tab[0];
+          $act_date_end = $act_d_e_tab[2].'/'.$act_d_e_tab[1].'/'.$act_d_e_tab[0];
           break;
         case "mm/dd/yyyy":
-          $act_date_start = date_format(date_create_from_format('m/d/Y', $_POST['act_date_start']),'Y-m-d');
-          $act_date_end = date_format(date_create_from_format('m/d/Y', $_POST['act_date_end']),'Y-m-d');
+          $act_date_start = $act_d_s_tab[2].'/'.$act_d_s_tab[0].'/'.$act_d_s_tab[1];
+          $act_date_end = $act_d_e_tab[2].'/'.$act_d_e_tab[0].'/'.$act_d_e_tab[1];
           break;
         default:
-          $act_date_start = date('Y-m-d', strtotime($_POST['act_date_start']));
-          $act_date_end = date('Y-m-d', strtotime($_POST['act_date_end']));
+          $act_date_start = esc_html($_POST['act_date_start']);
+          $act_date_end = esc_html($_POST['act_date_end']);
       }
     }else{
       $act_date_start = date('Y-m-d',time()-604800);
@@ -1158,8 +1122,45 @@ if (is_admin()){
       'POST_EDIT'     => __('Posts edited', 'wp-activity'),
       'COMMENT_ADD'   => __('Comments added', 'wp-activity'),
       'LINK_ADD'      => __('Links added', 'wp-activity')
-      )
+      );
+    echo '<script>
+  jQuery(function($){
+	$.datepicker.regional["'.WPLANG.'"] = {
+		closeText: "'.__('Close', 'wp-activity').'",
+		prevText: "'.__('&#x3c;Prev', 'wp-activity').'",
+		nextText: "'.__('Next&#x3e;', 'wp-activity').'",
+		currentText: "'.__('Current', 'wp-activity').'",
+		monthNames: ["'.__('January').'","'.__('February').'","'.__('March').'","'.__('April').'","'.__('May').'","'.__('June').'",
+		"'.__('July').'","'.__('August').'","'.__('September').'","'.__('October').'","'.__('November').'","'.__('December').'"],
+		monthNamesShort: ["'.__('Jan_January_abbreviation').'","'.__('Feb_February_abbreviation').'","'.__('Mar_March_abbreviation').'","'.__('Apr_April_abbreviation').'","'.__('May_May_abbreviation').'","'.__('Jun_June_abbreviation').'",
+		"'.__('Jul_July_abbreviation').'","'.__('Aug_August_abbreviation').'","'.__('Sep_September_abbreviation').'","'.__('Oct_October_abbreviation').'","'.__('Nov_November_abbreviation').'","'.__('Dec_December_abbreviation').'"],
+		dayNames: ["'.__('Sunday').'","'.__('Monday').'","'.__('Tuesday').'","'.__('Wednesday').'","'.__('Thursday').'","'.__('Friday').'","'.__('Saturday').'"],
+		dayNamesShort: ["'.__('Sun').'","'.__('Mon').'","'.__('Tue').'","'.__('Wed').'","'.__('Thu').'","'.__('Fri').'","'.__('Sat').'"],
+		dayNamesMin: ["'.__('S_Sunday_initial').'","'.__('M_Monday_initial').'","'.__('T_Tuesday_initial').'","'.__('W_Wednesday_initial').'","'.__('T_Thursday_initial').'","'.__('F_Friday_initial').'","'.__('S_Saturday_initial').'"],
+		firstDay: '.get_option('start_of_week').',
+		showMonthAfterYear: false,
+		yearSuffix: ""};
+	$.datepicker.setDefaults($.datepicker.regional["'.WPLANG.'"]);
+});
+	jQuery().ready(function ($) {
+		var dates = $( "#act_date_start, #act_date_end" ).datepicker({
+      dateFormat: "'.$act_date_format_js.'",
+      changeMonth: true,
+			numberOfMonths: 1,
+			onSelect: function( selectedDate ) {
+				var option = this.id == "act_date_start" ? "minDate" : "maxDate",
+					instance = $( this ).data( "datepicker" ),
+					date = $.datepicker.parseDate(
+						instance.settings.dateFormat ||
+						$.datepicker._defaults.dateFormat,
+						selectedDate, instance.settings );
+				dates.not( this ).datepicker( "option", option, date );
+			}
+		});
+	});
+	</script>';
     ?>
+    
     <div class="wrap">
       <div id="act_admin_icon" class="icon32"></div>
       <h2><?php _e('Activity Stats', 'wp-activity') ?></h2>
@@ -1188,10 +1189,13 @@ if (is_admin()){
                     <?php 
                       foreach ($act_tab_types as $act_tab_type => $act_tab_label){
                         if ($act_tab_type <> 'LOGIN_FAIL' OR $options_act['act_log_failures']) {
+                          $act_class ='';
+                          if ($act_tab_type == 'LOGIN_FAIL') $act_class = 'class="spam"';
+                          if ($act_tab_type == $act_filter) $act_class = 'class="waiting"';
                         ?>
                         <tr>
-                          <td class="first b"><a <?php if($act_tab_type == 'LOGIN_FAIL') echo 'class="spam"'; ?> href="?page=act_stats&act_stats=<?php echo $act_nonce ?>&act_filter=<?php echo $act_tab_type ?>&act_date_start=<?php echo $act_date_start ?>&act_date_end=<?php echo $act_date_end ?>"><?php echo ($act_events_tab[$act_tab_type]) ? $act_events_tab[$act_tab_type] : '0'; ?></a></td>
-                          <td class="t"><a <?php if($act_tab_type == 'LOGIN_FAIL') echo 'class="spam"'; ?> href="?page=act_stats&act_stats=<?php echo $act_nonce ?>&act_filter=<?php echo $act_tab_type ?>&act_date_start=<?php echo $act_date_start ?>&act_date_end=<?php echo $act_date_end ?>"><?php echo $act_tab_label ?></a> <a title="<?php echo __('See data for', 'wp-activity').' : '.$act_tab_label ?>" href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=<?php echo $act_tab_type ?>"><img class="act_data_report_icon" src="<?php echo WP_PLUGIN_URL ?>/wp-activity/img/report_data.png" alt="" /></a></td>
+                          <td class="first b"><a <?php echo $act_class ?> href="?page=act_stats&act_stats=<?php echo $act_nonce ?>&act_filter=<?php echo $act_tab_type ?>&act_date_start=<?php echo $act_date_start ?>&act_date_end=<?php echo $act_date_end ?>"><?php echo ($act_events_tab[$act_tab_type]) ? $act_events_tab[$act_tab_type] : '0'; ?></a></td>
+                          <td class="t"><a <?php echo $act_class ?> href="?page=act_stats&act_stats=<?php echo $act_nonce ?>&act_filter=<?php echo $act_tab_type ?>&act_date_start=<?php echo $act_date_start ?>&act_date_end=<?php echo $act_date_end ?>"><?php echo $act_tab_label ?></a> <a title="<?php echo __('See data for', 'wp-activity').' : '.$act_tab_label ?>" href="?page=act_activity&act_filter=<?php echo $act_nonce ?>&act_type_filter=<?php echo $act_tab_type ?>"><img class="act_data_report_icon" src="<?php echo WP_PLUGIN_URL ?>/wp-activity/img/report_data.png" alt="" /></a></td>
                         </tr>
                         <?php
                         }
