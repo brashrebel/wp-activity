@@ -27,9 +27,6 @@ If enabled, user who don't want to be listed in blog activity can hide its own a
 
 Users activity can be followed by RSS feed and can be exported in csv file (semicolon separation).
 
-Known Bugs :
-* Export in csv and rss feeds do not play well with Windows Hostings, you will get 404 errors when trying to access feed or csv file.
-
 Translations :
 
 - French
