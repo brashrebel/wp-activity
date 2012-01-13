@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Log and display users activity in backend and frontend of WordPress.
     Author: Dric
-    Version: 1.6
+    Version: 1.6.1
     Author URI: http://www.driczone.net
 */
 
@@ -27,7 +27,7 @@
 
 // let's initializing all vars
 
-$act_plugin_version = "1.6"; //Don't change this, of course.
+$act_plugin_version = "1.6.1"; //Don't change this, of course.
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get bugged by admin panel additions
@@ -134,8 +134,8 @@ function act_cron(){
 add_filter("plugin_action_links_wp-activity/wp-activity.php", 'act_plugin_action_links');
 function act_plugin_action_links($links)
 {
-    $settings_link = '<a href="options-general.php?page=wp-activity">' . __( 'Settings' ) . '</a>';
-    $uninstall_link = '<a href="options-general.php?page=wp-activity#act_reset">' . __( 'Uninstall' ) . '</a>';
+    $settings_link = '<a href="options-general.php?page=act_admin">' . __( 'Settings' ) . '</a>';
+    $uninstall_link = '<a href="options-general.php?page=act_admin#act_reset">' . __( 'Uninstall' ) . '</a>';
     array_unshift($links, $settings_link, $uninstall_link);
     return $links;
 }
@@ -537,7 +537,7 @@ if (is_admin()){
     }else{
       $act_last = $act_start + $limit;
     }
-  	$targetpage = "?page=wp-activity".$args;
+  	$targetpage = "?page=act_activity".$args;
   	if($current) 
   		$start = ($current - 1) * $limit; 			//first item to display on this page
   	else
@@ -559,7 +559,7 @@ if (is_admin()){
   			$pagination.= "<a class=\"prev page-numbers\" href=\"$targetpage&act_page=$prev\">&laquo;</a> ";
   		
   		//pages	
-  		if ($lastpage < (7 + $adjacents ))	//not enough pages to bother breaking it up
+  		if ($lastpage < (7 + $adjacents*2 ))	//not enough pages to bother breaking it up
   		{	
   			for ($counter = 1; $counter <= $lastpage; $counter++)
   			{
@@ -569,12 +569,12 @@ if (is_admin()){
   					$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=$counter\">$counter</a> ";					
   			}
   		}
-  		elseif($lastpage > (5 + $adjacents))	//enough pages to hide some
+  		elseif($lastpage > (5 + $adjacents*2))	//enough pages to hide some
   		{
   			//close to beginning; only hide later pages
-  			if($current < (1 + $adjacents))		
+  			if($current < (1 + $adjacents*2))		
   			{
-  				for ($counter = 1; $counter < (4 + $adjacents); $counter++)
+  				for ($counter = 1; $counter < (4 + $adjacents*2); $counter++)
   				{
   					if ($counter == $current)
   						$pagination.= "<span class=\"page-numbers current\">$counter</span> ";
@@ -586,7 +586,7 @@ if (is_admin()){
   				$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=$lastpage\">$lastpage</a> ";		
   			}
   			//in middle; hide some front and some back
-  			elseif($lastpage - $adjacents > $current && $current > $adjacents)
+  			elseif($lastpage - ($adjacents*2) > $current && $current > ($adjacents*2))
   			{
   				$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=1\">1</a> ";
   				//$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=2\">2</a> ";
@@ -608,7 +608,7 @@ if (is_admin()){
   				$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=1\">1</a> ";
   				//$pagination.= "<a class=\"page-numbers\" href=\"$targetpage&act_page=2\">2</a> ";
   				$pagination.= "<span class=\"page-numbers dots\">...</span> ";
-  				for ($counter = $lastpage - (2 + $adjacents); $counter <= $lastpage; $counter++)
+  				for ($counter = $lastpage - (2 + ($adjacents*2)); $counter <= $lastpage; $counter++)
   				{
   					if ($counter == $current)
   						$pagination.= "<span class=\"page-numbers current\">$counter</span> ";
