@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Activity 1.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-11 12:20+0100\n"
-"PO-Revision-Date: 2012-01-11 12:20+0100\n"
+"POT-Creation-Date: 2012-01-18 13:27+0100\n"
+"PO-Revision-Date: 2012-01-18 13:27+0100\n"
 "Last-Translator: Dric <cedric@driczone.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,13 +19,560 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
+#: ../wp-act-admin.php:5
+msgid "Last login"
+msgstr ""
+
+#: ../wp-act-admin.php:28
+msgid "Logon fails"
+msgstr ""
+
+#: ../wp-act-admin.php:39
+msgid "Activity Log"
+msgstr ""
+
+#: ../wp-act-admin.php:40
+#: ../wp-act-admin.php:702
+#: ../wp-act-admin.php:719
+msgid "Activity Stats"
+msgstr ""
+
+#: ../wp-act-admin.php:41
+#: ../wp-act-admin.php:374
+msgid "WP-Activity Settings"
+msgstr ""
+
+#: ../wp-act-admin.php:84
+#, php-format
+msgid "Displaying %s&#8211;%s of %s"
+msgstr ""
+
+#: ../wp-act-admin.php:164
+#: ../wp-act-admin.php:229
+#: ../wp-act-admin.php:521
 #: ../wp-activity-feed.php:30
-#: ../wp-activity.php:320
-#: ../wp-activity.php:634
-#: ../wp-activity.php:699
-#: ../wp-activity.php:986
+#: ../wp-activity.php:333
 #, php-format
 msgid "%s activity RSS Feed"
+msgstr ""
+
+#: ../wp-act-admin.php:171
+msgid "Event(s) deleted."
+msgstr ""
+
+#: ../wp-act-admin.php:229
+#: ../wp-activity.php:330
+#: ../wp-activity.php:533
+msgid "Recent Activity"
+msgstr ""
+
+#: ../wp-act-admin.php:243
+msgid "Bulk Actions"
+msgstr ""
+
+#: ../wp-act-admin.php:244
+msgid "Delete"
+msgstr ""
+
+#: ../wp-act-admin.php:250
+msgid "View all"
+msgstr ""
+
+#: ../wp-act-admin.php:256
+msgid "Order by date (DESC)"
+msgstr ""
+
+#: ../wp-act-admin.php:257
+msgid "Order by user"
+msgstr ""
+
+#: ../wp-act-admin.php:258
+msgid "Order by event type"
+msgstr ""
+
+#: ../wp-act-admin.php:264
+msgid "All users"
+msgstr ""
+
+#: ../wp-act-admin.php:281
+#: ../wp-act-admin.php:291
+#: ../wp-act-export.php:52
+msgid "Date"
+msgstr ""
+
+#: ../wp-act-admin.php:282
+#: ../wp-act-admin.php:292
+#: ../wp-act-export.php:52
+msgid "User"
+msgstr ""
+
+#: ../wp-act-admin.php:283
+#: ../wp-act-admin.php:293
+#: ../wp-act-export.php:52
+msgid "Event Type"
+msgstr ""
+
+#: ../wp-act-admin.php:284
+#: ../wp-act-admin.php:294
+#: ../wp-act-export.php:52
+msgid "Applies to"
+msgstr ""
+
+#: ../wp-act-admin.php:352
+msgid "Export filtered Data &raquo;"
+msgstr ""
+
+#: ../wp-act-admin.php:353
+msgid "Delete exported data"
+msgstr ""
+
+#: ../wp-act-admin.php:354
+msgid "If you use MS Excel and have some ugly characters, rename the file extension to .txt and open it within Excel."
+msgstr ""
+
+#: ../wp-act-admin.php:362
+msgid "Activity logs are empty !"
+msgstr ""
+
+#: ../wp-act-admin.php:403
+msgid "Options saved."
+msgstr ""
+
+#: ../wp-act-admin.php:408
+msgid "Activity logs deleted."
+msgstr ""
+
+#: ../wp-act-admin.php:415
+#: ../wp-act-admin.php:426
+#, php-format
+msgid "Activity Plugin has been uninstalled. You can now desactivate this plugin : <a href=\"%s\">Plugins Page</a>"
+msgstr ""
+
+#: ../wp-act-admin.php:420
+msgid "Manual pruning done."
+msgstr ""
+
+#: ../wp-act-admin.php:438
+#: ../wp-act-admin.php:446
+msgid "Date format"
+msgstr ""
+
+#: ../wp-act-admin.php:439
+#: ../wp-act-admin.php:469
+msgid "Display options"
+msgstr ""
+
+#: ../wp-act-admin.php:440
+#: ../wp-act-admin.php:500
+msgid "Privacy options"
+msgstr ""
+
+#: ../wp-act-admin.php:441
+#: ../wp-act-admin.php:513
+msgid "Events logging and feeding"
+msgstr ""
+
+#: ../wp-act-admin.php:442
+#: ../wp-act-admin.php:558
+msgid "Reset/uninstall"
+msgstr ""
+
+#: ../wp-act-admin.php:449
+msgid "Date format : "
+msgstr ""
+
+#: ../wp-act-admin.php:456
+msgid "For events that are more than a month old only, or if you dont use relative dates."
+msgstr ""
+
+#: ../wp-act-admin.php:459
+msgid "Use relative dates : "
+msgstr ""
+
+#: ../wp-act-admin.php:462
+msgid "Relatives dates exemples : 1 day ago, 22 hours and 3 minutes ago, etc."
+msgstr ""
+
+#: ../wp-act-admin.php:466
+#: ../wp-act-admin.php:497
+#: ../wp-act-admin.php:510
+#: ../wp-act-admin.php:553
+msgid "Update options &raquo;"
+msgstr ""
+
+#: ../wp-act-admin.php:472
+msgid "Display icons : "
+msgstr ""
+
+#: ../wp-act-admin.php:473
+msgid "Generic icons "
+msgstr ""
+
+#: ../wp-act-admin.php:475
+msgid "Gravatars for profile edit and connect events icons"
+msgstr ""
+
+#: ../wp-act-admin.php:476
+msgid "No icons "
+msgstr ""
+
+#: ../wp-act-admin.php:478
+msgid "Highlight new activity since last user login : "
+msgstr ""
+
+#: ../wp-act-admin.php:482
+msgid "Display a link to the activity archive page : "
+msgstr ""
+
+#: ../wp-act-admin.php:486
+msgid "You have to create a page first, with the [ACT_STREAM] shortcode."
+msgstr ""
+
+#: ../wp-act-admin.php:490
+msgid "Author Path : "
+msgstr ""
+
+#: ../wp-act-admin.php:493
+msgid "If you modified your author structure link or if you use WPMu, change your path. (Default : author, BuddyPress : members)"
+msgstr ""
+
+#: ../wp-act-admin.php:503
+msgid "Prevent users to hide their activity : "
+msgstr ""
+
+#: ../wp-act-admin.php:506
+msgid "Warning : If you activate this option, users won't have the choice to allow or deny the logging of their activity. For privacy respect, this option should stay desactivated."
+msgstr ""
+
+#: ../wp-act-admin.php:516
+msgid "Rows limit in database : "
+msgstr ""
+
+#: ../wp-act-admin.php:517
+msgid "Manually prune table"
+msgstr ""
+
+#: ../wp-act-admin.php:518
+#, php-format
+msgid "There is currently %s rows in database."
+msgstr ""
+
+#: ../wp-act-admin.php:521
+msgid "Display activity RSS feed : "
+msgstr ""
+
+#: ../wp-act-admin.php:524
+msgid "Log login failures : "
+msgstr ""
+
+#: ../wp-act-admin.php:527
+msgid "If you want to log all connexions attempts that failed, enable this option."
+msgstr ""
+
+#: ../wp-act-admin.php:530
+msgid "Log in database"
+msgstr ""
+
+#: ../wp-act-admin.php:530
+msgid "Display in feed"
+msgstr ""
+
+#: ../wp-act-admin.php:532
+msgid "Login events : "
+msgstr ""
+
+#: ../wp-act-admin.php:536
+msgid "Profile update events : "
+msgstr ""
+
+#: ../wp-act-admin.php:540
+msgid "Post creation/update events : "
+msgstr ""
+
+#: ../wp-act-admin.php:544
+msgid "New comment events : "
+msgstr ""
+
+#: ../wp-act-admin.php:548
+msgid "New link events : "
+msgstr ""
+
+#: ../wp-act-admin.php:561
+msgid "Empty activity table : "
+msgstr ""
+
+#: ../wp-act-admin.php:568
+msgid "Reset logs"
+msgstr ""
+
+#: ../wp-act-admin.php:568
+msgid ""
+"Empty activity table ? All your activity logs will be deleted.\\n"
+"\\n"
+"Choose [Cancel] to Stop, [OK] to proceed.\\n"
+msgstr ""
+
+#: ../wp-act-admin.php:569
+msgid "Warning : cleaning activity table erase all activity logs."
+msgstr ""
+
+#: ../wp-act-admin.php:573
+#: ../wp-act-admin.php:580
+msgid "Uninstall plugin"
+msgstr ""
+
+#: ../wp-act-admin.php:580
+msgid ""
+"Uninstall plugin ? Settings and activity logs will be deleted.\\n"
+"\\n"
+"Choose [Cancel] to Stop, [OK] to proceed.\\n"
+msgstr ""
+
+#: ../wp-act-admin.php:581
+msgid "Warning : This will delete settings and activity table."
+msgstr ""
+
+#: ../wp-act-admin.php:590
+#, php-format
+msgid "WP-Activity is a plugin by <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
+msgstr ""
+
+#: ../wp-act-admin.php:654
+msgid "Successful user logins"
+msgstr ""
+
+#: ../wp-act-admin.php:655
+msgid "Login attempts failed"
+msgstr ""
+
+#: ../wp-act-admin.php:656
+msgid "Profiles edited"
+msgstr ""
+
+#: ../wp-act-admin.php:657
+msgid "Posts created"
+msgstr ""
+
+#: ../wp-act-admin.php:658
+msgid "Posts edited"
+msgstr ""
+
+#: ../wp-act-admin.php:659
+msgid "Comments added"
+msgstr ""
+
+#: ../wp-act-admin.php:660
+msgid "Links added"
+msgstr ""
+
+#: ../wp-act-admin.php:665
+msgid "Close"
+msgstr ""
+
+#: ../wp-act-admin.php:666
+msgid "&#x3c;Prev"
+msgstr ""
+
+#: ../wp-act-admin.php:667
+msgid "Next&#x3e;"
+msgstr ""
+
+#: ../wp-act-admin.php:668
+msgid "Current"
+msgstr ""
+
+#: ../wp-act-admin.php:669
+msgid "January"
+msgstr ""
+
+#: ../wp-act-admin.php:669
+msgid "February"
+msgstr ""
+
+#: ../wp-act-admin.php:669
+msgid "March"
+msgstr ""
+
+#: ../wp-act-admin.php:669
+msgid "April"
+msgstr ""
+
+#: ../wp-act-admin.php:669
+msgid "May"
+msgstr ""
+
+#: ../wp-act-admin.php:669
+msgid "June"
+msgstr ""
+
+#: ../wp-act-admin.php:670
+msgid "July"
+msgstr ""
+
+#: ../wp-act-admin.php:670
+msgid "August"
+msgstr ""
+
+#: ../wp-act-admin.php:670
+msgid "September"
+msgstr ""
+
+#: ../wp-act-admin.php:670
+msgid "October"
+msgstr ""
+
+#: ../wp-act-admin.php:670
+msgid "November"
+msgstr ""
+
+#: ../wp-act-admin.php:670
+msgid "December"
+msgstr ""
+
+#: ../wp-act-admin.php:671
+msgid "Jan_January_abbreviation"
+msgstr ""
+
+#: ../wp-act-admin.php:671
+msgid "Feb_February_abbreviation"
+msgstr ""
+
+#: ../wp-act-admin.php:671
+msgid "Mar_March_abbreviation"
+msgstr ""
+
+#: ../wp-act-admin.php:671
+msgid "Apr_April_abbreviation"
+msgstr ""
+
+#: ../wp-act-admin.php:671
+msgid "May_May_abbreviation"
+msgstr ""
+
+#: ../wp-act-admin.php:671
+msgid "Jun_June_abbreviation"
+msgstr ""
+
+#: ../wp-act-admin.php:672
+msgid "Jul_July_abbreviation"
+msgstr ""
+
+#: ../wp-act-admin.php:672
+msgid "Aug_August_abbreviation"
+msgstr ""
+
+#: ../wp-act-admin.php:672
+msgid "Sep_September_abbreviation"
+msgstr ""
+
+#: ../wp-act-admin.php:672
+msgid "Oct_October_abbreviation"
+msgstr ""
+
+#: ../wp-act-admin.php:672
+msgid "Nov_November_abbreviation"
+msgstr ""
+
+#: ../wp-act-admin.php:672
+msgid "Dec_December_abbreviation"
+msgstr ""
+
+#: ../wp-act-admin.php:673
+msgid "Sunday"
+msgstr ""
+
+#: ../wp-act-admin.php:673
+msgid "Monday"
+msgstr ""
+
+#: ../wp-act-admin.php:673
+msgid "Tuesday"
+msgstr ""
+
+#: ../wp-act-admin.php:673
+msgid "Wednesday"
+msgstr ""
+
+#: ../wp-act-admin.php:673
+msgid "Thursday"
+msgstr ""
+
+#: ../wp-act-admin.php:673
+msgid "Friday"
+msgstr ""
+
+#: ../wp-act-admin.php:673
+msgid "Saturday"
+msgstr ""
+
+#: ../wp-act-admin.php:674
+msgid "Sun"
+msgstr ""
+
+#: ../wp-act-admin.php:674
+msgid "Mon"
+msgstr ""
+
+#: ../wp-act-admin.php:674
+msgid "Tue"
+msgstr ""
+
+#: ../wp-act-admin.php:674
+msgid "Wed"
+msgstr ""
+
+#: ../wp-act-admin.php:674
+msgid "Thu"
+msgstr ""
+
+#: ../wp-act-admin.php:674
+msgid "Fri"
+msgstr ""
+
+#: ../wp-act-admin.php:674
+msgid "Sat"
+msgstr ""
+
+#: ../wp-act-admin.php:675
+msgid "S_Sunday_initial"
+msgstr ""
+
+#: ../wp-act-admin.php:675
+msgid "M_Monday_initial"
+msgstr ""
+
+#: ../wp-act-admin.php:675
+msgid "T_Tuesday_initial"
+msgstr ""
+
+#: ../wp-act-admin.php:675
+msgid "W_Wednesday_initial"
+msgstr ""
+
+#: ../wp-act-admin.php:675
+msgid "T_Thursday_initial"
+msgstr ""
+
+#: ../wp-act-admin.php:675
+msgid "F_Friday_initial"
+msgstr ""
+
+#: ../wp-act-admin.php:675
+msgid "S_Saturday_initial"
+msgstr ""
+
+#: ../wp-act-admin.php:707
+msgid "Date range"
+msgstr ""
+
+#: ../wp-act-admin.php:722
+#: ../wp-activity.php:541
+#: ../wp-activity.php:604
+msgid "Events number :"
+msgstr ""
+
+#: ../wp-act-admin.php:734
+msgid "See data for"
 msgstr ""
 
 #: ../wp-activity-feed.php:33
@@ -43,17 +590,17 @@ msgstr ""
 #: ../wp-activity-feed.php:63
 #: ../wp-activity-feed.php:68
 #: ../wp-activity-feed.php:75
-#: ../wp-activity.php:363
-#: ../wp-activity.php:371
-#: ../wp-activity.php:379
+#: ../wp-activity.php:376
 #: ../wp-activity.php:384
-#: ../wp-activity.php:387
 #: ../wp-activity.php:392
+#: ../wp-activity.php:397
+#: ../wp-activity.php:400
+#: ../wp-activity.php:405
 msgid "View Profile"
 msgstr ""
 
 #: ../wp-activity-feed.php:44
-#: ../wp-activity.php:363
+#: ../wp-activity.php:376
 msgid "has logged."
 msgstr ""
 
@@ -62,7 +609,7 @@ msgid "New comment"
 msgstr ""
 
 #: ../wp-activity-feed.php:51
-#: ../wp-activity.php:371
+#: ../wp-activity.php:384
 msgid "commented"
 msgstr ""
 
@@ -71,7 +618,7 @@ msgid "New post"
 msgstr ""
 
 #: ../wp-activity-feed.php:57
-#: ../wp-activity.php:379
+#: ../wp-activity.php:392
 msgid "published"
 msgstr ""
 
@@ -80,7 +627,7 @@ msgid "Post edited"
 msgstr ""
 
 #: ../wp-activity-feed.php:63
-#: ../wp-activity.php:384
+#: ../wp-activity.php:397
 msgid "edited"
 msgstr ""
 
@@ -89,7 +636,7 @@ msgid "Profile edited"
 msgstr ""
 
 #: ../wp-activity-feed.php:68
-#: ../wp-activity.php:387
+#: ../wp-activity.php:400
 msgid "has updated his profile."
 msgstr ""
 
@@ -98,667 +645,128 @@ msgid "New link"
 msgstr ""
 
 #: ../wp-activity-feed.php:75
-#: ../wp-activity.php:392
+#: ../wp-activity.php:405
 msgid "has added a link to"
 msgstr ""
 
-#: ../wp-activity.php:137
+#: ../wp-activity.php:151
 msgid "Settings"
 msgstr ""
 
-#: ../wp-activity.php:138
+#: ../wp-activity.php:152
 msgid "Uninstall"
 msgstr ""
 
-#: ../wp-activity.php:191
+#: ../wp-activity.php:204
 msgid "Activity events"
 msgstr ""
 
-#: ../wp-activity.php:194
+#: ../wp-activity.php:207
 msgid "Hide my activity :"
 msgstr ""
 
-#: ../wp-activity.php:195
+#: ../wp-activity.php:208
 msgid "If selected, this option makes you become invisible in activity events."
 msgstr ""
 
-#: ../wp-activity.php:289
+#: ../wp-activity.php:302
 msgid "Last logon :"
 msgstr ""
 
-#: ../wp-activity.php:317
-#: ../wp-activity.php:699
-#: ../wp-activity.php:1433
-msgid "Recent Activity"
-msgstr ""
-
-#: ../wp-activity.php:323
+#: ../wp-activity.php:336
 #, php-format
 msgid "%s activity archive"
 msgstr ""
 
-#: ../wp-activity.php:323
+#: ../wp-activity.php:336
 msgid "Archives"
 msgstr ""
 
-#: ../wp-activity.php:455
+#: ../wp-activity.php:468
 msgid "weeks"
 msgstr ""
 
-#: ../wp-activity.php:455
+#: ../wp-activity.php:468
 msgid "week"
 msgstr ""
 
-#: ../wp-activity.php:456
-#: ../wp-activity.php:459
+#: ../wp-activity.php:469
+#: ../wp-activity.php:472
 msgid "days"
 msgstr ""
 
-#: ../wp-activity.php:456
-#: ../wp-activity.php:459
+#: ../wp-activity.php:469
+#: ../wp-activity.php:472
 msgid "day"
 msgstr ""
 
-#: ../wp-activity.php:460
-#: ../wp-activity.php:463
+#: ../wp-activity.php:473
+#: ../wp-activity.php:476
 msgid "hours"
 msgstr ""
 
-#: ../wp-activity.php:460
-#: ../wp-activity.php:463
+#: ../wp-activity.php:473
+#: ../wp-activity.php:476
 msgid "hour"
 msgstr ""
 
-#: ../wp-activity.php:464
-#: ../wp-activity.php:467
+#: ../wp-activity.php:477
+#: ../wp-activity.php:480
 msgid "minutes"
 msgstr ""
 
-#: ../wp-activity.php:464
-#: ../wp-activity.php:467
+#: ../wp-activity.php:477
+#: ../wp-activity.php:480
 msgid "minute"
 msgstr ""
 
-#: ../wp-activity.php:470
+#: ../wp-activity.php:483
 msgid "seconds"
 msgstr ""
 
-#: ../wp-activity.php:470
+#: ../wp-activity.php:483
 msgid "second"
 msgstr ""
 
-#: ../wp-activity.php:474
+#: ../wp-activity.php:487
 #, php-format
 msgid "%s ago"
 msgstr ""
 
-#: ../wp-activity.php:480
-msgid "Last login"
-msgstr ""
-
 #: ../wp-activity.php:503
-msgid "Logon fails"
-msgstr ""
-
-#: ../wp-activity.php:514
-msgid "Activity Log"
-msgstr ""
-
-#: ../wp-activity.php:515
-#: ../wp-activity.php:1167
-#: ../wp-activity.php:1184
-msgid "Activity Stats"
-msgstr ""
-
-#: ../wp-activity.php:516
-#: ../wp-activity.php:844
-msgid "WP-Activity Settings"
-msgstr ""
-
-#: ../wp-activity.php:554
-#, php-format
-msgid "Displaying %s&#8211;%s of %s"
-msgstr ""
-
-#: ../wp-activity.php:641
-msgid "Event(s) deleted."
-msgstr ""
-
-#: ../wp-activity.php:713
-msgid "Bulk Actions"
-msgstr ""
-
-#: ../wp-activity.php:714
-msgid "Delete"
-msgstr ""
-
-#: ../wp-activity.php:720
-msgid "View all"
-msgstr ""
-
-#: ../wp-activity.php:726
-msgid "Order by date (DESC)"
-msgstr ""
-
-#: ../wp-activity.php:727
-msgid "Order by user"
-msgstr ""
-
-#: ../wp-activity.php:728
-msgid "Order by event type"
-msgstr ""
-
-#: ../wp-activity.php:734
-msgid "All users"
-msgstr ""
-
-#: ../wp-activity.php:751
-#: ../wp-activity.php:761
-#: ../wp-activity.php:1344
-msgid "Date"
-msgstr ""
-
-#: ../wp-activity.php:752
-#: ../wp-activity.php:762
-#: ../wp-activity.php:1344
-msgid "User"
-msgstr ""
-
-#: ../wp-activity.php:753
-#: ../wp-activity.php:763
-#: ../wp-activity.php:1344
-msgid "Event Type"
-msgstr ""
-
-#: ../wp-activity.php:754
-#: ../wp-activity.php:764
-#: ../wp-activity.php:1344
-msgid "Applies to"
-msgstr ""
-
-#: ../wp-activity.php:822
-msgid "Export filtered Data &raquo;"
-msgstr ""
-
-#: ../wp-activity.php:823
-msgid "Delete exported data"
-msgstr ""
-
-#: ../wp-activity.php:824
-msgid "If you use MS Excel and have some ugly characters, rename the file extension to .txt and open it within Excel."
-msgstr ""
-
-#: ../wp-activity.php:832
-msgid "Activity logs are empty !"
-msgstr ""
-
-#: ../wp-activity.php:873
-msgid "Options saved."
-msgstr ""
-
-#: ../wp-activity.php:878
-msgid "Activity logs deleted."
-msgstr ""
-
-#: ../wp-activity.php:885
-#: ../wp-activity.php:891
-#, php-format
-msgid "Activity Plugin has been uninstalled. You can now desactivate this plugin : <a href=\"%s\">Plugins Page</a>"
-msgstr ""
-
-#: ../wp-activity.php:903
-#: ../wp-activity.php:911
-msgid "Date format"
-msgstr ""
-
-#: ../wp-activity.php:904
-#: ../wp-activity.php:934
-msgid "Display options"
-msgstr ""
-
-#: ../wp-activity.php:905
-#: ../wp-activity.php:965
-msgid "Privacy options"
-msgstr ""
-
-#: ../wp-activity.php:906
-#: ../wp-activity.php:978
-msgid "Events logging and feeding"
-msgstr ""
-
-#: ../wp-activity.php:907
-#: ../wp-activity.php:1023
-msgid "Reset/uninstall"
-msgstr ""
-
-#: ../wp-activity.php:914
-msgid "Date format : "
-msgstr ""
-
-#: ../wp-activity.php:921
-msgid "For events that are more than a month old only, or if you dont use relative dates."
-msgstr ""
-
-#: ../wp-activity.php:924
-msgid "Use relative dates : "
-msgstr ""
-
-#: ../wp-activity.php:927
-msgid "Relatives dates exemples : 1 day ago, 22 hours and 3 minutes ago, etc."
-msgstr ""
-
-#: ../wp-activity.php:931
-#: ../wp-activity.php:962
-#: ../wp-activity.php:975
-#: ../wp-activity.php:1018
-msgid "Update options &raquo;"
-msgstr ""
-
-#: ../wp-activity.php:937
-msgid "Display icons : "
-msgstr ""
-
-#: ../wp-activity.php:938
-msgid "Generic icons "
-msgstr ""
-
-#: ../wp-activity.php:940
-msgid "Gravatars for profile edit and connect events icons"
-msgstr ""
-
-#: ../wp-activity.php:941
-msgid "No icons "
-msgstr ""
-
-#: ../wp-activity.php:943
-msgid "Highlight new activity since last user login : "
-msgstr ""
-
-#: ../wp-activity.php:947
-msgid "Display a link to the activity archive page : "
-msgstr ""
-
-#: ../wp-activity.php:951
-msgid "You have to create a page first, with the [ACT_STREAM] shortcode."
-msgstr ""
-
-#: ../wp-activity.php:955
-msgid "Author Path : "
-msgstr ""
-
-#: ../wp-activity.php:958
-msgid "If you modified your author structure link or if you use WPMu, change your path. (Default : author, BuddyPress : members)"
-msgstr ""
-
-#: ../wp-activity.php:968
-msgid "Prevent users to hide their activity : "
-msgstr ""
-
-#: ../wp-activity.php:971
-msgid "Warning : If you activate this option, users won't have the choice to allow or deny the logging of their activity. For privacy respect, this option should stay desactivated."
-msgstr ""
-
-#: ../wp-activity.php:981
-msgid "Rows limit in database : "
-msgstr ""
-
-#: ../wp-activity.php:983
-#, php-format
-msgid "There is currently %s rows in database."
-msgstr ""
-
-#: ../wp-activity.php:986
-msgid "Display activity RSS feed : "
-msgstr ""
-
-#: ../wp-activity.php:989
-msgid "Log login failures : "
-msgstr ""
-
-#: ../wp-activity.php:992
-msgid "If you want to log all connexions attempts that failed, enable this option."
-msgstr ""
-
-#: ../wp-activity.php:995
-msgid "Log in database"
-msgstr ""
-
-#: ../wp-activity.php:995
-msgid "Display in feed"
-msgstr ""
-
-#: ../wp-activity.php:997
-msgid "Login events : "
-msgstr ""
-
-#: ../wp-activity.php:1001
-msgid "Profile update events : "
-msgstr ""
-
-#: ../wp-activity.php:1005
-msgid "Post creation/update events : "
-msgstr ""
-
-#: ../wp-activity.php:1009
-msgid "New comment events : "
-msgstr ""
-
-#: ../wp-activity.php:1013
-msgid "New link events : "
-msgstr ""
-
-#: ../wp-activity.php:1026
-msgid "Empty activity table : "
-msgstr ""
-
-#: ../wp-activity.php:1033
-msgid "Reset logs"
-msgstr ""
-
-#: ../wp-activity.php:1033
-msgid ""
-"Empty activity table ? All your activity logs will be deleted.\\n"
-"\\n"
-"Choose [Cancel] to Stop, [OK] to proceed.\\n"
-msgstr ""
-
-#: ../wp-activity.php:1034
-msgid "Warning : cleaning activity table erase all activity logs."
-msgstr ""
-
-#: ../wp-activity.php:1038
-#: ../wp-activity.php:1045
-msgid "Uninstall plugin"
-msgstr ""
-
-#: ../wp-activity.php:1045
-msgid ""
-"Uninstall plugin ? Settings and activity logs will be deleted.\\n"
-"\\n"
-"Choose [Cancel] to Stop, [OK] to proceed.\\n"
-msgstr ""
-
-#: ../wp-activity.php:1046
-msgid "Warning : This will delete settings and activity table."
-msgstr ""
-
-#: ../wp-activity.php:1055
-#, php-format
-msgid "WP-Activity is a plugin by <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
-msgstr ""
-
-#: ../wp-activity.php:1119
-msgid "Successful user logins"
-msgstr ""
-
-#: ../wp-activity.php:1120
-msgid "Login attempts failed"
-msgstr ""
-
-#: ../wp-activity.php:1121
-msgid "Profiles edited"
-msgstr ""
-
-#: ../wp-activity.php:1122
-msgid "Posts created"
-msgstr ""
-
-#: ../wp-activity.php:1123
-msgid "Posts edited"
-msgstr ""
-
-#: ../wp-activity.php:1124
-msgid "Comments added"
-msgstr ""
-
-#: ../wp-activity.php:1125
-msgid "Links added"
-msgstr ""
-
-#: ../wp-activity.php:1130
-msgid "Close"
-msgstr ""
-
-#: ../wp-activity.php:1131
-msgid "&#x3c;Prev"
-msgstr ""
-
-#: ../wp-activity.php:1132
-msgid "Next&#x3e;"
-msgstr ""
-
-#: ../wp-activity.php:1133
-msgid "Current"
-msgstr ""
-
-#: ../wp-activity.php:1134
-msgid "January"
-msgstr ""
-
-#: ../wp-activity.php:1134
-msgid "February"
-msgstr ""
-
-#: ../wp-activity.php:1134
-msgid "March"
-msgstr ""
-
-#: ../wp-activity.php:1134
-msgid "April"
-msgstr ""
-
-#: ../wp-activity.php:1134
-msgid "May"
-msgstr ""
-
-#: ../wp-activity.php:1134
-msgid "June"
-msgstr ""
-
-#: ../wp-activity.php:1135
-msgid "July"
-msgstr ""
-
-#: ../wp-activity.php:1135
-msgid "August"
-msgstr ""
-
-#: ../wp-activity.php:1135
-msgid "September"
-msgstr ""
-
-#: ../wp-activity.php:1135
-msgid "October"
-msgstr ""
-
-#: ../wp-activity.php:1135
-msgid "November"
-msgstr ""
-
-#: ../wp-activity.php:1135
-msgid "December"
-msgstr ""
-
-#: ../wp-activity.php:1136
-msgid "Jan_January_abbreviation"
-msgstr ""
-
-#: ../wp-activity.php:1136
-msgid "Feb_February_abbreviation"
-msgstr ""
-
-#: ../wp-activity.php:1136
-msgid "Mar_March_abbreviation"
-msgstr ""
-
-#: ../wp-activity.php:1136
-msgid "Apr_April_abbreviation"
-msgstr ""
-
-#: ../wp-activity.php:1136
-msgid "May_May_abbreviation"
-msgstr ""
-
-#: ../wp-activity.php:1136
-msgid "Jun_June_abbreviation"
-msgstr ""
-
-#: ../wp-activity.php:1137
-msgid "Jul_July_abbreviation"
-msgstr ""
-
-#: ../wp-activity.php:1137
-msgid "Aug_August_abbreviation"
-msgstr ""
-
-#: ../wp-activity.php:1137
-msgid "Sep_September_abbreviation"
-msgstr ""
-
-#: ../wp-activity.php:1137
-msgid "Oct_October_abbreviation"
-msgstr ""
-
-#: ../wp-activity.php:1137
-msgid "Nov_November_abbreviation"
-msgstr ""
-
-#: ../wp-activity.php:1137
-msgid "Dec_December_abbreviation"
-msgstr ""
-
-#: ../wp-activity.php:1138
-msgid "Sunday"
-msgstr ""
-
-#: ../wp-activity.php:1138
-msgid "Monday"
-msgstr ""
-
-#: ../wp-activity.php:1138
-msgid "Tuesday"
-msgstr ""
-
-#: ../wp-activity.php:1138
-msgid "Wednesday"
-msgstr ""
-
-#: ../wp-activity.php:1138
-msgid "Thursday"
-msgstr ""
-
-#: ../wp-activity.php:1138
-msgid "Friday"
-msgstr ""
-
-#: ../wp-activity.php:1138
-msgid "Saturday"
-msgstr ""
-
-#: ../wp-activity.php:1139
-msgid "Sun"
-msgstr ""
-
-#: ../wp-activity.php:1139
-msgid "Mon"
-msgstr ""
-
-#: ../wp-activity.php:1139
-msgid "Tue"
-msgstr ""
-
-#: ../wp-activity.php:1139
-msgid "Wed"
-msgstr ""
-
-#: ../wp-activity.php:1139
-msgid "Thu"
-msgstr ""
-
-#: ../wp-activity.php:1139
-msgid "Fri"
-msgstr ""
-
-#: ../wp-activity.php:1139
-msgid "Sat"
-msgstr ""
-
-#: ../wp-activity.php:1140
-msgid "S_Sunday_initial"
-msgstr ""
-
-#: ../wp-activity.php:1140
-msgid "M_Monday_initial"
-msgstr ""
-
-#: ../wp-activity.php:1140
-msgid "T_Tuesday_initial"
-msgstr ""
-
-#: ../wp-activity.php:1140
-msgid "W_Wednesday_initial"
-msgstr ""
-
-#: ../wp-activity.php:1140
-msgid "T_Thursday_initial"
-msgstr ""
-
-#: ../wp-activity.php:1140
-msgid "F_Friday_initial"
-msgstr ""
-
-#: ../wp-activity.php:1140
-msgid "S_Saturday_initial"
-msgstr ""
-
-#: ../wp-activity.php:1172
-msgid "Date range"
-msgstr ""
-
-#: ../wp-activity.php:1187
-#: ../wp-activity.php:1441
-#: ../wp-activity.php:1504
-msgid "Events number :"
-msgstr ""
-
-#: ../wp-activity.php:1199
-msgid "See data for"
-msgstr ""
-
-#: ../wp-activity.php:1403
 msgid "Display a stream of registered users events"
 msgstr ""
 
-#: ../wp-activity.php:1409
+#: ../wp-activity.php:509
 msgid "Wp-Activity Widget"
 msgstr ""
 
-#: ../wp-activity.php:1437
-#: ../wp-activity.php:1500
+#: ../wp-activity.php:537
+#: ../wp-activity.php:600
 msgid "Title :"
 msgstr ""
 
-#: ../wp-activity.php:1451
+#: ../wp-activity.php:551
 msgid "Display the logged user own activity"
 msgstr ""
 
-#: ../wp-activity.php:1457
+#: ../wp-activity.php:557
 msgid "Wp-Activity logged user own activity"
 msgstr ""
 
-#: ../wp-activity.php:1488
+#: ../wp-activity.php:588
 msgid "Your activity"
 msgstr ""
 
-#: ../wp-activity.php:1508
+#: ../wp-activity.php:608
 msgid "When viewed by visitor"
 msgstr ""
 
-#: ../wp-activity.php:1509
+#: ../wp-activity.php:609
 msgid "Display all users activity"
 msgstr ""
 
-#: ../wp-activity.php:1510
+#: ../wp-activity.php:610
 msgid "Display nothing"
 msgstr ""
 

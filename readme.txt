@@ -2,7 +2,7 @@
 Contributors: Dric1107
 Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor
-Requires at least: 2.8
+Requires at least: 3.0
 Tested up to: 3.3.1
 Stable tag: 1.6.1
 
@@ -133,9 +133,16 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 1. frontend display
 2. admin screen - activity display
 3. admin screen - one of the settings tabs
-4. admin screen - reset/uninstall tab
+4. admin screen - stats
 
 == ChangeLog ==
+
+= 1.7 =
+* Admin and export functions are only loaded when needed (separate php files).
+* Tweaked Cron task activation.
+* Fixed deletion of old activity (cron task).
+* Fixed csv file generation bug for IE.
+* Fixed missing datepicker js script when using wordpress prior to 3.3.
 
 = 1.6.1 =
 * Fixed pages navigation links

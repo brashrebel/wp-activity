@@ -1,52 +1,58 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Wp-activity 1.6\n"
+"Project-Id-Version: WP-Activity 1.6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-18 13:26+0100\n"
-"PO-Revision-Date: \n"
+"POT-Creation-Date: 2012-01-18 13:28+0100\n"
+"PO-Revision-Date: 2012-01-18 13:31+0100\n"
 "Last-Translator: Dric <cedric@driczone.net>\n"
-"Language-Team: Dric <cedric@driczone.net>\n"
+"Language-Team: Tom Vennekens\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-KeywordsList: __;_e\n"
-"X-Poedit-Basepath: .\n"
-"Plural-Forms: s\n"
-"X-Poedit-Country: FRANCE\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-Basepath: .\n"
+"X-Textdomain-Support: yes\n"
+"X-Poedit-Language: Dutch\n"
+"X-Poedit-Country: BELGIUM\n"
 "X-Poedit-SearchPath-0: ..\n"
 
+# @ wp-activity
 #: ../wp-act-admin.php:5
-#, fuzzy
 msgid "Last login"
-msgstr "Dernière connexion :"
+msgstr "Laatst aangemeld op"
 
+# @ wp-activity
 #: ../wp-act-admin.php:28
-#, fuzzy
 msgid "Logon fails"
-msgstr "Enregistrement des échecs de connexion :"
+msgstr "Mislukte aanmeldingen"
 
+# @ wp-activity
 #: ../wp-act-admin.php:39
 msgid "Activity Log"
-msgstr "Activité des membres"
+msgstr "Activiteiten Log"
 
+# @ wp-activity
 #: ../wp-act-admin.php:40
 #: ../wp-act-admin.php:702
 #: ../wp-act-admin.php:719
 msgid "Activity Stats"
-msgstr "Statistiques"
+msgstr "Activiteiten Stats"
 
+# @ wp-activity
 #: ../wp-act-admin.php:41
 #: ../wp-act-admin.php:374
 msgid "WP-Activity Settings"
-msgstr "Paramètres"
+msgstr "WP-Activity Instellingen"
 
+# @ default
 #: ../wp-act-admin.php:84
 #, php-format
 msgid "Displaying %s&#8211;%s of %s"
 msgstr ""
 
+# @ wp-activity
 #: ../wp-act-admin.php:164
 #: ../wp-act-admin.php:229
 #: ../wp-act-admin.php:521
@@ -54,145 +60,175 @@ msgstr ""
 #: ../wp-activity.php:333
 #, php-format
 msgid "%s activity RSS Feed"
-msgstr "Flux RSS de l'activité de %s"
+msgstr "%s activiteiten RSS Feed"
 
+# @ wp-activity
 #: ../wp-act-admin.php:171
 msgid "Event(s) deleted."
-msgstr "Evènement(s) supprimé(s)."
+msgstr "Event(s) verwijderd."
 
+# @ wp-activity
 #: ../wp-act-admin.php:229
 #: ../wp-activity.php:330
 #: ../wp-activity.php:533
 msgid "Recent Activity"
-msgstr "Activité récente"
+msgstr "Recente Activiteiten"
 
+# @ default
 #: ../wp-act-admin.php:243
 msgid "Bulk Actions"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:244
 msgid "Delete"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:250
 msgid "View all"
 msgstr ""
 
+# @ wp-activity
 #: ../wp-act-admin.php:256
 msgid "Order by date (DESC)"
-msgstr "Trier par date (décroissant)"
+msgstr "Rangschik op datum (DESC)"
 
+# @ wp-activity
 #: ../wp-act-admin.php:257
 msgid "Order by user"
-msgstr "Trier par utilisateur"
+msgstr "Rangschik op gebruiker"
 
+# @ wp-activity
 #: ../wp-act-admin.php:258
 msgid "Order by event type"
-msgstr "Trier par type d'évènement"
+msgstr "Rangschik op event type"
 
+# @ wp-activity
 #: ../wp-act-admin.php:264
 msgid "All users"
-msgstr "Tous les utilisateurs"
+msgstr "Alle gebruikers"
 
+# @ wp-activity
 #: ../wp-act-admin.php:281
 #: ../wp-act-admin.php:291
 #: ../wp-act-export.php:52
 msgid "Date"
-msgstr "Date"
+msgstr "Datum"
 
+# @ wp-activity
 #: ../wp-act-admin.php:282
 #: ../wp-act-admin.php:292
 #: ../wp-act-export.php:52
 msgid "User"
-msgstr "Utilisateur"
+msgstr "Gebruiker"
 
+# @ wp-activity
 #: ../wp-act-admin.php:283
 #: ../wp-act-admin.php:293
 #: ../wp-act-export.php:52
 msgid "Event Type"
-msgstr "Type"
+msgstr "Event Type"
 
+# @ wp-activity
 #: ../wp-act-admin.php:284
 #: ../wp-act-admin.php:294
 #: ../wp-act-export.php:52
 msgid "Applies to"
-msgstr "S'applique à"
+msgstr "Van toepassing op"
 
+# @ default
 #: ../wp-act-admin.php:352
 msgid "Export filtered Data &raquo;"
-msgstr "Exporter les données filtrées &raquo;"
+msgstr ""
 
+# @ wp-activity
 #: ../wp-act-admin.php:353
 msgid "Delete exported data"
-msgstr "Supprimer les données exportées"
+msgstr "Verwijder geëxporteerde data"
 
+# @ wp-activity
 #: ../wp-act-admin.php:354
 msgid "If you use MS Excel and have some ugly characters, rename the file extension to .txt and open it within Excel."
-msgstr "Si vous utilisez MS Excel et que vous voyez des caractères étranges, renommez l'extension de fichier .csv en .txt et ouvre-le depuis Excel."
+msgstr "Indien je MS Excel gebruikt en rare lettertekens ziet, hernoem dan de bestandsextensie naar .txt en open in Excel."
 
+# @ wp-activity
 #: ../wp-act-admin.php:362
 msgid "Activity logs are empty !"
-msgstr "Données supprimées."
+msgstr "Activiteiten logs zijn leeg !"
 
+# @ default
 #: ../wp-act-admin.php:403
 msgid "Options saved."
 msgstr ""
 
+# @ wp-activity
 #: ../wp-act-admin.php:408
 msgid "Activity logs deleted."
-msgstr "Données supprimées."
+msgstr "Activiteiten logs werden verwijderd."
 
+# @ wp-activity
 #: ../wp-act-admin.php:415
 #: ../wp-act-admin.php:426
 #, php-format
 msgid "Activity Plugin has been uninstalled. You can now desactivate this plugin : <a href=\"%s\">Plugins Page</a>"
-msgstr "Le plugin WP-ACTIVITY est désinstallé. Vous pouvez maintenant désactiver le plugin : <a href=\"%s\">Liste des extensions</a>"
+msgstr "Activity Plugin installatie werd ongedaan gemaakt. Je kan nu deze plugin deactiveren : <a href=\"%s\">Plugins Pagina</a>"
 
 #: ../wp-act-admin.php:420
 msgid "Manual pruning done."
-msgstr "Nettyoage manuel effectué."
+msgstr ""
 
+# @ wp-activity
 #: ../wp-act-admin.php:438
 #: ../wp-act-admin.php:446
 msgid "Date format"
-msgstr "Format des dates"
+msgstr "Datumformaat"
 
+# @ wp-activity
 #: ../wp-act-admin.php:439
 #: ../wp-act-admin.php:469
 msgid "Display options"
-msgstr "Options d'affichage"
+msgstr "Scherm opties"
 
+# @ wp-activity
 #: ../wp-act-admin.php:440
 #: ../wp-act-admin.php:500
 msgid "Privacy options"
-msgstr "Vie privée"
+msgstr "Privacy opties"
 
+# @ wp-activity
 #: ../wp-act-admin.php:441
 #: ../wp-act-admin.php:513
 msgid "Events logging and feeding"
-msgstr "Log et flux des évènements"
+msgstr "Events logging en feeding"
 
+# @ wp-activity
 #: ../wp-act-admin.php:442
 #: ../wp-act-admin.php:558
 msgid "Reset/uninstall"
-msgstr "Vider la table/Désinstaller"
+msgstr "Reset/Maak installatie ongedaan"
 
+# @ wp-activity
 #: ../wp-act-admin.php:449
 msgid "Date format : "
-msgstr "Format des dates :"
+msgstr "Datumformaat : "
 
+# @ wp-activity
 #: ../wp-act-admin.php:456
 msgid "For events that are more than a month old only, or if you dont use relative dates."
-msgstr "pour les évènements qui sont plus vieux qu'un mois seulement, ou si vous n'utilisez pas les dates relatives."
+msgstr "Enkel voor events die meer dan een maand oud zijn, of indien je geen relatieve data gebruikt."
 
+# @ wp-activity
 #: ../wp-act-admin.php:459
 msgid "Use relative dates : "
-msgstr "Utiliser les dates relatives : "
+msgstr "Gebruik relatieve data : "
 
+# @ wp-activity
 #: ../wp-act-admin.php:462
 msgid "Relatives dates exemples : 1 day ago, 22 hours and 3 minutes ago, etc."
-msgstr "Exemples de dates relatives : il y a 1 jour, il y a 22 heures et 3 minutes, etc."
+msgstr "Voorbeeld relatieve data : 1 dag geleden, 22 uren en 3 minuten geleden, enz."
 
+# @ default
 #: ../wp-act-admin.php:466
 #: ../wp-act-admin.php:497
 #: ../wp-act-admin.php:510
@@ -200,396 +236,491 @@ msgstr "Exemples de dates relatives : il y a 1 jour, il y a 22 heures et 3 minut
 msgid "Update options &raquo;"
 msgstr ""
 
+# @ wp-activity
 #: ../wp-act-admin.php:472
 msgid "Display icons : "
-msgstr "Icones"
+msgstr "Toon iconen : "
 
+# @ wp-activity
 #: ../wp-act-admin.php:473
 msgid "Generic icons "
-msgstr "Icones génériques"
+msgstr "Algemene iconen "
 
+# @ wp-activity
 #: ../wp-act-admin.php:475
 msgid "Gravatars for profile edit and connect events icons"
-msgstr "Gravatars pour les évènements de connexion et d'édition de profil"
+msgstr "Gravatars voor profiel bijwerking en connect events iconen"
 
+# @ wp-activity
 #: ../wp-act-admin.php:476
 msgid "No icons "
-msgstr "Pas d'icônes"
+msgstr "Geen iconen "
 
+# @ wp-activity
 #: ../wp-act-admin.php:478
 msgid "Highlight new activity since last user login : "
-msgstr "Mettre en valeur les évènements depuis la denière connexion de l'utilisateur :"
+msgstr "Markeer nieuwe activiteiten sinds laatste gebruikersaanmelding : "
 
+# @ wp-activity
 #: ../wp-act-admin.php:482
 msgid "Display a link to the activity archive page : "
-msgstr "Afficher un lien vers la page des archives de l'activité : "
+msgstr "Toon een link naar de activiteiten archiefpagina : "
 
+# @ wp-activity
 #: ../wp-act-admin.php:486
 msgid "You have to create a page first, with the [ACT_STREAM] shortcode."
-msgstr "Vous devez d'abord créer une page, et y insérer le shortcode [ACT_STREAM]."
+msgstr "Je moet eerst een pagina aanmaken, met de [ACT_STREAM] shortcode."
 
+# @ wp-activity
 #: ../wp-act-admin.php:490
 msgid "Author Path : "
-msgstr "Chemin pour les liens auteurs :"
+msgstr "Auteur pad : "
 
+# @ wp-activity
 #: ../wp-act-admin.php:493
 msgid "If you modified your author structure link or if you use WPMu, change your path. (Default : author, BuddyPress : members)"
-msgstr "Si vous avez modifié votre structure de liens ou si vous utilisez WPMu ou BuddyPress, changez le chemin. (Défaut : author, BuddyPress : members)"
+msgstr "Indien je je auteur structuurlink hebt gewijzigd of indien je WPMu gebruikt, pas dan je pad aan. (Default : auteur, BuddyPress : leden)"
 
+# @ wp-activity
 #: ../wp-act-admin.php:503
 msgid "Prevent users to hide their activity : "
-msgstr "Empêcher les utilisateurs de masquer leur activité : "
+msgstr "Sta gebruikers niet toe hun activiteiten te verbergen : "
 
+# @ wp-activity
 #: ../wp-act-admin.php:506
 msgid "Warning : If you activate this option, users won't have the choice to allow or deny the logging of their activity. For privacy respect, this option should stay desactivated."
-msgstr "ATTENTION : Si vous activez cette option, les utlisateurs n'auront plus le choix de pouvoir interdire l'enregistrement de leur activité. Pour un meilleur respect de la vie privée, cette option devrait rester désactivée."
+msgstr "Waarschuwing : Indien je deze optie activeert, krijgen gebruikers niet de keuze om hun activiteiten te tonen/verbergen. Uit respect voor privacy, kan deze optie best gedeactiveerd blijven."
 
+# @ wp-activity
 #: ../wp-act-admin.php:516
 msgid "Rows limit in database : "
-msgstr "Nombre max de lignes dans la table :"
+msgstr "Record limiet van de database : "
 
 #: ../wp-act-admin.php:517
 msgid "Manually prune table"
-msgstr "Nettoyer manuellement la table"
+msgstr ""
 
+# @ wp-activity
 #: ../wp-act-admin.php:518
 #, php-format
 msgid "There is currently %s rows in database."
-msgstr "Il y a actuellement %s lignes dans la table."
+msgstr "Er zijn momenteel %s records in de database."
 
+# @ wp-activity
 #: ../wp-act-admin.php:521
 msgid "Display activity RSS feed : "
-msgstr "Activer le flux RSS de l'activité"
+msgstr "Toon activiteiten RSS feed : "
 
+# @ wp-activity
 #: ../wp-act-admin.php:524
 msgid "Log login failures : "
-msgstr "Enregistrement des échecs de connexion :"
+msgstr "Log mislukte aanmeldingen : "
 
+# @ wp-activity
 #: ../wp-act-admin.php:527
 msgid "If you want to log all connexions attempts that failed, enable this option."
-msgstr "Si vous souhaitez collecter les échecs de connexion, activez cette option."
+msgstr "Indien je alle mislukte aanmeldpogingen wil loggen, activeer dan deze optie."
 
+# @ wp-activity
 #: ../wp-act-admin.php:530
 msgid "Log in database"
-msgstr "Enregistrement dans la base"
+msgstr "Log in database"
 
+# @ wp-activity
 #: ../wp-act-admin.php:530
 msgid "Display in feed"
-msgstr "Afficher dans le flux RSS"
+msgstr "Toon in feed"
 
+# @ wp-activity
 #: ../wp-act-admin.php:532
 msgid "Login events : "
-msgstr "Connexions utilisateurs :"
+msgstr "Aanmelden events : "
 
+# @ wp-activity
 #: ../wp-act-admin.php:536
 msgid "Profile update events : "
-msgstr "Mises à jour de profil :"
+msgstr "Profiel bijwerken events : "
 
+# @ wp-activity
 #: ../wp-act-admin.php:540
 msgid "Post creation/update events : "
-msgstr "Créations/éditions d'articles :"
+msgstr "Bericht aanmaken/bijwerken events : "
 
+# @ wp-activity
 #: ../wp-act-admin.php:544
 msgid "New comment events : "
-msgstr "Nouveaux commentaires :"
+msgstr "Nieuwe reactie events : "
 
+# @ wp-activity
 #: ../wp-act-admin.php:548
 msgid "New link events : "
-msgstr "Nouveaux liens :"
+msgstr "Nieuwe link events : "
 
+# @ wp-activity
 #: ../wp-act-admin.php:561
 msgid "Empty activity table : "
-msgstr "Vider la table de WP-Activity : "
+msgstr "Leegmaken activiteiten tabel : "
 
+# @ wp-activity
 #: ../wp-act-admin.php:568
 msgid "Reset logs"
-msgstr "Vider les logs."
+msgstr "Reset logs"
 
+# @ wp-activity
 #: ../wp-act-admin.php:568
+#, fuzzy
 msgid ""
 "Empty activity table ? All your activity logs will be deleted.\\n"
 "\\n"
 "Choose [Cancel] to Stop, [OK] to proceed.\\n"
 msgstr ""
-"Vider la table d'activité ? Tous vos logs vont être supprimés.\\n"
-"\\n"
-"Choisissez [Annuler] pour annuler (logique), [OK] pour continuer.\\n"
+"Activiteiten tabel leegmaken ? Al je activiteiten logs zullen verwijderd worden.\n"
+"\n"
+"Kies [Annuleren] om te stoppen, [OK] om verder te gaan.\n"
 
+# @ wp-activity
 #: ../wp-act-admin.php:569
 msgid "Warning : cleaning activity table erase all activity logs."
-msgstr "Attention : vider la table supprime tous les logs."
+msgstr "Waarschuwing : leegmaken activiteiten tabel zal alle activiteiten logs verwijderen."
 
+# @ wp-activity
 #: ../wp-act-admin.php:573
 #: ../wp-act-admin.php:580
 msgid "Uninstall plugin"
-msgstr "Désinstaller le plugin"
+msgstr "Maak plugin installatie ongedaan"
 
+# @ wp-activity
 #: ../wp-act-admin.php:580
+#, fuzzy
 msgid ""
 "Uninstall plugin ? Settings and activity logs will be deleted.\\n"
 "\\n"
 "Choose [Cancel] to Stop, [OK] to proceed.\\n"
 msgstr ""
-"Désinstaller le plugin ? Tous vos paramètres et logs vont être supprimés.\\n"
-"\\n"
-"Choisissez [Annuler] pour annuler (logique), [OK] pour continuer.\\n"
+"Plugin installatie ongedaan maken ? Instellingen en activiteiten logs zullen verwijderd worden.\n"
+"\n"
+"Kies [Annuleren] om te stoppen, [OK] om verder te gaan.\n"
 
+# @ wp-activity
 #: ../wp-act-admin.php:581
 msgid "Warning : This will delete settings and activity table."
-msgstr "Attention : ceci va supprimer les paramètres de WP-ACTIVITY ainsi que les logs de l'activité."
+msgstr "Waarschuwing : Dit zal de instellingen en activiteiten tabel verwijderen."
 
+# @ wp-activity
 #: ../wp-act-admin.php:590
 #, php-format
 msgid "WP-Activity is a plugin by <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
-msgstr "WP-Activity est un plugin développé par <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
+msgstr "WP-Activity is een plugin van <a href=\"http://www.driczone.net\">Dric</a>. Versie <strong>%s</strong>."
 
+# @ wp-activity
 #: ../wp-act-admin.php:654
 msgid "Successful user logins"
-msgstr "Connexions réussies"
+msgstr "Gelukte aanmeldingen"
 
+# @ wp-activity
 #: ../wp-act-admin.php:655
 msgid "Login attempts failed"
-msgstr "Connexions échouées"
+msgstr "Mislukte aanmeldpogingen"
 
+# @ wp-activity
 #: ../wp-act-admin.php:656
 msgid "Profiles edited"
-msgstr "Profils modifiés"
+msgstr "Bijgewerkte profielen"
 
+# @ wp-activity
 #: ../wp-act-admin.php:657
 msgid "Posts created"
-msgstr "Articles ajoutés"
+msgstr "Aangemaakte berichten"
 
+# @ wp-activity
 #: ../wp-act-admin.php:658
 msgid "Posts edited"
-msgstr "Articles modifiés"
+msgstr "Bijgewerkte berichten"
 
+# @ wp-activity
 #: ../wp-act-admin.php:659
 msgid "Comments added"
-msgstr "Commentaires ajoutés"
+msgstr "Toegevoegde reacties"
 
+# @ wp-activity
 #: ../wp-act-admin.php:660
 msgid "Links added"
-msgstr "Liens ajoutés"
+msgstr "Toegevoegde links"
 
+# @ wp-activity
 #: ../wp-act-admin.php:665
 msgid "Close"
-msgstr "Fermer"
+msgstr "Sluit"
 
+# @ wp-activity
 #: ../wp-act-admin.php:666
 msgid "&#x3c;Prev"
-msgstr "&#x3c;Préc"
+msgstr "&#x3c;Vorige"
 
+# @ wp-activity
 #: ../wp-act-admin.php:667
 msgid "Next&#x3e;"
-msgstr "Suiv&#x3e;"
+msgstr "Volgende&#x3e;"
 
+# @ wp-activity
 #: ../wp-act-admin.php:668
 msgid "Current"
-msgstr "Actuel"
+msgstr "Actueel"
 
+# @ default
 #: ../wp-act-admin.php:669
 msgid "January"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:669
 msgid "February"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:669
 msgid "March"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:669
 msgid "April"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:669
 msgid "May"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:669
 msgid "June"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:670
 msgid "July"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:670
 msgid "August"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:670
 msgid "September"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:670
 msgid "October"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:670
 msgid "November"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:670
 msgid "December"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:671
 msgid "Jan_January_abbreviation"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:671
 msgid "Feb_February_abbreviation"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:671
 msgid "Mar_March_abbreviation"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:671
 msgid "Apr_April_abbreviation"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:671
 msgid "May_May_abbreviation"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:671
 msgid "Jun_June_abbreviation"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:672
 msgid "Jul_July_abbreviation"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:672
 msgid "Aug_August_abbreviation"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:672
 msgid "Sep_September_abbreviation"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:672
 msgid "Oct_October_abbreviation"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:672
 msgid "Nov_November_abbreviation"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:672
 msgid "Dec_December_abbreviation"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:673
 msgid "Sunday"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:673
 msgid "Monday"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:673
 msgid "Tuesday"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:673
 msgid "Wednesday"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:673
 msgid "Thursday"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:673
 msgid "Friday"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:673
 msgid "Saturday"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:674
 msgid "Sun"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:674
 msgid "Mon"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:674
 msgid "Tue"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:674
 msgid "Wed"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:674
 msgid "Thu"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:674
 msgid "Fri"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:674
 msgid "Sat"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:675
 msgid "S_Sunday_initial"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:675
 msgid "M_Monday_initial"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:675
 msgid "T_Tuesday_initial"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:675
 msgid "W_Wednesday_initial"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:675
 msgid "T_Thursday_initial"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:675
 msgid "F_Friday_initial"
 msgstr ""
 
+# @ default
 #: ../wp-act-admin.php:675
 msgid "S_Saturday_initial"
 msgstr ""
 
+# @ wp-activity
 #: ../wp-act-admin.php:707
 msgid "Date range"
-msgstr "Plage de dates"
+msgstr "Datumbereik"
 
+# @ wp-activity
 #: ../wp-act-admin.php:722
 #: ../wp-activity.php:541
 #: ../wp-activity.php:604
 msgid "Events number :"
-msgstr "Nombre d'évènements :"
+msgstr "Aantal events :"
 
+# @ wp-activity
 #: ../wp-act-admin.php:734
 msgid "See data for"
-msgstr "Voir les données de"
+msgstr "Bekijk data voor"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:33
 #, php-format
 msgid "User events of %s"
-msgstr "Activité des utilisateurs de %s"
+msgstr "Gebruiker events van %s"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:43
 msgid "New visit"
-msgstr "Nouvelle visite"
+msgstr "Nieuw bezoek"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:44
 #: ../wp-activity-feed.php:51
 #: ../wp-activity-feed.php:57
@@ -603,207 +734,215 @@ msgstr "Nouvelle visite"
 #: ../wp-activity.php:400
 #: ../wp-activity.php:405
 msgid "View Profile"
-msgstr "Voir le profil"
+msgstr "Bekijk Profiel"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:44
 #: ../wp-activity.php:376
 msgid "has logged."
-msgstr "s'est connecté."
+msgstr "heeft aangemeld."
 
+# @ wp-activity
 #: ../wp-activity-feed.php:48
 msgid "New comment"
-msgstr "Nouveau commentaire"
+msgstr "Nieuwe reactie"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:51
 #: ../wp-activity.php:384
 msgid "commented"
-msgstr "a commenté"
+msgstr "reageerde"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:55
 msgid "New post"
-msgstr "Nouvel article"
+msgstr "Nieuw bericht"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:57
 #: ../wp-activity.php:392
 msgid "published"
-msgstr "a publié"
+msgstr "gepubliceerd"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:61
 msgid "Post edited"
-msgstr "Article modifié"
+msgstr "Bericht bijgewerkt"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:63
 #: ../wp-activity.php:397
 msgid "edited"
-msgstr "a modifié"
+msgstr "bijgewerkt"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:67
 msgid "Profile edited"
-msgstr "Profil modifié"
+msgstr "Profiel bijgewerkt"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:68
 #: ../wp-activity.php:400
 msgid "has updated his profile."
-msgstr "a modifié son profil."
+msgstr "heeft zijn profiel bijgewerkt"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:72
 msgid "New link"
-msgstr "Nouveau lien"
+msgstr "Nieuwe link"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:75
 #: ../wp-activity.php:405
 msgid "has added a link to"
-msgstr "a ajouté un lien vers"
+msgstr "heeft een link toegevoegd aan"
 
+# @ default
 #: ../wp-activity.php:151
 msgid "Settings"
-msgstr "Paramètres"
+msgstr ""
 
+# @ default
 #: ../wp-activity.php:152
-#, fuzzy
 msgid "Uninstall"
-msgstr "Désinstaller le plugin"
+msgstr ""
 
+# @ wp-activity
 #: ../wp-activity.php:204
 msgid "Activity events"
-msgstr "Activité"
+msgstr "Activiteiten events"
 
+# @ wp-activity
 #: ../wp-activity.php:207
 msgid "Hide my activity :"
-msgstr "Masquer mon activité :"
+msgstr "Verberg mijn activiteiten :"
 
+# @ wp-activity
 #: ../wp-activity.php:208
 msgid "If selected, this option makes you become invisible in activity events."
-msgstr "En cochant cette option, ce que vous ferez sur le site n'apparaîtra pas dans la liste de l'activité des membres."
+msgstr "Indien geselecteerd, maakt deze optie je activiteiten events onzichtbaar."
 
+# @ wp-activity
 #: ../wp-activity.php:302
 msgid "Last logon :"
-msgstr "Dernière connexion :"
+msgstr "Laaste aanmelding :"
 
+# @ wp-activity
 #: ../wp-activity.php:336
 #, php-format
 msgid "%s activity archive"
-msgstr "Archives de l'activité de %s"
+msgstr "%s activiteiten archief"
 
+# @ wp-activity
 #: ../wp-activity.php:336
 msgid "Archives"
-msgstr "Archives"
+msgstr "Archieven"
 
+# @ wp-activity
 #: ../wp-activity.php:468
 msgid "weeks"
-msgstr "semaines"
+msgstr "weken"
 
+# @ wp-activity
 #: ../wp-activity.php:468
 msgid "week"
-msgstr "semaine"
+msgstr "week"
 
+# @ wp-activity
 #: ../wp-activity.php:469
 #: ../wp-activity.php:472
 msgid "days"
-msgstr "jours"
+msgstr "dagen"
 
+# @ wp-activity
 #: ../wp-activity.php:469
 #: ../wp-activity.php:472
 msgid "day"
-msgstr "jour"
+msgstr "dag"
 
+# @ wp-activity
 #: ../wp-activity.php:473
 #: ../wp-activity.php:476
 msgid "hours"
-msgstr "heures"
+msgstr "uren"
 
+# @ wp-activity
 #: ../wp-activity.php:473
 #: ../wp-activity.php:476
 msgid "hour"
-msgstr "heure"
+msgstr "uur"
 
+# @ wp-activity
 #: ../wp-activity.php:477
 #: ../wp-activity.php:480
 msgid "minutes"
-msgstr "minutes"
+msgstr "minuten"
 
+# @ wp-activity
 #: ../wp-activity.php:477
 #: ../wp-activity.php:480
 msgid "minute"
-msgstr "minute"
+msgstr "minuut"
 
+# @ wp-activity
 #: ../wp-activity.php:483
 msgid "seconds"
-msgstr "secondes"
+msgstr "seconden"
 
+# @ wp-activity
 #: ../wp-activity.php:483
 msgid "second"
 msgstr "seconde"
 
+# @ wp-activity
 #: ../wp-activity.php:487
 #, php-format
 msgid "%s ago"
-msgstr "Il y a %s"
+msgstr "%s geleden"
 
+# @ wp-activity
 #: ../wp-activity.php:503
 msgid "Display a stream of registered users events"
-msgstr "Affiche le flux de l'activité des membres"
+msgstr "Toon activiteiten van geregistreerde gebruikers"
 
+# @ wp-activity
 #: ../wp-activity.php:509
 msgid "Wp-Activity Widget"
-msgstr "WP-Activity"
+msgstr "WP-Activity geregistreerde gebruikers"
 
+# @ wp-activity
 #: ../wp-activity.php:537
 #: ../wp-activity.php:600
 msgid "Title :"
-msgstr "Titre :"
+msgstr "Titel :"
 
+# @ wp-activity
 #: ../wp-activity.php:551
 msgid "Display the logged user own activity"
-msgstr "Afficher la propre activité de l'utilisateur connecté"
+msgstr "Toon activiteiten van aangemelde gebruiker"
 
+# @ wp-activity
 #: ../wp-activity.php:557
 msgid "Wp-Activity logged user own activity"
-msgstr "Wp-Activity activité de l'utilisateur connecté"
+msgstr "WP-Activity aangemelde gebruiker"
 
+# @ wp-activity
 #: ../wp-activity.php:588
 msgid "Your activity"
-msgstr "Votre activité"
+msgstr "Jouw activiteiten"
 
+# @ wp-activity
 #: ../wp-activity.php:608
 msgid "When viewed by visitor"
-msgstr "Si affiché en tant que visiteur"
+msgstr "Indien bekeken door een bezoeker"
 
+# @ wp-activity
 #: ../wp-activity.php:609
 msgid "Display all users activity"
-msgstr "Afficher l'activité de tous les membres"
+msgstr "Toon activiteiten van alle gebruikers"
 
+# @ wp-activity
 #: ../wp-activity.php:610
 msgid "Display nothing"
-msgstr "Ne rien afficher"
+msgstr "Toon niets"
 
-#~ msgid "You are not allowed to manage this plugin."
-#~ msgstr "Vous n'êtes pas autorisé(e) à paramétrer ce plugin."
-
-#~ msgid "rows in db"
-#~ msgstr "lignes dans la base"
-
-#~ msgid "Page"
-#~ msgstr "Page"
-
-#~ msgid "Data"
-#~ msgstr "Données"
-
-#~ msgid ""
-#~ "Activity Plugin uninstalled. You can now desactivate this plugin : <a "
-#~ "href=\"%s\">Plugins Page</a>"
-#~ msgstr ""
-#~ "Le plugin WP-ACTIVITY est désinstallé. Vous pouvez maintenant désactiver "
-#~ "le plugin : <a href=\"%s\">Liste des extensions</a>"
-
-#~ msgid "Manage"
-#~ msgstr "Paramétrage"
-
-#~ msgid "Update/clean tables"
-#~ msgstr "Mettre à jour/vider la table"
-
-#~ msgid "Submit"
-#~ msgstr "Valider"
-
-#~ msgid "put a message in the shoutbox."
-#~ msgstr "A laissé un message dans la Boîte à messages."
