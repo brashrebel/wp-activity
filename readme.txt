@@ -138,6 +138,7 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 == ChangeLog ==
 
 = 1.7 =
+* Added dutch translation (Thx to Tom Vennekens).
 * Admin and export functions are only loaded when needed (separate php files).
 * Tweaked Cron task activation.
 * Fixed deletion of old activity (cron task).
