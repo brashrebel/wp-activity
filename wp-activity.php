@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Log and display users activity in backend and frontend of WordPress.
     Author: Dric
-    Version: 1.7 beta
+    Version: 1.7
     Author URI: http://www.driczone.net
 */
 
@@ -27,7 +27,7 @@
 
 // let's initializing all vars
 
-$act_plugin_version = "1.7 beta"; //Don't change this, of course.
+$act_plugin_version = "1.7"; //Don't change this, of course.
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get bugged by admin panel additions
@@ -106,13 +106,19 @@ function act_install()
     $new_options_act['act_prevent_priv']= false;
     $new_options_act['act_log_failures']= false;
     $new_options_act['act_author_path']= 'author';
+    $new_options_act['act_blacklist_on']= false;
+    $new_options_act['act_bl_wplog']= true;
     $new_options_act['act_version'] = $act_plugin_version;
     add_option('act_settings', $new_options_act);
     
     if ($options_act['act_version'] != $act_plugin_version){
       act_desactive();
-      if ($options_act['act_version'] < '1.4'){
+      if (version_compare($options_act['act_version'], '1.4', '<')){
         $options_act['act_author_path']= 'author';
+      }
+      if (version_compare($options_act['act_version'], '1.7', '<')){
+        $options_act['act_blacklist_on']= false;
+        $options_act['act_bl_wplog']= true;
       }
       $options_act['act_version'] = $act_plugin_version;
       update_option('act_settings', $options_act);
@@ -175,7 +181,6 @@ if ($options_act['act_log_failures'] ){
 }
 
 function act_header(){
-  global $options_act;
   $altcss = TEMPLATEPATH.'/wp-activity.css';
   echo '<link type="text/css" rel="stylesheet" href="';
   if (@file_exists($altcss)){
@@ -184,16 +189,6 @@ function act_header(){
     echo ACT_URL;
   }
   echo 'wp-activity.css" />';
-  switch ($options_act['act_date_format']){
-    case "dd/mm/yyyy":
-      $act_date_format_js = "dd/mm/yy";
-      break;
-    case "mm/dd/yyyy":
-      $act_date_format_js = "mm/dd/yy";
-      break;
-    default:
-      $act_date_format_js = "yy/mm/dd";
-  }
 }
 add_action('wp_head', 'act_header');
 
@@ -216,7 +211,7 @@ if (!$options_act['act_prevent_priv']){
 
 function act_real_ip()
 {
-    if (!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
+    if (!empty($_SERVER['HTTP_CLIENT_IP']))  //check ip from share internet
     {
       $ip=$_SERVER['HTTP_CLIENT_IP'];
     }
@@ -253,7 +248,7 @@ function act_session($userlogin){
   if (!get_usermeta($user_ID, 'act_private')){
     $act_time=date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$act_time."', '')");
-    $act_url = parse_url(get_option('home'));
+    //$act_url = parse_url(get_option('home'));
   }
 }
 
@@ -303,6 +298,32 @@ function act_last_connect($act_user=''){
   }
 }
 
+//blacklist baby !
+function act_blacklist(){
+  global $options_act, $wpdb, $pagenow;
+  if ((($options_act['act_bl_login'] and $pagenow == 'wp-login.php') or !$options_act['act_bl_login']) and !is_admin()){
+    $act_bl_ip_array = explode("\n", trim($options_act['act_blacklist']));
+    $act_client_ip = act_real_ip();
+  	foreach ($act_bl_ip_array as $act_bl_ip) {
+  		$act_bl_ip = str_replace(".", "\.", $act_bl_ip);
+  		$act_bl_ip = str_replace("*", "[0-9\.]*", $act_bl_ip);
+  		$act_bl_ip = "/^" . trim($act_bl_ip) . "$/";
+  		if (preg_match($act_bl_ip, $act_client_ip)) {
+        $act_time=date("Y-m-d H:i:s", time());
+				$wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES(1, 'ACCESS_DENIED', '".$act_time."', '".$act_client_ip."')");
+        $wpdb->print_error();
+        echo "Die ! Diiiiiiiiie !"; 
+        //Header("HTTP/1.1 403 Forbidden");
+				//die('403 Forbidden');
+  		}
+    }
+  }
+}
+if ($options_act['act_blacklist_on']){
+  add_action('init', 'act_blacklist', 1);
+}
+
+//display activity in frontend
 function act_stream_user($act_user=''){
   global $options_act, $user_ID;
   if (!$act_user){ $act_user = $user_ID; }
@@ -323,7 +344,13 @@ function act_stream($act_number='30', $act_title=''){
   act_stream_common($act_number, $act_title, false,'');
 }
 
-//$act_number = -1 : no limit
+/*
+--- display activity in frontend ---
+* $act_number = -1 : no limit
+* $act_title : title of the box
+* $archive : to display on a page without box
+* $act_user : if user id specified, return user's activity only
+*/
 function act_stream_common($act_number='30', $act_title='', $archive = false, $act_user = ''){
 global $wpdb, $options_act, $user_ID;
   if ($act_title == ''){

@@ -1,4 +1,6 @@
 <?php
+
+//admin panel additions
 if (!$no_admin_mess){
   add_filter( 'manage_users_columns', 'add_act_last_login_column');
   function add_act_last_login_column( $columns){
@@ -33,6 +35,7 @@ if (!$no_admin_mess){
   }
 }
 
+//menus and scripts loading
 function act_admin_menu(){
   add_action( 'admin_head', 'act_header' );
   add_menu_page('WP-Activity', 'WP-Activity', 'publish_posts', 'act_activity', 'act_admin_activity', 'div');
@@ -48,7 +51,7 @@ function act_stats_scripts(){
   global $wp_version;
   wp_enqueue_style('act_datepicker', WP_PLUGIN_URL .'/wp-activity/jquery.ui.datepicker.css', false, '2.5.0', 'screen');
   wp_enqueue_script('flot', ACT_URL .'js/jquery.flot.min.js', 'jQuery');
-  if ( $wp_version < 3.3 ){
+  if ( version_compare($wp_version, '3.3', '<') ){
     wp_enqueue_script('act_datepicker', ACT_URL .'js/jquery.ui.datepicker.min.js', 'jQuery');
   }else{
     wp_enqueue_script('jquery-ui-datepicker');
@@ -60,6 +63,7 @@ function act_admin_scripts(){
   wp_enqueue_style('act_tabs', WP_PLUGIN_URL .'/wp-activity/jquery.ui.tabs.css', false, '2.5.0', 'screen');
 }
 
+//pagination function
 function act_pagination($act_count, $limit = 50, $current, $act_start = 0, $args = ''){
   // Adapted from http://www.phpeasystep.com/phptu/29.html
 	$adjacents = 1;
@@ -156,6 +160,7 @@ function act_pagination($act_count, $limit = 50, $current, $act_start = 0, $args
 	echo $pagination;
 }
 
+//main pages
 function act_admin_activity(){
   global $wpdb, $act_plugin_version, $act_list_limit, $options_act;
   ?>
@@ -332,6 +337,9 @@ function act_admin_activity(){
                       echo '<td>'.$act->display_name.'</td><td>'.$act->act_type.'</td><td><a href="'.$link->link_url.'" title="'.$link->link_description.'" target="'.$link->link_target.'">'.$link->link_name.'</a></td>';
                     }
                     break;
+                  case 'ACCESS_DENIED' :
+                    echo '<td><span class="activity_warning">&nbsp;</span></td><td><span class="activity_warning">'.$act->act_type.'</span></td><td>'.$act->act_params.'</td>';
+                    break;
                   default:
                     break;
                 }
@@ -398,6 +406,9 @@ function act_admin_settings(){
     $options_act['act_prevent_priv']=$_POST['act_prevent_priv'];
     $options_act['act_log_failures']=$_POST['act_log_failures'];
     $options_act['act_author_path']=$_POST['act_author_path'];
+    $options_act['act_blacklist_on']= $_POST['act_blacklist_on'];
+    $options_act['act_bl_wplog']= $_POST['act_bl_wplog'];
+    $options_act['act_blacklist']= $_POST['act_blacklist'];
     $options_act['act_version']=$act_plugin_version;
     if (update_option('act_settings', $options_act)){
       echo '<div id="message" class="updated fade"><p><strong>'.__('Options saved.').'</strong></p></div>';
@@ -439,6 +450,7 @@ function act_admin_settings(){
         <li><a href="#act_display"><?php _e('Display options', 'wp-activity') ;?></a></li>
         <li><a href="#act_privacy"><?php _e('Privacy options', 'wp-activity') ;?></a></li>
         <li><a href="#act_events"><?php _e('Events logging and feeding', 'wp-activity') ;?></a></li>
+        <li><a href="#act_bl"><?php _e('Blacklisting', 'wp-activity') ;?></a></li>
         <li><a href="#act_reset"><?php _e('Reset/uninstall', 'wp-activity') ;?></a></li>
       </ul>
       <form action='' method='post'>
@@ -552,6 +564,33 @@ function act_admin_settings(){
           </table>
           <div class="submit"><input type='submit' class='button-primary' name='submit' value='<?php _e('Update options &raquo;') ?>' /></div>
         </div>
+        <div id="act_bl">
+          <h2><?php _e('Blacklisting','wp-activity') ?></h2>
+          <table class="form-table">
+            <tr>
+              <th><?php _e('Activate blacklisting', 'wp-activity') ?> : </th>
+              <td>
+                <input type="checkbox" <?php if($act_blacklist_on){echo 'checked="checked"';} ?> name="act_blacklist_on" />
+                <br /><span class="act_info"><?php _e('Blacklisting allow to deny access to your blog for specified IP addresses.','wp-activity') ?></span>
+              </td>
+            </tr>
+            <tr>
+              <th><?php _e('Blacklist on wp-login.php only', 'wp-activity') ?> : </th>
+              <td>
+                <input type="checkbox" <?php if($act_bl_wplog){echo 'checked="checked"';} ?> name="act_bl_wplog" />
+                <br /><span class="act_info"><?php _e('Check this option if you don\'t have any frontend login form. For more blog performance, this option should be enabled when possible.','wp-activity') ?></span>
+              </td>
+            </tr>
+            <tr>
+              <th><?php _e('IP list', 'wp-activity') ?> : </th>
+              <td>
+                <textarea class="large-text code" rows="6" name="act_blacklist"><?php echo $act_blacklist ?></textarea>
+                <br /><span class="act_info"><?php _e('One IP per line. Don\'t blacklist your own IP ! Examples: 192.168.10.103, 192.168.10.*, 192.168.10.[0-9]','wp-activity') ?></span>
+              </td>
+            </tr>
+          </table>
+          <div class="submit"><input type='submit' class='button-primary' name='submit' value='<?php _e('Update options &raquo;') ?>' /></div>
+        </div>
         <?php wp_nonce_field('wp-activity-submit','act_admin'); ?>
       </form>
       <div id="act_reset">
@@ -651,13 +690,14 @@ function act_admin_stats(){
   }
   $act_nonce = wp_create_nonce('wp-activity-list');
   $act_tab_types = array(
-    'CONNECT'       => __('Successful user logins', 'wp-activity'),
-    'LOGIN_FAIL'    => __('Login attempts failed', 'wp-activity'),
-    'PROFILE_EDIT'  => __('Profiles edited', 'wp-activity'),
-    'POST_ADD'      => __('Posts created', 'wp-activity'),
-    'POST_EDIT'     => __('Posts edited', 'wp-activity'),
-    'COMMENT_ADD'   => __('Comments added', 'wp-activity'),
-    'LINK_ADD'      => __('Links added', 'wp-activity')
+    'CONNECT'       => __('Successful user login(s)', 'wp-activity'),
+    'LOGIN_FAIL'    => __('Login attempt(s) failed', 'wp-activity'),
+    'ACCESS_DENIED' => __('Access(es) denied', 'wp-activity'),
+    'PROFILE_EDIT'  => __('Profile(s) edited', 'wp-activity'),
+    'POST_ADD'      => __('Post(s) created', 'wp-activity'),
+    'POST_EDIT'     => __('Post(s) edited', 'wp-activity'),
+    'COMMENT_ADD'   => __('Comment(s) added', 'wp-activity'),
+    'LINK_ADD'      => __('Link(s) added', 'wp-activity')
     );
   echo '<script>
 jQuery(function($){
@@ -724,9 +764,9 @@ jQuery().ready(function ($) {
                 <tbody>
                   <?php 
                     foreach ($act_tab_types as $act_tab_type => $act_tab_label){
-                      if ($act_tab_type <> 'LOGIN_FAIL' OR $options_act['act_log_failures']) {
+                      if (($act_tab_type <> 'LOGIN_FAIL' OR $options_act['act_log_failures']) AND ($act_tab_type <> 'ACCESS_DENIED' OR $options_act['act_blacklist_on'])) {
                         $act_class ='';
-                        if ($act_tab_type == 'LOGIN_FAIL') $act_class = 'class="spam"';
+                        if ($act_tab_type == 'LOGIN_FAIL' or $act_tab_type == 'ACCESS_DENIED') $act_class = 'class="spam"';
                         if ($act_tab_type == $act_filter) $act_class = 'class="waiting"';
                       ?>
                       <tr>

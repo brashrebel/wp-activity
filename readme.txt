@@ -1,16 +1,16 @@
 === WP-Activity ===
 Contributors: Dric1107
 Donate link: http://www.driczone.net/blog
-Tags: stream, activity, community, multi-users, log, event, monitor
+Tags: stream, activity, community, multi-users, log, event, monitor, stats, blacklist, tracking, access deny
 Requires at least: 3.0
 Tested up to: 3.3.1
 Stable tag: 1.6.1
 
-Monitor and display users activity (logins, logon failures, new posts, new comments, etc.) in backend and frontend of WordPress.
+Monitor and display registered users activity (logins, logon failures, new posts, new comments, etc.). You can also monitor unwanted login attemps.
 
 == Description ==
 
-This plugin logs registered users events in your blog and displays it in frontend and backend.
+This plugin logs registered users activity in your blog and displays it in frontend and backend.
 
 - connections
 - new comments
@@ -19,13 +19,20 @@ This plugin logs registered users events in your blog and displays it in fronten
 - post edition
 - new link
 - login failures (displayed only in admin panel)
+- accesses denied by IP blacklisting (displayed only in admin panel)
 
-Admin can use this plugin to monitor a multi-users blog activity without displaying it in frontend.
-Users can see what other members do in the blog. Great for multi-users blogs or community blogs.
+Possible usages :
+- Monitor unwanted connexions attempts on your blog and block hackers IP.
+- Monitor the registered users activity on a multi-users blog.
+- Enhance your community blog by displaying to all users what other members have done.
 
 If enabled, user who don't want to be listed in blog activity can hide its own activity by checking a privacy option in the profile page. In that case, this user activity is not stored in database.
-
+When a login failure occurs, the IP address is also logged.
 Users activity can be followed by RSS feed and can be exported in csv file (semicolon separation).
+
+Admin can follow the blog users activity with the stats module.
+
+To avoid spammers or hackers trying to steal accounts, you can blacklist their IP addresses. Be careful, I you blacklist your own IP you won't be able to login anymore !
 
 Translations :
 
@@ -33,6 +40,7 @@ Translations :
 - Italian (Partial translation - Thx to Luca)
 - Turkish (Thx to Can KAYA - translated up to v1.2)
 - Spanish (Thx to Cscean - translated up to v1.3)
+- Dutch (Thx to Tom - translated up to 1.6.1)
 
 (If you translated my plugin, please send the translated .po file at cedric@driczone.net )
 
@@ -81,6 +89,10 @@ defaults are :
 * number = no limit
 * title = Recent Activity (translated by .mo)
 
+= I blacklisted my own IP address, or I can't login anymore since I activated the blacklisting ! =
+
+Just rename or delete the wp-activity directory in wp-content/plugins/, and you should be able to access to your blog.
+
 = How do I avoid erasing css tweaks when I update the plugin ? =
 
 Just put a copy of wp-activity.css in your theme dir, it will be processed instead of the css file included with the plugin.
@@ -113,15 +125,19 @@ You have to modify the `$act_list_limit` var line 31 of wp-activity.php.
 
 You have to modify the `$no_admin_mess` var line 33 of wp-activity.php and set it to **true**.
 
-= Export and RSS file are not working =
+= RSS feed is not working =
 
-If you renamed your wp-content directory, you have to change `$wpcontentdir` var in ../plugins/wp-activity/wp-activity-feed.php and wp-activity-export.php
+If you renamed your wp-content directory, you have to change `$wpcontentdir` var in ../plugins/wp-activity/wp-activity-feed.php.
 
 = I edited a post but wp-activity logged POST_ADD instead of POST_EDIT =
 That's because the post_add event for this post id was removed from the wp-activity database table. Wordpress doesn't have separate actions for adding or editing posts, so the plugin checks in it's table if there was a post creation with the same ID. If found, the plugin logs a post edition. But as the plugin clears old logs (see "Rows limit in database" setting), the post creation event can be previously deleted when the post edition occurs.
 
 = I have a poor hosting, is your plugin a big fat resources consumer ? =
-I also have a poor hosting, so I try to keep my plugin as light as I can. But for more performance, do not display the users gravatars in activity list.
+I also have a poor hosting, so I try to keep my plugin as light as I can ; the admin scripts and css files are only loaded when needed.
+Performance tips :
+* Do not display gravatars on frontend.
+* If you don't use frontend login form, check the 'blacklist on wp-login.php only' option.
+* Unckeck the events you don't want to monitor.
 
 = Do you really test your plugin before publishing new versions at the Wordpress Plugin Repository ? =
 
@@ -138,9 +154,11 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 == ChangeLog ==
 
 = 1.7 =
+* Added blacklisting of IP addresses.
 * Added dutch translation (Thx to Tom Vennekens).
 * Admin and export functions are only loaded when needed (separate php files).
 * Tweaked Cron task activation.
+* Replaced a few translation strings, sorry for translaters.
 * Fixed deletion of old activity (cron task).
 * Fixed csv file generation bug for IE.
 * Fixed missing datepicker js script when using wordpress prior to 3.3.
