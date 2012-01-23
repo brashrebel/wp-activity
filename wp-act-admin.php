@@ -250,7 +250,7 @@ function act_admin_activity(){
               </select>
               <input type="submit" value="<?php esc_attr_e('Apply'); ?>" name="doaction" id="doaction" class="button-secondary action" />
               <?php
-              $types = array('LOGIN_FAIL', 'CONNECT', 'POST_ADD', 'POST_EDIT', 'PROFILE_EDIT', 'COMMENT_ADD', 'LINK_ADD');
+              $types = array('LOGIN_FAIL', 'ACCESS_DENIED', 'CONNECT', 'POST_ADD', 'POST_EDIT', 'PROFILE_EDIT', 'COMMENT_ADD', 'LINK_ADD');
               $select_type = "<select name=\"act_type_filter\">";
               $select_type .= '<option value="all"'  . (($act_type_filter == 'all') ? " selected='selected'" : '') . '>' . __('View all') . "</option>";
               foreach ((array) $types as $type)
@@ -585,7 +585,7 @@ function act_admin_settings(){
               <th><?php _e('IP list', 'wp-activity') ?> : </th>
               <td>
                 <textarea class="large-text code" rows="6" name="act_blacklist"><?php echo $act_blacklist ?></textarea>
-                <br /><span class="act_info"><?php _e('One IP per line. Don\'t blacklist your own IP ! Examples: 192.168.10.103, 192.168.10.*, 192.168.10.[0-9]','wp-activity') ?></span>
+                <br /><span class="act_info"><?php _e('One IP per line. Don\'t blacklist your own IP ! Examples:','wp-activity') ?> 192.168.10.103, 192.168.10.*, 192.168.10.[0-9]</span>
               </td>
             </tr>
           </table>

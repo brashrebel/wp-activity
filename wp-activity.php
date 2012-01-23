@@ -2,13 +2,13 @@
 /*
     Plugin Name: WP-Activity
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
-    Description: Log and display users activity in backend and frontend of WordPress.
+    Description: Monitor and display blog members activity ; track and blacklist unwanted login attemps.
     Author: Dric
     Version: 1.7
     Author URI: http://www.driczone.net
 */
 
-/*  Copyright 2009-2011 Dric  (email : cedric@driczone.net)
+/*  Copyright 2009-2012 Dric  (email : cedric@driczone.net)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -162,7 +162,8 @@ function act_plugin_action_links($links)
 
 //we add actions to hooks to log their events
 if ($options_act['act_connect']){
-  add_action('wp_login', 'act_session');
+  add_action('wp_login', 'act_session', 10, 2);
+  add_action('auth_cookie_valid', 'act_session', 10, 2);
 }
 if ($options_act['act_profiles'] ){ 
   add_action('profile_update', 'act_profile_edit');
@@ -243,12 +244,11 @@ add_action('personal_options_update', 'act_profile_update');
 
 function act_session($userlogin){
   global $wpdb, $options_act;
-  $user = get_userdatabylogin($userlogin);
-  $user_ID = $user->ID;
+  //$user = get_userdatabylogin($userlogin);
+  $user_ID = $userlogin->ID;
   if (!get_usermeta($user_ID, 'act_private')){
     $act_time=date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$act_time."', '')");
-    //$act_url = parse_url(get_option('home'));
   }
 }
 
@@ -311,10 +311,8 @@ function act_blacklist(){
   		if (preg_match($act_bl_ip, $act_client_ip)) {
         $act_time=date("Y-m-d H:i:s", time());
 				$wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES(1, 'ACCESS_DENIED', '".$act_time."', '".$act_client_ip."')");
-        $wpdb->print_error();
-        echo "Die ! Diiiiiiiiie !"; 
-        //Header("HTTP/1.1 403 Forbidden");
-				//die('403 Forbidden');
+        Header("HTTP/1.1 403 Forbidden");
+				die('403 Forbidden');
   		}
     }
   }

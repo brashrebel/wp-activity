@@ -1,18 +1,18 @@
 === WP-Activity ===
 Contributors: Dric1107
 Donate link: http://www.driczone.net/blog
-Tags: stream, activity, community, multi-users, log, event, monitor, stats, blacklist, tracking, access deny
+Tags: stream, activity, community, multi-users, log, event, monitor, stats, blacklist, tracking, access, security, login
 Requires at least: 3.0
 Tested up to: 3.3.1
 Stable tag: 1.6.1
 
-Monitor and display registered users activity (logins, logon failures, new posts, new comments, etc.). You can also monitor unwanted login attemps.
+Monitor and display registered users activity (logins, logon failures, new posts, new comments, etc.). You can also monitor and blacklist unwanted login attemps.
 
 == Description ==
 
-This plugin logs registered users activity in your blog and displays it in frontend and backend.
+This plugin logs registered users activity in your blog and displays it in frontend and backend. It can also track and deny access by blacklisting to unwanted login attempts.
 
-- connections
+- logons
 - new comments
 - profile update
 - new post
@@ -30,9 +30,11 @@ If enabled, user who don't want to be listed in blog activity can hide its own a
 When a login failure occurs, the IP address is also logged.
 Users activity can be followed by RSS feed and can be exported in csv file (semicolon separation).
 
-Admin can follow the blog users activity with the stats module.
+Admin can follow the blog users activity within dates range with the stats module.
 
 To avoid spammers or hackers trying to steal accounts, you can blacklist their IP addresses. Be careful, I you blacklist your own IP you won't be able to login anymore !
+Blacklisted IP addresses get a 403 error when trying to logon, and the activity log displays an 'access denied' event.
+Keep in mind that this plugin is not security oriented. There are lots of plugins that specifically deal with [security](http://wordpress.org/extend/plugins/search.php?q=security).
 
 Translations :
 
@@ -53,7 +55,7 @@ I my plugin doesn't fit your needs, you can also try [ThreeWP Activity Monitor](
 1. Download the plugin and unzip,
 2. Upload the wp-activity folder to your wp-content/plugins folder,
 3. Activate the plugin through the Wordpress admin,
-4. Go to `Settings > Wp-Activity` and set options.
+4. Go to `Wp-Activity > Settings` for plugin options.
 5. Put `<?php act_stream() ?>` where you want the stream to be displayed, or use included widget.
 6. Use `[ACT_STREAM]` to display activity in a page or post. See FAQ section for parameters.
 7. If you renamed your wp-content directory and you want to use RSS feed, change `$wpcontentdir` var in wp-activity-feed.php and wp-activity-export.php
@@ -135,13 +137,13 @@ That's because the post_add event for this post id was removed from the wp-activ
 = I have a poor hosting, is your plugin a big fat resources consumer ? =
 I also have a poor hosting, so I try to keep my plugin as light as I can ; the admin scripts and css files are only loaded when needed.
 Performance tips :
-* Do not display gravatars on frontend.
-* If you don't use frontend login form, check the 'blacklist on wp-login.php only' option.
+* Use of Gravatars generate more sql queries and is slower to display.
+* If you don't use frontend login form, check the 'blacklist on wp-login.php only' option. If you want to blacklist an IP address on all your blog, use htaccess filtering instead.
 * Unckeck the events you don't want to monitor.
 
 = Do you really test your plugin before publishing new versions at the Wordpress Plugin Repository ? =
 
-Hum. I'm testing it on a single Wordpress installation, so it can't really be called "test". That's why there is often updates that just fix the previous ones... Sorry for that.
+Hum. I'm testing it on two Wordpress installations (local WAMP and online test site), so it can't be called extended tests. That's why there is often updates that just fix the previous ones... Sorry for that.
 
 
 == Screenshots ==
@@ -159,6 +161,7 @@ Hum. I'm testing it on a single Wordpress installation, so it can't really be ca
 * Admin and export functions are only loaded when needed (separate php files).
 * Tweaked Cron task activation.
 * Replaced a few translation strings, sorry for translaters.
+* Fixed Logon events who where only added when entering credentials since v1.6. Authentification with cookie ('remember me' option) will now generate a login event.
 * Fixed deletion of old activity (cron task).
 * Fixed csv file generation bug for IE.
 * Fixed missing datepicker js script when using wordpress prior to 3.3.
