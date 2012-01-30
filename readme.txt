@@ -22,6 +22,7 @@ This plugin logs registered users activity in your blog and displays it in front
 - accesses denied by IP blacklisting (displayed only in admin panel)
 
 Possible usages :
+
 - Monitor unwanted connexions attempts on your blog and block hackers IP.
 - Monitor the registered users activity on a multi-users blog.
 - Enhance your community blog by displaying to all users what other members have done.
@@ -137,6 +138,7 @@ That's because the post_add event for this post id was removed from the wp-activ
 = I have a poor hosting, is your plugin a big fat resources consumer ? =
 I also have a poor hosting, so I try to keep my plugin as light as I can ; the admin scripts and css files are only loaded when needed.
 Performance tips :
+
 * Use of Gravatars generate more sql queries and is slower to display.
 * If you don't use frontend login form, check the 'blacklist on wp-login.php only' option. If you want to blacklist an IP address on all your blog, use htaccess filtering instead.
 * Unckeck the events you don't want to monitor.
