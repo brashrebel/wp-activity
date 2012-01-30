@@ -22,15 +22,14 @@
 }
 .wp-activity_page_act_admin #tabs{
 	display: block;
-	background:#F1F1F1 none repeat scroll 0%;
-	font-size:14px;
-	overflow:hidden;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif;
 }
 
 .wp-activity_page_act_admin .ui-tabs-nav {
     list-style: none;
     margin: 0;
-    padding: 0 0 0 10px;
+    padding: 0;
+    border-bottom: 1px solid #CCCCCC;
 }
 .wp-activity_page_act_admin .ui-tabs-nav:after { /* clearing without presentational markup, IE gets extra treatment */
     display: block;
@@ -38,101 +37,60 @@
     content: " ";
 }
 .wp-activity_page_act_admin .ui-tabs-nav li {
-    float: left;
-    padding: 6px 5px;
     min-width: 84px; /* be nice to Opera */
-    margin: 2px 2px 0px 1px !important;
-	text-decoration: none;
-	list-style: none;
+    padding: 4px 10px 4px 10px;
+    text-decoration: none;
+	  list-style: none;
+    border-color: #DFDFDF #DFDFDF #FFFFFF;
+    border-style: solid;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-width: 1px 1px 0px;
+    display: inline-block;
+    margin: 0 0 -1px 4px;
 }
-.wp-activity_page_act_admin .ui-tabs-nav a, .wp-activity_page_act_admin .ui-tabs-nav a span {
-    display: block;
-    padding: 0 1px;
+.wp-activity_page_act_admin .ui-tabs-nav a, .wp-activity_page_act_admin .ui-tabs-nav a {
+    text-decoration: none;
+    font-size:18px;
+    font-weight: 200;
+    line-height: 22px;
 }
 
 .wp-activity_page_act_admin .ui-tabs-nav a {
-    margin: 1px 0 0; /* position: relative makes opacity fail for disabled tab in IE */
-    padding-left: 0;
-    color: #2583AD;
-    line-height: 1.2;
+    color: #AAAAAA;
     text-align: center;
     text-decoration: none;
     white-space: nowrap; /* required in IE 6 */    
     outline: 0; /* prevent dotted border in Firefox */
 }
 
-
-.wp-activity_page_act_admin .ui-tabs-selected a,
-.wp-activity_page_act_admin .ui-tabs-selected a:hover {
-	color:#FFFFFF !important;
-}
-
-.wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-selected a,
-.wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-selected a:hover  {
-    position: relative;
-    top: 1px;
-    z-index: 2;
-    margin-top: 0;
-}
-
 .wp-activity_page_act_admin .ui-tabs-nav li a:hover {
 	color:#D54E21;
 }
 
-.wp-activity_page_act_admin .ui-tabs-nav a span {
+.wp-activity_page_act_admin .ui-tabs-nav a {
     width: 64px; /* IE 6 treats width as min-width */
     min-width: 64px;
-    height: 18px; /* IE 6 treats height as min-height */
-    min-height: 18px;
     padding-top: 6px;
     padding-right: 0;
 }
-.wp-activity_page_act_admin *>.ui-tabs-nav a span { /* hide from IE 6 */
+.wp-activity_page_act_admin *>.ui-tabs-nav a{ /* hide from IE 6 */
     width: auto;
     height: auto;
 }
-.wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-selected a span {
-    padding-bottom: 1px;
+.wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-selected a{
+    color: #464646;
 }
-.wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-selected a, .wp-activity_page_act_admin .ui-tabs-nav a:hover, .wp-activity_page_act_admin .ui-tabs-nav a:focus, .wp-activity_page_act_admin .ui-tabs-nav a:active {
-    background-position: 100% -150px;
-}
-.wp-activity_page_act_admin .ui-tabs-nav a, .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-disabled a:hover, .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-disabled a:focus, .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-disabled a:active {
-    background-position: 100% -100px;
-}
-.wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-selected a span, .wp-activity_page_act_admin .ui-tabs-nav a:hover span, .wp-activity_page_act_admin .ui-tabs-nav a:focus span, .wp-activity_page_act_admin .ui-tabs-nav a:active span {
-    background-position: 0 -50px;
-}
-.wp-activity_page_act_admin .ui-tabs-nav a span, .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-disabled a:hover span, .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-disabled a:focus span, .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-disabled a:active span {
-    background-position: 0 0;
-}
-.wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-selected a:link, .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-selected a:visited, .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-disabled a:link, .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-disabled a:visited { /* @ Opera, use pseudo classes otherwise it confuses cursor... */
-    cursor: text;
-}
+
 .wp-activity_page_act_admin .ui-tabs-nav a:hover, .wp-activity_page_act_admin .ui-tabs-nav a:focus, .wp-activity_page_act_admin .ui-tabs-nav a:active,
 .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-unselect a:hover, .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-unselect a:focus, .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-unselect a:active { /* @ Opera, we need to be explicit again here now... */
     cursor: pointer;
 }
-.wp-activity_page_act_admin .ui-tabs-disabled {
-    opacity: .4;
-    filter: alpha(opacity=40);
-}
+
 .wp-activity_page_act_admin .ui-tabs-panel {
-    border-top: 1px solid #97a5b0 !important;
     padding: 1em 8px;
     background: #fff; /* declare background color for container to avoid distorted fonts in IE while fading */
-
-	/* overwrite wp-admin */
-	border:none !important;
-	height:100% !important;
-	margin:0pt 0pt 0pt 0px !important;
-	overflow:visible !important;
-}
-
-.wp-activity_page_act_admin .ui-tabs-panel a {
-	display:inline;
-}
-
+} 
 
 /* Additional IE specific bug fixes... */
 * html .wp-activity_page_act_admin .ui-tabs-nav { /* auto clear, @ IE 6 & IE 7 Quirks Mode */
@@ -143,17 +101,7 @@
 }
 
 .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-selected {
-	background: #6D6D6D url(../images/menu-bits.gif) repeat-x scroll left top;
-	border-color: #6D6D6D;
-	color: #FFFFFF;
-	text-shadow:0 -1px 0 #666666;
-
-	-moz-border-radius-topright: 6px;
-	-khtml-border-top-right-radius: 6px;
-	-webkit-border-top-right-radius: 6px;
-	border-top-right-radius: 6px;
-	-moz-border-radius-topleft: 6px;
-	-khtml-border-top-left-radius: 6px;
-	-webkit-border-top-left-radius: 6px;
-	border-top-left-radius: 6px;
+	border-color: #CCCCCC #CCCCCC;
+  border-bottom: 1px solid #FFF;
+  background-color: #FFF;
 }

@@ -164,6 +164,7 @@ function act_plugin_action_links($links)
 if ($options_act['act_connect']){
   add_action('wp_login', 'act_session', 10, 2);
   add_action('auth_cookie_valid', 'act_session', 10, 2);
+  add_action('wp_logout', 'act_reinit');
 }
 if ($options_act['act_profiles'] ){ 
   add_action('profile_update', 'act_profile_edit');
@@ -242,14 +243,17 @@ function act_profile_update(){
 }
 add_action('personal_options_update', 'act_profile_update');
 
-function act_session($userlogin){
+function act_session($arg='', $userlogin){
   global $wpdb, $options_act;
-  //$user = get_userdatabylogin($userlogin);
   $user_ID = $userlogin->ID;
-  if (!get_usermeta($user_ID, 'act_private')){
+  if (!get_usermeta($user_ID, 'act_private') and !$_COOKIE['act_logged']){
     $act_time=date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$act_time."', '')");
+    setcookie('act_logged',time());
   }
+}
+function act_reinit(){
+  if ($_COOKIE['act_logged']){ setcookie ("act_logged", "", time() - 3600);}
 }
 
 function act_profile_edit($act_user){

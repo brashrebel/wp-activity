@@ -4,7 +4,7 @@ Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor, stats, blacklist, tracking, access, security, login
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.6.1
+Stable tag: 1.7
 
 Monitor and display registered users activity (logins, logon failures, new posts, new comments, etc.). You can also monitor and blacklist unwanted login attemps.
 
@@ -160,6 +160,7 @@ Hum. I'm testing it on two Wordpress installations (local WAMP and online test s
 * Added dutch translation (Thx to Tom Vennekens).
 * Admin and export functions are only loaded when needed (separate php files).
 * Tweaked Cron task activation.
+* Changed the display of settings page to look more like 'standard' admin WP.
 * Replaced a few translation strings, sorry for translaters.
 * Fixed Logon events who where only added when entering credentials since v1.6. Authentification with cookie ('remember me' option) will now generate a login event.
 * Fixed deletion of old activity (cron task).

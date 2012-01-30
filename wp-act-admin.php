@@ -50,9 +50,9 @@ add_action('admin_menu', 'act_admin_menu');
 function act_stats_scripts(){
   global $wp_version;
   wp_enqueue_style('act_datepicker', WP_PLUGIN_URL .'/wp-activity/jquery.ui.datepicker.css', false, '2.5.0', 'screen');
-  wp_enqueue_script('flot', ACT_URL .'js/jquery.flot.min.js', 'jQuery');
+  wp_enqueue_script('flot', ACT_URL .'js/jquery.flot.min.js');
   if ( version_compare($wp_version, '3.3', '<') ){
-    wp_enqueue_script('act_datepicker', ACT_URL .'js/jquery.ui.datepicker.min.js', 'jQuery');
+    wp_enqueue_script('act_datepicker', ACT_URL .'js/jquery.ui.datepicker.min.js', array('jquery-ui-core'), false, true);
   }else{
     wp_enqueue_script('jquery-ui-datepicker');
   }
@@ -626,7 +626,7 @@ function act_admin_settings(){
     </div>
   <?php } ?>
     <br />
-    <h4><?php echo sprintf(__('WP-Activity is a plugin by <a href="http://www.driczone.net">Dric</a>. Version <strong>%s</strong>.', 'wp-activity'), $act_plugin_version ) ?></h4>
+    <h4 id="act_credits"><?php echo sprintf(__('WP-Activity is a plugin by <a href="http://www.driczone.net">Dric</a>. Version <strong>%s</strong>.', 'wp-activity'), $act_plugin_version ) ?></h4>
   </div>
   <?php
 }
@@ -664,6 +664,16 @@ function act_admin_stats(){
   }else{
     $act_filter = "CONNECT";
   }
+  switch ($options_act['act_date_format']){
+    case "dd/mm/yyyy":
+      $act_date_format_js = "dd/mm/yy";
+      break;
+    case "mm/dd/yyyy":
+      $act_date_format_js = "mm/dd/yy";
+      break;
+    default:
+      $act_date_format_js = "yy/mm/dd";
+  }
   $sql  = "SELECT * FROM ".$wpdb->prefix."activity WHERE act_date BETWEEN '".$act_date_start."' AND '".$act_date_end." 23:59:59' ORDER BY act_type ASC, act_date ASC"; //We need to set h:m:s as they are by default 00:00:00
   if ( $act_events = $wpdb->get_results( $sql)){
     $act_events_tab = array();
@@ -700,41 +710,44 @@ function act_admin_stats(){
     'LINK_ADD'      => __('Link(s) added', 'wp-activity')
     );
   echo '<script>
-jQuery(function($){
-$.datepicker.regional["'.WPLANG.'"] = {
-	closeText: "'.__('Close', 'wp-activity').'",
-	prevText: "'.__('&#x3c;Prev', 'wp-activity').'",
-	nextText: "'.__('Next&#x3e;', 'wp-activity').'",
-	currentText: "'.__('Current', 'wp-activity').'",
-	monthNames: ["'.__('January').'","'.__('February').'","'.__('March').'","'.__('April').'","'.__('May').'","'.__('June').'",
-	"'.__('July').'","'.__('August').'","'.__('September').'","'.__('October').'","'.__('November').'","'.__('December').'"],
-	monthNamesShort: ["'.__('Jan_January_abbreviation').'","'.__('Feb_February_abbreviation').'","'.__('Mar_March_abbreviation').'","'.__('Apr_April_abbreviation').'","'.__('May_May_abbreviation').'","'.__('Jun_June_abbreviation').'",
-	"'.__('Jul_July_abbreviation').'","'.__('Aug_August_abbreviation').'","'.__('Sep_September_abbreviation').'","'.__('Oct_October_abbreviation').'","'.__('Nov_November_abbreviation').'","'.__('Dec_December_abbreviation').'"],
-	dayNames: ["'.__('Sunday').'","'.__('Monday').'","'.__('Tuesday').'","'.__('Wednesday').'","'.__('Thursday').'","'.__('Friday').'","'.__('Saturday').'"],
-	dayNamesShort: ["'.__('Sun').'","'.__('Mon').'","'.__('Tue').'","'.__('Wed').'","'.__('Thu').'","'.__('Fri').'","'.__('Sat').'"],
-	dayNamesMin: ["'.__('S_Sunday_initial').'","'.__('M_Monday_initial').'","'.__('T_Tuesday_initial').'","'.__('W_Wednesday_initial').'","'.__('T_Thursday_initial').'","'.__('F_Friday_initial').'","'.__('S_Saturday_initial').'"],
-	firstDay: '.get_option('start_of_week').',
-	showMonthAfterYear: false,
-	yearSuffix: ""};
-$.datepicker.setDefaults($.datepicker.regional["'.WPLANG.'"]);
-});
-jQuery().ready(function ($) {
-	var dates = $( "#act_date_start, #act_date_end" ).datepicker({
-    dateFormat: "'.$act_date_format_js.'",
-    changeMonth: true,
-		numberOfMonths: 1,
-		onSelect: function( selectedDate ) {
-			var option = this.id == "act_date_start" ? "minDate" : "maxDate",
-				instance = $( this ).data( "datepicker" ),
-				date = $.datepicker.parseDate(
-					instance.settings.dateFormat ||
-					$.datepicker._defaults.dateFormat,
-					selectedDate, instance.settings );
-			dates.not( this ).datepicker( "option", option, date );
-		}
-	});
-});
-</script>';
+        jQuery().ready(function($){
+          $.datepicker.regional["'.WPLANG.'"] = {
+        	closeText: "'.__('Close', 'wp-activity').'",
+        	prevText: "'.__('&#x3c;Prev', 'wp-activity').'",
+        	nextText: "'.__('Next&#x3e;', 'wp-activity').'",
+        	currentText: "'.__('Current', 'wp-activity').'",
+        	monthNames: ["'.__('January').'","'.__('February').'","'.__('March').'","'.__('April').'","'.__('May').'","'.__('June').'",
+        	"'.__('July').'","'.__('August').'","'.__('September').'","'.__('October').'","'.__('November').'","'.__('December').'"],
+        	monthNamesShort: ["'.__('Jan_January_abbreviation').'","'.__('Feb_February_abbreviation').'","'.__('Mar_March_abbreviation').'","'.__('Apr_April_abbreviation').'","'.__('May_May_abbreviation').'","'.__('Jun_June_abbreviation').'",
+        	"'.__('Jul_July_abbreviation').'","'.__('Aug_August_abbreviation').'","'.__('Sep_September_abbreviation').'","'.__('Oct_October_abbreviation').'","'.__('Nov_November_abbreviation').'","'.__('Dec_December_abbreviation').'"],
+        	dayNames: ["'.__('Sunday').'","'.__('Monday').'","'.__('Tuesday').'","'.__('Wednesday').'","'.__('Thursday').'","'.__('Friday').'","'.__('Saturday').'"],
+        	dayNamesShort: ["'.__('Sun').'","'.__('Mon').'","'.__('Tue').'","'.__('Wed').'","'.__('Thu').'","'.__('Fri').'","'.__('Sat').'"],
+        	dayNamesMin: ["'.__('S_Sunday_initial').'","'.__('M_Monday_initial').'","'.__('T_Tuesday_initial').'","'.__('W_Wednesday_initial').'","'.__('T_Thursday_initial').'","'.__('F_Friday_initial').'","'.__('S_Saturday_initial').'"],
+        	firstDay: '.get_option('start_of_week').',
+        	showMonthAfterYear: false,
+        	yearSuffix: ""};
+          $.datepicker.setDefaults($.datepicker.regional["'.WPLANG.'"]);
+        });
+        </script>'; 
+ echo '<script>
+        jQuery().ready(function ($) {
+          var dates = $( "#act_date_start, #act_date_end" ).datepicker({
+            dateFormat: "'.$act_date_format_js.'",
+            changeMonth: true,
+            changeYear: true,
+        		numberOfMonths: 1,
+        		onSelect: function( selectedDate ) {
+        			var option = this.id == "act_date_start" ? "minDate" : "maxDate",
+        				instance = $( this ).data( "datepicker" ),
+        				date = $.datepicker.parseDate(
+        					instance.settings.dateFormat ||
+        					$.datepicker._defaults.dateFormat,
+        					selectedDate, instance.settings );
+        			dates.not( this ).datepicker( "option", option, date );
+        		}
+        	});
+        });
+      </script>';
   ?>
   
   <div class="wrap">
