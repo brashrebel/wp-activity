@@ -6,7 +6,7 @@ Requires at least: 3.0
 Tested up to: 3.3.1
 Stable tag: 1.7
 
-Monitor and display registered users activity (logins, logon failures, new posts, new comments, etc.). You can also monitor and blacklist unwanted login attemps.
+Monitor and display registered users activity (logins, logon failures, new posts, new comments, etc.). You can also prevent unwanted login attemps.
 
 == Description ==
 
