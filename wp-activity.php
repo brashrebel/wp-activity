@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Monitor and display blog members activity ; track and blacklist unwanted login attemps.
     Author: Dric
-    Version: 1.7
+    Version: 1.7.1beta
     Author URI: http://www.driczone.net
 */
 
@@ -27,7 +27,7 @@
 
 // let's initializing all vars
 
-$act_plugin_version = "1.7"; //Don't change this, of course.
+$act_plugin_version = "1.7.1beta"; //Don't change this, of course.
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get bugged by admin panel additions
@@ -243,10 +243,16 @@ function act_profile_update(){
 }
 add_action('personal_options_update', 'act_profile_update');
 
-function act_session($arg='', $userlogin){
+function act_session($arg='', $userlogin=''){
   global $wpdb, $options_act;
-  $user_ID = $userlogin->ID;
-  if (!get_usermeta($user_ID, 'act_private') and !$_COOKIE['act_logged']){
+  if ( is_a($userlogin, 'WP_User') ){
+    $user_ID = $userlogin->ID;
+  }elseif ( is_a(get_userdatabylogin($arg), 'WP_User')){
+    $user_ID = $arg->ID;
+  }else{
+    $user_ID = '';
+  }
+  if (!empty($user_ID) and !get_usermeta($user_ID, 'act_private') and !$_COOKIE['act_logged']){
     $act_time=date("Y-m-d H:i:s", time());
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$act_time."', '')");
     setcookie('act_logged',time());

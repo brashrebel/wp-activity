@@ -37,6 +37,8 @@ To avoid spammers or hackers trying to steal accounts, you can blacklist their I
 Blacklisted IP addresses get a 403 error when trying to logon, and the activity log displays an 'access denied' event.
 Keep in mind that this plugin is not security oriented. There are lots of plugins that specifically deal with [security](http://wordpress.org/extend/plugins/search.php?q=security).
 
+I would like to thank Tom V. for finding a lot of bugs each time I release a new version, and for helping me fix them.
+
 Translations :
 
 - French
@@ -156,6 +158,10 @@ Hum. I'm testing it on two Wordpress installations (local WAMP and online test s
 4. admin screen - stats
 
 == ChangeLog ==
+
+= 1.7.1 =
+* Fixed bug with logon log function when using a plugin that deals with login.
+* Fixed js bug where numbers were displayed as scientific notation with a comma, preventing stats chart to display.
 
 = 1.7 =
 * Added blacklisting of IP addresses.

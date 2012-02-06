@@ -798,6 +798,8 @@ function act_admin_stats(){
               <div id="act_cat_graphs" style="width:98%;height:250px;"></div>
               <script type="text/javascript">
                 jQuery().ready(function ($) {
+                  xmin = <?php echo strtotime($act_date_start)*1000 ?>;
+                  xmax = <?php echo strtotime($act_date_end." 23:59:59")*1000 ?>
                   var d1 = [
                   <?php
                     $act_disp = ''; 
@@ -822,8 +824,8 @@ function act_admin_stats(){
                             mode: "time",
                             minTickSize: [1, "day"],
                             tickLength: 0,
-                            min: <?php echo strtotime($act_date_start)*1000 ?>,
-                            max: <?php echo strtotime($act_date_end." 23:59:59")*1000 ?>
+                            min: xmin.toPrecision(13),
+                            max: xmax.toPrecision(13)
                         },
                         yaxis: { 
                             tickDecimals: 0,
