@@ -160,8 +160,8 @@ Hum. I'm testing it on two Wordpress installations (local WAMP and online test s
 == ChangeLog ==
 
 = 1.7.1 =
-* Fixed bug with the alternative logon log function.
-* Fixed js bug where numbers were possibly displayed as scientific notation with a comma, preventing stats chart to display.
+* Fixed bug with the logon log function.
+* Fixed php bug where numbers were possibly displayed as scientific notation with a comma, totally messing up js code and preventing stats chart to display.
 
 = 1.7 =
 * Added blacklisting of IP addresses.

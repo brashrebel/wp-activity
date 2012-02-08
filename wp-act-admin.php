@@ -798,14 +798,14 @@ function act_admin_stats(){
               <div id="act_cat_graphs" style="width:98%;height:250px;"></div>
               <script type="text/javascript">
                 jQuery().ready(function ($) {
-                  xmin = <?php echo strtotime($act_date_start)*1000 ?>;
-                  xmax = <?php echo strtotime($act_date_end." 23:59:59")*1000 ?>;
+                  xmin = <?php echo number_format(strtotime($act_date_start)*1000, 0, '.', '') ?>;
+                  xmax = <?php echo number_format(strtotime($act_date_end." 23:59:59")*1000, 0, '.', '') ?>;
                   var d1 = [
                   <?php
                     $act_disp = ''; 
                     foreach ($act_filter_tab as $act_date => $act_number){
                       $act_date = $act_date*1000;
-                      $act_disp .= "[".$act_date.", ".$act_number."],";
+                      $act_disp .= "[".number_format($act_date, 0, '.', '').", ".$act_number."],";
                     }
                     $act_disp = rtrim($act_disp, ",");
                     echo $act_disp;
