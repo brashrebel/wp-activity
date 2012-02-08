@@ -245,7 +245,7 @@ add_action('personal_options_update', 'act_profile_update');
 
 function act_session($arg='', $userlogin=''){
   global $wpdb, $options_act;
-  if ( is_a($userlogin, 'WP_User') ){
+  if ( is_numeric($userlogin->ID) ){
     $user_ID = $userlogin->ID;
   }else{
     $userlogin = get_userdatabylogin($arg);
