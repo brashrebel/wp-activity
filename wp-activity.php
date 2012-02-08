@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Monitor and display blog members activity ; track and blacklist unwanted login attemps.
     Author: Dric
-    Version: 1.7.1beta
+    Version: 1.7.1 beta 2
     Author URI: http://www.driczone.net
 */
 
@@ -27,7 +27,7 @@
 
 // let's initializing all vars
 
-$act_plugin_version = "1.7.1beta"; //Don't change this, of course.
+$act_plugin_version = "1.7.1 beta 2"; //Don't change this, of course.
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get bugged by admin panel additions
@@ -47,7 +47,7 @@ define('ACT_DIR', dirname(plugin_basename(__FILE__)));
 define('ACT_URL', WP_CONTENT_URL . '/plugins/' . ACT_DIR . '/');
 
 //Plugin can be translated, just put the .mo language file in the /lang directory
-load_plugin_textdomain('wp-activity', WP_PLUGIN_URL.'/wp-activity/lang/', ACT_DIR . '/lang/');
+load_plugin_textdomain('wp-activity', ACT_URL . 'lang/', ACT_DIR . '/lang/');
 
 add_action('init', 'act_process_post');
 
@@ -247,10 +247,13 @@ function act_session($arg='', $userlogin=''){
   global $wpdb, $options_act;
   if ( is_a($userlogin, 'WP_User') ){
     $user_ID = $userlogin->ID;
-  }elseif ( is_a(get_userdatabylogin($arg), 'WP_User')){
-    $user_ID = $arg->ID;
   }else{
-    $user_ID = '';
+    $userlogin = get_userdatabylogin($arg);
+    if ($userlogin->ID){
+      $user_ID = $userlogin->ID;
+    }else{
+      $user_ID = '';    
+    }
   }
   if (!empty($user_ID) and !get_usermeta($user_ID, 'act_private') and !$_COOKIE['act_logged']){
     $act_time=date("Y-m-d H:i:s", time());

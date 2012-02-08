@@ -49,7 +49,7 @@ add_action('admin_menu', 'act_admin_menu');
 
 function act_stats_scripts(){
   global $wp_version;
-  wp_enqueue_style('act_datepicker', WP_PLUGIN_URL .'/wp-activity/jquery.ui.datepicker.css', false, '2.5.0', 'screen');
+  wp_enqueue_style('act_datepicker', ACT_URL .'jquery.ui.datepicker.css', false, '2.5.0', 'screen');
   wp_enqueue_script('flot', ACT_URL .'js/jquery.flot.min.js');
   if ( version_compare($wp_version, '3.3', '<') ){
     wp_enqueue_script('act_datepicker', ACT_URL .'js/jquery.ui.datepicker.min.js', array('jquery-ui-core'), false, true);
@@ -60,7 +60,7 @@ function act_stats_scripts(){
 
 function act_admin_scripts(){
   wp_enqueue_script('jquery-ui-tabs');
-  wp_enqueue_style('act_tabs', WP_PLUGIN_URL .'/wp-activity/jquery.ui.tabs.css', false, '2.5.0', 'screen');
+  wp_enqueue_style('act_tabs', ACT_URL .'jquery.ui.tabs.css', false, '2.5.0', 'screen');
 }
 
 //pagination function
@@ -799,7 +799,7 @@ function act_admin_stats(){
               <script type="text/javascript">
                 jQuery().ready(function ($) {
                   xmin = <?php echo strtotime($act_date_start)*1000 ?>;
-                  xmax = <?php echo strtotime($act_date_end." 23:59:59")*1000 ?>
+                  xmax = <?php echo strtotime($act_date_end." 23:59:59")*1000 ?>;
                   var d1 = [
                   <?php
                     $act_disp = ''; 
@@ -824,8 +824,8 @@ function act_admin_stats(){
                             mode: "time",
                             minTickSize: [1, "day"],
                             tickLength: 0,
-                            min: xmin.toPrecision(13),
-                            max: xmax.toPrecision(13)
+                            min: xmin,
+                            max: xmax
                         },
                         yaxis: { 
                             tickDecimals: 0,
