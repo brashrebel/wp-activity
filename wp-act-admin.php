@@ -48,8 +48,11 @@ function act_admin_menu(){
 add_action('admin_menu', 'act_admin_menu');
 
 function act_stats_scripts(){
-  global $wp_version;
+  global $wp_version, $is_IE;
   wp_enqueue_style('act_datepicker', ACT_URL .'jquery.ui.datepicker.css', false, '2.5.0', 'screen');
+  if ($is_IE){
+    wp_enqueue_script('excanvas', ACT_URL .'js/excanvas.min.js');
+  } 
   wp_enqueue_script('flot', ACT_URL .'js/jquery.flot.min.js');
   if ( version_compare($wp_version, '3.3', '<') ){
     wp_enqueue_script('act_datepicker', ACT_URL .'js/jquery.ui.datepicker.min.js', array('jquery-ui-core'), false, true);
