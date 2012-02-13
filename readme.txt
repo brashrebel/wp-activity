@@ -4,7 +4,7 @@ Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor, stats, blacklist, tracking, access, security, login
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.7
+Stable tag: 1.7.1
 
 Monitor and display registered users activity (logins, logon failures, new posts, new comments, etc.). You can also prevent unwanted login attemps.
 
