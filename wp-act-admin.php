@@ -169,7 +169,7 @@ function act_admin_activity(){
   ?>
   <div class="wrap">
   <div id="act_admin_icon" class="icon32"></div>
-  <h2>WP-Activity Log <?php if($options_act['act_feed_display']){ ?><a href="<?php echo WP_PLUGIN_URL ?>/wp-activity/wp-activity-feed.php" title="<?php echo sprintf(__('%s activity RSS Feed', 'wp-activity'),get_bloginfo('name')) ?>"><img src="<?php echo WP_PLUGIN_URL ?>/wp-activity/img/rss.png" alt="" /></a><?php } ?></h2>
+  <h2>WP-Activity Log <?php echo act_feed_link(); ?></h2>
   <?php
   if ( isset($_GET['act_list_action']) && isset($_GET['act_check']) && check_admin_referer('wp-activity-list', 'act_filter')) {
   	$doaction = $_GET['act_list_action'];
@@ -180,23 +180,24 @@ function act_admin_activity(){
       }
   	}
   }
-  $act_args = $act_sqlorderby_sec = '';
+  $act_args = $sqlfilter = '';
   if (isset($_GET['act_type_filter'])){
     $act_type_filter = esc_html($_GET['act_type_filter']);
     $act_user_sel = esc_html($_GET['act_user_sel']);
     if ($act_user_sel <> 'all' and !empty($act_user_sel)){
-      $act_user_sql_filter = 'AND users.id = '.$act_user_sel.' AND act_type <> "LOGIN_FAIL" ';
+      $sql_username = get_userdata($act_user_sel);
+      $sqlfilter .= ' AND u.id = '.$act_user_sel.' AND act_type NOT IN ("LOGIN_FAIL", "ACCESS_DENIED")';
       $act_args .= '&act_user_sel='.$act_user_sel;
-    }else{
-      $act_user_sql_filter = '';
     }
     if ($act_type_filter <> 'all' and !empty($act_type_filter)){
-      $sqlfilter = 'AND act_type = "'.$act_type_filter.'"';
+      $sqlfilter .= 'AND act_type = "'.$act_type_filter.'"';
     }
     $act_args .= '&act_type_filter='.$act_type_filter;
-  }else{
-    $sqlfilter = '';
+    if ($act_type_filter == 'LOGIN_FAIL' or $act_type_filter == 'all'){
+      $sqlfilter .= ') UNION ALL (SELECT null as display_name, user_id as id, act_type, act_date, act_params FROM '.$wpdb->prefix.'activity WHERE act_type = "LOGIN_FAIL" AND SUBSTRING_INDEX(act_params, "###", 1) = "'.$sql_username->display_name.'"';
+    }
   }
+  $sqlfilter .= ')';
   if (isset($_GET['act_order_by'])){
     $act_order_by = esc_html($_GET['act_order_by']);
     $act_args .= '&act_order_by='.$act_order_by;
@@ -210,19 +211,14 @@ function act_admin_activity(){
 
   switch ($act_order_by) {
   	case 'order_user' :
-  		$sqlorderby = 'display_name';
-  		$sqlasc = 'ASC';
-      $act_sqlorderby_sec = ', act_date DESC';
+  		$sqlorderby = 'display_name ASC, act_date DESC';
   		break;
   	case 'order_type' :
-  		$sqlorderby = 'act_type';
-  		$sqlasc = 'ASC';
-      $act_sqlorderby_sec = ', act_date DESC';
+  		$sqlorderby = 'act_type ASC, act_date DESC';
   		break;
   	case 'order_date' :
   	default :
-  		$sqlorderby = 'act_date';
-  		$sqlasc = 'DESC';
+  		$sqlorderby = 'act_date DESC';
   		break;
   }
   ?>
@@ -234,11 +230,11 @@ function act_admin_activity(){
         $act_page = 1;
       }
     ?>
-    <h2><?php _e("Recent Activity", 'wp-activity'); ?> <?php if($act_feed_display){ ?><a href="<?php echo WP_PLUGIN_URL ?>/wp-activity/wp-activity-feed.php" title="<?php echo sprintf(__('%s activity RSS Feed', 'wp-activity'),get_bloginfo('name')) ?>"><img src="<?php echo WP_PLUGIN_URL ?>/wp-activity/img/rss.png" alt="" /></a><?php } ?></h2>
+    <h2><?php _e("Recent Activity", 'wp-activity'); ?></h2>
     <?php
       $act_start = ($act_page - 1)*$act_list_limit;
-      $act_recent_sql  = "SELECT * FROM ".$wpdb->prefix."activity AS activity, ".$wpdb->users." AS users WHERE activity.user_id = users.id ".$sqlfilter." ".$act_user_sql_filter."ORDER BY ".$sqlorderby." ".$sqlasc." ".$act_sqlorderby_sec; //." LIMIT ".$act_start.",".$act_list_limit;
-      if ( $logins = $wpdb->get_results($wpdb->prepare($act_recent_sql)) or !empty($act_user_sql_filter) ){
+      $act_recent_sql  = "(SELECT u.display_name as display_name, u.id as id, act_type, act_date, act_params FROM ".$wpdb->prefix."activity AS a, ".$wpdb->users." AS u WHERE a.user_id = u.id ".$sqlfilter." ORDER BY ".$sqlorderby;
+      if ( $logins = $wpdb->get_results($wpdb->prepare($act_recent_sql)) or !empty($sqlfilter) ){
         $act_count = count($logins);
         ?>
         <form id="act-filter" action="" method="get">
@@ -412,6 +408,8 @@ function act_admin_settings(){
     $options_act['act_blacklist_on']= $_POST['act_blacklist_on'];
     $options_act['act_bl_wplog']= $_POST['act_bl_wplog'];
     $options_act['act_blacklist']= $_POST['act_blacklist'];
+    $options_act['act_auto_bl_n'] = $_POST['act_auto_bl_n'];
+    $options_act['act_auto_bl'] = $_POST['act_auto_bl'];
     $options_act['act_version']=$act_plugin_version;
     if (update_option('act_settings', $options_act)){
       echo '<div id="message" class="updated fade"><p><strong>'.__('Options saved.').'</strong></p></div>';
@@ -533,7 +531,7 @@ function act_admin_settings(){
               <br /><span class="act_info"><?php echo sprintf(__('There is currently %s rows in database.','wp-activity'), $act_count); ?></span>
               </td>
             </tr><tr>
-              <th><?php _e('Display activity RSS feed : ', 'wp-activity') ?> <?php if($act_feed_display){ ?><a href="<?php echo WP_PLUGIN_URL ?>/wp-activity/wp-activity-feed.php" title="<?php echo sprintf(__('%s activity RSS Feed', 'wp-activity'),get_bloginfo('name')) ?>"><img src="<?php echo WP_PLUGIN_URL ?>/wp-activity/img/rss.png" alt="" /></a><?php } ?></th><td><input type="checkbox" <?php if($act_feed_display){echo 'checked="checked"';} ?> name="act_feed_display" /></td>
+              <th><?php _e('Display activity RSS feed : ', 'wp-activity') ?> <?php echo act_feed_link(); ?></th><td><input type="checkbox" <?php if($act_feed_display){echo 'checked="checked"';} ?> name="act_feed_display" /></td>
             </tr><tr>
             </tr><tr>
               <th><?php _e('Log login failures : ', 'wp-activity') ?></th>
@@ -582,6 +580,23 @@ function act_admin_settings(){
               <td>
                 <input type="checkbox" <?php if($act_bl_wplog){echo 'checked="checked"';} ?> name="act_bl_wplog" />
                 <br /><span class="act_info"><?php _e('Check this option if you don\'t have any frontend login form. For more blog performance, this option should be enabled when possible.','wp-activity') ?></span>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <?php _e('Auto-Blacklist IP after ', 'wp-activity') ?>
+                <select name="act_auto_bl_n">
+                  <?php
+                    for ($i=3;$i<11;$i++){
+                      ?><option <?php if($act_auto_bl_n == $i) {echo"selected='selected'";}?> value ="<?php echo $i; ?>"><?php echo $i;?></option><?php
+                    }
+                  ?>
+                </select>&nbsp;
+                <?php _e('failed logon attempts', 'wp-activity') ?> :
+              </th>
+              <td>
+                <input type="checkbox" <?php if($act_auto_bl){echo 'checked="checked"';} ?> name="act_auto_bl" />
+                <br /><span class="act_info"><?php _e('If checked, IP addresses will be automatically added to the blacklist after x failed logon attempts during the last 48h.','wp-activity') ?></span>
               </td>
             </tr>
             <tr>

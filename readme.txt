@@ -42,7 +42,7 @@ Thanks to [Venntom](http://wordpress.org/support/profile/venntom) for finding a 
 Translations :
 
 - French
-- Italian (Partial translation - Thx to Luca)
+- Italian (Thx to Luca - partially translated up to v1.2)
 - Turkish (Thx to Can KAYA - translated up to v1.2)
 - Spanish (Thx to Cscean - translated up to v1.3)
 - Dutch (Thx to Tom - translated up to 1.6.1)
@@ -55,13 +55,22 @@ I my plugin doesn't fit your needs, you can also try [ThreeWP Activity Monitor](
 
 == Installation ==
 
+Manual :
+
 1. Download the plugin and unzip,
 2. Upload the wp-activity folder to your wp-content/plugins folder,
 3. Activate the plugin through the Wordpress admin,
+
+Automatic :
+1. In your Admin Panel, go to `Plugins > Add New`
+2. Search for "__WP-Activity__"
+3. Click Install Now under "__WP-Activity__"
+
+Setting plugin :
+
 4. Go to `Wp-Activity > Settings` for plugin options.
 5. Put `<?php act_stream() ?>` where you want the stream to be displayed, or use included widget.
 6. Use `[ACT_STREAM]` to display activity in a page or post. See FAQ section for parameters.
-7. If you renamed your wp-content directory and you want to use RSS feed, change `$wpcontentdir` var in wp-activity-feed.php and wp-activity-export.php
 
 == Frequently Asked Questions ==
 
@@ -130,19 +139,16 @@ You have to modify the `$act_list_limit` var line 31 of wp-activity.php.
 
 You have to modify the `$no_admin_mess` var line 33 of wp-activity.php and set it to **true**.
 
-= RSS feed is not working =
-
-If you renamed your wp-content directory, you have to change `$wpcontentdir` var in ../plugins/wp-activity/wp-activity-feed.php.
-
 = I edited a post but wp-activity logged POST_ADD instead of POST_EDIT =
 That's because the post_add event for this post id was removed from the wp-activity database table. Wordpress doesn't have separate actions for adding or editing posts, so the plugin checks in it's table if there was a post creation with the same ID. If found, the plugin logs a post edition. But as the plugin clears old logs (see "Rows limit in database" setting), the post creation event can be previously deleted when the post edition occurs.
 
 = I have a poor hosting, is your plugin a big fat resources consumer ? =
 I also have a poor hosting, so I try to keep my plugin as light as I can ; the admin scripts and css files are only loaded when needed.
-Performance tips :
+Best-Performance tips :
 
-* Use of Gravatars generate more sql queries and is slower to display.
+* Don't use Gravatars as they generate more sql queries and are slower to display.
 * If you don't use frontend login form, check the 'blacklist on wp-login.php only' option. If you want to blacklist an IP address on all your blog, use htaccess filtering instead.
+* Don't activate activity RSS feed.
 * Unckeck the events you don't want to monitor.
 
 = Do you really test your plugin before publishing new versions at the Wordpress Plugin Repository ? =
@@ -158,6 +164,13 @@ Hum. I'm testing it on two Wordpress installations (local WAMP and online test s
 4. admin screen - stats
 
 == ChangeLog ==
+
+= 1.8 =
+* Added auto-blacklisting of IP addresses after a configurable amount of failed logon attempts in the last 2 days.
+* User filter and LOGIN_FAILED filter combination is now possible.
+* Changed Activity RSS feed with better integration with Wordpress RSS Feeds and permalinks.
+* Fixed Activity RSS feed missing user names.
+* Fixed daily cron task.
 
 = 1.7.1 =
 * Fixed bug with the logon log function.
