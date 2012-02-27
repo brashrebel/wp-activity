@@ -30,8 +30,7 @@
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get bugged by admin panel additions
-$act_plugin = get_plugin_data(__FILE__, false, false);
-$act_plugin_version = $act_plugin['Version'];
+$act_plugin_version = "1.8 beta 2";
 
 $options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
