@@ -166,9 +166,11 @@ Hum. I'm testing it on two Wordpress installations (local WAMP and online test s
 == ChangeLog ==
 
 = 1.8 =
-* Added auto-blacklisting of IP addresses after a configurable amount of failed logon attempts in the last 2 days.
+* Added auto-blacklisting of IP addresses after a configurable number of failed logon attempts in the last 2 days.
+* Added compatibility with Better-WP-Security plugin (false failed logon events when log in).
+* Added logging of IP Address in successful login events.
 * User filter and LOGIN_FAILED filter combination is now possible.
-* Changed Activity RSS feed with better integration with Wordpress RSS Feeds and permalinks.
+* Changed Activity RSS feed for better integration with Wordpress RSS Feeds and permalinks.
 * Fixed Activity RSS feed missing user names.
 * Fixed daily cron task.
 

@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Monitor and display blog members activity ; track and blacklist unwanted login attemps.
     Author: Dric
-    Version: 1.8 beta
+    Version: 1.8 beta 2
     Author URI: http://www.driczone.net
 */
 
@@ -27,10 +27,11 @@
 
 // let's initializing all vars
 
-$act_plugin_version = "1.8 beta"; //Don't change this, of course.
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get bugged by admin panel additions
+$act_plugin = get_plugin_data(__FILE__, false, false);
+$act_plugin_version = $act_plugin['Version'];
 
 $options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
@@ -49,6 +50,7 @@ define('ACT_URL', WP_CONTENT_URL . '/plugins/' . ACT_DIR . '/');
 //Plugin can be translated, just put the .mo language file in the /lang directory
 load_plugin_textdomain('wp-activity', ACT_URL . 'lang/', ACT_DIR . '/lang/');
 
+
 add_action('init', 'act_init_process');
 
 function act_init_process() {
@@ -61,8 +63,8 @@ function act_init_process() {
     add_feed('act-feed', 'act_feed');
   }
   if (isset($_POST['act_export'])) {
-      require_once(WP_PLUGIN_DIR.'/'.ACT_DIR.'/wp-act-export.php');
-      act_export();
+    require_once(WP_PLUGIN_DIR.'/'.ACT_DIR.'/wp-act-export.php');
+    act_export();
   }
 }
 
@@ -72,64 +74,64 @@ function act_desactive() {
 }
 
 function act_install() {
-    global $wpdb, $act_plugin_version, $options_act;
-    wp_schedule_event(time(), 'daily', 'act_cron_daily');
-    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-    $table = $wpdb->prefix."activity";
-    $act_structure = "CREATE TABLE `".$table."` (
-                     `id` int(9) NOT NULL auto_increment,
-                     `user_id` bigint(20) NOT NULL,
-                     `act_type` varchar(20) NOT NULL,
-                     `act_date` datetime default NULL,
-                     `act_params` text,
-                     UNIQUE KEY `id` (`id`),
-                     KEY `user_id` (`user_id`),
-                     KEY `act_date` (`act_date`)
-                     );";
-    dbDelta($act_structure);
-    $new_options_act['act_prune'] = '5000';
-    $new_options_act['act_feed_display'] = false;
-    $new_options_act['act_date_format'] = 'yyyy/mm/dd';
-    $new_options_act['act_date_relative']= true;
-    $new_options_act['act_connect']= true;
-    $new_options_act['act_profiles']= true;
-    $new_options_act['act_posts']= true;
-    $new_options_act['act_comments']= true;
-    $new_options_act['act_links']= true;
-    $new_options_act['act_feed_connect']= false;
-    $new_options_act['act_feed_profiles']= true;
-    $new_options_act['act_feed_posts']= true;
-    $new_options_act['act_feed_comments']= true;
-    $new_options_act['act_feed_links']= true;
-    $new_options_act['act_icons']= 'g';
-    $new_options_act['act_old']= true;
-    $new_options_act['act_prevent_priv']= false;
-    $new_options_act['act_log_failures']= false;
-    $new_options_act['act_author_path']= 'author';
-    $new_options_act['act_blacklist_on']= false;
-    $new_options_act['act_auto_bl']= false;
-    $new_options_act['act_auto_bl_n']= '5';
-    $new_options_act['act_bl_wplog']= true;
-    $new_options_act['act_version'] = $act_plugin_version;
-    add_option('act_settings', $new_options_act);
+  global $wpdb, $act_plugin_version, $options_act;
+  wp_schedule_event(time(), 'daily', 'act_cron_daily');
+  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+  $table = $wpdb->prefix."activity";
+  $act_structure = "CREATE TABLE `".$table."` (
+                   `id` int(9) NOT NULL auto_increment,
+                   `user_id` bigint(20) NOT NULL,
+                   `act_type` varchar(20) NOT NULL,
+                   `act_date` datetime default NULL,
+                   `act_params` text,
+                   UNIQUE KEY `id` (`id`),
+                   KEY `user_id` (`user_id`),
+                   KEY `act_date` (`act_date`)
+                   );";
+  dbDelta($act_structure);
+  $new_options_act['act_prune'] = '5000';
+  $new_options_act['act_feed_display'] = false;
+  $new_options_act['act_date_format'] = 'yyyy/mm/dd';
+  $new_options_act['act_date_relative']= true;
+  $new_options_act['act_connect']= true;
+  $new_options_act['act_profiles']= true;
+  $new_options_act['act_posts']= true;
+  $new_options_act['act_comments']= true;
+  $new_options_act['act_links']= true;
+  $new_options_act['act_feed_connect']= false;
+  $new_options_act['act_feed_profiles']= true;
+  $new_options_act['act_feed_posts']= true;
+  $new_options_act['act_feed_comments']= true;
+  $new_options_act['act_feed_links']= true;
+  $new_options_act['act_icons']= 'g';
+  $new_options_act['act_old']= true;
+  $new_options_act['act_prevent_priv']= false;
+  $new_options_act['act_log_failures']= false;
+  $new_options_act['act_author_path']= 'author';
+  $new_options_act['act_blacklist_on']= false;
+  $new_options_act['act_auto_bl']= false;
+  $new_options_act['act_auto_bl_n']= '5';
+  $new_options_act['act_bl_wplog']= true;
+  $new_options_act['act_version'] = $act_plugin_version;
+  add_option('act_settings', $new_options_act);
 
-    if ($options_act['act_version'] != $act_plugin_version) {
-        act_desactive();
-        if (version_compare($options_act['act_version'], '1.4', '<')) {
-            $options_act['act_author_path']= 'author';
-        }
-        if (version_compare($options_act['act_version'], '1.7', '<')) {
-            $options_act['act_blacklist_on']= false;
-            $options_act['act_bl_wplog']= true;
-        }
-        if (version_compare($options_act['act_version'], '1.8', '<')) {
-            $options_act['act_auto_bl']= false;
-            $options_act['act_auto_bl_n']= '5';
-        }
-        $options_act['act_version'] = $act_plugin_version;
-        update_option('act_settings', $options_act);
-    }
-    flush_rewrite_rules();
+  if ($options_act['act_version'] != $act_plugin_version) {
+      act_desactive();
+      if (version_compare($options_act['act_version'], '1.4', '<')) {
+          $options_act['act_author_path']= 'author';
+      }
+      if (version_compare($options_act['act_version'], '1.7', '<')) {
+          $options_act['act_blacklist_on']= false;
+          $options_act['act_bl_wplog']= true;
+      }
+      if (version_compare($options_act['act_version'], '1.8', '<')) {
+          $options_act['act_auto_bl']= false;
+          $options_act['act_auto_bl_n']= '5';
+      }
+      $options_act['act_version'] = $act_plugin_version;
+      update_option('act_settings', $options_act);
+  }
+  flush_rewrite_rules();
 }
 
 register_activation_hook( __FILE__, 'act_install' );
@@ -137,110 +139,121 @@ register_deactivation_hook(__FILE__, 'act_desactive');
 add_action('act_cron_daily', 'act_cron');
 
 function act_cron($prune_limit='') {
-    global $wpdb, $options_act, $plugin_page;
-    if ($prune_limit == '') {
-        $prune_limit = $options_act['act_prune'];
+  global $wpdb, $options_act, $plugin_page;
+  if ($prune_limit == '') {
+    $prune_limit = $options_act['act_prune'];
+  } else {
+    $ret = true;
+  }
+  $act_count = $wpdb->get_var("SELECT count(ID) FROM ".$wpdb->prefix."activity");
+  $act_delete = $act_count - $prune_limit;
+  if ($act_delete > 0) {
+    if ($ret == true) {
+      if ($wpdb->query("DELETE FROM ".$wpdb->prefix."activity ORDER BY id ASC LIMIT ".$act_delete)) {
+          return true;
+      } else {
+          return false;
+      }
     } else {
-        $ret = true;
+      $wpdb->query("DELETE FROM ".$wpdb->prefix."activity ORDER BY id ASC LIMIT ".$act_delete);
     }
-    $act_count = $wpdb->get_var("SELECT count(ID) FROM ".$wpdb->prefix."activity");
-    $act_delete = $act_count - $prune_limit;
-    if ($act_delete > 0) {
-        if ($ret == true) {
-            if ($wpdb->query("DELETE FROM ".$wpdb->prefix."activity ORDER BY id ASC LIMIT ".$act_delete)) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            $wpdb->query("DELETE FROM ".$wpdb->prefix."activity ORDER BY id ASC LIMIT ".$act_delete);
-        }
-    }
+  }
 }
 
 add_filter("plugin_action_links_wp-activity/wp-activity.php", 'act_plugin_action_links');
 function act_plugin_action_links($links) {
-    $settings_link = '<a href="options-general.php?page=act_admin">' . __( 'Settings' ) . '</a>';
-    $uninstall_link = '<a href="options-general.php?page=act_admin#act_reset">' . __( 'Uninstall' ) . '</a>';
-    array_unshift($links, $settings_link, $uninstall_link);
-    return $links;
+  $settings_link = '<a href="options-general.php?page=act_admin">' . __( 'Settings' ) . '</a>';
+  $uninstall_link = '<a href="options-general.php?page=act_admin#act_reset">' . __( 'Uninstall' ) . '</a>';
+  array_unshift($links, $settings_link, $uninstall_link);
+  return $links;
 }
 
 //we add actions to hooks to log their events
 if ($options_act['act_connect']) {
-    add_action('wp_login', 'act_session', 10, 2);
-    add_action('auth_cookie_valid', 'act_session', 10, 2);
-    add_action('wp_logout', 'act_reinit');
+  add_action('wp_login', 'act_session', 10, 2);
+  add_action('auth_cookie_valid', 'act_session', 10, 2);
+  add_action('wp_logout', 'act_reinit');
 }
 if ($options_act['act_profiles'] ) {
-    add_action('profile_update', 'act_profile_edit');
+  add_action('profile_update', 'act_profile_edit');
 }
 if ($options_act['act_posts']) {
-    add_action('publish_post', 'act_post_add');
+  add_action('publish_post', 'act_post_add');
 }
 if ($options_act['act_comments']) {
-    add_action('comment_post', 'act_comment_add');
+  add_action('comment_post', 'act_comment_add');
 }
 if ($options_act['act_links']) {
-    add_action('add_link', 'act_link_add');
+  add_action('add_link', 'act_link_add');
 }
 if ($options_act['act_log_failures'] ) {
-    add_action('wp_login_failed', 'act_login_failed');
+  add_action('wp_login_failed', 'act_login_failed');
 }
 
 function act_header() {
-    $altcss = TEMPLATEPATH.'/wp-activity.css';
-    echo '<link type="text/css" rel="stylesheet" href="';
-    if (@file_exists($altcss)) {
-        echo get_bloginfo('stylesheet_directory').'/';
-    } else {
-        echo ACT_URL;
-    }
-    echo 'wp-activity.css" />';
+  $altcss = TEMPLATEPATH.'/wp-activity.css';
+  echo '<link type="text/css" rel="stylesheet" href="';
+  if (@file_exists($altcss)) {
+      echo get_bloginfo('stylesheet_directory').'/';
+  } else {
+      echo ACT_URL;
+  }
+  echo 'wp-activity.css" />';
 }
 add_action('wp_head', 'act_header');
 
 function act_profile_option() {
-    global $wpdb, $user_ID, $options_act;
-    $act_private = get_user_meta($user_ID, 'act_private');
-    ?>
-    <h3><?php _e('Activity events', 'wp-activity');
-    ?></h3>
-    <table>
-    <tr>
-    <th><?php _e('Hide my activity :', 'wp-activity');
-    ?></th>
-    <td><input type="checkbox" id="act_private" name="act_private" <?php if ($act_private) {
-        echo 'checked="checked"';
-    }?> value="true" /> <?php _e('If selected, this option makes you become invisible in activity events.', 'wp-activity');
-    ?></td>
-    </tr>
-    </table>
-    <?php
+  global $wpdb, $user_ID, $options_act;
+  $act_private = get_user_meta($user_ID, 'act_private');
+  ?>
+  <h3><?php _e('Activity events', 'wp-activity');
+  ?></h3>
+  <table>
+  <tr>
+  <th><?php _e('Hide my activity :', 'wp-activity');
+  ?></th>
+  <td><input type="checkbox" id="act_private" name="act_private" <?php if ($act_private) {
+      echo 'checked="checked"';
+  }?> value="true" /> <?php _e('If selected, this option makes you become invisible in activity events.', 'wp-activity');
+  ?></td>
+  </tr>
+  </table>
+  <?php
 }
 if (!$options_act['act_prevent_priv']) {
-    add_action('show_user_profile', 'act_profile_option');
+  add_action('show_user_profile', 'act_profile_option');
 }
 
 function act_real_ip() {
-    if (!empty($_SERVER['HTTP_CLIENT_IP'])) { //check ip from share internet
-        $ip=$_SERVER['HTTP_CLIENT_IP'];
-    }
-    elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) { //to check ip is pass from proxy
-        $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
-    }
-    else {
-        $ip=$_SERVER['REMOTE_ADDR'];
-    }
-    return $ip;
+  if (!empty($_SERVER['HTTP_CLIENT_IP'])) { //check ip from share internet
+      $ip=$_SERVER['HTTP_CLIENT_IP'];
+  }
+  elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) { //to check ip is pass from proxy
+      $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
+  }
+  else {
+      $ip=$_SERVER['REMOTE_ADDR'];
+  }
+  return $ip;
 }
 
 function act_login_failed($act_user='') {
-    global $wpdb, $options_act;
-    if ($act_user) {
-      $user_ID = 1; //event has to be linked to a wp user.
-      $act_time=date("Y-m-d H:i:s", time());
-      $ip = act_real_ip();
+  global $wpdb, $options_act;
+  if ($act_user) {
+    $user_ID = 1; //event has to be linked to a wp user.
+    $no_add = false;
+    $act_time=date("Y-m-d H:i:s", time());
+    $ip = act_real_ip();
+    $bwps = unserialize(get_option("BWPS_options")); //Compatibility check for Better-WP-Security Plugin that do wp_login_failed action hook even if login is successful...
+    if ($bwps['ll_enable'] == 1){
+      $sql = "SELECT user_id FROM ".$wpdb->prefix."activity WHERE act_type = 'CONNECT' AND act_date <= DATE_SUB(NOW(), INTERVAL 1 MINUTE)";
+      $act_prec_id = $wpdb->get_var($sql);
+      $act_prec = get_userdata($act_prec_id);
+      if ($act_user == $act_prec->display_name){
+        $no_add = true;
+      }
+    }
+    if (!$no_add){
       $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'LOGIN_FAIL', '".$act_time."', '".$act_user."###".$ip."')");
       if ($options_act['act_auto_bl'] and $options_act['act_blacklist_on']){
         $act_count_attempts = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."activity WHERE SUBSTRING_INDEX(act_params, '###', -1) = '".$ip."' AND act_date <= DATE_SUB(NOW(), INTERVAL 2 DAY)");
@@ -260,36 +273,38 @@ function act_login_failed($act_user='') {
         }
       }
     }
+  }
 }
 
 function act_profile_update() {
-    global $user_ID, $_POST;
-    update_usermeta($user_ID,'act_private',isset($_POST['act_private']) ? true : false);
+  global $user_ID, $_POST;
+  update_usermeta($user_ID,'act_private',isset($_POST['act_private']) ? true : false);
 }
 add_action('personal_options_update', 'act_profile_update');
 
 function act_session($arg='', $userlogin='') {
-    global $wpdb, $options_act;
-    if ( is_numeric($userlogin->ID) ) {
-        $user_ID = $userlogin->ID;
-    } else {
-        $userlogin = get_userdatabylogin($arg);
-        if ($userlogin->ID) {
-            $user_ID = $userlogin->ID;
-        } else {
-            $user_ID = '';
-        }
-    }
-    if (!empty($user_ID) and !get_usermeta($user_ID, 'act_private') and !$_COOKIE['act_logged']) {
-        $act_time=date("Y-m-d H:i:s", time());
-        $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$act_time."', '')");
-        setcookie('act_logged',time());
-    }
+  global $wpdb, $options_act;
+  if ( is_numeric($userlogin->ID) ) {
+      $user_ID = $userlogin->ID;
+  } else {
+      $userlogin = get_userdatabylogin($arg);
+      if ($userlogin->ID) {
+          $user_ID = $userlogin->ID;
+      } else {
+          $user_ID = '';
+      }
+  }
+  if (!empty($user_ID) and !get_usermeta($user_ID, 'act_private') and !$_COOKIE['act_logged']) {
+    $ip = act_real_ip();
+    $act_time=date("Y-m-d H:i:s", time());
+    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$act_time."', '".$ip."')");
+    setcookie('act_logged',time());
+  }
 }
 function act_reinit() {
-    if ($_COOKIE['act_logged']) {
-        setcookie ("act_logged", "", time() - 3600);
-    }
+  if ($_COOKIE['act_logged']) {
+      setcookie ("act_logged", "", time() - 3600);
+  }
 }
 
 function act_profile_edit($act_user) {
@@ -343,7 +358,7 @@ function act_last_connect($act_user='') {
 //blacklist baby !
 function act_blacklist() {
     global $options_act, $wpdb, $pagenow;
-    if ((($options_act['act_bl_login'] and $pagenow == 'wp-login.php') or !$options_act['act_bl_login']) and !is_admin()) {
+    if ((($options_act['act_bl_wplog'] and $pagenow == 'wp-login.php') or !$options_act['act_bl_wplog']) and !is_user_logged_in()) {
         $act_bl_ip_array = explode("\n", trim($options_act['act_blacklist']));
         $act_client_ip = act_real_ip();
         foreach ($act_bl_ip_array as $act_bl_ip) {
@@ -359,7 +374,7 @@ function act_blacklist() {
         }
     }
 }
-if ($options_act['act_blacklist_on']) {
+if ($options_act['act_blacklist_on'] and !$_COOKIE['act_logged']) {
     add_action('init', 'act_blacklist', 1);
 }
 

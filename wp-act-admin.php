@@ -169,7 +169,7 @@ function act_admin_activity(){
   ?>
   <div class="wrap">
   <div id="act_admin_icon" class="icon32"></div>
-  <h2>WP-Activity Log <?php echo act_feed_link(); ?></h2>
+  <h2>WP-Activity <?php echo $act_plugin_version; ?> Log <?php echo act_feed_link(); ?></h2>
   <?php
   if ( isset($_GET['act_list_action']) && isset($_GET['act_check']) && check_admin_referer('wp-activity-list', 'act_filter')) {
   	$doaction = $_GET['act_list_action'];
@@ -315,7 +315,7 @@ function act_admin_activity(){
                     echo '<td><span class="activity_warning">'.$act_fail_tab[0].'</span></td><td><span class="activity_warning">'.$act->act_type.'</span></td><td>'.$act_fail_tab[1].'</td>';
                     break;
                   case 'CONNECT':
-                    echo '<td>'.$act->display_name.'</td><td>'.$act->act_type.'</td><td>&nbsp;</td>';
+                    echo '<td>'.$act->display_name.'</td><td>'.$act->act_type.'</td><td>'.$act->act_params.'</td>';
                     break;
                   case 'COMMENT_ADD':
                     $act_comment=get_comment($act->act_params);
