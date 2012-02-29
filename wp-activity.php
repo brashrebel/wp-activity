@@ -345,7 +345,7 @@ function act_link_add($act_link) {
     }
 }
 
-function act_last_connect($act_user='', $act_notext=false) {
+function act_last_connect($act_user='', $act_notext='') {
   global $wpdb, $options_act, $user_ID;
   if (!$act_user) {
     $act_user = $user_ID;
