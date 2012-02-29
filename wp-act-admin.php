@@ -195,7 +195,7 @@ function act_admin_activity(){
     }
     $act_args .= '&act_type_filter='.$act_type_filter;
     if ($act_type_filter == 'LOGIN_FAIL' or $act_type_filter == 'all'){
-      $sqlfilter .= ') UNION ALL (SELECT null as display_name, user_id as id, act_type, act_date, act_params FROM '.$wpdb->prefix.'activity WHERE act_type = "LOGIN_FAIL" AND SUBSTRING_INDEX(act_params, "###", 1) = "'.$sql_username->display_name.'"';
+      $sqlfilter .= ') UNION ALL (SELECT null as display_name, user_id as id, act_type, act_date, act_params, id FROM '.$wpdb->prefix.'activity WHERE act_type = "LOGIN_FAIL" AND SUBSTRING_INDEX(act_params, "###", 1) = "'.$sql_username->display_name.'"';
     }
   }
   $sqlfilter .= ')';
@@ -234,7 +234,7 @@ function act_admin_activity(){
     <h2><?php _e("Recent Activity", 'wp-activity'); ?></h2>
     <?php
       $act_start = ($act_page - 1)*$act_list_limit;
-      $act_recent_sql  = "(SELECT u.display_name as display_name, u.id as id, act_type, act_date, act_params FROM ".$wpdb->prefix."activity AS a, ".$wpdb->users." AS u WHERE a.user_id = u.id ".$sqlfilter." ORDER BY ".$sqlorderby;
+      $act_recent_sql  = "(SELECT u.display_name as display_name, u.id as id, act_type, act_date, act_params, a.id as act_id FROM ".$wpdb->prefix."activity AS a, ".$wpdb->users." AS u WHERE a.user_id = u.id ".$sqlfilter." ORDER BY ".$sqlorderby;
       if ( $logins = $wpdb->get_results($wpdb->prepare($act_recent_sql)) or !empty($sqlfilter) ){
         $act_count = count($logins);
         ?>
@@ -306,7 +306,7 @@ function act_admin_activity(){
               if ($i > $act_start and $i <= ($act_start + $act_list_limit)){
                 if ($act_alt == 1){$act_alt_class = 'class="alternate"';}else{$act_alt_class = '';}
                 echo '<tr '.$act_alt_class.'>';
-                echo '<th scope="row" class="check-column"><input type="checkbox" name="act_check[]" value="'. esc_attr($act->id) .'" /></th>';
+                echo '<th scope="row" class="check-column"><input type="checkbox" name="act_check[]" value="'. $act->act_id .'" /></th>';
                 echo '<td>'.$i.'</td><td>'.nicetime($act->act_date, true).'</td>';
                 switch ($act->act_type){
                   case 'LOGIN_FAIL' :

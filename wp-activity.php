@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Monitor and display blog members activity ; track and blacklist unwanted login attemps.
     Author: Dric
-    Version: 1.8 beta 3
+    Version: 1.8 beta 4
     Author URI: http://www.driczone.net
 */
 
@@ -30,7 +30,7 @@
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get bugged by admin panel additions
-$act_plugin_version = "1.8 beta 3"; //don't modify this !
+$act_plugin_version = "1.8 beta 4"; //don't modify this !
 
 $options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
@@ -345,15 +345,18 @@ function act_link_add($act_link) {
     }
 }
 
-function act_last_connect($act_user='') {
-    global $wpdb, $options_act, $user_ID;
-    if (!$act_user) {
-        $act_user = $user_ID;
+function act_last_connect($act_user='', $act_notext=false) {
+  global $wpdb, $options_act, $user_ID;
+  if (!$act_user) {
+    $act_user = $user_ID;
+  }
+  if ($options_act['act_connect'] and !get_usermeta($act_user, 'act_private')) {
+    $act_last_connect = $wpdb->get_var("SELECT MAX(act_date) FROM ".$wpdb->prefix."activity WHERE user_id = '".$act_user."'");
+    if ($act_notext <> 'no_text'){
+      echo __("Last logon :", 'wp-activity')." ";
     }
-    if ($options_act['act_connect'] and !get_usermeta($act_user, 'act_private')) {
-        $act_last_connect = $wpdb->get_var("SELECT MAX(act_date) FROM ".$wpdb->prefix."activity WHERE user_id = '".$act_user."'");
-        echo __("Last logon :", 'wp-activity')." ".nicetime($act_last_connect);
-    }
+    echo nicetime($act_last_connect);
+  }
 }
 
 //blacklist baby !

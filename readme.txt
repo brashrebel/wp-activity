@@ -170,11 +170,12 @@ Hum. I'm testing it on two Wordpress installations (local WAMP and online test s
 * Added compatibility with Better-WP-Security plugin (false failed logon events when log in).
 * Added logging of IP Address in successful login events.
 * Added widget width setting (was previously set in wp-activity css file - default to 350px).
-* You will be now redirected to the previously selected tab when reloading setting page (at the cost of a small js file load).
+* You will be now redirected to the previously selected tab when reloading settings page (at the cost of a small js file load).
 * User filter and LOGIN_FAILED filter combination is now possible.
 * Changed Activity RSS feed for better integration with Wordpress RSS Feeds and permalinks.
 * Fixed Activity RSS feed missing user names.
 * Fixed daily cron task.
+* Fixed exported data deletion.
 
 = 1.7.1 =
 * Fixed bug with the logon log function.
