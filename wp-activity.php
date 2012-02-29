@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Monitor and display blog members activity ; track and blacklist unwanted login attemps.
     Author: Dric
-    Version: 1.8 beta 2
+    Version: 1.8 beta 3
     Author URI: http://www.driczone.net
 */
 
@@ -30,7 +30,7 @@
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get bugged by admin panel additions
-$act_plugin_version = "1.8 beta 2";
+$act_plugin_version = "1.8 beta 3"; //don't modify this !
 
 $options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
@@ -243,13 +243,15 @@ function act_login_failed($act_user='') {
     $no_add = false;
     $act_time=date("Y-m-d H:i:s", time());
     $ip = act_real_ip();
-    $bwps = unserialize(get_option("BWPS_options")); //Compatibility check for Better-WP-Security Plugin that do wp_login_failed action hook even if login is successful...
-    if ($bwps['ll_enable'] == 1){
-      $sql = "SELECT user_id FROM ".$wpdb->prefix."activity WHERE act_type = 'CONNECT' AND act_date <= DATE_SUB(NOW(), INTERVAL 1 MINUTE)";
-      $act_prec_id = $wpdb->get_var($sql);
-      $act_prec = get_userdata($act_prec_id);
-      if ($act_user == $act_prec->display_name){
-        $no_add = true;
+    $bwps = get_option("BWPS_options"); //Compatibility check for Better-WP-Security Plugin that do wp_login_failed action hook even if login is successful...
+    if (!empty($bwps)){
+      $sql = "SELECT user_id, act_params FROM ".$wpdb->prefix."activity WHERE act_type = 'CONNECT' AND act_date <= DATE_SUB(NOW(), INTERVAL 2 SECOND)";
+      $act_prec_res = $wpdb->get_results($sql);
+      foreach ($act_prec_res as $act_prec_id){
+        $act_prec = get_userdata($act_prec_id->user_id);
+        if ($act_user == $act_prec->display_name and $act_prec_id->act_params == $ip){
+          $no_add = true;
+        }
       }
     }
     if (!$no_add){
@@ -422,7 +424,7 @@ function act_feed_link(){
 * $archive : if true, display activity on a page without box
 * $act_user : if user id specified, return user's activity only
 */
-function act_stream_common($act_number='30', $act_title='', $archive = false, $act_user = '') {
+function act_stream_common($act_number='30', $act_title='', $archive = false, $act_user = '', $act_width = '') {
     global $wpdb, $options_act, $user_ID;
     if ($act_title == '') {
         $act_title= __("Recent Activity", 'wp-activity');
@@ -438,7 +440,11 @@ function act_stream_common($act_number='30', $act_title='', $archive = false, $a
 
     echo '<h2>'.$act_title.'</h2>';
     if ($archive == false) {
-        echo '<ul id="activity">';
+        echo '<ul ';
+        if (!empty($act_width)){
+          echo 'style="width:'.$act_width.'px" ';
+        }
+        echo 'id="activity">';
     } else {
         echo '<ul id="activity-archive">';
     }
@@ -602,57 +608,58 @@ function WPActivity_load_widgets() {
     register_widget('WpActivity_user_Widget');
 }
 class WpActivity_Widget extends WP_Widget {
+  function WpActivity_Widget() {
+      /* Widget settings. */
+      $widget_ops = array( 'classname' => 'wp-activity', 'description' => __('Display a stream of registered users events', 'wp-activity') );
 
-    function WpActivity_Widget() {
-        /* Widget settings. */
-        $widget_ops = array( 'classname' => 'wp-activity', 'description' => __('Display a stream of registered users events', 'wp-activity') );
+      /* Widget control settings. */
+      $control_ops = array( 'height' => 350, 'id_base' => 'wp-activity' );
 
-        /* Widget control settings. */
-        $control_ops = array( 'height' => 350, 'id_base' => 'wp-activity' );
+      /* Create the widget. */
+      $this->WP_Widget( 'wp-activity', __('Wp-Activity Widget', 'wp-activity'), $widget_ops, $control_ops );
+  }
 
-        /* Create the widget. */
-        $this->WP_Widget( 'wp-activity', __('Wp-Activity Widget', 'wp-activity'), $widget_ops, $control_ops );
-    }
+  function widget( $args, $instance ) {
+      extract( $args );
+      $title = apply_filters('widget_title', $instance['title'] );
+      $number = $instance['number'];
+      $width = $instance['width'];
 
-    function widget( $args, $instance ) {
-        extract( $args );
-        $title = apply_filters('widget_title', $instance['title'] );
-        $number = $instance['number'];
+      echo $before_widget;
+      if ( $title )
+          $title =  $before_title . $title . $after_title;
+      act_stream_common($number, $title, false, '', $width);
+      echo $after_widget;
+  }
 
-        echo $before_widget;
-        if ( $title )
-            $title =  $before_title . $title . $after_title;
-        act_stream_common($number, $title, false, '');
-        echo $after_widget;
-    }
+  function update( $new_instance, $old_instance ) {
+      $instance = $old_instance;
+      $instance['title'] = strip_tags( $new_instance['title'] );
+      $instance['number'] = $new_instance['number'];
+      $instance['width'] = $new_instance['width'];
+      return $instance;
+  }
 
-    function update( $new_instance, $old_instance ) {
-        $instance = $old_instance;
-        $instance['title'] = strip_tags( $new_instance['title'] );
-        $instance['number'] = $new_instance['number'];
-        return $instance;
-    }
+  function form( $instance ) {
 
-    function form( $instance ) {
-
-        $defaults = array( 'title' => __('Recent Activity', 'wp-activity'), 'number' => '30');
-        $instance = wp_parse_args( (array) $instance, $defaults );
-        ?>
-
-        <p>
-        <label for ="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title :', 'wp-activity');
-        ?></label>
+      $defaults = array( 'title' => __('Recent Activity', 'wp-activity'), 'number' => '30', 'width' => '350');
+      $instance = wp_parse_args( (array) $instance, $defaults );
+      ?>
+      <p>
+        <label for ="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title :', 'wp-activity'); ?></label>
         <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:95%;" />
-                  </p>
-                  <p>
-                  <label for ="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e('Events number :', 'wp-activity');
-        ?></label>
+      </p>
+      <p>
+        <label for ="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e('Events number :', 'wp-activity'); ?></label>
         <input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" value="<?php echo $instance['number']; ?>" style="width:95%;" />
-                  </p>
-
-                  <?php
-              }
-          }
+      </p>
+      <p>
+        <label for ="<?php echo $this->get_field_id( 'width' ); ?>"><?php _e('Widget width (px) :', 'wp-activity'); ?></label>
+        <input id="<?php echo $this->get_field_id( 'width' ); ?>" name="<?php echo $this->get_field_name( 'width' ); ?>" value="<?php echo $instance['width']; ?>" style="width:95%;" />
+      </p>
+      <?php
+  }
+}
 class WpActivity_user_Widget extends WP_Widget {
     function WpActivity_user_Widget() {
         /* Widget settings. */

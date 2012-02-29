@@ -63,6 +63,7 @@ function act_stats_scripts(){
 
 function act_admin_scripts(){
   wp_enqueue_script('jquery-ui-tabs');
+  wp_enqueue_script('jquery-cookie', ACT_URL .'js/jquery.cookie.js');
   wp_enqueue_style('act_tabs', ACT_URL .'jquery.ui.tabs.css', false, '2.5.0', 'screen');
 }
 
@@ -262,16 +263,14 @@ function act_admin_activity(){
               $select_order .= '<option value="order_type"' . (($act_order_by == 'order_type') ? " selected='selected'" : '') . '>' .  __('Order by event type', 'wp-activity') . '</option>';
               $select_order .= "</select>";
               echo $select_order;
-              $act_users_sql = "SELECT ID, display_name FROM ".$wpdb->users." ORDER BY display_name ASC";
-              if ( $act_u_res = $wpdb->get_results($act_users_sql)){
-                $act_u_sel = "<select name=\"act_user_sel\">";
-                $act_u_sel .= '<option value="all"' . (($act_user_sel == 'all') ? " selected='selected'" : '') . '>' .  __('All users', 'wp-activity') . '</option>';
-                foreach ( (array) $act_u_res as $act_u ){
-                  $act_u_sel .= '<option value="'.$act_u->ID.'"' . (($act_user_sel == $act_u->ID) ? " selected='selected'" : '') . '>' .  $act_u->display_name . '</option>';
-                }
-                $act_u_sel .= "</select>";
-                echo $act_u_sel;
+              $act_u_res = get_users('orderby=displayname');
+              $act_u_sel = "<select name=\"act_user_sel\">";
+              $act_u_sel .= '<option value="all"' . (($act_user_sel == 'all') ? " selected='selected'" : '') . '>' .  __('All users', 'wp-activity') . '</option>';
+              foreach ( (array) $act_u_res as $act_u ){
+                $act_u_sel .= '<option value="'.$act_u->ID.'"' . (($act_user_sel == $act_u->ID) ? " selected='selected'" : '') . '>' .  $act_u->display_name . '</option>';
               }
+              $act_u_sel .= "</select>";
+              echo $act_u_sel;
               ?>
               <input type="submit" id="post-query-submit" value="<?php esc_attr_e('Filter'); ?>" class="button-secondary" />
             </div>
@@ -441,7 +440,11 @@ function act_admin_settings(){
     ?>
     <script type="text/javascript">
       jQuery(function() {
-          jQuery('#slider').tabs({ fxFade: true, fxSpeed: 'fast' });
+          $act_tab = jQuery('#slider').tabs({
+                                          fxFade: true,
+                                          fxSpeed: 'fast',
+                                          cookie: { expires: 1 }
+                                          });
       });
     </script>
     <br />
