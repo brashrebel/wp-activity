@@ -4,7 +4,7 @@ Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor, stats, blacklist, tracking, access, security, login
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.7.1
+Stable tag: 1.8
 
 Monitor and display registered users activity (logins, logon failures, new posts, new comments, etc.). You can also prevent unwanted login attemps.
 
@@ -62,6 +62,7 @@ Manual :
 3. Activate the plugin through the Wordpress admin,
 
 Automatic :
+
 1. In your Admin Panel, go to `Plugins > Add New`
 2. Search for "__WP-Activity__"
 3. Click Install Now under "__WP-Activity__"
@@ -69,6 +70,14 @@ Automatic :
 Setting plugin :
 
 4. Go to `Wp-Activity > Settings` for plugin options.
+
+For security use :
+
+5. Activate Login failures log.
+6. Set blacklist options.
+
+For frontend use :
+
 5. Put `<?php act_stream() ?>` where you want the stream to be displayed, or use included widget.
 6. Use `[ACT_STREAM]` to display activity in a page or post. See FAQ section for parameters.
 
@@ -77,6 +86,7 @@ Setting plugin :
 = How do I enable the user last logon on author or index page ? =
 
 Use `<?php act_last_connect($author) ?>` in author.php template, or `<?php act_last_connect() ?>` in index page.
+If you only want to display the last login date without any text, use `<?php act_last_connect($author, 'no_text') ?>`.
 
 = How do I add user activity on it's author page ? =
 
@@ -106,6 +116,10 @@ defaults are :
 = I blacklisted my own IP address, or I can't login anymore since I activated the blacklisting ! =
 
 Just rename or delete the wp-activity directory in wp-content/plugins/, and you should be able to access to your blog.
+
+= The Blacklist tab is disabled in admin panel =
+
+Before settings blacklist options, you need to activate logon failures log (in the previous tab).
 
 = How do I avoid erasing css tweaks when I update the plugin ? =
 
@@ -173,9 +187,11 @@ Hum. I'm testing it on two Wordpress installations (local WAMP and online test s
 * You will be now redirected to the previously selected tab when reloading settings page (at the cost of a small js file load).
 * User filter and LOGIN_FAILED filter combination is now possible.
 * Changed Activity RSS feed for better integration with Wordpress RSS Feeds and permalinks.
+* Blacklist tab is now disabled when Logon failures log is not enabled.
 * Fixed Activity RSS feed missing user names.
 * Fixed daily cron task.
 * Fixed exported data deletion.
+* Fixed bad link in plugins list additions for wp-activity (settings/uninstall).
 
 = 1.7.1 =
 * Fixed bug with the logon log function.

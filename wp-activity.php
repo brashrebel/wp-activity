@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Monitor and display blog members activity ; track and blacklist unwanted login attemps.
     Author: Dric
-    Version: 1.8 beta 4
+    Version: 1.8
     Author URI: http://www.driczone.net
 */
 
@@ -30,7 +30,7 @@
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get bugged by admin panel additions
-$act_plugin_version = "1.8 beta 4"; //don't modify this !
+$act_plugin_version = "1.8"; //don't modify this !
 
 $options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
@@ -159,14 +159,6 @@ function act_cron($prune_limit='') {
   }
 }
 
-add_filter("plugin_action_links_wp-activity/wp-activity.php", 'act_plugin_action_links');
-function act_plugin_action_links($links) {
-  $settings_link = '<a href="options-general.php?page=act_admin">' . __( 'Settings' ) . '</a>';
-  $uninstall_link = '<a href="options-general.php?page=act_admin#act_reset">' . __( 'Uninstall' ) . '</a>';
-  array_unshift($links, $settings_link, $uninstall_link);
-  return $links;
-}
-
 //we add actions to hooks to log their events
 if ($options_act['act_connect']) {
   add_action('wp_login', 'act_session', 10, 2);
@@ -257,14 +249,15 @@ function act_login_failed($act_user='') {
     if (!$no_add){
       $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'LOGIN_FAIL', '".$act_time."', '".$act_user."###".$ip."')");
       if ($options_act['act_auto_bl'] and $options_act['act_blacklist_on']){
-        $act_count_attempts = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."activity WHERE SUBSTRING_INDEX(act_params, '###', -1) = '".$ip."' AND act_date <= DATE_SUB(NOW(), INTERVAL 2 DAY)");
+        $sql = "SELECT COUNT(*) FROM ".$wpdb->prefix."activity WHERE act_type='LOGIN_FAIL' AND SUBSTRING_INDEX(act_params, '###', -1) = '".$ip."' AND act_date >= DATE_SUB(NOW(), INTERVAL 2 DAY)";
+        $act_count_attempts = $wpdb->get_var($sql);
         if ($act_count_attempts > $options_act['act_auto_bl_n']){
           $act_bl_ip_array = explode("\n", trim($options_act['act_blacklist']));
-          $no_add = false;
+          $no_add_n = false;
           foreach ($act_bl_ip_array as $act_bl_ip) {
-            if ($act_bl_ip == $ip){$no_add = true;}
+            if ($act_bl_ip == $ip){$no_add_n = true;}
           }
-          if (!$no_add){
+          if (!$no_add_n){
             if ( substr($options_act['act_blacklist'], -2) != "\n"){
               $options_act['act_blacklist'] .= "\n";
             }

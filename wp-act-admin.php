@@ -35,6 +35,14 @@ if (!$no_admin_mess){
   }
 }
 
+function act_plugin_action_links($links) {
+  $settings_link = '<a href="admin.php?page=act_admin#act_date">' . __( 'Settings' ) . '</a>';
+  $uninstall_link = '<a href="admin.php?page=act_admin#act_reset">' . __( 'Uninstall' ) . '</a>';
+  array_unshift($links, $settings_link, $uninstall_link);
+  return $links;
+}
+add_filter("plugin_action_links_wp-activity/wp-activity.php", 'act_plugin_action_links');
+
 //menus and scripts loading
 function act_admin_menu(){
   add_action( 'admin_head', 'act_header' );
@@ -443,7 +451,8 @@ function act_admin_settings(){
           $act_tab = jQuery('#slider').tabs({
                                           fxFade: true,
                                           fxSpeed: 'fast',
-                                          cookie: { expires: 1 }
+                                          cookie: { expires: 1 },
+                                          <?php if (!$options_act['act_log_failures']) {echo "disabled: [4]";} ?>
                                           });
       });
     </script>

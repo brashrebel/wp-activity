@@ -81,7 +81,9 @@
 .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-selected a{
     color: #464646;
 }
-
+.wp-activity_page_act_admin .ui-tabs-nav .ui-state-disabled a, .wp-activity_page_act_admin .ui-tabs-nav .ui-state-disabled a:hover{
+    color: #eee;
+}
 .wp-activity_page_act_admin .ui-tabs-nav a:hover, .wp-activity_page_act_admin .ui-tabs-nav a:focus, .wp-activity_page_act_admin .ui-tabs-nav a:active,
 .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-unselect a:hover, .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-unselect a:focus, .wp-activity_page_act_admin .ui-tabs-nav .ui-tabs-unselect a:active { /* @ Opera, we need to be explicit again here now... */
     cursor: pointer;
@@ -104,4 +106,8 @@
 	border-color: #CCCCCC #CCCCCC;
   border-bottom: 1px solid #FFF;
   background-color: #FFF;
+}
+
+.wp-activity_page_act_admin .ui-tabs-nav .ui-state-disabled {
+	border-color: #eee #eee;
 }
