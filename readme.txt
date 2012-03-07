@@ -2,7 +2,7 @@
 Contributors: Dric1107
 Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor, stats, blacklist, tracking, access, security, login
-Requires at least: 3.1
+Requires at least: 3.0
 Tested up to: 3.3.1
 Stable tag: 1.8.1
 
