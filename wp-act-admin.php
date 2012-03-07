@@ -452,7 +452,7 @@ function act_admin_settings(){
                                           fxFade: true,
                                           fxSpeed: 'fast',
                                           cookie: { expires: 1 },
-                                          <?php if (!$options_act['act_log_failures']) {echo "disabled: [4]";} ?>
+                                          <?php if (!$act_log_failures) {echo "disabled: [4]";} ?>
                                           });
       });
     </script>
@@ -741,7 +741,7 @@ function act_admin_stats(){
     );
   echo '<script>
         jQuery().ready(function($){
-          $.datepicker.regional["'.WPLANG.'"] = {
+          $.datepicker.regional["ACT"] = {
         	closeText: "'.__('Close', 'wp-activity').'",
         	prevText: "'.__('&#x3c;Prev', 'wp-activity').'",
         	nextText: "'.__('Next&#x3e;', 'wp-activity').'",
@@ -756,7 +756,7 @@ function act_admin_stats(){
         	firstDay: '.get_option('start_of_week').',
         	showMonthAfterYear: false,
         	yearSuffix: ""};
-          $.datepicker.setDefaults($.datepicker.regional["'.WPLANG.'"]);
+          $.datepicker.setDefaults($.datepicker.regional["ACT"]);
         });
         </script>'; 
  echo '<script>

@@ -4,13 +4,14 @@ Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor, stats, blacklist, tracking, access, security, login
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.8
+Stable tag: 1.8.1
 
-Monitor and display registered users activity (logins, logon failures, new posts, new comments, etc.). You can also prevent unwanted login attemps.
+Monitor and display registered users activity (logins, posts, comments, etc.). You can also track and prevent hackering attemps, with IP blacklisting.
 
 == Description ==
 
-This plugin logs registered users activity in your blog and displays it in frontend and backend. It can also track and deny access by blacklisting to unwanted login attempts.
+This plugin logs registered users activity in your blog and displays it in frontend and backend.
+It can also track and deny access by blacklisting to unwanted login attempts.
 
 - logons
 - new comments
@@ -45,7 +46,7 @@ Translations :
 - Italian (Thx to Luca - partially translated up to v1.2)
 - Turkish (Thx to Can KAYA - translated up to v1.2)
 - Spanish (Thx to Cscean - translated up to v1.3)
-- Dutch (Thx to Tom - translated up to 1.6.1)
+- Dutch (Thx to Tom - translated up to v1.8.1)
 
 (If you translated my plugin, please send the translated .po file at cedric@driczone.net )
 
@@ -154,7 +155,7 @@ You have to modify the `$act_list_limit` var line 31 of wp-activity.php.
 You have to modify the `$no_admin_mess` var line 33 of wp-activity.php and set it to **true**.
 
 = I edited a post but wp-activity logged POST_ADD instead of POST_EDIT =
-That's because the post_add event for this post id was removed from the wp-activity database table. Wordpress doesn't have separate actions for adding or editing posts, so the plugin checks in it's table if there was a post creation with the same ID. If found, the plugin logs a post edition. But as the plugin clears old logs (see "Rows limit in database" setting), the post creation event can be previously deleted when the post edition occurs.
+That's because the post_add event for this post id was removed from the wp-activity database table. Wordpress doesn't have separate actions for adding or editing posts, so the plugin checks in it own table if there was a post creation with the same ID. If found, the plugin logs a post edition. But as the plugin clears old logs (see "Rows limit in database" setting), the post creation event can be previously deleted when the post edition occurs.
 
 = I have a poor hosting, is your plugin a big fat resources consumer ? =
 I also have a poor hosting, so I try to keep my plugin as light as I can ; the admin scripts and css files are only loaded when needed.
@@ -167,7 +168,8 @@ Best-Performance tips :
 
 = Do you really test your plugin before publishing new versions at the Wordpress Plugin Repository ? =
 
-Hum. I'm testing it on two Wordpress installations (local WAMP and online test site), so it can't be called extended tests. That's why there is often updates that just fix the previous ones... Sorry for that.
+Hum. I'm testing it on two Wordpress installations (local WAMP and online test site), and I send my beta versions to my favorite tester. But even with that, some bugs stay present. That's why there is often updates that just fix the previous ones... Sorry for that.
+If you want to be sure it's debugged, you can wait a few days for a x.x.1 version release.
 
 
 == Screenshots ==
@@ -178,6 +180,10 @@ Hum. I'm testing it on two Wordpress installations (local WAMP and online test s
 4. admin screen - stats
 
 == ChangeLog ==
+
+= 1.8.1 =
+* Fixed bug with blacklist tab who stay disabled unless you uncheck/check again the logon failures logging option.
+* Updated Dutch Translation By [Venntom](http://wordpress.org/support/profile/venntom).
 
 = 1.8 =
 * Added auto-blacklisting of IP addresses after a configurable number of failed logon attempts in the last 2 days.
