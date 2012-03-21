@@ -185,10 +185,11 @@ If you want to be sure it's debugged, you can wait a few days for a x.x.1 versio
 
 = 1.9 =
 * Added new events types logging : new users, comments edits, comments deletions (not spam comments), posts deletions (real deletions, not trashed posts).
-* Changed modified post event logging.
+* Changed the way modified post event are logged.
 * Changed and added a few translation strings.
 * Various Tweaks.
 * When a post or a comment is deleted, the post and comments related events are updated (the title of the deleted post is saved instead of post id).
+* Fixed a possible bug with dates timezones. This could mess a little your previous logged events dates.
 * Fixed ACCESS_DENIED events that are no more displayed in frontend.
 * Fixed possible wrong url path to users profiles in RSS feed.
 

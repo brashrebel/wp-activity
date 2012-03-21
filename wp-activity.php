@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Monitor and display blog members activity ; track and blacklist unwanted login attemps.
     Author: Dric
-    Version: 1.9 alpha 3
+    Version: 1.9 beta
     Author URI: http://www.driczone.net
 */
 
@@ -30,7 +30,7 @@
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get bugged by admin panel additions
-$act_plugin_version = "1.9 alpha 3"; //don't modify this !
+$act_plugin_version = "1.9 beta"; //don't modify this !
 
 $options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
@@ -238,7 +238,7 @@ function act_login_failed($act_user='') {
   if ($act_user) {
     $user_ID = 1; //event has to be linked to a wp user.
     $no_add = false;
-    $act_time=date("Y-m-d H:i:s", time());
+    $act_time=current_time('mysql', true);
     $ip = act_real_ip();
     $bwps = get_option("BWPS_options"); //Compatibility check for Better-WP-Security Plugin that do wp_login_failed action hook even if login is successful...
     if (!empty($bwps)){
@@ -295,7 +295,7 @@ function act_session($arg='', $userlogin='') {
   }
   if (!empty($user_ID) and !get_usermeta($user_ID, 'act_private') and !$_COOKIE['act_logged']) {
     $ip = act_real_ip();
-    $act_time=date("Y-m-d H:i:s", time());
+    $act_time=current_time('mysql', true);
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$act_time."', '".$ip."')");
     setcookie('act_logged',time());
   }
@@ -308,14 +308,14 @@ function act_reinit() {
 
 function act_new_user() {
   global $wpdb, $user_ID, $options_act;
-  $act_time=date("Y-m-d H:i:s", time());
+  $act_time=current_time('mysql', true);
   $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date) VALUES($user_ID, 'NEW_USER', '".$act_time."')");
 }
 
 function act_profile_edit($act_user) {
     global $wpdb, $user_ID, $options_act;
     if (!get_usermeta($user_ID, 'act_private')) {
-        $act_time=date("Y-m-d H:i:s", time());
+        $act_time=current_time('mysql', true);
         $sql="INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date) VALUES($user_ID, 'PROFILE_EDIT', '".$act_time."')";
         $wpdb->query($sql);
     }
@@ -327,7 +327,7 @@ function act_post_del($act_post){
   if ($act_post_meta and $act_post_meta->post_status != 'inherit'){
       $wpdb->query("UPDATE ".$wpdb->prefix."activity SET act_params = '".$act_post_meta->post_title."' WHERE act_type IN ('POST_ADD','POST_EDIT', 'COMMENT_ADD') and act_params = ".$act_post);
     if (!get_usermeta($user_ID, 'act_private')) {
-      $act_time=date("Y-m-d H:i:s", time());
+      $act_time=current_time('mysql', true);
       $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'POST_DEL', '".$act_time."', '".$act_post_meta->post_title."###".$act_post."')");
     }
   }
@@ -336,7 +336,7 @@ function act_post_del($act_post){
 function act_post_update($act_post){
   global $wpdb, $user_ID, $options_act;
   if (!get_usermeta($user_ID, 'act_private')) {
-    $act_time=date("Y-m-d H:i:s", time());
+    $act_time=current_time('mysql', true);
     $act_post_meta = get_post($act_post);
     if ($act_post_meta->status_post == 'publish'){
       $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'POST_EDIT', '".$act_time."', ".$act_post.")");
@@ -347,7 +347,7 @@ function act_post_update($act_post){
 function act_post_add($act_post) {
     global $wpdb, $user_ID, $options_act;
     if (!get_usermeta($user_ID, 'act_private')) {
-        $act_time=date("Y-m-d H:i:s", time());
+        $act_time=current_time('mysql', true);
         $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'POST_ADD', '".$act_time."', $act_post)");
     }
 }
@@ -355,7 +355,7 @@ function act_post_add($act_post) {
 function act_comment_add($act_comment) {
     global $wpdb, $user_ID, $options_act;
     if (!get_usermeta($user_ID, 'act_private') and $user_ID <> 0) {
-        $act_time=date("Y-m-d H:i:s", time());
+        $act_time=current_time('mysql', true);
         $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'COMMENT_ADD', '".$act_time."', $act_comment)");
     }
 }
@@ -363,7 +363,7 @@ function act_comment_add($act_comment) {
 function act_comment_edit($act_comment){
   global $wpdb, $user_ID, $options_act;
   if (!get_usermeta($user_ID, 'act_private')) {
-    $act_time=date("Y-m-d H:i:s", time());
+    $act_time=current_time('mysql', true);
     $act_comment_meta = get_comment($act_comment);
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'COMMENT_EDIT', '".$act_time."', $act_comment)");
   }
@@ -376,7 +376,7 @@ function act_comment_del($act_comment) {
     $act_post_meta = get_post($act_comment_meta->comment_post_ID );
     $wpdb->query("UPDATE ".$wpdb->prefix."activity SET act_params = '".$act_comment_meta->comment_post_ID."###$act_comment' WHERE act_type IN ('COMMENT_ADD', 'COMMENT_EDIT') and act_params = ".$act_comment);
     if (!get_usermeta($user_ID, 'act_private')) {
-      $act_time=date("Y-m-d H:i:s", time());
+      $act_time=current_time('mysql', true);
       $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'COMMENT_DEL', '".$act_time."', '".$act_post_meta->post_title."###".$act_comment."###".$act_comment_meta->comment_post_ID."')");
     }
   }
@@ -385,7 +385,7 @@ function act_comment_del($act_comment) {
 function act_link_add($act_link) {
     global $wpdb, $user_ID, $options_act;
     if (!get_usermeta($user_ID, 'act_private')) {
-        $act_time=date("Y-m-d H:i:s", time());
+        $act_time=current_time('mysql', true);
         $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'LINK_ADD', '".$act_time."', $act_link)");
     }
 }
@@ -415,7 +415,7 @@ function act_blacklist() {
             $act_bl_ip = str_replace("*", "[0-9\.]*", $act_bl_ip);
             $act_bl_ip = "/^" . trim($act_bl_ip) . "$/";
             if (preg_match($act_bl_ip, $act_client_ip)) {
-                $act_time=date("Y-m-d H:i:s", time());
+                $act_time=current_time('mysql', true);
                 $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES(1, 'ACCESS_DENIED', '".$act_time."', '".$act_client_ip."')");
                 Header("HTTP/1.1 403 Forbidden");
                 die('403 Forbidden');
@@ -769,16 +769,13 @@ function nicetime($posted_date, $admin=false, $nohour=false) {
     $act_opt=get_option('act_settings');
     $date_relative = $act_opt['act_date_relative'];
     $date_format = $act_opt['act_date_format'];
-    //$posted_date = date("Y-m-d H:i:s", strtotime($posted_date) + ( get_option( 'gmt_offset' ) * 3600 ));
-    $in_seconds = strtotime($posted_date);
-    //$diff = strtotime(date("Y-m-d H:i:s", time() + ( get_option( 'gmt_offset' ) * 3600 )));
-    $diff = time();
-    $relative_date = '';
     $cur_time_gmt = current_time('timestamp', true);
     $cur_time_loc = current_time('timestamp', false);
-    $gmt = $cur_time_loc - $cur_time_gmt;  //poor hack to get the gmt_offset which is sometimes empty.
-    $diff = ($diff - $in_seconds) + $gmt;
-    //echo "date : ".date("Y-m-d H:i:s", time())." - time : ".date_i18n("j F Y G \h i \m\i\n",( time() + ( get_option( 'gmt_offset' ) * 3600 ) ))." - in_seconds : ".date_i18n("j F Y G \h i \m\i\n",$in_seconds)." = diff : $diff<br />";
+    $gmt_offset = $cur_time_loc - $cur_time_gmt;  //poor hack to get the gmt_offset which is sometimes empty.
+    $in_seconds = strtotime($posted_date);
+    $posted_date = gmdate("Y-m-d H:i:s", strtotime($posted_date) + $gmt_offset);
+    $relative_date = '';
+    $diff = $cur_time_gmt - $in_seconds;
     $months = floor($diff/2592000);
     $diff -= $months*2419200;
     $weeks = floor($diff/604800);
