@@ -568,7 +568,7 @@ function act_prepare($act_raw, $act_disp){
       $act_user = $act_raw->display_name;
       break;
     case 'rss':
-      $act_date = date('r', strtotime($act_raw->act_date));
+      $act_date = gmdate('r', strtotime($act_raw->act_date));
       $act_user = '<a href="'.$wp_url.'/'.$options_act['act_author_path'].'/'.$act_raw->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act_raw->display_name.'</a>';
       break;
     case 'frontend':

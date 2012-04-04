@@ -4,7 +4,7 @@ function act_feed(){
   extract($options_act);
   $act_feed = wp_cache_get( 'act_feed' );
   if (!$act_feed) {
-    $date = date('r', strtotime($wpdb->get_var("SELECT MAX(act_date) FROM ".$wpdb->prefix."activity")));
+    $date = gmdate('r', strtotime($wpdb->get_var("SELECT MAX(act_date) FROM ".$wpdb->prefix."activity")));
     $wp_url = get_bloginfo('wpurl');
     $act_not_in = '';
     if(!$act_feed_connect)  { $act_not_in .= "'CONNECT', "; }
