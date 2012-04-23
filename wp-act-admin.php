@@ -46,14 +46,17 @@ add_filter("plugin_action_links_wp-activity/wp-activity.php", 'act_plugin_action
 //menus and scripts loading
 function act_admin_menu(){
   add_action( 'admin_head', 'act_header' );
-  add_menu_page('WP-Activity', 'WP-Activity', 'publish_posts', 'act_activity', 'act_admin_activity', 'div');
-  add_submenu_page( 'act_activity' , __('Activity Log', 'wp-activity'), __('Activity Log', 'wp-activity'), 'publish_posts', 'act_activity', 'act_admin_activity');
-  $act_stats_page = add_submenu_page( 'act_activity' , __('Activity Stats', 'wp-activity'), __('Activity Stats', 'wp-activity'), 'publish_posts', 'act_stats', 'act_admin_stats');
-  $act_admin_page = add_submenu_page( 'act_activity' , __('WP-Activity Settings', 'wp-activity'), __('WP-Activity Settings', 'wp-activity'), 'manage_options', 'act_admin', 'act_admin_settings');
+  add_menu_page('WP-Activity', 'WP-Activity', 'administrator', 'act_activity', 'act_admin_activity', 'div');
+  $act_log_page = add_submenu_page( 'act_activity' , __('Activity Log', 'wp-activity'), __('Activity Log', 'wp-activity'), 'administrator', 'act_activity', 'act_admin_activity');
+  $act_stats_page = add_submenu_page( 'act_activity' , __('Activity Stats', 'wp-activity'), __('Activity Stats', 'wp-activity'), 'administrator', 'act_stats', 'act_admin_stats');
+  $act_admin_page = add_submenu_page( 'act_activity' , __('WP-Activity Settings', 'wp-activity'), __('WP-Activity Settings', 'wp-activity'), 'administrator', 'act_admin', 'act_admin_settings');
+  add_action('admin_print_styles-' . $act_log_page, 'act_log_scripts');
   add_action('admin_print_styles-' . $act_stats_page, 'act_stats_scripts');
   add_action('admin_print_styles-' . $act_admin_page, 'act_admin_scripts');
+
 }
 add_action('admin_menu', 'act_admin_menu');
+add_action('wp_ajax_act_get_users', 'act_get_users');
 
 function act_stats_scripts(){
   global $wp_version, $is_IE;
@@ -67,6 +70,10 @@ function act_stats_scripts(){
   }else{
     wp_enqueue_script('jquery-ui-datepicker');
   }
+}
+
+function act_log_scripts(){
+  wp_enqueue_script('suggest');
 }
 
 function act_admin_scripts(){
@@ -171,11 +178,26 @@ function act_pagination($act_count, $limit = 50, $current, $act_start = 0, $args
 	$pagination.= "</div>";	
 	echo $pagination;
 }
+function act_get_users(){
+  global $wpdb;
+  $act_users_sql = "SELECT display_name FROM ".$wpdb->users." WHERE display_name LIKE '%%".$_GET['q']."%%' ORDER BY display_name ASC";
+  if ( $results = $wpdb->get_results($wpdb->prepare($act_users_sql))){
+    foreach ($results as $user) {
+      echo $user->display_name . "\n";
+    }
+  }
+  die();
+}
 
 //main pages
 function act_admin_activity(){
-  global $wpdb, $act_plugin_version, $act_list_limit, $options_act;
+  global $wpdb, $act_plugin_version, $act_list_limit, $options_act, $act_user_filter_max;
   ?>
+    <script type="text/javascript">
+      jQuery(function() {
+          jQuery('#act_user_sel').suggest(ajaxurl + "?action=act_get_users", { minchars: 3 });
+      });
+    </script>
   <div class="wrap">
   <div id="act_admin_icon" class="icon32"></div>
   <h2>WP-Activity <?php echo $act_plugin_version; ?> Log <?php echo act_feed_link(); ?></h2>
@@ -193,17 +215,36 @@ function act_admin_activity(){
   if (isset($_GET['act_type_filter'])){
     $act_type_filter = esc_html($_GET['act_type_filter']);
     $act_user_sel = esc_html($_GET['act_user_sel']);
+    $act_data_filter = esc_html($_GET['act_data_filter']);
     if ($act_user_sel <> 'all' and !empty($act_user_sel)){
-      $sql_username = get_userdata($act_user_sel);
-      $sqlfilter .= ' AND u.id = '.$act_user_sel.' AND act_type NOT IN ("LOGIN_FAIL", "ACCESS_DENIED")';
+      if (is_numeric($act_user_sel)){
+        $sql_userobject = get_userdata($act_user_sel);
+        $sql_username = $sql_userobject->display_name;
+        $sqlfilter .= ' AND u.id = '.$act_user_sel;
+      }else{
+        $sql_username = $act_user_sel;
+        $sql_userobject = get_user_by('login', $act_user_sel);
+        $sqlfilter .= ' AND u.display_name = "'.$act_user_sel.'"';
+        //$act_user_sel = $sql_userobject->ID;
+      }
+      $sqlfilter .= ' AND act_type NOT IN ("LOGIN_FAIL", "ACCESS_DENIED")';
       $act_args .= '&act_user_sel='.$act_user_sel;
     }
     if ($act_type_filter <> 'all' and !empty($act_type_filter)){
-      $sqlfilter .= 'AND act_type = "'.$act_type_filter.'"';
+      $sqlfilter .= ' AND act_type = "'.$act_type_filter.'"';
+    }
+    if (!empty($act_data_filter)){
+      $sqlfilter .= ' AND act_params LIKE "%%'.$act_data_filter.'%%"';  //double % characters to be wpdb->prepare compatible
+      $act_args .= '&act_data_filter='.$act_data_filter;
     }
     $act_args .= '&act_type_filter='.$act_type_filter;
-    if ($act_type_filter == 'LOGIN_FAIL' or $act_type_filter == 'all'){
-      $sqlfilter .= ') UNION ALL (SELECT null as display_name, user_id as id, act_type, act_date, act_params, id FROM '.$wpdb->prefix.'activity WHERE act_type = "LOGIN_FAIL" AND SUBSTRING_INDEX(act_params, "###", 1) = "'.$sql_username->display_name.'"';
+    if (($act_type_filter == 'LOGIN_FAIL' or $act_type_filter == 'all') and $act_user_sel <> 'all'){
+      $sqlfilter .= ') UNION ALL (SELECT null as display_name, user_id as id, act_type, act_date, act_params, id FROM '.$wpdb->prefix.'activity WHERE act_type = "LOGIN_FAIL" AND SUBSTRING_INDEX(act_params, "###", 1) = "'.$sql_username.'"';
+      if (!empty($act_data_filter)){
+        //This avoid to have login_fail events not related to data filter selected when filtering also by user.
+        //WARNING : If you enter the same value for user AND data filters, you will see login_fail events for this user. That's because raw data value contains the user logon name.)
+        $sqlfilter .= ' AND act_params LIKE "%%'.$act_data_filter.'%%"';
+      }
     }
   }
   $sqlfilter .= ')';
@@ -213,8 +254,6 @@ function act_admin_activity(){
   }
   if ( empty($act_type_filter) )
   	$act_type_filter = 'all';
-  if ( empty($act_user_sel) )
-  	$act_user_sel = 'all';
   if ( empty($act_order_by) )
   	$act_order_by = 'order_date';
 
@@ -243,34 +282,40 @@ function act_admin_activity(){
     <?php
       $act_start = ($act_page - 1)*$act_list_limit;
       $act_recent_sql  = "(SELECT u.display_name as display_name, u.id as id, act_type, act_date, act_params, a.id as act_id FROM ".$wpdb->prefix."activity AS a, ".$wpdb->users." AS u WHERE a.user_id = u.id ".$sqlfilter." ORDER BY ".$sqlorderby;
-      if ( $logins = $wpdb->get_results($wpdb->prepare($act_recent_sql)) or !empty($sqlfilter) ){
-        $act_count = count($logins);
-        ?>
-        <form id="act-filter" action="" method="get">
-          <input type="hidden" name="page" value="act_activity" />
-          <?php wp_nonce_field('wp-activity-list', 'act_filter', false) ?>
-          <div class="tablenav">
-            <?php act_pagination($act_count,$act_list_limit, $act_page, $act_start, $act_args); ?>
-            <div class="alignleft actions">
-              <select name="act_list_action">
-                <option value="" selected="selected"><?php _e('Bulk Actions'); ?></option>
-                <option value="delete"><?php _e('Delete'); ?></option>
-              </select>
-              <input type="submit" value="<?php esc_attr_e('Apply'); ?>" name="doaction" id="doaction" class="button-secondary action" />
-              <?php
-              $types = array('LOGIN_FAIL', 'ACCESS_DENIED', 'CONNECT', 'POST_ADD', 'POST_EDIT', 'POST_DEL', 'PROFILE_EDIT', 'COMMENT_ADD', 'COMMENT_EDIT', 'COMMENT_DEL', 'LINK_ADD');
-              $select_type = "<select name=\"act_type_filter\">";
-              $select_type .= '<option value="all"'  . (($act_type_filter == 'all') ? " selected='selected'" : '') . '>' . __('View all') . "</option>";
-              foreach ((array) $types as $type)
-                $select_type .= '<option value="' . $type . '"' . (($type == $act_type_filter) ? " selected='selected'" : '') . '>' . $type . "</option>";
-              $select_type .= "</select>";
-              echo $select_type;
-              $select_order = "<select name=\"act_order_by\">";
-              $select_order .= '<option value="order_date"' . (($act_order_by == 'order_date') ? " selected='selected'" : '') . '>' .  __('Order by date (DESC)', 'wp-activity') . '</option>';
-              $select_order .= '<option value="order_user"' . (($act_order_by == 'order_user') ? " selected='selected'" : '') . '>' .  __('Order by user', 'wp-activity') . '</option>';
-              $select_order .= '<option value="order_type"' . (($act_order_by == 'order_type') ? " selected='selected'" : '') . '>' .  __('Order by event type', 'wp-activity') . '</option>';
-              $select_order .= "</select>";
-              echo $select_order;
+      $logins = $wpdb->get_results($wpdb->prepare($act_recent_sql));
+      $act_count = count($logins);
+      //echo 'act_recent_sql : '.$act_recent_sql.' - act_count : '.$act_count.'<br />';
+    ?>
+      <form id="act-filter" action="" method="get">
+        <input type="hidden" name="page" value="act_activity" />
+        <?php wp_nonce_field('wp-activity-list', 'act_filter', false) ?>
+        <div class="tablenav">
+          <?php act_pagination($act_count,$act_list_limit, $act_page, $act_start, $act_args); ?>
+          <div class="alignleft actions">
+            <select name="act_list_action">
+              <option value="" selected="selected"><?php _e('Bulk Actions'); ?></option>
+              <option value="delete"><?php _e('Delete'); ?></option>
+            </select>
+            <input type="submit" value="<?php esc_attr_e('Apply'); ?>" name="doaction" id="doaction" class="button-secondary action" />
+            <?php
+            $types = array('LOGIN_FAIL', 'ACCESS_DENIED', 'CONNECT', 'POST_ADD', 'POST_EDIT', 'POST_DEL', 'PROFILE_EDIT', 'COMMENT_ADD', 'COMMENT_EDIT', 'COMMENT_DEL', 'LINK_ADD');
+            $select_type = "<select name=\"act_type_filter\">";
+            $select_type .= '<option value="all"'  . (($act_type_filter == 'all') ? " selected='selected'" : '') . '>' . __('View all') . "</option>";
+            foreach ((array) $types as $type)
+              $select_type .= '<option value="' . $type . '"' . (($type == $act_type_filter) ? " selected='selected'" : '') . '>' . $type . "</option>";
+            $select_type .= "</select>";
+            echo $select_type;
+            $select_order = "<select name=\"act_order_by\">";
+            $select_order .= '<option value="order_date"' . (($act_order_by == 'order_date') ? " selected='selected'" : '') . '>' .  __('Order by date (DESC)', 'wp-activity') . '</option>';
+            $select_order .= '<option value="order_user"' . (($act_order_by == 'order_user') ? " selected='selected'" : '') . '>' .  __('Order by user', 'wp-activity') . '</option>';
+            $select_order .= '<option value="order_type"' . (($act_order_by == 'order_type') ? " selected='selected'" : '') . '>' .  __('Order by event type', 'wp-activity') . '</option>';
+            $select_order .= "</select>";
+            echo $select_order;
+            $user_count = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->users;");
+            if ( $user_count <= $act_user_filter_max ){
+              if ( empty($act_user_sel) ){
+  	            $act_user_sel = 'all';
+              }
               $act_u_res = get_users('orderby=displayname');
               $act_u_sel = "<select name=\"act_user_sel\">";
               $act_u_sel .= '<option value="all"' . (($act_user_sel == 'all') ? " selected='selected'" : '') . '>' .  __('All users', 'wp-activity') . '</option>';
@@ -278,71 +323,73 @@ function act_admin_activity(){
                 $act_u_sel .= '<option value="'.$act_u->ID.'"' . (($act_user_sel == $act_u->ID) ? " selected='selected'" : '') . '>' .  $act_u->display_name . '</option>';
               }
               $act_u_sel .= "</select>";
-              echo $act_u_sel;
-              ?>
-              <input type="submit" id="post-query-submit" value="<?php esc_attr_e('Filter'); ?>" class="button-secondary" />
-            </div>
-            <br class="clear" />
-          </div>
-          <table id="activity-admin" class="widefat">
-            <thead>
-              <tr>
-                <th scope="col" id="cb" class="manage-column column-cb check-column"><input type="checkbox" /></th>
-                <th></th>
-                <th scope="col" class="manage-column"><?php _e("Date", 'wp-activity'); ?></th>
-                <th scope="col" class="manage-column"><?php _e("User", 'wp-activity'); ?></th>
-                <th scope="col" class="manage-column"><?php _e("Event Type", 'wp-activity'); ?></th>
-                <th scope="col" class="manage-column"><?php _e("Applies to", 'wp-activity'); ?></th>
-              </tr>
-            </thead>
-            <tfoot>
-              <tr>
-                <th scope="col" class="manage-column column-cb check-column"><input type="checkbox" /></th>
-                <th></th>
-                <th scope="col" class="manage-column"><?php _e("Date", 'wp-activity'); ?></th>
-                <th scope="col" class="manage-column"><?php _e("User", 'wp-activity'); ?></th>
-                <th scope="col" class="manage-column"><?php _e("Event Type", 'wp-activity'); ?></th>
-                <th scope="col" class="manage-column"><?php _e("Applies to", 'wp-activity'); ?></th>
-              </tr>
-            </tfoot>
-            <tbody>
-            <?php
-            $act_alt = 0;
-            $i = 0;
-            foreach ( (array) $logins as $act ){
-              $i++;
-              if ($i > $act_start and $i <= ($act_start + $act_list_limit)){
-                if ($act_alt == 1){$act_alt_class = 'class="alternate"';}else{$act_alt_class = '';}
-                $act_prep = act_prepare($act, 'admin');
-                echo '<tr '.$act_alt_class.'>';
-                echo '<th scope="row" class="check-column"><input type="checkbox" name="act_check[]" value="'. $act->act_id .'" /></th>';
-                echo '<td>'.$i.'</td><td>'.$act_prep['date'].'</td><td><span class="'.$act_prep['class'].'">'.$act_prep['user'].'</span></td><td><span class="'.$act_prep['class'].'">'.$act_prep['type'].'</span></td><td>'.$act_prep['params'].'</td>';
-                echo '</tr>';
-                if ($act_alt == 1){$act_alt = 0;}else{$act_alt = 1;}
-              }
+            }else{
+              $act_u_sel = __("User").' : <input type="text" id="act_user_sel" name="act_user_sel" value="'.$act_user_sel.'" />';
             }
+            echo $act_u_sel;
             ?>
-            </tbody>
-          </table>
-        </form>                
-        <div class="tablenav">
-          <form action="" method="post">
-            
-            <input type="hidden" name="act_type_filter" value="<?php echo $act_type_filter; ?>" />
-            <input type="hidden" name="act_order_by" value="<?php echo $act_order_by; ?>" />
-            <input type="hidden" name="act_user_sel" value="<?php echo $act_user_sel; ?>" />
-            <input type="submit" class="button-primary" name="act_export" value="<?php _e('Export filtered Data &raquo;','wp-activity') ?>" />
-            <input type="checkbox" name="act_del_exported" /> <?php _e('Delete exported data','wp-activity') ?> 
-            <br /><span class="act_info"><?php _e('If you use MS Excel and have some ugly characters, rename the file extension to .txt and open it within Excel.','wp-activity') ?></span>
-            <?php wp_nonce_field('wp-activity-export','act_export_csv'); ?>
-          </form>
-        <?php
-        act_pagination($act_count,$act_list_limit, $act_page, $act_start, $act_args);
-        echo '</div>';
-        echo '<div class="clearfix"></div>';
-      }else{
-        echo '<h3>'.__('Activity logs are empty !','wp-activity').'</h3>';
-      }
+            <?php _e("Data", 'wp-activity'); ?> : <input type="text" id="act_data_filter" name="act_data_filter" value="<?php echo $act_data_filter; ?>" />
+            <input type="submit" id="post-query-submit" value="<?php esc_attr_e('Filter'); ?>" class="button-secondary" />
+          </div>
+          <br class="clear" />
+        </div>
+        <table id="activity-admin" class="widefat">
+          <thead>
+            <tr>
+              <th scope="col" id="cb" class="manage-column column-cb check-column"><input type="checkbox" /></th>
+              <th></th>
+              <th scope="col" class="manage-column"><?php _e("Date", 'wp-activity'); ?></th>
+              <th scope="col" class="manage-column"><?php _e("User"); ?></th>
+              <th scope="col" class="manage-column"><?php _e("Event Type", 'wp-activity'); ?></th>
+              <th scope="col" class="manage-column"><?php _e("Applies to", 'wp-activity'); ?></th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th scope="col" class="manage-column column-cb check-column"><input type="checkbox" /></th>
+              <th></th>
+              <th scope="col" class="manage-column"><?php _e("Date", 'wp-activity'); ?></th>
+              <th scope="col" class="manage-column"><?php _e("User", 'wp-activity'); ?></th>
+              <th scope="col" class="manage-column"><?php _e("Event Type", 'wp-activity'); ?></th>
+              <th scope="col" class="manage-column"><?php _e("Applies to", 'wp-activity'); ?></th>
+            </tr>
+          </tfoot>
+          <tbody>
+          <?php
+          $act_alt = 0;
+          $i = 0;
+          foreach ( (array) $logins as $act ){
+            $i++;
+            if ($i > $act_start and $i <= ($act_start + $act_list_limit)){
+              if ($act_alt == 1){$act_alt_class = 'class="alternate"';}else{$act_alt_class = '';}
+              $act_prep = act_prepare($act, 'admin');
+              echo '<tr '.$act_alt_class.'>';
+              echo '<th scope="row" class="check-column"><input type="checkbox" name="act_check[]" value="'. $act->act_id .'" /></th>';
+              echo '<td>'.$i.'</td><td>'.$act_prep['date'].'</td><td><span class="'.$act_prep['class'].'">'.$act_prep['user'].'</span></td><td><span class="'.$act_prep['class'].'">'.$act_prep['type'].'</span></td><td>'.$act_prep['params'].'</td>';
+              echo '</tr>';
+              if ($act_alt == 1){$act_alt = 0;}else{$act_alt = 1;}
+            }
+          }
+          ?>
+          </tbody>
+        </table>
+      </form>                
+      <div class="tablenav">
+        <form action="" method="post">
+          
+          <input type="hidden" name="act_type_filter" value="<?php echo $act_type_filter; ?>" />
+          <input type="hidden" name="act_order_by" value="<?php echo $act_order_by; ?>" />
+          <input type="hidden" name="act_user_sel" value="<?php echo $act_user_sel; ?>" />
+          <input type="hidden" name="act_data_filter" value="<?php echo $act_data_filter; ?>" />
+          <input type="submit" class="button-primary" name="act_export" value="<?php _e('Export filtered Data &raquo;','wp-activity') ?>" />
+          <input type="checkbox" name="act_del_exported" /> <?php _e('Delete exported data','wp-activity') ?> 
+          <br /><span class="act_info"><?php _e('If you use MS Excel and have some ugly characters, rename the file extension to .txt and open it within Excel.','wp-activity') ?></span>
+          <?php wp_nonce_field('wp-activity-export','act_export_csv'); ?>
+        </form>
+      <?php
+      act_pagination($act_count,$act_list_limit, $act_page, $act_start, $act_args);
+      echo '</div>';
+      echo '<div class="clearfix"></div>';
     ?>
   </div>
   <?php

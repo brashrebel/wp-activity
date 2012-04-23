@@ -6,17 +6,31 @@ function act_export(){
     if (isset($_POST['act_type_filter'])){
     $act_type_filter = esc_html($_POST['act_type_filter']);
     $act_user_sel = esc_html($_POST['act_user_sel']);
+    $act_data_filter = esc_html($_POST['act_data_filter']);
     if ($act_user_sel <> 'all' and !empty($act_user_sel)){
-      $sql_username = get_userdata($act_user_sel);
-      $sqlfilter .= ' AND u.id = '.$act_user_sel.' AND act_type NOT IN ("LOGIN_FAIL", "ACCESS_DENIED")';
-      $act_args .= '&act_user_sel='.$act_user_sel;
+      if (is_numeric($act_user_sel)){
+        $sql_userobject = get_userdata($act_user_sel);
+        $sql_username = $sql_userobject->display_name;
+        $sqlfilter .= ' AND u.id = '.$act_user_sel;
+      }else{
+        $sql_username = $act_user_sel;
+        $sql_userobject = get_user_by('login', $act_user_sel);
+        $sqlfilter .= ' AND u.display_name = "'.$act_user_sel.'"';
+        $act_user_sel = $sql_userobject->ID;
+      }
+      $sqlfilter .= ' AND act_type NOT IN ("LOGIN_FAIL", "ACCESS_DENIED")';
     }
     if ($act_type_filter <> 'all' and !empty($act_type_filter)){
       $sqlfilter .= 'AND act_type = "'.$act_type_filter.'"';
     }
-    $act_args .= '&act_type_filter='.$act_type_filter;
-    if ($act_type_filter == 'LOGIN_FAIL' or $act_type_filter == 'all'){
-      $sqlfilter .= ') UNION ALL (SELECT null as display_name, user_id as id, act_type, act_date, act_params, id FROM '.$wpdb->prefix.'activity WHERE act_type = "LOGIN_FAIL" AND SUBSTRING_INDEX(act_params, "###", 1) = "'.$sql_username->display_name.'"';
+    if (!empty($act_data_filter)){
+      $sqlfilter .= ' AND act_params LIKE "%%'.$act_data_filter.'%%"';
+    }
+    if (($act_type_filter == 'LOGIN_FAIL' or $act_type_filter == 'all') and $act_user_sel <> 'all'){
+      $sqlfilter .= ') UNION ALL (SELECT null as display_name, user_id as id, act_type, act_date, act_params, id FROM '.$wpdb->prefix.'activity WHERE act_type = "LOGIN_FAIL" AND SUBSTRING_INDEX(act_params, "###", 1) = "'.$sql_username.'"';
+      if (!empty($act_data_filter)){
+        $sqlfilter .= ' AND act_params LIKE "%%'.$act_data_filter.'%%"';
+      }
     }
   }
   $sqlfilter .= ')';

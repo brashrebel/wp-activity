@@ -3,7 +3,7 @@ Contributors: Dric1107
 Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor, stats, blacklist, tracking, access, security, login
 Requires at least: 3.1
-Tested up to: 3.3.1
+Tested up to: 3.3.2
 Stable tag: 1.9
 
 Monitor and display registered users activity (logins, posts, comments, etc.). You can also track and prevent hackering attemps, with IP blacklisting.
@@ -12,7 +12,7 @@ Monitor and display registered users activity (logins, posts, comments, etc.). Y
 
 This plugin logs registered users activity in your blog and displays it in frontend and backend.
 It can also track and deny access by blacklisting to unwanted login attempts.
-Activity loggued :
+Activity logged :
 
 - logins
 - new user
@@ -51,6 +51,7 @@ Translations :
 - Italian (Thx to Luca - partially translated up to v1.2)
 - Turkish (Thx to Can KAYA - translated up to v1.2)
 - Spanish (Thx to Cscean - translated up to v1.3)
+- Romanian (Thx to Web Geeks - translated up to v1.7)
 - Dutch (Thx to Tom - translated up to v1.8.1)
 
 (If you translated my plugin, please send the translated .po file at cedric@driczone.net )
@@ -147,9 +148,13 @@ Just change the icons in the /img directory, but keep the event name (example : 
 
 You will have to edit wp-activity.php, check line 32 and set `$strict_logs` to **true**.
 
+= How can I change the search field filter in admin activity log by the user list ?
+
+You will have to edit wp-activity.php and change the value for the `$act_user_filter_max` var (near line 33).
+
 = I exported data to a csv file but there are ugly characters in MS Excel ! =
 
-This is a known excel bug : when you open a .csv file in Excel, it uses the local encoding set (WINDOWS-1252 for French) and not UTF-8. To avoid this, you will have to rename the file extension from .csv to .txt, open Excel, do File/Open and open the wp-activity.txt. The csv import assistant will now launch, allowing you to set the encoding to UTF-8. 
+This is a known excel bug : when you open a .csv file in Excel, it forces the use of the local encoding set (WINDOWS-1252 for French) and not UTF-8. To avoid this, you will have to rename the file extension from .csv to .txt, open Excel, do File/Open and open the wp-activity.txt. The csv import assistant will now launch, allowing you to set the encoding to UTF-8.
 
 = I would like to display more or less than 50 lines per page in admin panel of wp_activity =
 
@@ -185,8 +190,12 @@ If you want to be sure it's debugged, you can wait a few days for a x.x.1 versio
 
 = 1.9 =
 * Added new events types logging : new users, comments edits, comments deletions (not spam comments), posts deletions (real deletions, not trashed posts).
-* Changed the way modified post event are logged.
+* Added a search field for filtering by data in admin activity log (to search for IP addresses, posts, etc.).
+* Added partial Romanian translation (for version 1.7, not up-to-date !) by [Web Geeks](http://webhostinggeeks.com).
+* When there is more than 25 users, the user filter is now displayed with a search field (with autocomplete) instead of the users list for better performance/readability.
+* Changed the way modified post events are logged.
 * Changed and added a few translation strings.
+* Changed minimum user capability to access plugin from 'publish_post' to 'administrator'.
 * Various Tweaks.
 * When a post or a comment is deleted, the post and comments related events are updated (the title of the deleted post is saved instead of post id).
 * Fixed a possible bug with dates timezones. This could mess a little your previous logged events dates.

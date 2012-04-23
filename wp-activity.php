@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Monitor and display blog members activity ; track and blacklist unwanted login attemps.
     Author: Dric
-    Version: 1.9 beta
+    Version: 1.9 beta 2
     Author URI: http://www.driczone.net
 */
 
@@ -30,7 +30,8 @@
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get bugged by admin panel additions
-$act_plugin_version = "1.9 beta"; //don't modify this !
+$act_user_filter_max = 25; //If you have less than 25 users (default value), it will display a select field with all users instead of a search field in activity log filter
+$act_plugin_version = "1.9 beta 2"; //don't modify this !
 
 $options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
@@ -286,7 +287,7 @@ function act_session($arg='', $userlogin='') {
   if ( is_numeric($userlogin->ID) ) {
       $user_ID = $userlogin->ID;
   } else {
-      $userlogin = get_userdatabylogin($arg);
+      $userlogin = get_user_by('login', $arg);
       if ($userlogin->ID) {
           $user_ID = $userlogin->ID;
       } else {
@@ -769,11 +770,15 @@ function nicetime($posted_date, $admin=false, $nohour=false) {
     $act_opt=get_option('act_settings');
     $date_relative = $act_opt['act_date_relative'];
     $date_format = $act_opt['act_date_format'];
+    $gmt_offset = get_option('gmt_offset');
+    if (empty($gmt_offset)){
+      $timezone = get_option('timezone_string');
+      $gmt = date_create($posted_date, timezone_open($timezone));
+      $gmt_offset = date_offset_get($gmt) / 3600;
+    }
     $cur_time_gmt = current_time('timestamp', true);
-    $cur_time_loc = current_time('timestamp', false);
-    $gmt_offset = $cur_time_loc - $cur_time_gmt;  //poor hack to get the gmt_offset which is sometimes empty.
     $in_seconds = strtotime($posted_date);
-    $posted_date = gmdate("Y-m-d H:i:s", strtotime($posted_date) + $gmt_offset);
+    $posted_date = gmdate("Y-m-d H:i:s", strtotime($posted_date) + ($gmt_offset*3600));
     $relative_date = '';
     $diff = $cur_time_gmt - $in_seconds;
     $months = floor($diff/2592000);

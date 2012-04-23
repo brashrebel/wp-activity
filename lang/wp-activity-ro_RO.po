@@ -1,331 +1,388 @@
-# Translation of the WordPress plugin WP-Activity 0.8 by Dric.
-# Copyright (C) 2010 Dric
-# This file is distributed under the same license as the WP-Activity package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: WP-Activity 1.1\n"
+"Project-Id-Version: WP-Activity 1.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-23 16:42+0100\n"
-"PO-Revision-Date: 2012-04-23 16:42+0100\n"
+"POT-Creation-Date: 2012-04-23 16:44+0100\n"
+"PO-Revision-Date: 2012-04-23 16:44+0100\n"
 "Last-Translator: Dric <cedric@driczone.net>\n"
-"Language-Team: leevel OpenSource (http://leevel.com) <opensource@leevel.com>\n"
+"Language-Team: Web Geeks\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-KeywordsList: _e;__\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-Language: Spanish\n"
-"X-Poedit-Country: SPAIN\n"
+"X-Textdomain-Support: yes\n"
+"X-Poedit-Language: Romanian\n"
+"X-Poedit-Country: Romania\n"
 "X-Poedit-SearchPath-0: ..\n"
 
+# @ wp-activity
 #: ../wp-act-admin.php:7
-#, fuzzy
 msgid "Last login"
-msgstr "Última sesión:"
+msgstr "Ultima conectare"
 
+# @ wp-activity
 #: ../wp-act-admin.php:30
 msgid "Logon fails"
-msgstr "Inicio de sesión erróneos"
+msgstr "Log on nu reuşeşte"
 
+# @ default
 #: ../wp-act-admin.php:39
 msgid "Settings"
-msgstr "Configuración"
+msgstr "Setări"
 
+# @ default
 #: ../wp-act-admin.php:40
 msgid "Uninstall"
-msgstr "Desinstalar"
+msgstr "Dezinstalare"
 
+# @ wp-activity
 #: ../wp-act-admin.php:50
-#, fuzzy
 msgid "Activity Log"
-msgstr "Eventos de actividad"
+msgstr "Activitate jurnal"
 
+# @ wp-activity
 #: ../wp-act-admin.php:51
 #: ../wp-act-admin.php:802
 #: ../wp-act-admin.php:819
-#, fuzzy
 msgid "Activity Stats"
-msgstr "Eventos de actividad"
+msgstr "Activitatea Stats"
 
+# @ wp-activity
 #: ../wp-act-admin.php:52
 #: ../wp-act-admin.php:403
-#, fuzzy
 msgid "WP-Activity Settings"
-msgstr "Eventos de actividad"
+msgstr "Setările WP-activitate"
 
+# @ default
 #: ../wp-act-admin.php:107
-#, php-format
+#, fuzzy, php-format
 msgid "Displaying %s&#8211;%s of %s"
-msgstr "Mostrando %s&#8211;%s de %s"
+msgstr "Afişarea %s – %s din %s"
 
+# @ wp-activity
 #: ../wp-act-admin.php:210
 msgid "Event(s) deleted."
-msgstr "Evento(s) eliminado(s)."
+msgstr "Evenimentul sau evenimentele de şters."
 
+# @ wp-activity
 #: ../wp-act-admin.php:281
 #: ../wp-activity.php:479
 #: ../wp-activity.php:887
 msgid "Recent Activity"
-msgstr "Actividad Reciente"
+msgstr "Activitate recentă"
 
+# @ default
 #: ../wp-act-admin.php:296
 msgid "Bulk Actions"
-msgstr "Acciones en Bloque"
+msgstr "Acţiuni în masă"
 
+# @ default
 #: ../wp-act-admin.php:297
 msgid "Delete"
-msgstr "Borrar"
+msgstr "Ştergere"
 
+# @ default
 #: ../wp-act-admin.php:303
 msgid "View all"
-msgstr "Ver todos"
+msgstr "Vizualizare toate"
 
+# @ wp-activity
 #: ../wp-act-admin.php:309
 msgid "Order by date (DESC)"
-msgstr "Ordenar por Fecha (DESC)"
+msgstr "Ordonare după data (DESC)"
 
+# @ wp-activity
 #: ../wp-act-admin.php:310
 msgid "Order by user"
-msgstr "Ordenar por usuario"
+msgstr "Comanda de utilizator"
 
+# @ wp-activity
 #: ../wp-act-admin.php:311
 msgid "Order by event type"
-msgstr "Ordenar por tipo de evento"
+msgstr "Comanda de tip de eveniment"
 
+# @ wp-activity
 #: ../wp-act-admin.php:321
 msgid "All users"
-msgstr ""
+msgstr "Toţi utilizatorii"
 
+# @ wp-activity
 #: ../wp-act-admin.php:327
 #: ../wp-act-admin.php:342
 #: ../wp-act-admin.php:352
 #: ../wp-act-export.php:65
 msgid "User"
-msgstr "Usuario"
+msgstr "Utilizator"
 
+# @ wp-activity
 #: ../wp-act-admin.php:331
 #, fuzzy
 msgid "Data"
-msgstr "Fecha"
+msgstr "Data"
 
+# @ wp-activity
 #: ../wp-act-admin.php:341
 #: ../wp-act-admin.php:351
 #: ../wp-act-export.php:65
 msgid "Date"
-msgstr "Fecha"
+msgstr "Data"
 
+# @ wp-activity
 #: ../wp-act-admin.php:343
 #: ../wp-act-admin.php:353
 #: ../wp-act-export.php:65
 msgid "Event Type"
-msgstr "Tipo de evento"
+msgstr "Tip de eveniment"
 
+# @ wp-activity
 #: ../wp-act-admin.php:344
 #: ../wp-act-admin.php:354
 #: ../wp-act-export.php:65
 msgid "Applies to"
-msgstr "Se aplica a"
+msgstr "Se aplică"
 
+# @ default
 #: ../wp-act-admin.php:384
+#, fuzzy
 msgid "Export filtered Data &raquo;"
-msgstr ""
+msgstr "Exportaţi datele filtrate»"
 
+# @ wp-activity
 #: ../wp-act-admin.php:385
 msgid "Delete exported data"
-msgstr ""
+msgstr "Ştergeţi datele exportate"
 
+# @ wp-activity
 #: ../wp-act-admin.php:386
 msgid "If you use MS Excel and have some ugly characters, rename the file extension to .txt and open it within Excel."
-msgstr ""
+msgstr "Dacă utilizaţi MS Excel şi au unele caractere urât, redenumiţi extensia de fişier .txt şi deschideţi-l în Excel."
 
+# @ default
 #: ../wp-act-admin.php:437
 msgid "Options saved."
-msgstr "Opciones guardadas."
+msgstr "Opţiuni salvate."
 
+# @ wp-activity
 #: ../wp-act-admin.php:442
 msgid "Activity logs deleted."
-msgstr "Registros de actividad eliminados."
+msgstr "Jurnalele de activitate elimină."
 
+# @ wp-activity
 #: ../wp-act-admin.php:449
 #: ../wp-act-admin.php:460
 #, php-format
 msgid "Activity Plugin has been uninstalled. You can now desactivate this plugin : <a href=\"%s\">Plugins Page</a>"
-msgstr "Activity Plugin ha sido desinstalado. Ahora puedes desactivar este plugin: <a href=\"%s\">Página de Plugins</a>"
+msgstr "Plugin Activitatea a fost dezinstalat. Puteţi desactivate acum acest plugin <a href=\"%s\">Plugins Page</a>"
 
 #: ../wp-act-admin.php:454
 msgid "Manual pruning done."
-msgstr ""
+msgstr "Tăiere manual făcut."
 
+# @ wp-activity
 #: ../wp-act-admin.php:477
 #: ../wp-act-admin.php:486
 msgid "Date format"
-msgstr "Formato de fecha"
+msgstr "Format dată"
 
+# @ wp-activity
 #: ../wp-act-admin.php:478
 #: ../wp-act-admin.php:509
 msgid "Display options"
-msgstr "Opciones de visualización"
+msgstr "Opţiuni de afişare"
 
+# @ wp-activity
 #: ../wp-act-admin.php:479
 #: ../wp-act-admin.php:540
 msgid "Privacy options"
-msgstr "Opciones de privacidad"
+msgstr "Opţiuni de confidenţialitate"
 
+# @ wp-activity
 #: ../wp-act-admin.php:480
 #: ../wp-act-admin.php:553
 msgid "Events logging and feeding"
-msgstr "Registro y feed de eventos"
+msgstr "Jurnal de evenimente şi hrănire"
 
 #: ../wp-act-admin.php:481
 #: ../wp-act-admin.php:596
 msgid "Blacklisting"
-msgstr ""
+msgstr "Pe lista neagră"
 
+# @ wp-activity
 #: ../wp-act-admin.php:482
 #: ../wp-act-admin.php:642
 msgid "Reset/uninstall"
-msgstr "Restablacer/desinstalar"
+msgstr "A nu putea suporta/uninstall"
 
+# @ wp-activity
 #: ../wp-act-admin.php:489
 msgid "Date format : "
-msgstr "Formato de fecha:"
+msgstr "Formatul datei: "
 
+# @ wp-activity
 #: ../wp-act-admin.php:496
 msgid "For events that are more than a month old only, or if you dont use relative dates."
-msgstr "Para los eventos que tienen más de un mes solamente, o si no utilizas fechas relativas."
+msgstr "Pentru evenimente care sunt mai mult de o lună vechi, sau dacă nu utilizaţi datele relative."
 
+# @ wp-activity
 #: ../wp-act-admin.php:499
 msgid "Use relative dates : "
-msgstr "Uso de fechas relativas:"
+msgstr "Utilizaţi date relative: "
 
+# @ wp-activity
 #: ../wp-act-admin.php:502
 msgid "Relatives dates exemples : 1 day ago, 22 hours and 3 minutes ago, etc."
-msgstr "Ejemplos de fechas relativas: hace 1 día, hace 22 horas y 3 minutos, etc."
+msgstr "Rudele datele exemples: 1 zi în urmă, de la 22 de ore şi 3 minute în urmă, etc."
 
+# @ default
 #: ../wp-act-admin.php:506
 #: ../wp-act-admin.php:537
 #: ../wp-act-admin.php:550
 #: ../wp-act-admin.php:593
 #: ../wp-act-admin.php:637
+#, fuzzy
 msgid "Update options &raquo;"
-msgstr "Actualizar opciones &raquo;"
+msgstr "Opţiuni de actualizare»"
 
+# @ wp-activity
 #: ../wp-act-admin.php:512
 msgid "Display icons : "
-msgstr "Mostrar iconos:"
+msgstr "Afişa pictograme: "
 
+# @ wp-activity
 #: ../wp-act-admin.php:513
 msgid "Generic icons "
-msgstr "Iconos genéricos"
+msgstr "Icoane generic "
 
+# @ wp-activity
 #: ../wp-act-admin.php:515
 msgid "Gravatars for profile edit and connect events icons"
-msgstr "Gravatars para editar perfil y conectar los iconos de los eventos"
+msgstr "Gravatars pentru profil editare şi conectaţi evenimente icoane"
 
+# @ wp-activity
 #: ../wp-act-admin.php:516
 msgid "No icons "
-msgstr "Sin iconos"
+msgstr "Nu icoane "
 
+# @ wp-activity
 #: ../wp-act-admin.php:518
 msgid "Highlight new activity since last user login : "
-msgstr "Destacar la nueva actividad desde el último acceso:"
+msgstr "Evidenţia noua activitate din ultima user login: "
 
+# @ wp-activity
 #: ../wp-act-admin.php:522
 msgid "Display a link to the activity archive page : "
-msgstr "Mostrar un enlace a la página de archivo de actividad:"
+msgstr "Afişa un link la pagina de Arhiva de activitate: "
 
+# @ wp-activity
 #: ../wp-act-admin.php:526
 msgid "You have to create a page first, with the [ACT_STREAM] shortcode."
-msgstr "Tienes que crear una página en primer lugar, con el [ACT_STREAM] abreviado."
+msgstr "Trebuie să creaţi o pagină în primul rând, cu shortcode [ACT_STREAM]."
 
+# @ wp-activity
 #: ../wp-act-admin.php:530
 msgid "Author Path : "
-msgstr ""
+msgstr "Calea de autor: "
 
+# @ wp-activity
 #: ../wp-act-admin.php:533
 msgid "If you modified your author structure link or if you use WPMu, change your path. (Default : author, BuddyPress : members)"
-msgstr ""
+msgstr "Dacă aţi modificat autor structura link-ul tau sau dacă utilizaţi WPMu, modificaţi calea ta. (Implicit: autor, BuddyPress: membrii)"
 
+# @ wp-activity
 #: ../wp-act-admin.php:543
 msgid "Prevent users to hide their activity : "
-msgstr "Evitar que los usuarios oculten su actividad:"
+msgstr "Împiedică utilizatorii pentru a ascunde activitatea lor: "
 
+# @ wp-activity
 #: ../wp-act-admin.php:546
 msgid "Warning : If you activate this option, users won't have the choice to allow or deny the logging of their activity. For privacy respect, this option should stay desactivated."
-msgstr "Advertencia: Si se activa esta opción, los usuarios no tienen la opción de permitir o denegar el registro de su actividad. Para respetar la privacidad, esta opción debe permanecer desactivada."
+msgstr "AVERTISMENT: Dacă activaţi această opţiune, utilizatorii nu vor avea posibilitatea de a permite sau a refuza înregistrarea lor activitate. Pentru respectarea vieții private, această opţiune ar trebui să staţi desactivated."
 
+# @ wp-activity
 #: ../wp-act-admin.php:556
 msgid "Rows limit in database : "
-msgstr "Límite de las filas en la base de datos:"
+msgstr "Limita de rânduri în baza de date: "
 
 #: ../wp-act-admin.php:557
 msgid "Manually prune table"
-msgstr ""
+msgstr "Manual de prune tabel"
 
+# @ wp-activity
 #: ../wp-act-admin.php:558
 #, php-format
 msgid "There is currently %s rows in database."
-msgstr ""
+msgstr "În prezent nu există rânduri %s în baza de date."
 
+# @ wp-activity
 #: ../wp-act-admin.php:561
 msgid "Display activity RSS feed : "
-msgstr "Mostrar feed RSS de la actividad:"
+msgstr "Afişează activitatea RSS feed: "
 
+# @ wp-activity
 #: ../wp-act-admin.php:564
 msgid "Log login failures : "
-msgstr "Registro de errores de acceso:"
+msgstr "Eşecuri login log: "
 
+# @ wp-activity
 #: ../wp-act-admin.php:567
 msgid "If you want to log all connexions attempts that failed, enable this option."
-msgstr "Si deseas registrar todos los intentos de conexiones fallidas, activa esta opción."
+msgstr "Dacă doriţi să vă conectaţi toate încercările de connexions care nu a reuşit, activaţi această opţiune."
 
+# @ wp-activity
 #: ../wp-act-admin.php:570
 msgid "Log in database"
-msgstr "Registro en la base de datos"
+msgstr "Log in baza de date"
 
+# @ wp-activity
 #: ../wp-act-admin.php:570
 msgid "Display in feed"
-msgstr "Mostrar en feed"
+msgstr "Afişa în furaje"
 
+# @ wp-activity
 #: ../wp-act-admin.php:572
 msgid "Login events : "
-msgstr "Eventos de acceso:"
+msgstr "Evenimente de autentificare: "
 
+# @ wp-activity
 #: ../wp-act-admin.php:576
 #, fuzzy
 msgid "Profile update/new user events : "
-msgstr "Eventos de actualización de perfil:"
+msgstr "Profil update evenimente: "
 
+# @ wp-activity
 #: ../wp-act-admin.php:580
 #, fuzzy
 msgid "Post creation/update/deletion events : "
-msgstr "Entradas creadas/eventos de actualización:"
+msgstr "Post crearea/actualizare evenimente: "
 
+# @ wp-activity
 #: ../wp-act-admin.php:584
 msgid "New comment events : "
-msgstr "Eventos de nuevos comentario:"
+msgstr "Nou comentariu evenimente: "
 
+# @ wp-activity
 #: ../wp-act-admin.php:588
 msgid "New link events : "
-msgstr "Eventos de nuevos enlaces:"
+msgstr "Nou link-ul de evenimente: "
 
 #: ../wp-act-admin.php:599
 msgid "Activate blacklisting"
-msgstr ""
+msgstr "Activa pe lista neagră"
 
 #: ../wp-act-admin.php:602
 msgid "Blacklisting allow to deny access to your blog for specified IP addresses."
-msgstr ""
+msgstr "Pe lista neagră a permite să împiedice accesul la blog-ul pentru specificate de adrese IP."
 
 #: ../wp-act-admin.php:606
 msgid "Blacklist on wp-login.php only"
-msgstr ""
+msgstr "Lista neagră pe wp-login.php numai"
 
 #: ../wp-act-admin.php:609
 msgid "Check this option if you don't have any frontend login form. For more blog performance, this option should be enabled when possible."
-msgstr ""
+msgstr "Verificaţi această opţiune dacă nu aveţi orice formă de interfat de login. Pentru mai multe blog-ul de performanţă, această opţiune ar trebui să fie activat atunci când este posibil."
 
 #: ../wp-act-admin.php:614
 msgid "Auto-Blacklist IP after "
@@ -341,106 +398,128 @@ msgstr ""
 
 #: ../wp-act-admin.php:630
 msgid "IP list"
-msgstr ""
+msgstr "Lista de IP"
 
 #: ../wp-act-admin.php:633
 msgid "One IP per line. Don't blacklist your own IP ! Examples:"
-msgstr ""
+msgstr "O anchetă pe linie. Nu blacklist IP-ul propriu! Exemple:"
 
+# @ wp-activity
 #: ../wp-act-admin.php:645
 msgid "Empty activity table : "
-msgstr "Tabla de actividades vacía:"
+msgstr "Tabelul activitate goală: "
 
+# @ wp-activity
 #: ../wp-act-admin.php:652
 msgid "Reset logs"
-msgstr "Restablecer registros"
+msgstr "Reiniţializare jurnalele"
 
+# @ wp-activity
 #: ../wp-act-admin.php:652
+#, fuzzy
 msgid ""
 "Empty activity table ? All your activity logs will be deleted.\\n"
 "\\n"
 "Choose [Cancel] to Stop, [OK] to proceed.\\n"
 msgstr ""
-"¿Vacíar tabla de actividad ? Todos tus registros de actividad serán eliminados.\\n"
-"\\n"
-"Selecciona [Cancelar] para detener, [Aceptar] para continuar.\\n"
+"Activiteiten tabel leegmaken ? Al je activiteiten logs zullen verwijderd worden.\n"
+"\n"
+"Kies [Annuleren] om te stoppen, [OK] om verder te gaan.\n"
 
+# @ wp-activity
 #: ../wp-act-admin.php:653
 msgid "Warning : cleaning activity table erase all activity logs."
-msgstr "Advertencia: Limpiando la tabla de actividad se borrarán todos los registros de actividad."
+msgstr "AVERTISMENT: curăţare activitatea tabelul şterge toate jurnalele de activitate."
 
+# @ wp-activity
 #: ../wp-act-admin.php:657
 #: ../wp-act-admin.php:664
 msgid "Uninstall plugin"
-msgstr "Desinstalar plugin"
+msgstr "Dezinstalaţi plugin"
 
+# @ wp-activity
 #: ../wp-act-admin.php:664
+#, fuzzy
 msgid ""
 "Uninstall plugin ? Settings and activity logs will be deleted.\\n"
 "\\n"
 "Choose [Cancel] to Stop, [OK] to proceed.\\n"
 msgstr ""
-"¿Desinstalar plugin ? Los registros de configuración y actividad serán eliminados.\\n"
-"\\n"
-"Selecciona [Cancelar] para detener, [Aceptar] para continuar. \\n"
+"Plugin installatie ongedaan maken ? Instellingen en activiteiten logs zullen verwijderd worden.\n"
+"\n"
+"Kies [Annuleren] om te stoppen, [OK] om verder te gaan.\n"
 
+# @ wp-activity
 #: ../wp-act-admin.php:665
 msgid "Warning : This will delete settings and activity table."
-msgstr "Advertencia: Se borrarán las configuraciones y la tabla de actividades."
+msgstr "AVERTISMENT: Acest lucru va şterge setările şi tabelul activitate."
 
+# @ wp-activity
 #: ../wp-act-admin.php:674
 #, php-format
 msgid "WP-Activity is a plugin by <a href=\"http://www.driczone.net\">Dric</a>. Version <strong>%s</strong>."
-msgstr "WP-Activity es un plugin de <a href=\"http://www.driczone.net\">Dric</a>. Versión <strong>%s</strong>."
+msgstr "> Dric</a>. Versiunea <strong>%s</strong>."
 
+# @ wp-activity
 #: ../wp-act-admin.php:748
+#, fuzzy
 msgid "Successful user login(s)"
-msgstr ""
+msgstr "Login(s) utilizator de succes"
 
 #: ../wp-act-admin.php:749
 msgid "New registered user(s)"
 msgstr ""
 
+# @ wp-activity
 #: ../wp-act-admin.php:750
+#, fuzzy
 msgid "Login attempt(s) failed"
-msgstr ""
+msgstr "Attempt(s) login nu a reușit"
 
 #: ../wp-act-admin.php:751
 msgid "Access(es) denied"
-msgstr ""
+msgstr "Access(ES) denied"
 
+# @ wp-activity
 #: ../wp-act-admin.php:752
 #, fuzzy
 msgid "Profile(s) edited"
-msgstr "Perfil editado"
+msgstr "Profiluri editat"
 
+# @ wp-activity
 #: ../wp-act-admin.php:753
 #, fuzzy
 msgid "Post(s) created"
-msgstr "Entrada Editada"
+msgstr "Posturilor creat"
 
+# @ wp-activity
 #: ../wp-act-admin.php:754
 #, fuzzy
 msgid "Post(s) edited"
-msgstr "Entrada Editada"
+msgstr "Posturilor editat"
 
+# @ wp-activity
 #: ../wp-act-admin.php:755
 #, fuzzy
 msgid "Post(s) deleted"
-msgstr "Entrada Editada"
+msgstr "Posturilor editat"
 
+# @ wp-activity
 #: ../wp-act-admin.php:756
 #, fuzzy
 msgid "Comment(s) added"
-msgstr "comentó"
+msgstr "Comment (s) adaugă"
 
+# @ wp-activity
 #: ../wp-act-admin.php:757
+#, fuzzy
 msgid "Link(s) added"
-msgstr ""
+msgstr "Linkurile adaugă"
 
+# @ wp-activity
 #: ../wp-act-admin.php:762
 msgid "Close"
-msgstr ""
+msgstr "Închide"
 
 #: ../wp-act-admin.php:763
 msgid "&#x3c;Prev"
@@ -450,431 +529,515 @@ msgstr ""
 msgid "Next&#x3e;"
 msgstr ""
 
+# @ wp-activity
 #: ../wp-act-admin.php:765
 msgid "Current"
-msgstr ""
+msgstr "Curent"
 
+# @ default
 #: ../wp-act-admin.php:766
 msgid "January"
-msgstr ""
+msgstr "Ianuarie"
 
+# @ default
 #: ../wp-act-admin.php:766
 msgid "February"
-msgstr ""
+msgstr "Februarie"
 
+# @ default
 #: ../wp-act-admin.php:766
 msgid "March"
-msgstr ""
+msgstr "Martie"
 
+# @ default
 #: ../wp-act-admin.php:766
 msgid "April"
-msgstr ""
+msgstr "Aprilie"
 
+# @ default
 #: ../wp-act-admin.php:766
-#, fuzzy
 msgid "May"
-msgstr "día"
+msgstr "Mai"
 
+# @ default
 #: ../wp-act-admin.php:766
 msgid "June"
-msgstr ""
+msgstr "Iunie"
 
+# @ default
 #: ../wp-act-admin.php:767
 msgid "July"
-msgstr ""
+msgstr "Iulie"
 
+# @ default
 #: ../wp-act-admin.php:767
 msgid "August"
-msgstr ""
+msgstr "August"
 
+# @ default
 #: ../wp-act-admin.php:767
 msgid "September"
-msgstr ""
+msgstr "Septembrie"
 
+# @ default
 #: ../wp-act-admin.php:767
 msgid "October"
-msgstr ""
+msgstr "Octombrie"
 
+# @ default
 #: ../wp-act-admin.php:767
 msgid "November"
-msgstr ""
+msgstr "Noiembrie"
 
+# @ default
 #: ../wp-act-admin.php:767
 msgid "December"
-msgstr ""
+msgstr "Decembrie"
 
+# @ default
 #: ../wp-act-admin.php:768
 msgid "Jan_January_abbreviation"
-msgstr ""
+msgstr "Jan_January_abbreviation"
 
+# @ default
 #: ../wp-act-admin.php:768
 msgid "Feb_February_abbreviation"
-msgstr ""
+msgstr "Feb_February_abbreviation"
 
+# @ default
 #: ../wp-act-admin.php:768
 msgid "Mar_March_abbreviation"
-msgstr ""
+msgstr "Mar_March_abbreviation"
 
+# @ default
 #: ../wp-act-admin.php:768
 msgid "Apr_April_abbreviation"
-msgstr ""
+msgstr "Apr_April_abbreviation"
 
+# @ default
 #: ../wp-act-admin.php:768
 msgid "May_May_abbreviation"
-msgstr ""
+msgstr "May_May_abbreviation"
 
+# @ default
 #: ../wp-act-admin.php:768
 msgid "Jun_June_abbreviation"
-msgstr ""
+msgstr "Jun_June_abbreviation"
 
+# @ default
 #: ../wp-act-admin.php:769
 msgid "Jul_July_abbreviation"
-msgstr ""
+msgstr "Jul_July_abbreviation"
 
+# @ default
 #: ../wp-act-admin.php:769
 msgid "Aug_August_abbreviation"
-msgstr ""
+msgstr "Aug_August_abbreviation"
 
+# @ default
 #: ../wp-act-admin.php:769
 msgid "Sep_September_abbreviation"
-msgstr ""
+msgstr "Sep_September_abbreviation"
 
+# @ default
 #: ../wp-act-admin.php:769
 msgid "Oct_October_abbreviation"
-msgstr ""
+msgstr "Oct_October_abbreviation"
 
+# @ default
 #: ../wp-act-admin.php:769
 msgid "Nov_November_abbreviation"
-msgstr ""
+msgstr "Nov_November_abbreviation"
 
+# @ default
 #: ../wp-act-admin.php:769
 msgid "Dec_December_abbreviation"
-msgstr ""
+msgstr "Dec_December_abbreviation"
 
+# @ default
 #: ../wp-act-admin.php:770
-#, fuzzy
 msgid "Sunday"
-msgstr "día"
+msgstr "Duminică"
 
+# @ default
 #: ../wp-act-admin.php:770
-#, fuzzy
 msgid "Monday"
-msgstr "día"
+msgstr "Luni"
 
+# @ default
 #: ../wp-act-admin.php:770
-#, fuzzy
 msgid "Tuesday"
-msgstr "día"
+msgstr "Marţi"
 
+# @ default
 #: ../wp-act-admin.php:770
 msgid "Wednesday"
-msgstr ""
+msgstr "Miercuri"
 
+# @ default
 #: ../wp-act-admin.php:770
-#, fuzzy
 msgid "Thursday"
-msgstr "horas"
+msgstr "Joi"
 
+# @ default
 #: ../wp-act-admin.php:770
-#, fuzzy
 msgid "Friday"
-msgstr "día"
+msgstr "Vineri"
 
+# @ default
 #: ../wp-act-admin.php:770
 msgid "Saturday"
-msgstr ""
+msgstr "Sâmbătă"
 
+# @ default
 #: ../wp-act-admin.php:771
 msgid "Sun"
-msgstr ""
+msgstr "Soare"
 
+# @ default
 #: ../wp-act-admin.php:771
 msgid "Mon"
-msgstr ""
+msgstr "Lun"
 
+# @ default
 #: ../wp-act-admin.php:771
 msgid "Tue"
-msgstr ""
+msgstr "Marti"
 
+# @ default
 #: ../wp-act-admin.php:771
 msgid "Wed"
-msgstr ""
+msgstr "Miercuri"
 
+# @ default
 #: ../wp-act-admin.php:771
 msgid "Thu"
-msgstr ""
+msgstr "Joi"
 
+# @ default
 #: ../wp-act-admin.php:771
 msgid "Fri"
-msgstr ""
+msgstr "Vineri"
 
+# @ default
 #: ../wp-act-admin.php:771
 msgid "Sat"
-msgstr ""
+msgstr "Sat"
 
+# @ default
 #: ../wp-act-admin.php:772
 msgid "S_Sunday_initial"
-msgstr ""
+msgstr "S_Sunday_initial"
 
+# @ default
 #: ../wp-act-admin.php:772
 msgid "M_Monday_initial"
-msgstr ""
+msgstr "M_Monday_initial"
 
+# @ default
 #: ../wp-act-admin.php:772
 msgid "T_Tuesday_initial"
-msgstr ""
+msgstr "T_Tuesday_initial"
 
+# @ default
 #: ../wp-act-admin.php:772
 msgid "W_Wednesday_initial"
-msgstr ""
+msgstr "W_Wednesday_initial"
 
+# @ default
 #: ../wp-act-admin.php:772
 msgid "T_Thursday_initial"
-msgstr ""
+msgstr "T_Thursday_initial"
 
+# @ default
 #: ../wp-act-admin.php:772
 msgid "F_Friday_initial"
-msgstr ""
+msgstr "F_Friday_initial"
 
+# @ default
 #: ../wp-act-admin.php:772
 msgid "S_Saturday_initial"
-msgstr ""
+msgstr "S_Saturday_initial"
 
+# @ wp-activity
 #: ../wp-act-admin.php:807
-#, fuzzy
 msgid "Date range"
-msgstr "Formato de fecha"
+msgstr "Interval"
 
+# @ wp-activity
 #: ../wp-act-admin.php:822
 #: ../wp-activity.php:895
 #: ../wp-activity.php:963
 msgid "Events number :"
-msgstr "Número de eventos:"
+msgstr "Numărul de evenimente:"
 
+# @ wp-activity
 #: ../wp-act-admin.php:834
 msgid "See data for"
-msgstr ""
+msgstr "A se vedea date pentru"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:16
 msgid "New visit"
-msgstr "Nueva visita"
+msgstr "Nouă vizită"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:17
 msgid "New post"
-msgstr "Nueva entrada"
+msgstr "Nou post"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:18
 msgid "Post edited"
-msgstr "Entrada Editada"
+msgstr "Post editat"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:19
 #, fuzzy
 msgid "Post deleted"
-msgstr "Entrada Editada"
+msgstr "Post editat"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:20
 msgid "Profile edited"
-msgstr "Perfil editado"
+msgstr "Profil editat"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:21
 msgid "New comment"
-msgstr "Nuevo comentario"
+msgstr "Comentariu nou"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:22
 #, fuzzy
 msgid "Comment edited"
-msgstr "comentó"
+msgstr "Comment (s) adaugă"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:23
 #, fuzzy
 msgid "Comment deleted"
-msgstr "comentó"
+msgstr "Comment (s) adaugă"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:24
 msgid "New link"
-msgstr "Nuevo enlace"
+msgstr "Nou link"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:31
 #: ../wp-activity.php:464
 #, php-format
 msgid "%s activity RSS Feed"
-msgstr "%s actividad RSS Feed"
+msgstr "activitatea %s RSS Feed"
 
+# @ wp-activity
 #: ../wp-activity-feed.php:33
 #, php-format
 msgid "User events of %s"
-msgstr "Eventos de usuario de %s"
+msgstr "Utilizator evenimentele din %s"
 
+# @ wp-activity
 #: ../wp-activity.php:206
 msgid "Activity events"
-msgstr "Eventos de actividad"
+msgstr "Evenimente de activitate"
 
+# @ wp-activity
 #: ../wp-activity.php:210
 msgid "Hide my activity :"
-msgstr "Ocultar mi actividad:"
+msgstr "Ascunde activitatea mea:"
 
+# @ wp-activity
 #: ../wp-activity.php:214
 msgid "If selected, this option makes you become invisible in activity events."
-msgstr "Si se selecciona, esta opción hace que se vuelven invisibles en los eventos de la actividad."
+msgstr "Dacă selectat, această opţiune face să devină invizibil în activitatea de evenimente."
 
+# @ wp-activity
 #: ../wp-activity.php:402
 msgid "Last logon :"
-msgstr "Última sesión:"
+msgstr "Ultimul log on:"
 
+# @ wp-activity
 #: ../wp-activity.php:483
 #, php-format
 msgid "%s activity archive"
-msgstr "%s archivo de la actividad"
+msgstr "%s activitatea Arhiva"
 
+# @ wp-activity
 #: ../wp-activity.php:483
 msgid "Archives"
-msgstr "Archivos"
+msgstr "Arhivele"
 
+# @ wp-activity
 #: ../wp-activity.php:573
 #: ../wp-activity.php:578
 msgid "View Profile"
-msgstr "Ver Perfil"
+msgstr "Vizualizare profil"
 
+# @ wp-activity
 #: ../wp-activity.php:587
 #, fuzzy
 msgid "has logged in."
-msgstr "ha iniciado la sesión."
+msgstr "a înregistrat în jurnal."
 
+# @ wp-activity
 #: ../wp-activity.php:627
 msgid "published"
-msgstr "publicado"
+msgstr "publicat"
 
+# @ wp-activity
 #: ../wp-activity.php:645
 msgid "edited"
-msgstr "editado"
+msgstr "editat"
 
+# @ default
 #: ../wp-activity.php:654
 #, fuzzy
 msgid "deleted"
-msgstr "Borrar"
+msgstr "Ştergere"
 
+# @ wp-activity
 #: ../wp-activity.php:683
 msgid "commented"
-msgstr "comentó"
+msgstr "a comentat"
 
+# @ wp-activity
 #: ../wp-activity.php:712
 #, fuzzy
 msgid "edited comment on"
-msgstr "Nuevo comentario"
+msgstr "Comentariu nou"
 
+# @ wp-activity
 #: ../wp-activity.php:726
 #, fuzzy
 msgid "deleted comment on"
-msgstr "Nuevo comentario"
+msgstr "Comentariu nou"
 
+# @ wp-activity
 #: ../wp-activity.php:734
 #, fuzzy
 msgid "has registered."
-msgstr "ha iniciado la sesión."
+msgstr "a înregistrat în jurnal."
 
+# @ wp-activity
 #: ../wp-activity.php:742
 msgid "has updated his profile."
-msgstr "ha actualizado su perfil."
+msgstr "-a actualizat Profil."
 
+# @ wp-activity
 #: ../wp-activity.php:756
 msgid "has added a link to"
-msgstr "ha añadido un enlace a"
+msgstr "a adăugat un link la"
 
+# @ wp-activity
 #: ../wp-activity.php:817
 msgid "weeks"
-msgstr "semanas"
+msgstr "săptămâni"
 
+# @ wp-activity
 #: ../wp-activity.php:817
 msgid "week"
-msgstr "semana"
+msgstr "săptămână"
 
+# @ wp-activity
 #: ../wp-activity.php:818
 #: ../wp-activity.php:822
 msgid "days"
-msgstr "días"
+msgstr "zile"
 
+# @ wp-activity
 #: ../wp-activity.php:818
 #: ../wp-activity.php:822
 msgid "day"
-msgstr "día"
+msgstr "zi"
 
+# @ wp-activity
 #: ../wp-activity.php:823
 #: ../wp-activity.php:827
 msgid "hours"
-msgstr "horas"
+msgstr "ore"
 
+# @ wp-activity
 #: ../wp-activity.php:823
 #: ../wp-activity.php:827
 msgid "hour"
-msgstr "hora"
+msgstr "oră"
 
+# @ wp-activity
 #: ../wp-activity.php:828
 #: ../wp-activity.php:832
 msgid "minutes"
-msgstr "minutos"
+msgstr "minute"
 
+# @ wp-activity
 #: ../wp-activity.php:828
 #: ../wp-activity.php:832
 msgid "minute"
-msgstr "minuto"
+msgstr "minute"
 
+# @ wp-activity
 #: ../wp-activity.php:836
 msgid "seconds"
-msgstr "segundo"
+msgstr "secunde"
 
+# @ wp-activity
 #: ../wp-activity.php:836
 msgid "second"
-msgstr "segundo"
+msgstr "al doilea"
 
+# @ wp-activity
 #: ../wp-activity.php:840
 #, php-format
 msgid "%s ago"
-msgstr "hace %s"
+msgstr "%s în urmă"
 
+# @ wp-activity
 #: ../wp-activity.php:855
 msgid "Display a stream of registered users events"
-msgstr "Mostrar una secuencia de eventos usuarios registrados"
+msgstr "Afişa un flux de utilizatorii înregistraţi evenimente"
 
+# @ wp-activity
 #: ../wp-activity.php:861
 msgid "Wp-Activity Widget"
-msgstr "Wp-Activity Widget"
+msgstr "WP-activitate Widget"
 
+# @ wp-activity
 #: ../wp-activity.php:891
 #: ../wp-activity.php:958
 msgid "Title :"
-msgstr "Título:"
+msgstr "Titlu:"
 
 #: ../wp-activity.php:899
 msgid "Widget width (px) :"
 msgstr ""
 
+# @ wp-activity
 #: ../wp-activity.php:908
 msgid "Display the logged user own activity"
-msgstr ""
+msgstr "Afişează activitatea propriu utilizator conectat"
 
+# @ wp-activity
 #: ../wp-activity.php:914
 msgid "Wp-Activity logged user own activity"
-msgstr ""
+msgstr "WP-activitate conectat activitatea proprie utilizatorului"
 
+# @ wp-activity
 #: ../wp-activity.php:946
 msgid "Your activity"
-msgstr ""
+msgstr "Activitatea ta"
 
+# @ wp-activity
 #: ../wp-activity.php:968
 msgid "When viewed by visitor"
-msgstr ""
+msgstr "Când vizualizat de vizitatori"
 
+# @ wp-activity
 #: ../wp-activity.php:970
 msgid "Display all users activity"
-msgstr ""
+msgstr "Afişa întreaga activitate a utilizatorilor"
 
+# @ wp-activity
 #: ../wp-activity.php:972
-#, fuzzy
 msgid "Display nothing"
-msgstr "Opciones de visualización"
+msgstr "Afişa nimic"
 
-#~ msgid "Activity logs are empty !"
-#~ msgstr "¡Los registros de actividad están vacíos!"
-
-#~ msgid "You are not allowed to manage this plugin."
-#~ msgstr "No te está permitido gestionar este plugin."
