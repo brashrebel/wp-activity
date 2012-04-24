@@ -776,7 +776,8 @@ function nicetime($posted_date, $admin=false, $nohour=false) {
       $gmt = date_create($posted_date, timezone_open($timezone));
       $gmt_offset = date_offset_get($gmt) / 3600;
     }
-    $cur_time_gmt = current_time('timestamp', true);
+    //$cur_time_gmt = current_time('timestamp', true);
+    $cur_time_gmt = time();
     $in_seconds = strtotime($posted_date);
     $posted_date = gmdate("Y-m-d H:i:s", strtotime($posted_date) + ($gmt_offset*3600));
     $relative_date = '';
