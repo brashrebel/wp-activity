@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Monitor and display blog members activity ; track and blacklist unwanted login attemps.
     Author: Dric
-    Version: 1.9 beta 2
+    Version: 1.9
     Author URI: http://www.driczone.net
 */
 
@@ -29,9 +29,9 @@
 
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
-$no_admin_mess = false; //If you don't want to get bugged by admin panel additions
+$no_admin_mess = false; //If you don't want to get annoyed by admin panel additions
 $act_user_filter_max = 25; //If you have less than 25 users (default value), it will display a select field with all users instead of a search field in activity log filter
-$act_plugin_version = "1.9 beta 2"; //don't modify this !
+$act_plugin_version = "1.9"; //don't modify this !
 
 $options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
@@ -307,10 +307,10 @@ function act_reinit() {
   }
 }
 
-function act_new_user() {
-  global $wpdb, $user_ID, $options_act;
+function act_new_user($user_id) {
+  global $wpdb, $options_act;
   $act_time=current_time('mysql', true);
-  $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date) VALUES($user_ID, 'NEW_USER', '".$act_time."')");
+  $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date) VALUES($user_id, 'NEW_USER', '".$act_time."')");
 }
 
 function act_profile_edit($act_user) {
@@ -517,15 +517,17 @@ function act_stream_common($act_number='30', $act_title='', $archive = false, $a
             }
             if (((strtotime($act_logged[$act->user_id]) - strtotime($act->act_date)) > 60 AND $act->act_type == 'CONNECT') OR $act->act_type != 'CONNECT') {
                 echo '<li class="login '.$act_old_class.'">';
-                if ($options_act['act_icons']== 'g') {
-                    echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/'.$act->act_type.'.png" />';
-                }
-                elseif ($options_act['act_icons']== 'a') {
-                    if ($act->act_type == 'CONNECT' or $act->act_type == 'PROFILE_EDIT' or $act->act_type == 'NEW_USER') {
-                        echo get_avatar( $act->user_id, '16'); ;
-                    } else {
-                        echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/'.$act->act_type.'.png" />';
+                if ($options_act['act_icons']!= 'n') {
+                  if ($options_act['act_icons']== 'a' and ($act->act_type == 'CONNECT' or $act->act_type == 'PROFILE_EDIT' or $act->act_type == 'NEW_USER')) {
+                      echo get_avatar( $act->user_id, '16'); ;
+                  } else {
+                    $act_icon = WP_PLUGIN_DIR.'/wp-activity/img/'.$act->act_type.'.png';
+                    if (@file_exists($act_icon)) {
+                      echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/'.$act->act_type.'.png" />';
+                    }else{
+                      echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/default.png" />';
                     }
+                  }
                 }
                 if ($act->user_id == $user_ID and $options_act['act_old'] and $act->act_type == 'CONNECT') {
                   $act_old_flag++;

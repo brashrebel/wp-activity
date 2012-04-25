@@ -14,7 +14,7 @@ This plugin logs registered users activity in your blog and displays it in front
 It can also track and deny access by blacklisting to unwanted login attempts.
 Activity logged :
 
-- logins
+- logon
 - new user
 - new comment
 - comment edition
@@ -59,6 +59,12 @@ Translations :
 [Plugin page](http://www.driczone.net/blog/plugins/wp-activity/) (French blog but feel free to comment in english)
 
 I my plugin doesn't fit your needs, you can also try [ThreeWP Activity Monitor](http://wordpress.org/extend/plugins/threewp-activity-monitor/) by [Edward Mindeantre](http://mindreantre.se).
+
+Resources used :
+
+- Fugue Icons by Yusuke Kamiyamane (http://p.yusukekamiyamane.com)
+- Flot jQuery library (http://code.google.com/p/flot/)
+
 
 == Installation ==
 
@@ -142,7 +148,7 @@ Change the value in the plugin administration, under display options tab.
 
 = How do I Change the events generic icons ? =
 
-Just change the icons in the /img directory, but keep the event name (example : to change the login/connect event icon, change the icon named CONNECT.png - names must be in capitals)
+Just change the icons in the /img directory, but keep the event name (example : to change the login/connect event icon, change the icon named CONNECT.png - names must be in capitals). If events don't have related icons, you can add it by naming an icon from the event name. I used [Fugue Icons](http://p.yusukekamiyamane.com) - shadowless version for generic icons.
 
 = I added a post and changed the author, and the activity logs have changed too. How could I disable this ? =
 
@@ -193,12 +199,13 @@ If you want to be sure it's debugged, you can wait a few days for a x.x.1 versio
 * Added a search field for filtering by data in admin activity log (to search for IP addresses, posts, etc.).
 * Added partial Romanian translation (for version 1.7, not up-to-date !) by [Web Geeks](http://webhostinggeeks.com).
 * When there is more than 25 users, the user filter is now displayed with a search field (with autocomplete) instead of the users list for better performance/readability.
-* Changed the way modified post events are logged.
-* Changed and added a few translation strings.
-* Changed minimum user capability to access plugin from 'publish_post' to 'administrator'.
+* In frontend display, a default icon is now displayed if the event has no icon associated.
+* Changed the way modified post events are monitored.
+* Changed, added and deleted a few translation strings.
+* Changed minimum user capability to access plugin in admin panel from 'publish_post' to 'administrator'.
 * Various Tweaks.
 * When a post or a comment is deleted, the post and comments related events are updated (the title of the deleted post is saved instead of post id).
-* Fixed a possible bug with dates timezones. This could mess a little your previous logged events dates.
+* Fixed a possible bug with dates timezones. This could mess a little your previous logged events dates (Thx to [Elmoonfire](http://wordpress.org/support/profile/elmoonfire) ).
 * Fixed ACCESS_DENIED events that are no more displayed in frontend.
 * Fixed possible wrong url path to users profiles in RSS feed.
 
