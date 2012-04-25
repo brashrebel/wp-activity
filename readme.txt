@@ -3,8 +3,8 @@ Contributors: Dric1107
 Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor, stats, blacklist, tracking, access, security, login
 Requires at least: 3.1
-Tested up to: 3.3.1
-Stable tag: trunk
+Tested up to: 3.3.2
+Stable tag: 1.9
 
 Monitor and display registered users activity (logins, posts, comments, etc.). You can also track and prevent hackering attemps, with IP blacklisting.
 
@@ -12,15 +12,20 @@ Monitor and display registered users activity (logins, posts, comments, etc.). Y
 
 This plugin logs registered users activity in your blog and displays it in frontend and backend.
 It can also track and deny access by blacklisting to unwanted login attempts.
+Activity logged :
 
-- logons
-- new comments
+- logon
+- new user
+- new comment
+- comment edition
+- comment deletion
 - profile update
-- new post
-- post edition
+- new published post
+- published post edition
+- post deleted (really deleted, not trashed)
 - new link
-- login failures (displayed only in admin panel)
-- accesses denied by IP blacklisting (displayed only in admin panel)
+- login failure (displayed only in admin panel)
+- access denied by IP blacklisting (displayed only in admin panel)
 
 Possible usages :
 
@@ -46,6 +51,7 @@ Translations :
 - Italian (Thx to Luca - partially translated up to v1.2)
 - Turkish (Thx to Can KAYA - translated up to v1.2)
 - Spanish (Thx to Cscean - translated up to v1.3)
+- Romanian (Thx to Web Geeks - translated up to v1.7)
 - Dutch (Thx to Tom - translated up to v1.8.1)
 
 (If you translated my plugin, please send the translated .po file at cedric@driczone.net )
@@ -53,6 +59,12 @@ Translations :
 [Plugin page](http://www.driczone.net/blog/plugins/wp-activity/) (French blog but feel free to comment in english)
 
 I my plugin doesn't fit your needs, you can also try [ThreeWP Activity Monitor](http://wordpress.org/extend/plugins/threewp-activity-monitor/) by [Edward Mindeantre](http://mindreantre.se).
+
+Resources used :
+
+- Fugue Icons by Yusuke Kamiyamane (http://p.yusukekamiyamane.com)
+- Flot jQuery library (http://code.google.com/p/flot/)
+
 
 == Installation ==
 
@@ -136,15 +148,19 @@ Change the value in the plugin administration, under display options tab.
 
 = How do I Change the events generic icons ? =
 
-Just change the icons in the /img directory, but keep the event name (example : to change the login/connect event icon, change the icon named CONNECT.png - names must be in capitals)
+Just change the icons in the /img directory, but keep the event name (example : to change the login/connect event icon, change the icon named CONNECT.png - names must be in capitals). If events don't have related icons, you can add it by naming an icon from the event name. I used [Fugue Icons](http://p.yusukekamiyamane.com) - shadowless version for generic icons.
 
 = I added a post and changed the author, and the activity logs have changed too. How could I disable this ? =
 
 You will have to edit wp-activity.php, check line 32 and set `$strict_logs` to **true**.
 
+= How can I change the search field filter in admin activity log by the user list ?
+
+You will have to edit wp-activity.php and change the value for the `$act_user_filter_max` var (near line 33).
+
 = I exported data to a csv file but there are ugly characters in MS Excel ! =
 
-This is a known excel bug : when you open a .csv file in Excel, it uses the local encoding set (WINDOWS-1252 for French) and not UTF-8. To avoid this, you will have to rename the file extension from .csv to .txt, open Excel, do File/Open and open the wp-activity.txt. The csv import assistant will now launch, allowing you to set the encoding to UTF-8. 
+This is a known excel bug : when you open a .csv file in Excel, it forces the use of the local encoding set (WINDOWS-1252 for French) and not UTF-8. To avoid this, you will have to rename the file extension from .csv to .txt, open Excel, do File/Open and open the wp-activity.txt. The csv import assistant will now launch, allowing you to set the encoding to UTF-8.
 
 = I would like to display more or less than 50 lines per page in admin panel of wp_activity =
 
@@ -153,9 +169,6 @@ You have to modify the `$act_list_limit` var line 31 of wp-activity.php.
 = I don't need the last login column in user list or I don't need the last login failures in admin panel =
 
 You have to modify the `$no_admin_mess` var line 33 of wp-activity.php and set it to **true**.
-
-= I edited a post but wp-activity logged POST_ADD instead of POST_EDIT =
-That's because the post_add event for this post id was removed from the wp-activity database table. Wordpress doesn't have separate actions for adding or editing posts, so the plugin checks in it own table if there was a post creation with the same ID. If found, the plugin logs a post edition. But as the plugin clears old logs (see "Rows limit in database" setting), the post creation event can be previously deleted when the post edition occurs.
 
 = I have a poor hosting, is your plugin a big fat resources consumer ? =
 I also have a poor hosting, so I try to keep my plugin as light as I can ; the admin scripts and css files are only loaded when needed.
@@ -180,6 +193,21 @@ If you want to be sure it's debugged, you can wait a few days for a x.x.1 versio
 4. admin screen - stats
 
 == ChangeLog ==
+
+= 1.9 =
+* Added new events types logging : new users, comments edits, comments deletions (not spam comments), posts deletions (real deletions, not trashed posts).
+* Added a search field for filtering by data in admin activity log (to search for IP addresses, posts, etc.).
+* Added partial Romanian translation (for version 1.7, not up-to-date !) by [Web Geeks](http://webhostinggeeks.com).
+* When there is more than 25 users, the user filter is now displayed with a search field (with autocomplete) instead of the users list for better performance/readability.
+* In frontend display, a default icon is now displayed if the event has no icon associated.
+* Changed the way modified post events are monitored.
+* Changed, added and deleted a few translation strings.
+* Changed minimum user capability to access plugin in admin panel from 'publish_post' to 'administrator'.
+* Various Tweaks.
+* When a post or a comment is deleted, the post and comments related events are updated (the title of the deleted post is saved instead of post id).
+* Fixed a possible bug with dates timezones. This could mess a little your previous logged events dates (Thx to [Elmoonfire](http://wordpress.org/support/profile/elmoonfire) ).
+* Fixed ACCESS_DENIED events that are no more displayed in frontend.
+* Fixed possible wrong url path to users profiles in RSS feed.
 
 = 1.8.1 =
 * Fixed bug with blacklist tab who stay disabled unless you uncheck/check again the logon failures logging option.

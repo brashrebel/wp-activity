@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Monitor and display blog members activity ; track and blacklist unwanted login attemps.
     Author: Dric
-    Version: 1.8.1
+    Version: 1.9
     Author URI: http://www.driczone.net
 */
 
@@ -29,8 +29,9 @@
 
 $act_list_limit = 50; //Change this if you want to display more than 50 items per page in admin list
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
-$no_admin_mess = false; //If you don't want to get bugged by admin panel additions
-$act_plugin_version = "1.8.1"; //don't modify this !
+$no_admin_mess = false; //If you don't want to get annoyed by admin panel additions
+$act_user_filter_max = 25; //If you have less than 25 users (default value), it will display a select field with all users instead of a search field in activity log filter
+$act_plugin_version = "1.9"; //don't modify this !
 
 $options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
@@ -159,7 +160,7 @@ function act_cron($prune_limit='') {
   }
 }
 
-//we add actions to hooks to log their events
+//attaching to action hooks
 if ($options_act['act_connect']) {
   add_action('wp_login', 'act_session', 10, 2);
   add_action('auth_cookie_valid', 'act_session', 10, 2);
@@ -167,12 +168,17 @@ if ($options_act['act_connect']) {
 }
 if ($options_act['act_profiles'] ) {
   add_action('profile_update', 'act_profile_edit');
+  add_action('user_register', 'act_new_user');
 }
 if ($options_act['act_posts']) {
   add_action('publish_post', 'act_post_add');
+  add_action('post_updated', 'act_post_update');
+  add_action('delete_post', 'act_post_del');
 }
 if ($options_act['act_comments']) {
   add_action('comment_post', 'act_comment_add');
+  add_action('edit_comment', 'act_comment_edit');
+  add_action('delete_comment', 'act_comment_del');
 }
 if ($options_act['act_links']) {
   add_action('add_link', 'act_link_add');
@@ -233,7 +239,7 @@ function act_login_failed($act_user='') {
   if ($act_user) {
     $user_ID = 1; //event has to be linked to a wp user.
     $no_add = false;
-    $act_time=date("Y-m-d H:i:s", time());
+    $act_time=current_time('mysql', true);
     $ip = act_real_ip();
     $bwps = get_option("BWPS_options"); //Compatibility check for Better-WP-Security Plugin that do wp_login_failed action hook even if login is successful...
     if (!empty($bwps)){
@@ -281,7 +287,7 @@ function act_session($arg='', $userlogin='') {
   if ( is_numeric($userlogin->ID) ) {
       $user_ID = $userlogin->ID;
   } else {
-      $userlogin = get_userdatabylogin($arg);
+      $userlogin = get_user_by('login', $arg);
       if ($userlogin->ID) {
           $user_ID = $userlogin->ID;
       } else {
@@ -290,7 +296,7 @@ function act_session($arg='', $userlogin='') {
   }
   if (!empty($user_ID) and !get_usermeta($user_ID, 'act_private') and !$_COOKIE['act_logged']) {
     $ip = act_real_ip();
-    $act_time=date("Y-m-d H:i:s", time());
+    $act_time=current_time('mysql', true);
     $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'CONNECT', '".$act_time."', '".$ip."')");
     setcookie('act_logged',time());
   }
@@ -301,39 +307,86 @@ function act_reinit() {
   }
 }
 
+function act_new_user($user_id) {
+  global $wpdb, $options_act;
+  $act_time=current_time('mysql', true);
+  $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date) VALUES($user_id, 'NEW_USER', '".$act_time."')");
+}
+
 function act_profile_edit($act_user) {
     global $wpdb, $user_ID, $options_act;
     if (!get_usermeta($user_ID, 'act_private')) {
-        $act_time=date("Y-m-d H:i:s", time());
-        $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'PROFILE_EDIT', '".$act_time."', $act_user)");
+        $act_time=current_time('mysql', true);
+        $sql="INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date) VALUES($user_ID, 'PROFILE_EDIT', '".$act_time."')";
+        $wpdb->query($sql);
     }
+}
+
+function act_post_del($act_post){
+  global $wpdb, $user_ID, $options_act;
+  $act_post_meta=get_post($act_post);
+  if ($act_post_meta and $act_post_meta->post_status != 'inherit'){
+      $wpdb->query("UPDATE ".$wpdb->prefix."activity SET act_params = '".$act_post_meta->post_title."' WHERE act_type IN ('POST_ADD','POST_EDIT', 'COMMENT_ADD') and act_params = ".$act_post);
+    if (!get_usermeta($user_ID, 'act_private')) {
+      $act_time=current_time('mysql', true);
+      $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'POST_DEL', '".$act_time."', '".$act_post_meta->post_title."###".$act_post."')");
+    }
+  }
+}
+
+function act_post_update($act_post){
+  global $wpdb, $user_ID, $options_act;
+  if (!get_usermeta($user_ID, 'act_private')) {
+    $act_time=current_time('mysql', true);
+    $act_post_meta = get_post($act_post);
+    if ($act_post_meta->status_post == 'publish'){
+      $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'POST_EDIT', '".$act_time."', ".$act_post.")");
+    }
+  }
 }
 
 function act_post_add($act_post) {
     global $wpdb, $user_ID, $options_act;
     if (!get_usermeta($user_ID, 'act_private')) {
-        $act_time=date("Y-m-d H:i:s", time());
-        if ($wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."activity WHERE act_params=$act_post AND act_type='POST_ADD'") > 0) {
-            $act_type='POST_EDIT';
-        } else {
-            $act_type='POST_ADD';
-        }
-        $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, '".$act_type."', '".$act_time."', $act_post)");
+        $act_time=current_time('mysql', true);
+        $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'POST_ADD', '".$act_time."', $act_post)");
     }
 }
 
 function act_comment_add($act_comment) {
     global $wpdb, $user_ID, $options_act;
     if (!get_usermeta($user_ID, 'act_private') and $user_ID <> 0) {
-        $act_time=date("Y-m-d H:i:s", time());
+        $act_time=current_time('mysql', true);
         $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID,'COMMENT_ADD', '".$act_time."', $act_comment)");
     }
+}
+
+function act_comment_edit($act_comment){
+  global $wpdb, $user_ID, $options_act;
+  if (!get_usermeta($user_ID, 'act_private')) {
+    $act_time=current_time('mysql', true);
+    $act_comment_meta = get_comment($act_comment);
+    $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'COMMENT_EDIT', '".$act_time."', $act_comment)");
+  }
+}
+
+function act_comment_del($act_comment) {
+  global $wpdb, $user_ID, $options_act;
+  $act_comment_meta=get_comment($act_comment);
+  if ($act_comment_meta->comment_approved != 'spam' ){
+    $act_post_meta = get_post($act_comment_meta->comment_post_ID );
+    $wpdb->query("UPDATE ".$wpdb->prefix."activity SET act_params = '".$act_comment_meta->comment_post_ID."###$act_comment' WHERE act_type IN ('COMMENT_ADD', 'COMMENT_EDIT') and act_params = ".$act_comment);
+    if (!get_usermeta($user_ID, 'act_private')) {
+      $act_time=current_time('mysql', true);
+      $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'COMMENT_DEL', '".$act_time."', '".$act_post_meta->post_title."###".$act_comment."###".$act_comment_meta->comment_post_ID."')");
+    }
+  }
 }
 
 function act_link_add($act_link) {
     global $wpdb, $user_ID, $options_act;
     if (!get_usermeta($user_ID, 'act_private')) {
-        $act_time=date("Y-m-d H:i:s", time());
+        $act_time=current_time('mysql', true);
         $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES($user_ID, 'LINK_ADD', '".$act_time."', $act_link)");
     }
 }
@@ -363,7 +416,7 @@ function act_blacklist() {
             $act_bl_ip = str_replace("*", "[0-9\.]*", $act_bl_ip);
             $act_bl_ip = "/^" . trim($act_bl_ip) . "$/";
             if (preg_match($act_bl_ip, $act_client_ip)) {
-                $act_time=date("Y-m-d H:i:s", time());
+                $act_time=current_time('mysql', true);
                 $wpdb->query("INSERT INTO ".$wpdb->prefix."activity (user_id, act_type, act_date, act_params) VALUES(1, 'ACCESS_DENIED', '".$act_time."', '".$act_client_ip."')");
                 Header("HTTP/1.1 403 Forbidden");
                 die('403 Forbidden');
@@ -444,11 +497,11 @@ function act_stream_common($act_number='30', $act_title='', $archive = false, $a
     } else {
         echo '<ul id="activity-archive">';
     }
-    $sql  = "SELECT * FROM ".$wpdb->prefix."activity AS activity, ".$wpdb->users." AS users WHERE activity.user_id = users.id";
-    if ($act_user!= '') {
-        $sql .= " AND user_id = '".$act_user."'";
+    $sql  = "SELECT u.display_name as display_name, user_nicename, u.id as id, act_type, act_date, act_params, a.id as act_id, a.user_id as user_id FROM ".$wpdb->prefix."activity AS a, ".$wpdb->users." AS u WHERE a.user_id = u.id";
+    if ($act_user != '') {
+        $sql .= " AND a.user_id = '".$act_user."'";
     } else {
-        $sql .= " AND act_type <> 'LOGIN_FAIL'";
+        $sql .= " AND act_type NOT IN ('LOGIN_FAIL', 'ACCESS_DENIED')";
     }
     $sql .= " ORDER BY act_date DESC";
     $i=1;
@@ -464,54 +517,24 @@ function act_stream_common($act_number='30', $act_title='', $archive = false, $a
             }
             if (((strtotime($act_logged[$act->user_id]) - strtotime($act->act_date)) > 60 AND $act->act_type == 'CONNECT') OR $act->act_type != 'CONNECT') {
                 echo '<li class="login '.$act_old_class.'">';
-                if ($options_act['act_icons']== 'g') {
-                    echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/'.$act->act_type.'.png" />';
+                if ($options_act['act_icons']!= 'n') {
+                  if ($options_act['act_icons']== 'a' and ($act->act_type == 'CONNECT' or $act->act_type == 'PROFILE_EDIT' or $act->act_type == 'NEW_USER')) {
+                      echo get_avatar( $act->user_id, '16'); ;
+                  } else {
+                    $act_icon = WP_PLUGIN_DIR.'/wp-activity/img/'.$act->act_type.'.png';
+                    if (@file_exists($act_icon)) {
+                      echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/'.$act->act_type.'.png" />';
+                    }else{
+                      echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/default.png" />';
+                    }
+                  }
                 }
-                elseif ($options_act['act_icons']== 'a') {
-                    if ($act->act_type == 'CONNECT' or $act->act_type == 'PROFILE_EDIT') {
-                        echo get_avatar( $act->user_id, '16'); ;
-                    } else {
-                        echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/'.$act->act_type.'.png" />';
-                    }
+                if ($act->user_id == $user_ID and $options_act['act_old'] and $act->act_type == 'CONNECT') {
+                  $act_old_flag++;
                 }
-                switch ($act->act_type) {
-                case 'CONNECT':
-                    echo '<a href="'.$wp_url.'/'.$options_act['act_author_path'].'/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act->display_name.'</a> '.__('has logged.', 'wp-activity');
-                    if ($act->user_id == $user_ID and $options_act['act_old']) {
-                        $act_old_flag++;
-                    }
-                    break;
-                case 'COMMENT_ADD':
-                    $act_comment=get_comment($act->act_params);
-                    $act_post=get_post($act_comment->comment_post_ID);
-                    echo '<a href="'.$wp_url.'/'.$options_act['act_author_path'].'/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act_comment->comment_author.'</a> '.__('commented', 'wp-activity').' <a href="'.$act_post->post_name.'#comment-'.$act_comment->comment_ID.'">'.$act_post->post_title.'</a>';
-                    break;
-                case 'POST_ADD':
-                    $act_post=get_post($act->act_params);
-                    if ($act->user_id != $act_post->post_author and !$strict_logs) { //this is a check if post author has been changed in admin post edition.
-                        $sql = "UPDATE ".$wpdb->prefix."activity SET user_id = '".$act_post->post_author."' WHERE id = '".$act->id."'";
-                        $wpdb->query( $sql);
-                    } else {
-                        echo '<a href="'.$wp_url.'/'.$options_act['act_author_path'].'/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act->display_name.'</a> '.__('published', 'wp-activity').' <a href="'.$act_post->post_name.'">'.$act_post->post_title.'</a>';
-                    }
-                    break;
-                case 'POST_EDIT':
-                    $act_post=get_post($act->act_params);
-                    echo '<a href="'.$wp_url.'/'.$options_act['act_author_path'].'/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act->display_name.'</a> '.__('edited', 'wp-activity').' <a href="'.$act_post->post_name.'">'.$act_post->post_title.'</a>';
-                    break;
-                case 'PROFILE_EDIT':
-                    echo '<a href="'.$wp_url.'/'.$options_act['act_author_path'].'/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act->display_name.'</a> '.__('has updated his profile.', 'wp-activity');
-                    break;
-                case 'LINK_ADD':
-                    $act_link = get_bookmark($act->act_params);
-                    if ($act_link->link_visible == 'Y') {
-                        echo '<a href="'.$wp_url.'/'.$options_act['act_author_path'].'/'.$act->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act->display_name.'</a> '.__('has added a link to', 'wp-activity').' <a href="'.$act_link->link_url.'" title="'.$act_link->link_description.'" target="'.$act_link->link_target.'">'.$act_link->link_name.'</a>.';
-                    }
-                    break;
-                default:
-                    break;
-                }
-                echo '<span class="activity_date">'.nicetime($act->act_date).'</span>';
+                //format event display
+                $act_prep = act_prepare($act, 'frontend');
+                echo $act_prep['user'].' '.$act_prep['text'].' '.$act_prep['params'].' <span class="activity_date">'.$act_prep['date'].'</span>';
                 echo '</li>';
                 $i++;
             }
@@ -524,17 +547,243 @@ function act_stream_common($act_number='30', $act_title='', $archive = false, $a
     echo '</ul>';
 }
 
+/*
+--- prepare and format event display ---
+* $act_raw : object
+* Row returned by sql query (u.display_name as display_name,
+*                            user_nicename,
+*                            u.id as id,
+*                            act_type,
+*                            act_date,
+*                            act_params,
+*                            a.id as act_id,
+*                            a.user_id as user_id)
+* $act_disp : can be 'frontend', 'admin', 'csv' or 'rss'
+* Returns array ('class', 'user', 'text', 'params', 'date', 'type')
+*/
+function act_prepare($act_raw, $act_disp){
+  global $options_act;
+  $wp_url = get_bloginfo('wpurl');
+  switch ($act_disp) {
+    case 'admin' :
+    case 'csv' :
+      $act_date = nicetime($act_raw->act_date, true);
+      $act_user = $act_raw->display_name;
+      break;
+    case 'rss':
+      $act_date = gmdate('r', strtotime($act_raw->act_date));
+      $act_user = '<a href="'.$wp_url.'/'.$options_act['act_author_path'].'/'.$act_raw->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act_raw->display_name.'</a>';
+      break;
+    case 'frontend':
+    default:
+      $act_date = nicetime($act_raw->act_date);
+      $act_user = '<a href="'.$wp_url.'/'.$options_act['act_author_path'].'/'.$act_raw->user_nicename.'" title="'.__('View Profile', 'wp-activity').'">'.$act_raw->display_name.'</a>';
+      break;
+  }
+  switch ($act_raw->act_type) {
+    case 'CONNECT':
+      ($act_disp == 'admin' or $act_disp == 'csv')? $act_params = $act_raw->act_params : $act_params = '';
+      $act_done = array(
+                     'class'  => '',
+                     'user'   => $act_user,
+                     'text'   => __('has logged in.', 'wp-activity'),
+                     'params' => $act_params
+                      );
+      break;
+    case 'LOGIN_FAIL':
+      $act_post_tab = explode ("###", $act_raw->act_params);
+      $act_done = array(
+                     'class'  => 'activity_warning',
+                     'user'   => $act_post_tab[0],
+                     'text'   => '',
+                     'params' => $act_post_tab[1]
+                      );
+      break;
+    case 'ACCESS_DENIED':
+      $act_post_tab = explode ("###", $act_raw->act_params);
+      $act_done = array(
+                     'class'  => 'activity_warning',
+                     'user'   => '',
+                     'text'   => '',
+                     'params' => $act_post_tab[0]
+                      );
+      break;
+    case 'POST_ADD':
+      if (is_numeric($act_raw->act_params)){
+        $act_post=get_post($act_raw->act_params);
+        if ($act_raw->id != $act_post->post_author and !$strict_logs) { //this is a check if post author has been changed in admin post edition.
+          $sql = "UPDATE ".$wpdb->prefix."activity SET user_id = '".$act_post->post_author."' WHERE id = '".$act_raw->id."'";
+          $wpdb->query( $sql);
+        }
+        if($act_disp == 'csv'){
+          $act_params = $act_post->post_title;
+        }else{
+          $act_params = '<a href="'.get_permalink($act_post->ID).'">'.$act_post->post_title.'</a>';
+        }
+      }else{
+        $act_params = $act_raw->act_params;
+      }
+      $act_done = array(
+                     'class'  => '',
+                     'user'   => $act_user,
+                     'text'   => __('published', 'wp-activity'),
+                     'params' => $act_params
+                      );
+      break;
+    case 'POST_EDIT':
+      if (is_numeric($act_raw->act_params)){
+        $act_post=get_post($act_raw->act_params);
+        if($act_disp == 'csv'){
+          $act_params = $act_post->post_title;
+        }else{
+          $act_params = '<a href="'.get_permalink($act_post->ID).'">'.$act_post->post_title.'</a>';
+        }
+      }else{
+        $act_params = $act_raw->act_params;
+      }
+      $act_done = array(
+                     'class'  => '',
+                     'user'   => $act_user,
+                     'text'   => __('edited', 'wp-activity'),
+                     'params' => $act_params
+                      );
+      break;
+    case 'POST_DEL':
+      $act_post_tab = explode ("###", $act_raw->act_params);
+      $act_done = array(
+                     'class'  => '',
+                     'user'   => $act_user,
+                     'text'   => __('deleted', 'wp-activity'),
+                     'params' => $act_post_tab[0]
+                      );
+      break;
+    case 'COMMENT_ADD':
+      if (is_numeric($act_raw->act_params)){
+        $act_comment=get_comment($act_raw->act_params);
+        $act_post=get_post($act_comment->comment_post_ID);
+        if($act_disp == 'csv'){
+          $act_params = $act_post->post_title;
+        }else{
+          $act_params = '<a href="'.get_permalink($act_post->ID).'#comment-'.$act_comment->comment_ID.'">'.$act_post->post_title.'</a>';
+        }
+      }else{
+        $act_comment_tab = explode ("###", $act_raw->act_params);
+        if (isset($act_comment_tab[1])){
+          $act_post=get_post($act_comment_tab[0]);
+          if($act_disp == 'csv'){
+            $act_params = $act_post->post_title;
+          }else{
+            $act_params = '<a href="'.get_permalink($act_post->ID).'">'.$act_post->post_title.'</a>';
+          }
+        }else{
+          $act_params = $act_raw->act_params;
+        }
+      }
+      $act_done = array(
+                     'class'  => '',
+                     'user'   => $act_user,
+                     'text'   => __('commented', 'wp-activity'),
+                     'params' => $act_params
+                      );
+      break;
+    case 'COMMENT_EDIT':
+      if (is_numeric($act_raw->act_params)){
+        $act_comment=get_comment($act_raw->act_params);
+        $act_post=get_post($act_comment->comment_post_ID);
+        if($act_disp == 'csv'){
+          $act_params = $act_post->post_title;
+        }else{
+          $act_params = '<a href="'.get_permalink($act_post->ID).'#comment-'.$act_comment->comment_ID.'">'.$act_post->post_title.'</a>';
+        }
+      }else{
+        $act_comment_tab = explode ("###", $act_raw->act_params);
+        if (isset($act_comment_tab[1])){
+          $act_post=get_post($act_comment_tab[0]);
+          if($act_disp == 'csv'){
+            $act_params = $act_post->post_title;
+          }else{
+            $act_params = '<a href="'.get_permalink($act_post->ID).'">'.$act_post->post_title.'</a>';
+          }
+        }else{
+          $act_params = $act_raw->act_params;
+        }
+      }
+      $act_done = array(
+                     'class'  => '',
+                     'user'   => $act_user,
+                     'text'   => __('edited comment on', 'wp-activity'),
+                     'params' => $act_params
+                      );
+      break;
+    case 'COMMENT_DEL':
+      $act_post_tab = explode ("###", $act_raw->act_params);
+      if ($act_post = get_post($act_post_tab[2]) and $act_disp != 'csv'){
+        $act_params = '<a href="'.get_permalink($act_post->ID).'">'.$act_post->post_title.'</a>';
+      }else{
+        $act_params = $act_post->post_title;
+      }
+      $act_done = array(
+                     'class'  => '',
+                     'user'   => $act_user,
+                     'text'   => __('deleted comment on', 'wp-activity'),
+                     'params' => $act_params
+                      );
+      break;
+    case 'NEW_USER':
+      $act_done = array(
+                     'class'  => '',
+                     'user'   => $act_user,
+                     'text'   => __('has registered.', 'wp-activity'),
+                     'params' => $act_raw->act_params
+                      );
+      break;
+    case 'PROFILE_EDIT':
+      $act_done = array(
+                     'class'  => '',
+                     'user'   => $act_user,
+                     'text'   => __('has updated his profile.', 'wp-activity'),
+                     'params' => $act_raw->act_params
+                      );
+      break;
+    case 'LINK_ADD':
+      $act_link = get_bookmark($act_raw->act_params);
+      if($act_disp == 'csv'){
+        $act_params = $act_link->link_name;
+      }else{
+        $act_params = '<a href="'.$act_link->link_url.'" title="'.$act_link->link_description.'" target="'.$act_link->link_target.'">'.$act_link->link_name.'</a>.';
+      }
+      $act_done = array(
+                     'class'  => '',
+                     'user'   => $act_user,
+                     'text'   => __('has added a link to', 'wp-activity'),
+                     'params' => $act_params
+                      );
+      break;
+    default:
+      break;
+  }
+  $act_done['date'] = $act_date;
+  $act_done['type'] = $act_raw->act_type;
+  return $act_done;
+}
+
 function nicetime($posted_date, $admin=false, $nohour=false) {
     // Adapted for something found on Internet, but I forgot to keep the url...
     $act_opt=get_option('act_settings');
     $date_relative = $act_opt['act_date_relative'];
     $date_format = $act_opt['act_date_format'];
-    $posted_date = date("Y-m-d H:i:s", strtotime($posted_date) + ( get_option( 'gmt_offset' ) * 3600 ));
+    $gmt_offset = get_option('gmt_offset');
+    if (empty($gmt_offset)){
+      $timezone = get_option('timezone_string');
+      $gmt = date_create($posted_date, timezone_open($timezone));
+      $gmt_offset = date_offset_get($gmt) / 3600;
+    }
+    //$cur_time_gmt = current_time('timestamp', true);
+    $cur_time_gmt = time();
     $in_seconds = strtotime($posted_date);
-    $diff = strtotime(date("Y-m-d H:i:s", time() + ( get_option( 'gmt_offset' ) * 3600 )));
+    $posted_date = gmdate("Y-m-d H:i:s", strtotime($posted_date) + ($gmt_offset*3600));
     $relative_date = '';
-    $diff = $diff - $in_seconds;
-    //echo "date : ".date("Y-m-d H:i:s", time())." - time : ".date_i18n("j F Y G \h i \m\i\n",( time() + ( get_option( 'gmt_offset' ) * 3600 ) ))." - in_seconds : ".date_i18n("j F Y G \h i \m\i\n",$in_seconds)." = diff : $diff<br />";
+    $diff = $cur_time_gmt - $in_seconds;
     $months = floor($diff/2592000);
     $diff -= $months*2419200;
     $weeks = floor($diff/604800);
