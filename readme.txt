@@ -194,6 +194,9 @@ If you want to be sure it's debugged, you can wait a few days for a x.x.1 versio
 
 == ChangeLog ==
 
+= 1.9.1 =
+* Fixed bug with timezones UTC+0.
+
 = 1.9 =
 * Added new events types logging : new users, comments edits, comments deletions (not spam comments), posts deletions (real deletions, not trashed posts).
 * Added a search field for filtering by data in admin activity log (to search for IP addresses, posts, etc.).
