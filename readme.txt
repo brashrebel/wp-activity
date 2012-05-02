@@ -194,6 +194,9 @@ If you want to be sure it's debugged, you can wait a few days for a x.x.1 versio
 
 == ChangeLog ==
 
+= 2.0 =
+* Added auto-refresh for activity displayed on frontend (with AJAX).
+
 = 1.9.1 =
 * Fixed bug with UTC+0 timezone .
 

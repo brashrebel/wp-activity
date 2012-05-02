@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Monitor and display blog members activity ; track and blacklist unwanted login attemps.
     Author: Dric
-    Version: 1.9.1
+    Version: 2.0 alpha
     Author URI: http://www.driczone.net
 */
 
@@ -31,7 +31,7 @@ $act_list_limit = 50; //Change this if you want to display more than 50 items pe
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get annoyed by admin panel additions
 $act_user_filter_max = 25; //If you have less than 25 users (default value), it will display a select field with all users instead of a search field in activity log filter
-$act_plugin_version = "1.9.1"; //don't modify this !
+$act_plugin_version = "2.0 alpha"; //don't modify this !
 
 $options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
@@ -112,6 +112,8 @@ function act_install() {
   $new_options_act['act_auto_bl']= false;
   $new_options_act['act_auto_bl_n']= '5';
   $new_options_act['act_bl_wplog']= true;
+  $new_options_act['act_refresh']= false;
+  $new_options_act['act_r_interval']= '1800';
   $new_options_act['act_version'] = $act_plugin_version;
   add_option('act_settings', $new_options_act);
 
@@ -127,6 +129,10 @@ function act_install() {
       if (version_compare($options_act['act_version'], '1.8', '<')) {
           $options_act['act_auto_bl']= false;
           $options_act['act_auto_bl_n']= '5';
+      }
+      if (version_compare($options_act['act_version'], '2.0', '<')) {
+          $options_act['act_refresh']= false;
+          $options_act['act_r_interval']= '1800';
       }
       $options_act['act_version'] = $act_plugin_version;
       update_option('act_settings', $options_act);
@@ -196,6 +202,7 @@ function act_header() {
       echo ACT_URL;
   }
   echo 'wp-activity.css" />';
+
 }
 add_action('wp_head', 'act_header');
 
@@ -435,20 +442,45 @@ function act_stream_user($act_user='') {
         $act_user = $user_ID;
     }
     if (!get_usermeta($act_user, 'act_private')) {
-        act_stream_common('-1', '', true, $act_user);
+        act_stream('-1', '', true, $act_user);
     }
 }
 
 function act_stream_shortcode ($attr) {
     $attr = shortcode_atts(array('number'   => '-1',
                                  'title'    => '',), $attr);
-    return act_stream_common($attr['number'], $attr['title'], true, '');
+    return act_stream($attr['number'], $attr['title'], true, '');
 }
 
 add_shortcode('ACT_STREAM', 'act_stream_shortcode');
 
-function act_stream($act_number='30', $act_title='') {
-    act_stream_common($act_number, $act_title, false,'');
+function act_stream($act_number='30', $act_title='', $archive = false, $act_user = '', $act_width = '') {
+  global $options_act;
+  if ($options_act['act_refresh']){
+    act_ajax_javascript($act_number, $options_act['act_r_interval']);
+  }
+  if ($act_title == '') {
+    $act_title= __("Recent Activity", 'wp-activity');
+  }
+  $act_title .= act_feed_link();
+  if ($options_act['act_page_link'] and !$archive) {
+    $act_title .= ' <a href="'.get_page_link($options_act['act_page_id']).'" title="'.sprintf(__('%s activity archive', 'wp-activity'),get_bloginfo('name')).'">'.__('Archives', 'wp-activity').'</a>';
+  }
+
+  echo '<h2>'.$act_title.'</h2>';
+
+  echo '<div id="act_wrap" ';
+  if (!empty($act_width)){
+    echo 'style="width:'.$act_width.'px" ';
+  }
+  echo '>';
+  if ($archive == false) {
+      echo '<ul id="activity">';
+  } else {
+      echo '<ul id="activity-archive">';
+  }
+  act_stream_common($act_number, $act_user, $archive);
+  echo '</ul></div>';
 }
 
 function act_feed_link(){
@@ -466,6 +498,40 @@ function act_feed_link(){
   return $return;
 }
 
+function act_ajax_refresh(){
+  if ( isset($_GET['act_action']) && $_GET['act_action'] == 'act_refresh' ) {
+    $act_number = $_GET['act_number'];
+    act_stream_common($act_number);
+    die();
+  }
+}
+if ($options_act['act_refresh']){
+  add_action('init', 'act_ajax_refresh', 1);
+}
+
+function act_ajax_javascript($act_number = '30', $act_refresh_interval = '1800'){
+  echo '<script type="text/javascript">
+      jQuery(document).ready(function($){
+  var load_activity = function() {
+    $.ajax({
+      type : "GET",
+      url : "index.php",
+      data : { act_action : "act_refresh",
+               act_number : '.$act_number.',
+             },
+      beforeSend: function() {$("#activity").animate({opacity : "toggle"}, "fast");},
+      success : function(response){
+        // the server has finished executing PHP and has returned something, so display it!
+        $("#activity").html(response);
+        $("#activity").animate({opacity : "toggle"}, "slow"); //animation
+      }
+    });
+  };
+  var act_refreshId = setInterval(load_activity, '.($act_refresh_interval*1000).');
+  $.ajaxSetup({ cache: false });
+});</script>';
+}
+
 /*
 --- display activity in frontend ---
 * $act_number = -1 : no limit
@@ -473,78 +539,60 @@ function act_feed_link(){
 * $archive : if true, display activity on a page without box
 * $act_user : if user id specified, return user's activity only
 */
-function act_stream_common($act_number='30', $act_title='', $archive = false, $act_user = '', $act_width = '') {
-    global $wpdb, $options_act, $user_ID;
-    if ($act_title == '') {
-        $act_title= __("Recent Activity", 'wp-activity');
-    }
-    $act_title .= act_feed_link();
-    if ($options_act['act_page_link'] and !$archive) {
-        $act_title .= ' <a href="'.get_page_link($options_act['act_page_id']).'" title="'.sprintf(__('%s activity archive', 'wp-activity'),get_bloginfo('name')).'">'.__('Archives', 'wp-activity').'</a>';
-    }
-
-    $wp_url = get_bloginfo('wpurl');
-    $act_old_class = '';
-    $act_old_flag = -1;
-
-    echo '<h2>'.$act_title.'</h2>';
-    if ($archive == false) {
-        echo '<ul ';
-        if (!empty($act_width)){
-          echo 'style="width:'.$act_width.'px" ';
+function act_stream_common($act_number='30', $act_user = '', $archive = false) {
+  global $wpdb, $options_act, $user_ID;
+  $wp_url = get_bloginfo('wpurl');
+  $act_old_class = '';
+  $act_old_flag = -1;
+  $sql  = "SELECT u.display_name as display_name, user_nicename, u.id as id, act_type, act_date, act_params, a.id as act_id, a.user_id as user_id FROM ".$wpdb->prefix."activity AS a, ".$wpdb->users." AS u WHERE a.user_id = u.id";
+  if ($act_user != '') {
+      $sql .= " AND a.user_id = '".$act_user."'";
+  } else {
+      $sql .= " AND act_type NOT IN ('LOGIN_FAIL', 'ACCESS_DENIED')";
+  }
+  $sql .= " ORDER BY act_date DESC";
+  $i=1;
+  if ( $act_logins = $wpdb->get_results( $sql)) {
+    foreach ( (array) $act_logins as $act ) {
+      if ($options_act['act_old'] and $act_old_flag > 0 and !$archive) {
+        $act_old_class = 'act-old';
+      } else {
+        $act_old_class = '';
+      }
+      if (!$act_logged[$act->user_id]) {
+        $act_logged[$act->user_id]="2029-01-01 00:00:01"; //hope this plugin won't be used anymore at this date...
+      }
+      if (((strtotime($act_logged[$act->user_id]) - strtotime($act->act_date)) > 60 AND $act->act_type == 'CONNECT') OR $act->act_type != 'CONNECT') {
+        echo '<li class="login '.$act_old_class.'">';
+        if ($options_act['act_icons']!= 'n') {
+          if ($options_act['act_icons']== 'a' and ($act->act_type == 'CONNECT' or $act->act_type == 'PROFILE_EDIT' or $act->act_type == 'NEW_USER')) {
+            echo get_avatar( $act->user_id, '16'); ;
+          } else {
+            $act_icon = WP_PLUGIN_DIR.'/wp-activity/img/'.$act->act_type.'.png';
+            if (@file_exists($act_icon)) {
+              echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/'.$act->act_type.'.png" />';
+            }else{
+              echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/default.png" />';
+            }
+          }
         }
-        echo 'id="activity">';
-    } else {
-        echo '<ul id="activity-archive">';
-    }
-    $sql  = "SELECT u.display_name as display_name, user_nicename, u.id as id, act_type, act_date, act_params, a.id as act_id, a.user_id as user_id FROM ".$wpdb->prefix."activity AS a, ".$wpdb->users." AS u WHERE a.user_id = u.id";
-    if ($act_user != '') {
-        $sql .= " AND a.user_id = '".$act_user."'";
-    } else {
-        $sql .= " AND act_type NOT IN ('LOGIN_FAIL', 'ACCESS_DENIED')";
-    }
-    $sql .= " ORDER BY act_date DESC";
-    $i=1;
-    if ( $act_logins = $wpdb->get_results( $sql)) {
-        foreach ( (array) $act_logins as $act ) {
-            if ($options_act['act_old'] and $act_old_flag > 0 and !$archive) {
-                $act_old_class = 'act-old';
-            } else {
-                $act_old_class = '';
-            }
-            if (!$act_logged[$act->user_id]) {
-                $act_logged[$act->user_id]="2029-01-01 00:00:01"; //hope this plugin won't be used anymore at this date...
-            }
-            if (((strtotime($act_logged[$act->user_id]) - strtotime($act->act_date)) > 60 AND $act->act_type == 'CONNECT') OR $act->act_type != 'CONNECT') {
-                echo '<li class="login '.$act_old_class.'">';
-                if ($options_act['act_icons']!= 'n') {
-                  if ($options_act['act_icons']== 'a' and ($act->act_type == 'CONNECT' or $act->act_type == 'PROFILE_EDIT' or $act->act_type == 'NEW_USER')) {
-                      echo get_avatar( $act->user_id, '16'); ;
-                  } else {
-                    $act_icon = WP_PLUGIN_DIR.'/wp-activity/img/'.$act->act_type.'.png';
-                    if (@file_exists($act_icon)) {
-                      echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/'.$act->act_type.'.png" />';
-                    }else{
-                      echo '<img class="activity_icon" alt="" src="'.WP_PLUGIN_URL.'/wp-activity/img/default.png" />';
-                    }
-                  }
-                }
-                if ($act->user_id == $user_ID and $options_act['act_old'] and $act->act_type == 'CONNECT') {
-                  $act_old_flag++;
-                }
-                //format event display
-                $act_prep = act_prepare($act, 'frontend');
-                echo $act_prep['user'].' '.$act_prep['text'].' '.$act_prep['params'].' <span class="activity_date">'.$act_prep['date'].'</span>';
-                echo '</li>';
-                $i++;
-            }
-            $act_logged[$act->user_id] = $act->act_date;
-            if ($i >$act_number) {
-                break;
-            }
+        if ($act->user_id == $user_ID and $options_act['act_old'] and $act->act_type == 'CONNECT') {
+          $act_old_flag++;
         }
+        //format event display
+        $act_prep = act_prepare($act, 'frontend');
+        echo $act_prep['user'].' '.$act_prep['text'].' '.$act_prep['params'].' <span class="activity_date">'.$act_prep['date'].'</span>';
+        echo '</li>';
+        $i++;
+      }
+      $act_logged[$act->user_id] = $act->act_date;
+      if ($i >$act_number) {
+        break;
+      }
     }
-    echo '</ul>';
+  }else{
+    echo "Foiré !";
+  }
 }
 
 /*
@@ -868,11 +916,10 @@ class WpActivity_Widget extends WP_Widget {
       $title = apply_filters('widget_title', $instance['title'] );
       $number = $instance['number'];
       $width = $instance['width'];
-
       echo $before_widget;
       if ( $title )
           $title =  $before_title . $title . $after_title;
-      act_stream_common($number, $title, false, '', $width);
+      act_stream($number, $title, false, '', $width);
       echo $after_widget;
   }
 
@@ -885,7 +932,7 @@ class WpActivity_Widget extends WP_Widget {
   }
 
   function form( $instance ) {
-
+      $options_act = get_option('act_settings');
       $defaults = array( 'title' => __('Recent Activity', 'wp-activity'), 'number' => '30', 'width' => '350');
       $instance = wp_parse_args( (array) $instance, $defaults );
       ?>
@@ -927,10 +974,10 @@ class WpActivity_user_Widget extends WP_Widget {
         if ( $title )
             $title =  $before_title . $title . $after_title;
         if ($user_ID) {
-            act_stream_common($number, $title, false, $user_ID);
+            act_stream($number, $title, false, $user_ID);
         }
         elseif ($visitor=='1') {
-            act_stream_common($number, $title, false, '');
+            act_stream($number, $title, false, '');
         }
         echo $after_widget;
     }

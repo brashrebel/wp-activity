@@ -432,6 +432,7 @@ function act_admin_settings(){
     $options_act['act_blacklist']= $_POST['act_blacklist'];
     $options_act['act_auto_bl_n'] = $_POST['act_auto_bl_n'];
     $options_act['act_auto_bl'] = $_POST['act_auto_bl'];
+    $options_act['act_refresh'] = $_POST['act_refresh'];
     $options_act['act_version']=$act_plugin_version;
     if (update_option('act_settings', $options_act)){
       echo '<div id="message" class="updated fade"><p><strong>'.__('Options saved.').'</strong></p></div>';
@@ -517,6 +518,21 @@ function act_admin_settings(){
             <tr>
               <th><?php _e('Highlight new activity since last user login : ', 'wp-activity') ?></th>
               <td><input type="checkbox" <?php if($act_old){echo 'checked="checked"';} ?> name="act_old" /></td>
+            </tr>
+            <tr>
+              <th><?php _e('Use auto-refreshing : ', 'wp-activity') ?></th>
+              <td>
+                <input type="checkbox" <?php if($act_refresh){echo 'checked="checked"';} ?> name="act_refresh" />
+                <select name="act_r_interval">
+                  <option <?php if($act_r_interval == '60') {echo"selected='selected' ";} ?>value ="60">1 <?php _e('minute', wp_activity) ?></option>
+                  <option <?php if($act_r_interval == '120') {echo"selected='selected' ";} ?>value ="120">2 <?php _e('minutes', wp_activity) ?></option>
+                  <option <?php if($act_r_interval == '300') {echo"selected='selected' ";} ?>value ="300">5 <?php _e('minutes', wp_activity) ?></option>
+                  <option <?php if($act_r_interval == '600') {echo"selected='selected' ";} ?>value ="600">10 <?php _e('minutes', wp_activity) ?></option>
+                  <option <?php if($act_r_interval == '900') {echo"selected='selected' ";} ?>value ="900">15 <?php _e('minutes', wp_activity) ?></option>
+                  <option <?php if($act_r_interval == '1800') {echo"selected='selected' ";} ?>value ="1800">30 <?php _e('minutes', wp_activity) ?></option>
+                </select>
+                <br /><span class="act_info"><?php _e('Activity displayed on frontend can be auto-refreshed by AJAX. You can specify the delay between 2 refreshes.','wp-activity') ?></span>
+              </td>
             </tr>
             <tr>
               <th><?php _e('Display a link to the activity archive page : ', 'wp-activity') ?></th>
