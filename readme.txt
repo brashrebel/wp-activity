@@ -4,7 +4,7 @@ Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor, stats, blacklist, tracking, access, security, login
 Requires at least: 3.1
 Tested up to: 3.3.2
-Stable tag: 1.9
+Stable tag: 1.9.1
 
 Monitor and display registered users activity (logins, posts, comments, etc.). You can also track and prevent hackering attemps, with IP blacklisting.
 
@@ -195,7 +195,7 @@ If you want to be sure it's debugged, you can wait a few days for a x.x.1 versio
 == ChangeLog ==
 
 = 1.9.1 =
-* Fixed bug with timezones UTC+0.
+* Fixed bug with UTC+0 timezone .
 
 = 1.9 =
 * Added new events types logging : new users, comments edits, comments deletions (not spam comments), posts deletions (real deletions, not trashed posts).
