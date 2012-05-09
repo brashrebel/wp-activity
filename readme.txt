@@ -4,7 +4,7 @@ Donate link: http://www.driczone.net/blog
 Tags: stream, activity, community, multi-users, log, event, monitor, stats, blacklist, tracking, access, security, login
 Requires at least: 3.1
 Tested up to: 3.3.2
-Stable tag: 1.9.1
+Stable tag: 1.9.2
 
 Monitor and display registered users activity (logins, posts, comments, etc.). You can also track and prevent hackering attemps, with IP blacklisting.
 
@@ -196,6 +196,11 @@ If you want to be sure it's debugged, you can wait a few days for a x.x.1 versio
 
 = 2.0 =
 * Added auto-refresh for activity displayed on frontend (with AJAX).
+* Another tweak with dates (Suggested by [Elmoonfire](http://wordpress.org/support/profile/elmoonfire) )
+* Various Tweaks
+
+= 1.9.2 =
+* Fixed bug with event display.
 
 = 1.9.1 =
 * Fixed bug with UTC+0 timezone .

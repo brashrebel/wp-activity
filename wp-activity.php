@@ -550,8 +550,7 @@ function act_stream_common($act_number='30', $act_user = '', $archive = false) {
   } else {
       $sql .= " AND act_type NOT IN ('LOGIN_FAIL', 'ACCESS_DENIED')";
   }
-  $sql .= " ORDER BY act_date DESC";
-  $i=1;
+  $sql .= " ORDER BY act_date DESC LIMIT ".$act_number;
   if ( $act_logins = $wpdb->get_results( $sql)) {
     foreach ( (array) $act_logins as $act ) {
       if ($options_act['act_old'] and $act_old_flag > 0 and !$archive) {
@@ -583,15 +582,9 @@ function act_stream_common($act_number='30', $act_user = '', $archive = false) {
         $act_prep = act_prepare($act, 'frontend');
         echo $act_prep['user'].' '.$act_prep['text'].' '.$act_prep['params'].' <span class="activity_date">'.$act_prep['date'].'</span>';
         echo '</li>';
-        $i++;
       }
       $act_logged[$act->user_id] = $act->act_date;
-      if ($i >$act_number) {
-        break;
-      }
     }
-  }else{
-    echo "Foiré !";
   }
 }
 
@@ -610,7 +603,7 @@ function act_stream_common($act_number='30', $act_user = '', $archive = false) {
 * Returns array ('class', 'user', 'text', 'params', 'date', 'type')
 */
 function act_prepare($act_raw, $act_disp){
-  global $options_act;
+  global $options_act, $wpdb;
   $wp_url = get_bloginfo('wpurl');
   switch ($act_disp) {
     case 'admin' :
@@ -826,6 +819,9 @@ function nicetime($posted_date, $admin=false, $nohour=false) {
       $gmt = date_create($posted_date, timezone_open($timezone));
       $gmt_offset = date_offset_get($gmt) / 3600;
     }
+    /*$cur_time_gmt = current_time('timestamp', true);
+    $posted_date = gmdate("Y-m-d H:i:s", strtotime($posted_date) + ($gmt_offset * 3600));
+    $in_seconds = strtotime($posted_date);*/
     $cur_time_gmt = time();
     $in_seconds = strtotime($posted_date);
     $posted_date = gmdate("Y-m-d H:i:s", strtotime($posted_date) + ($gmt_offset*3600));
