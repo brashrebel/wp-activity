@@ -339,7 +339,7 @@ function act_admin_activity(){
               <th scope="col" id="cb" class="manage-column column-cb check-column"><input type="checkbox" /></th>
               <th></th>
               <th scope="col" class="manage-column"><?php _e("Date", 'wp-activity'); ?></th>
-              <th scope="col" class="manage-column"><?php _e("User"); ?></th>
+              <th scope="col" class="manage-column"><?php _e("User", 'wp-activity'); ?></th>
               <th scope="col" class="manage-column"><?php _e("Event Type", 'wp-activity'); ?></th>
               <th scope="col" class="manage-column"><?php _e("Applies to", 'wp-activity'); ?></th>
             </tr>
@@ -728,12 +728,15 @@ function act_admin_stats(){
   switch ($options_act['act_date_format']){
     case "dd/mm/yyyy":
       $act_date_format_js = "dd/mm/yy";
+      $act_df_xaxis = "%0d %b";
       break;
     case "mm/dd/yyyy":
       $act_date_format_js = "mm/dd/yy";
+      $act_df_xaxis = "%b %0d";
       break;
     default:
       $act_date_format_js = "yy/mm/dd";
+      $act_df_xaxis = "%b %0d";
   }
   $sql  = "SELECT * FROM ".$wpdb->prefix."activity WHERE act_date BETWEEN '".$act_date_start."' AND '".$act_date_end." 23:59:59' ORDER BY act_type ASC, act_date ASC"; //We need to set h:m:s as they are by default 00:00:00
   if ( $act_events = $wpdb->get_results( $sql)){
@@ -829,7 +832,7 @@ function act_admin_stats(){
       </form>
       <br class="clear" />
     </div>
-    <div id="act_wrap">
+    <div id="act_admin_wrap">
       <div id="dashboard-widgets" class="metabox-holder">
         <div id="dashboard_right_now" class="postbox">
           <h3><?php _e('Activity Stats', 'wp-activity') ?></h3>
@@ -878,7 +881,7 @@ function act_admin_stats(){
                     {
                         data: d1,
                         label: "<?php echo $act_tab_types[$act_filter] ?>",
-                        bars: { show: true, barWidth : 24*60*60*1000 },
+                        bars: { show: true, barWidth : 24*60*60*1000, align: 'center' },
                         color: "#a3bcd3"
                     }
                   ],
@@ -886,9 +889,11 @@ function act_admin_stats(){
                         xaxis: {
                             mode: "time",
                             minTickSize: [1, "day"],
+                            timeformat: "<?php echo $act_df_xaxis; ?>",
                             tickLength: 0,
                             min: xmin,
-                            max: xmax
+                            max: xmax,
+                            monthNames: <?php echo '["'.__('Jan_January_abbreviation').'","'.__('Feb_February_abbreviation').'","'.__('Mar_March_abbreviation').'","'.__('Apr_April_abbreviation').'","'.__('May_May_abbreviation').'","'.__('Jun_June_abbreviation').'","'.__('Jul_July_abbreviation').'","'.__('Aug_August_abbreviation').'","'.__('Sep_September_abbreviation').'","'.__('Oct_October_abbreviation').'","'.__('Nov_November_abbreviation').'","'.__('Dec_December_abbreviation').'"]'; ?>
                         },
                         yaxis: { 
                             tickDecimals: 0,
@@ -929,7 +934,7 @@ function act_admin_stats(){
                                       y = item.datapoint[1].toFixed(2);
                                   var actDate = new Date();
                                   actDate.setTime(x);
-                                  showTooltip(item.pageX, item.pageY, actDate.toDateString() + "<br />" + item.series.label + " : " + parseFloat(y));
+                                  showTooltip(item.pageX, item.pageY, actDate.toLocaleDateString() + "<br />" + item.series.label + " : " + parseFloat(y));
                               }
                           }
                           else {

@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Activity 1.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-02 15:17+0100\n"
-"PO-Revision-Date: 2012-05-02 15:17+0100\n"
+"POT-Creation-Date: 2012-05-10 08:40+0100\n"
+"PO-Revision-Date: 2012-05-10 08:40+0100\n"
 "Last-Translator: Dric <cedric@driczone.net>\n"
-"Language-Team: Web Geeks\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
 "X-Poedit-Basepath: .\n"
 "X-Textdomain-Support: yes\n"
-"X-Poedit-Language: Romanian\n"
-"X-Poedit-Country: Romania\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 # @ wp-activity
@@ -70,7 +70,7 @@ msgstr "Evenimentul sau evenimentele de şters."
 # @ wp-activity
 #: ../wp-act-admin.php:281
 #: ../wp-activity.php:463
-#: ../wp-activity.php:936
+#: ../wp-activity.php:932
 msgid "Recent Activity"
 msgstr "Activitate recentă"
 
@@ -277,8 +277,8 @@ msgstr ""
 
 # @ wp-activity
 #: ../wp-act-admin.php:527
+#: ../wp-activity.php:874
 #: ../wp-activity.php:878
-#: ../wp-activity.php:882
 msgid "minute"
 msgstr "minute"
 
@@ -288,8 +288,8 @@ msgstr "minute"
 #: ../wp-act-admin.php:530
 #: ../wp-act-admin.php:531
 #: ../wp-act-admin.php:532
+#: ../wp-activity.php:874
 #: ../wp-activity.php:878
-#: ../wp-activity.php:882
 msgid "minutes"
 msgstr "minute"
 
@@ -792,8 +792,8 @@ msgstr "Interval"
 
 # @ wp-activity
 #: ../wp-act-admin.php:838
-#: ../wp-activity.php:944
-#: ../wp-activity.php:1012
+#: ../wp-activity.php:940
+#: ../wp-activity.php:1008
 msgid "Events number :"
 msgstr "Numărul de evenimente:"
 
@@ -895,163 +895,163 @@ msgid "Archives"
 msgstr "Arhivele"
 
 # @ wp-activity
-#: ../wp-activity.php:623
-#: ../wp-activity.php:628
+#: ../wp-activity.php:616
+#: ../wp-activity.php:621
 msgid "View Profile"
 msgstr "Vizualizare profil"
 
 # @ wp-activity
-#: ../wp-activity.php:637
+#: ../wp-activity.php:630
 #, fuzzy
 msgid "has logged in."
 msgstr "a înregistrat în jurnal."
 
 # @ wp-activity
-#: ../wp-activity.php:677
+#: ../wp-activity.php:670
 msgid "published"
 msgstr "publicat"
 
 # @ wp-activity
-#: ../wp-activity.php:695
+#: ../wp-activity.php:688
 msgid "edited"
 msgstr "editat"
 
 # @ default
-#: ../wp-activity.php:704
+#: ../wp-activity.php:697
 #, fuzzy
 msgid "deleted"
 msgstr "Ştergere"
 
 # @ wp-activity
-#: ../wp-activity.php:733
+#: ../wp-activity.php:726
 msgid "commented"
 msgstr "a comentat"
 
 # @ wp-activity
-#: ../wp-activity.php:762
+#: ../wp-activity.php:755
 #, fuzzy
 msgid "edited comment on"
 msgstr "Comentariu nou"
 
 # @ wp-activity
-#: ../wp-activity.php:776
+#: ../wp-activity.php:769
 #, fuzzy
 msgid "deleted comment on"
 msgstr "Comentariu nou"
 
 # @ wp-activity
-#: ../wp-activity.php:784
+#: ../wp-activity.php:777
 #, fuzzy
 msgid "has registered."
 msgstr "a înregistrat în jurnal."
 
 # @ wp-activity
-#: ../wp-activity.php:792
+#: ../wp-activity.php:785
 msgid "has updated his profile."
 msgstr "-a actualizat Profil."
 
 # @ wp-activity
-#: ../wp-activity.php:806
+#: ../wp-activity.php:799
 msgid "has added a link to"
 msgstr "a adăugat un link la"
 
 # @ wp-activity
-#: ../wp-activity.php:867
+#: ../wp-activity.php:863
 msgid "weeks"
 msgstr "săptămâni"
 
 # @ wp-activity
-#: ../wp-activity.php:867
+#: ../wp-activity.php:863
 msgid "week"
 msgstr "săptămână"
 
 # @ wp-activity
+#: ../wp-activity.php:864
 #: ../wp-activity.php:868
-#: ../wp-activity.php:872
 msgid "days"
 msgstr "zile"
 
 # @ wp-activity
+#: ../wp-activity.php:864
 #: ../wp-activity.php:868
-#: ../wp-activity.php:872
 msgid "day"
 msgstr "zi"
 
 # @ wp-activity
+#: ../wp-activity.php:869
 #: ../wp-activity.php:873
-#: ../wp-activity.php:877
 msgid "hours"
 msgstr "ore"
 
 # @ wp-activity
+#: ../wp-activity.php:869
 #: ../wp-activity.php:873
-#: ../wp-activity.php:877
 msgid "hour"
 msgstr "oră"
 
 # @ wp-activity
-#: ../wp-activity.php:886
+#: ../wp-activity.php:882
 msgid "seconds"
 msgstr "secunde"
 
 # @ wp-activity
-#: ../wp-activity.php:886
+#: ../wp-activity.php:882
 msgid "second"
 msgstr "al doilea"
 
 # @ wp-activity
-#: ../wp-activity.php:890
+#: ../wp-activity.php:886
 #, php-format
 msgid "%s ago"
 msgstr "%s în urmă"
 
 # @ wp-activity
-#: ../wp-activity.php:905
+#: ../wp-activity.php:901
 msgid "Display a stream of registered users events"
 msgstr "Afişa un flux de utilizatorii înregistraţi evenimente"
 
 # @ wp-activity
-#: ../wp-activity.php:911
+#: ../wp-activity.php:907
 msgid "Wp-Activity Widget"
 msgstr "WP-activitate Widget"
 
 # @ wp-activity
-#: ../wp-activity.php:940
-#: ../wp-activity.php:1007
+#: ../wp-activity.php:936
+#: ../wp-activity.php:1003
 msgid "Title :"
 msgstr "Titlu:"
 
-#: ../wp-activity.php:948
+#: ../wp-activity.php:944
 msgid "Widget width (px) :"
 msgstr ""
 
 # @ wp-activity
-#: ../wp-activity.php:957
+#: ../wp-activity.php:953
 msgid "Display the logged user own activity"
 msgstr "Afişează activitatea propriu utilizator conectat"
 
 # @ wp-activity
-#: ../wp-activity.php:963
+#: ../wp-activity.php:959
 msgid "Wp-Activity logged user own activity"
 msgstr "WP-activitate conectat activitatea proprie utilizatorului"
 
 # @ wp-activity
-#: ../wp-activity.php:995
+#: ../wp-activity.php:991
 msgid "Your activity"
 msgstr "Activitatea ta"
 
 # @ wp-activity
-#: ../wp-activity.php:1017
+#: ../wp-activity.php:1013
 msgid "When viewed by visitor"
 msgstr "Când vizualizat de vizitatori"
 
 # @ wp-activity
-#: ../wp-activity.php:1019
+#: ../wp-activity.php:1015
 msgid "Display all users activity"
 msgstr "Afişa întreaga activitate a utilizatorilor"
 
 # @ wp-activity
-#: ../wp-activity.php:1021
+#: ../wp-activity.php:1017
 msgid "Display nothing"
 msgstr "Afişa nimic"
 

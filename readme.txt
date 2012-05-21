@@ -53,6 +53,7 @@ Translations :
 - Spanish (Thx to Cscean - translated up to v1.3)
 - Romanian (Thx to Web Geeks - translated up to v1.7)
 - Dutch (Thx to Tom - translated up to v1.8.1)
+- Russian (Thx to Semyon Nikiforov - partially translated)
 
 (If you translated my plugin, please send the translated .po file at cedric@driczone.net )
 
@@ -196,8 +197,13 @@ If you want to be sure it's debugged, you can wait a few days for a x.x.1 versio
 
 = 2.0 =
 * Added auto-refresh for activity displayed on frontend (with AJAX).
-* Another tweak with dates (Suggested by [Elmoonfire](http://wordpress.org/support/profile/elmoonfire) )
+* Added partial Russian translation (Thx to Semyon Nikiforov)
 * Various Tweaks
+
+= 1.9.3 =
+* Fixed bug with stats display.
+* Fixed bug with translation string.
+* Updated Dutch translation by [Venntom](http://wordpress.org/support/profile/venntom).
 
 = 1.9.2 =
 * Fixed bug with event display.
