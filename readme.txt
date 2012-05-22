@@ -196,6 +196,8 @@ If you want to be sure it's debugged, you can wait a few days for a x.x.1 versio
 
 = 1.9.3 =
 * Fixed bug with stats display.
+* Fixed bug with translation string.
+* Updated Dutch translation by [Venntom](http://wordpress.org/support/profile/venntom).
 
 = 1.9.2 =
 * Fixed bug with event display.

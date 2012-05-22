@@ -338,20 +338,20 @@ function act_admin_activity(){
             <tr>
               <th scope="col" id="cb" class="manage-column column-cb check-column"><input type="checkbox" /></th>
               <th></th>
-              <th scope="col" class="manage-column"><?php _e("Date", 'wp-activity'); ?></th>
-              <th scope="col" class="manage-column"><?php _e("User"); ?></th>
-              <th scope="col" class="manage-column"><?php _e("Event Type", 'wp-activity'); ?></th>
-              <th scope="col" class="manage-column"><?php _e("Applies to", 'wp-activity'); ?></th>
+              <th scope="col" class="manage-column"><?php _e('Date', 'wp-activity'); ?></th>
+              <th scope="col" class="manage-column"><?php _e('User', 'wp-activity'); ?></th>
+              <th scope="col" class="manage-column"><?php _e('Event Type', 'wp-activity'); ?></th>
+              <th scope="col" class="manage-column"><?php _e('Applies to', 'wp-activity'); ?></th>
             </tr>
           </thead>
           <tfoot>
             <tr>
               <th scope="col" class="manage-column column-cb check-column"><input type="checkbox" /></th>
               <th></th>
-              <th scope="col" class="manage-column"><?php _e("Date", 'wp-activity'); ?></th>
-              <th scope="col" class="manage-column"><?php _e("User", 'wp-activity'); ?></th>
-              <th scope="col" class="manage-column"><?php _e("Event Type", 'wp-activity'); ?></th>
-              <th scope="col" class="manage-column"><?php _e("Applies to", 'wp-activity'); ?></th>
+              <th scope="col" class="manage-column"><?php _e('Date', 'wp-activity'); ?></th>
+              <th scope="col" class="manage-column"><?php _e('User', 'wp-activity'); ?></th>
+              <th scope="col" class="manage-column"><?php _e('Event Type', 'wp-activity'); ?></th>
+              <th scope="col" class="manage-column"><?php _e('Applies to', 'wp-activity'); ?></th>
             </tr>
           </tfoot>
           <tbody>
@@ -712,12 +712,15 @@ function act_admin_stats(){
   switch ($options_act['act_date_format']){
     case "dd/mm/yyyy":
       $act_date_format_js = "dd/mm/yy";
+      $act_df_xaxis = "%0d/%0m";
       break;
     case "mm/dd/yyyy":
       $act_date_format_js = "mm/dd/yy";
+      $act_df_xaxis = "%0m/%0d";
       break;
     default:
       $act_date_format_js = "yy/mm/dd";
+      $act_df_xaxis = "%0m/%0d";
   }
   $sql  = "SELECT * FROM ".$wpdb->prefix."activity WHERE act_date BETWEEN '".$act_date_start."' AND '".$act_date_end." 23:59:59' ORDER BY act_type ASC, act_date ASC"; //We need to set h:m:s as they are by default 00:00:00
   if ( $act_events = $wpdb->get_results( $sql)){
@@ -870,6 +873,7 @@ function act_admin_stats(){
                         xaxis: {
                             mode: "time",
                             minTickSize: [1, "day"],
+                            timeformat: "<?php echo $act_df_xaxis; ?>",
                             tickLength: 0,
                             min: xmin,
                             max: xmax
@@ -913,7 +917,7 @@ function act_admin_stats(){
                                       y = item.datapoint[1].toFixed(2);
                                   var actDate = new Date();
                                   actDate.setTime(x);
-                                  showTooltip(item.pageX, item.pageY, actDate.toDateString() + "<br />" + item.series.label + " : " + parseFloat(y));
+                                  showTooltip(item.pageX, item.pageY, actDate.toLocaleDateString() + "<br />" + item.series.label + " : " + parseFloat(y));
                               }
                           }
                           else {
