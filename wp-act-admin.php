@@ -865,7 +865,7 @@ function act_admin_stats(){
                     {
                         data: d1,
                         label: "<?php echo $act_tab_types[$act_filter] ?>",
-                        bars: { show: true, barWidth : 24*60*60*1000 },
+                        bars: { show: true, barWidth : 24*60*60*1000, align: 'center' },
                         color: "#a3bcd3"
                     }
                   ],
@@ -876,7 +876,8 @@ function act_admin_stats(){
                             timeformat: "<?php echo $act_df_xaxis; ?>",
                             tickLength: 0,
                             min: xmin,
-                            max: xmax
+                            max: xmax,
+                            monthNames: <?php echo '["'.__('Jan_January_abbreviation').'","'.__('Feb_February_abbreviation').'","'.__('Mar_March_abbreviation').'","'.__('Apr_April_abbreviation').'","'.__('May_May_abbreviation').'","'.__('Jun_June_abbreviation').'","'.__('Jul_July_abbreviation').'","'.__('Aug_August_abbreviation').'","'.__('Sep_September_abbreviation').'","'.__('Oct_October_abbreviation').'","'.__('Nov_November_abbreviation').'","'.__('Dec_December_abbreviation').'"]'; ?>
                         },
                         yaxis: { 
                             tickDecimals: 0,
