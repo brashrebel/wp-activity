@@ -195,7 +195,7 @@ If you want to be sure it's debugged, you can wait a few days for a x.x.1 versio
 == ChangeLog ==
 
 = 1.9.3 =
-* Stats graph now displays localized dates.
+* Stats graph now displays localized dates (Thx to Per Söderman).
 * Fixed bug with stats display.
 * Fixed bug with translation string.
 * Updated Dutch translation by [Venntom](http://wordpress.org/support/profile/venntom).
