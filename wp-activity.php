@@ -4,7 +4,7 @@
     Plugin URI: http://www.driczone.net/blog/plugins/wp-activity
     Description: Monitor and display blog members activity ; track and blacklist unwanted login attemps.
     Author: Dric
-    Version: 2.0 alpha
+    Version: 2.0 alpha 2
     Author URI: http://www.driczone.net
 */
 
@@ -31,7 +31,7 @@ $act_list_limit = 50; //Change this if you want to display more than 50 items pe
 $strict_logs = false; //If you don't want to keep track of posts authors changes, set this to "true"
 $no_admin_mess = false; //If you don't want to get annoyed by admin panel additions
 $act_user_filter_max = 25; //If you have less than 25 users (default value), it will display a select field with all users instead of a search field in activity log filter
-$act_plugin_version = "2.0 alpha"; //don't modify this !
+$act_plugin_version = "2.0 alpha 2"; //don't modify this !
 
 $options_act = get_option('act_settings');
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
@@ -813,16 +813,17 @@ function nicetime($posted_date, $admin=false, $nohour=false) {
     $act_opt=get_option('act_settings');
     $date_relative = $act_opt['act_date_relative'];
     $date_format = $act_opt['act_date_format'];
-    $gmt_offset = get_option('gmt_offset');
+    /*$gmt_offset = get_option('gmt_offset');
     if (empty($gmt_offset) and $gmt_offset != 0){
       $timezone = get_option('timezone_string');
       $gmt = date_create($posted_date, timezone_open($timezone));
       $gmt_offset = date_offset_get($gmt) / 3600;
-    }
+    } */
     /*$cur_time_gmt = current_time('timestamp', true);
     $posted_date = gmdate("Y-m-d H:i:s", strtotime($posted_date) + ($gmt_offset * 3600));
     $in_seconds = strtotime($posted_date);*/
-    $cur_time_gmt = time();
+    $cur_time_gmt = current_time('timestamp', 1);
+    $gmt_offset = (current_time('timestamp') - $cur_time_gmt)/3600;
     $in_seconds = strtotime($posted_date);
     $posted_date = gmdate("Y-m-d H:i:s", strtotime($posted_date) + ($gmt_offset*3600));
     $relative_date = '';

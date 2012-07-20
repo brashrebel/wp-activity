@@ -197,7 +197,8 @@ If you want to be sure it's debugged, you can wait a few days for a x.x.1 versio
 
 = 2.0 =
 * Added auto-refresh for activity displayed on frontend (with AJAX).
-* Added partial Russian translation (Thx to Semyon Nikiforov)
+* Added partial Russian translation (Thx to Semyon Nikiforov).
+* Changed again the way of retrieving timezone setting. Should not change anything if it was already working for you.
 * Various Tweaks
 
 = 1.9.3 =
