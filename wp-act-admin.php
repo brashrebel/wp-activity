@@ -447,7 +447,7 @@ function act_admin_settings(){
     delete_option('act_settings'); //delete activity settings
     $sql="DROP TABLE ".$wpdb->prefix."activity"; //delete activity table
 		if ( $results = $wpdb->query( $sql ) ){
-		  echo '<div id="message" class="updated highlight fade"><p><strong>'.sprintf(__('Activity Plugin has been uninstalled. You can now desactivate this plugin : <a href="%s">Plugins Page</a>', 'wp-activity'),get_bloginfo('wpurl').'/wp-admin/plugins.php').'</strong></p></div>';
+		  echo '<div id="message" class="updated highlight fade"><p><strong>'.sprintf(__('Activity Plugin has been uninstalled. You can now deactivate this plugin : <a href="%s">Plugins Page</a>', 'wp-activity'),get_bloginfo('wpurl').'/wp-admin/plugins.php').'</strong></p></div>';
 		}      
   }elseif(isset($_POST['act_prune_now']) and check_admin_referer('wp-activity-submit','act_admin')){
     $act_success = act_cron($_POST['act_prune']);
@@ -458,7 +458,7 @@ function act_admin_settings(){
   $act_opt=get_option('act_settings');
   $act_count = $wpdb->get_var("SELECT count(ID) FROM ".$wpdb->prefix."activity");
   if (!is_array($act_opt)){
-    echo '<span class="activity_warning">'.sprintf(__('Activity Plugin has been uninstalled. You can now desactivate this plugin : <a href="%s">Plugins Page</a>', 'wp-activity'),get_bloginfo('wpurl').'/wp-admin/plugins.php').'</span>';
+    echo '<span class="activity_warning">'.sprintf(__('Activity Plugin has been uninstalled. You can now deactivate this plugin : <a href="%s">Plugins Page</a>', 'wp-activity'),get_bloginfo('wpurl').'/wp-admin/plugins.php').'</span>';
   }else{
     extract($act_opt);
     ?>
@@ -559,7 +559,7 @@ function act_admin_settings(){
               <th><?php _e('Prevent users to hide their activity : ', 'wp-activity') ?></th>
               <td>
                 <input type="checkbox" <?php if($act_prevent_priv){echo 'checked="checked"';} ?> name="act_prevent_priv" />
-                <br /><span class="activity_warning"><?php _e('Warning : If you activate this option, users won\'t have the choice to allow or deny the logging of their activity. For privacy respect, this option should stay desactivated.', 'wp-activity') ?></span>
+                <br /><span class="activity_warning"><?php _e('Warning : If you activate this option, users won\'t have the choice to allow or deny the logging of their activity. For privacy respect, this option should stay deactivated.', 'wp-activity') ?></span>
               </td>
             </tr>
           </table>
